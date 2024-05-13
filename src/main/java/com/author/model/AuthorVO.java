@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.book_author.model.BookAuthorVO;
+import com.bookauthor.model.BookAuthorVO;
 
 @Entity
 @Table(name = "author")

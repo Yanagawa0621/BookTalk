@@ -16,9 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.book_author.model.BookAuthorVO;
-import com.book_class.model.BookClassVO;
-import com.books_and_picture.model.BooksAndPictureVO;
+import com.bookauthor.model.BookAuthorVO;
+import com.bookclass.model.BookClassVO;
+import com.booksandpicture.model.BooksAndPictureVO;
 import com.publishing_house.model.PublishingHouseVO;
 
 @Entity

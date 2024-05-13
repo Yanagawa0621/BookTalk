@@ -1,4 +1,4 @@
-package com.book_author.model;
+package com.bookauthor.model;
 
 import java.io.Serializable;
 import java.util.Objects;

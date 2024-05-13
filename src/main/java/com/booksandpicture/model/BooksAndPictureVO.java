@@ -1,4 +1,4 @@
-package com.books_and_picture.model;
+package com.booksandpicture.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
