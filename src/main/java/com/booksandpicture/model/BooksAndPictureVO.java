@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.book_products.model.BookProductsVO;
+import com.bookproducts.model.BookProductsVO;
 
 @Entity
 @Table(name="books_and_picture")

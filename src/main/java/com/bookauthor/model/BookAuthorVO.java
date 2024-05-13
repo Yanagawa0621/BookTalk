@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.author.model.AuthorVO;
-import com.book_products.model.BookProductsVO;
+import com.bookproducts.model.BookProductsVO;
 
 @Entity
 @Table(name="book_author")

@@ -1,4 +1,4 @@
-package com.publishing_house.model;
+package com.publishinghouse.model;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.book_products.model.BookProductsVO;
+import com.bookproducts.model.BookProductsVO;
 
 @Entity
 @Table(name = "publishing_house")

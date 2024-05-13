@@ -1,4 +1,4 @@
-package com.book_products.model;
+package com.bookproducts.model;
 
 import java.sql.Date;
 import java.util.List;
@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import com.bookauthor.model.BookAuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
-import com.publishing_house.model.PublishingHouseVO;
+import com.publishinghouse.model.PublishingHouseVO;
 
 @Entity
 @Table(name = "book_products")
