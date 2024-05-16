@@ -36,7 +36,7 @@ public class PublishingHouseVO implements java.io.Serializable {
 	@Column(name = "telephoneNumber", length = 15,nullable = false)
 	private String telephoneNumber;
 	
-	@OneToMany(mappedBy = "publishiingHouseCode",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "phVO",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@OrderBy("bookNumber asc")
 	private List<BookProductsVO> bpVO;
 	

@@ -80,13 +80,16 @@ CREATE TABLE book_products(
 	price decimal(10,2) COMMENT '價格',
 	publicationDate date COMMENT '出版日期',
 	stock int COMMENT '庫存量',
+	releaseDate date COMMENT '發布日期',
 	introductionContent LONGTEXT COMMENT '介紹內容',
+	
 	CONSTRAINT fk_book_products_bookClassNumber FOREIGN KEY (bookClassNumber) REFERENCES book_class (classNumber),
     CONSTRAINT fk_book_products_publishiingHouseCode FOREIGN KEY (publishiingHouseCode) REFERENCES publishing_house (publishingHouseNumber),
     CONSTRAINT uk_book_products_isbn UNIQUE (isbn)
 ) COMMENT '書籍商品 book_products';
 
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (3,2,0,'潛藏的宇宙：量子世界與時空的湧現','9786269762156',550.00,'2023-12-04',10,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (3,2,0,'潛藏的宇宙：量子世界與時空的湧現','9786269762156',550.00,'2023-12-04',10,'2024-01-20',
+
 	'　　當代最活躍的理論物理學家之一尚・卡羅，在本書中集中火力，暢談被物理學界視為「不夠嚴肅」的量子力學基礎研究，以無礙的思路與生花妙筆，描繪出量子宇宙觀的完整圖像，並大聲而謹慎地宣告，多重宇宙論中的多世界詮釋，是已知對於現實最深刻、最全面的理解：
 
 　　「量子力學並非只是真理的一個近似值，它就是真理本身。」
@@ -106,13 +109,12 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 　　第二部，瞄準多世界詮釋的宇宙，邀請你這個觀察者一起進入其中，成為和「宇宙波函數」水乳交融的一部分，這裡沒有古典力學，沒有哥本哈根式的崩陷（或譯為塌縮）這個牽強的解釋。對於量子力學最容易引起投射的一點：意識或自由意志，也細細剖析了一番。
 
 　　第三部，帶我們回到無垠的疆界中看時空的「湧現」，會用這個看起來很潮的名詞是有道理的，提醒我們必須抗拒「眼見為真」的想法，才能認識到重力的本質，以及一切的可能性都是持續存在，導致多世界是目前最簡潔的、可能最接近「真相」的物理描述。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (1,4,0,'哈利波特(1)：神秘的魔法石','9789573317241',250.00,'2000-06-01',17,
-	'　　　在世界的另一個角落裡，有一個神秘的國度，裡面住滿了巫師，貓頭鷹是他們的信差，飛天掃帚是交通工具，西洋棋子會思考，幽靈頑皮鬼滿天飛，畫像裡的人還會跑出來串門子。
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (1,4,0,'哈利波特(1)：神秘的魔法石','9789573317241',250.00,'2000-06-01',17,'2002-06-10',	'　　　在世界的另一個角落裡，有一個神秘的國度，裡面住滿了巫師，貓頭鷹是他們的信差，飛天掃帚是交通工具，西洋棋子會思考，幽靈頑皮鬼滿天飛，畫像裡的人還會跑出來串門子。
 
 　　　十一歲的哈利波特，從小被阿姨一家當成怪胎，經常得滿屋子躲避表哥達力的追打。他一直以為自己只是個平凡的小男孩，直到一封又一封神秘的信，將他帶入這個充滿神奇魔法的巫師世界，而他的身世之謎與魔法石的秘密也將同時解開。
 
 　　　「哈利波特」已成為一種蔓延全世界的閱讀現象。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (4,3,0,'拉普拉斯的魔女','9789863668916',360.00,'2016-01-29',8,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (4,3,0,'拉普拉斯的魔女','9789863668916',360.00,'2016-01-29',8,'2016-03-11',
 	'在這個世界上，
 	沒有一個個體能夠獨自存在，而不具備任何意義──
 
@@ -127,7 +129,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 
 　　【拉普拉斯之魔】D　mon de Laplace
 　　為法國數學家皮埃爾-西蒙‧拉普拉斯於1814年提出的理論。其理論假設若有一生物能掌握宇宙中每個原子確切的位置和動量，即能夠運用力學規律推算出宇宙所有事件的發生歷程、過去以及未來。後人將此假定生物定名為「拉普拉斯之魔」。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (2,5,0,'ZOO【經典回歸版】','9789865580704',340.00,'2021-07-01',5,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (2,5,0,'ZOO【經典回歸版】','9789865580704',340.00,'2021-07-01',5,'2022-01-10',
 	'受虐的少年少女、瀕死的父親、
 	純真的機器女孩、寂寞的男孩、
 	懷抱著祕密的男人女人、
@@ -135,7 +137,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 	
 	有人想活下來、想死得其所、想藏住真相、想得到幸福。
 	這些重量不一的執念，化做十一個深入人心的晶瑩物語。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (5,1,0,'侏羅紀公園','9789862272237',380.00,'2017-06-15',9,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,1,0,'侏羅紀公園','9789862272237',380.00,'2017-06-15',9,'2020-4-15',
 	'進化史就是一部生命逃脫一切障礙的歷史。
 	這過程是痛苦的，甚至充滿危險，但生命卻找到了出路。
 
