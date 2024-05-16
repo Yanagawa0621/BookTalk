@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,6 +27,7 @@ public class BooksAndPictureVO implements java.io.Serializable{
 	private BookProductsVO bpVO;
 	
 	@Column(name = "pictureFile",nullable = false)
+	@Lob
 	private byte[] pictureFile;
 	
 	public Integer getPictureNumber() {

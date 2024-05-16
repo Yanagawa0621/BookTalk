@@ -2,6 +2,7 @@ package com.bookproducts.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 import com.bookauthor.model.BookAuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
+import com.orderdetails.model.OrderDetailsVO;
 import com.publishinghouse.model.PublishingHouseVO;
 
 @Entity
@@ -32,7 +34,7 @@ public class BookProductsVO implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bookClassNumber", referencedColumnName = "classNumber", nullable = false)
-	private BookClassVO bpVO;
+	private BookClassVO bcVO;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publishiingHouseCode", referencedColumnName = "publishingHouseNumber", nullable = false)
@@ -47,7 +49,7 @@ public class BookProductsVO implements java.io.Serializable {
 	@Column(name = "isbn", length = 13, unique = true,nullable = false)
 	private String isbn;
 
-	@Column(name = "price",nullable = false)
+	@Column(name = "price",nullable = false,columnDefinition="DECIMAL")
 	private Double price;
 
 	@Column(name = "publicationDate",nullable = false)
@@ -56,16 +58,23 @@ public class BookProductsVO implements java.io.Serializable {
 	@Column(name = "stock",nullable = false)
 	private Integer stock;
 
-	@Column(name = "introductionContent")
+	@Column(name = "introductionContent",columnDefinition = "longtext")
 	private String introductionContent;
 
-	@OneToMany(mappedBy = "bookNumber",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@Column(name="releaseDate")
+	private Date releaseDate;
+	
+	@OneToMany(mappedBy = "bpVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@OrderBy("pictureNumber asc")
 	private List<BooksAndPictureVO> bapVO;
 	
-	@OneToMany(mappedBy = "bookNumber",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@OrderBy("authorNumber asc")
+	@OneToMany(mappedBy = "compositeKey.bpVO",cascade = CascadeType.ALL)
+	@OrderBy("authorVO.authorNumber asc")
 	private List<BookAuthorVO> baVO;
+	
+//	@OneToMany(mappedBy = "bookProductsVO",cascade = CascadeType.ALL)
+//	@OrderBy("bookNumber asc")
+//	private Set<OrderDetailsVO> orderDetailsVO;
 	
 	public Integer getBookNumber() {
 		return bookNumber;
@@ -76,11 +85,11 @@ public class BookProductsVO implements java.io.Serializable {
 	}
 
 	public BookClassVO getBpVO() {
-		return bpVO;
+		return bcVO;
 	}
 
-	public void setBpVO(BookClassVO bpVO) {
-		this.bpVO = bpVO;
+	public void setBpVO(BookClassVO bcVO) {
+		this.bcVO = bcVO;
 	}
 
 	public PublishingHouseVO getPhVO() {
@@ -146,6 +155,14 @@ public class BookProductsVO implements java.io.Serializable {
 	public void setIntroductionContent(String introductionContent) {
 		this.introductionContent = introductionContent;
 	}
+	
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
 
 	public List<BooksAndPictureVO> getBapVO() {
 		return bapVO;
@@ -162,6 +179,13 @@ public class BookProductsVO implements java.io.Serializable {
 	public void setBaVO(List<BookAuthorVO> baVO) {
 		this.baVO = baVO;
 	}
-	
+
+//	public Set<OrderDetailsVO> getOrderDetailsVO() {
+//		return orderDetailsVO;
+//	}
+//
+//	public void setOrderDetailsVO(Set<OrderDetailsVO> orderDetailsVO) {
+//		this.orderDetailsVO = orderDetailsVO;
+//	}
 	
 }
