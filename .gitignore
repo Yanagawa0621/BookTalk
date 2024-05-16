@@ -5,4 +5,4 @@ target/
 .project
 .DS_Store
 .hibernate.cfg.xml
-G3.sql
+.G3.sql
