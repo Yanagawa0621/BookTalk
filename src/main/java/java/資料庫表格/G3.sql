@@ -1,47 +1,34 @@
 CREATE DATABASE IF NOT EXISTS G3;
-
 use G3;
 
--- 刪除表資料庫 --
-DROP DATABASE IF EXISTS G3;
-
-1. --
-DROP TABLE IF EXISTS book_author; -- 書籍作者 --
-DROP TABLE IF EXISTS books_and_picture; -- 書籍圖片 --
-DROP TABLE IF EXISTS book_products; -- 書籍商品 (需先刪除 4.訂單明細)--
-DROP TABLE IF EXISTS book_class; -- 書籍類別 (需先刪除 書籍商品)--
-DROP TABLE IF EXISTS Author; -- 作者 (需先刪除 書籍作者)--
-DROP TABLE IF EXISTS publishing_house; -- 出版社 (需先刪除 書籍商品)--
-
-2. --
-DROP TABLE IF EXISTS purchase_details; -- 採購明細 (需先刪除 1.書籍商品)--
-DROP TABLE IF EXISTS Purchase; -- 採購 (需先刪除 採購明細)--
-DROP TABLE IF EXISTS promotion_details; -- 促銷明細 (需先刪除 1.書籍商品)--
-DROP TABLE IF EXISTS promotion_project; -- 促銷專案 (需先刪除 促銷明細、4.訂單明細)--
-
-3.--
-DROP TABLE IF EXISTS login_record; -- 登入紀錄 --
-DROP TABLE IF EXISTS Complaint; -- 申訴 --
-DROP TABLE IF EXISTS user; -- 會員 (需先刪除 申訴、登入紀錄、4.訂單、5.文章、5.留言、5.點讚、5.檢舉)--
-DROP TABLE IF EXISTS Access; -- 權限 (需先刪除 會員)--
-DROP TABLE IF EXISTS user_status; -- 會員狀態 (需先刪除 會員、1.檢舉)--
-
-4. --
-DROP TABLE IF EXISTS administrator; -- 管理員 --
-DROP TABLE IF EXISTS QA; -- QA --
-DROP TABLE IF EXISTS order_details; --  訂單明細 --
-DROP TABLE IF EXISTS customer_order; -- 訂單 (需先刪除 訂單明細)--
-
-5. --
 DROP TABLE IF EXISTS report; -- 檢舉 --
 DROP TABLE IF EXISTS my_like; -- 點讚 --
 DROP TABLE IF EXISTS message; -- 留言 --
-DROP TABLE IF EXISTS article; -- 文章 (需先刪除 留言、點讚、檢舉)--
-DROP TABLE IF EXISTS forum; -- 版類 (需先刪除 文章、點讚、檢舉)--
+DROP TABLE IF EXISTS article; -- 文章 --
+DROP TABLE IF EXISTS forum; -- 版類 --
+DROP TABLE IF EXISTS order_details; --  訂單明細 --
+DROP TABLE IF EXISTS customer_order; -- 訂單 --
+DROP TABLE IF EXISTS login_record; -- 登入紀錄 --
+DROP TABLE IF EXISTS complaint; -- 申訴 --
+DROP TABLE IF EXISTS user; -- 會員 --
+DROP TABLE IF EXISTS access; -- 權限 --
+DROP TABLE IF EXISTS user_status; -- 會員狀態 --
+DROP TABLE IF EXISTS administrator; -- 管理員 --
+DROP TABLE IF EXISTS qa; -- QA --
+DROP TABLE IF EXISTS purchase_details; -- 採購明細 --
+DROP TABLE IF EXISTS purchase; -- 採購 --
+DROP TABLE IF EXISTS promotion_details; -- 促銷明細 --
+DROP TABLE IF EXISTS promotion_project; -- 促銷專案 --
+DROP TABLE IF EXISTS book_author; -- 書籍作者 --
+DROP TABLE IF EXISTS books_and_picture; -- 書籍圖片 --
+DROP TABLE IF EXISTS book_products; -- 書籍商品 --
+DROP TABLE IF EXISTS book_class; -- 書籍類別 --
+DROP TABLE IF EXISTS author; -- 作者 --
+DROP TABLE IF EXISTS publishing_house; -- 出版社 --
+
 
 
 -- 建立表格及輸入測試用資料 --
--- 1. --
 -- 出版社 --
 CREATE TABLE publishing_house(
 	publishingHouseNumber int PRIMARY KEY AUTO_INCREMENT COMMENT '出版社編號',
@@ -58,17 +45,17 @@ INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUE
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('鼎文','802高雄市苓雅區五福一路67號','吳志成','0956428719');
 
 -- 作者 --
-CREATE TABLE Author(
+CREATE TABLE author(
 	authorNumber int PRIMARY KEY AUTO_INCREMENT COMMENT '作者編號',
 	authorName varchar(225) COMMENT '作者名稱',
 	englishName varchar(225) COMMENT '英文名稱'
-) COMMENT '作者 Author';
+) COMMENT '作者 author';
 
-INSERT INTO Author (authorName,englishName) VALUES ('乙一','Otsuichi');
-INSERT INTO Author (authorName,englishName) VALUES ('J·K·羅琳','J. K. Rowling');
-INSERT INTO Author (authorName,englishName) VALUES ('尚・卡羅','Sean Carroll');
-INSERT INTO Author (authorName,englishName) VALUES ('東野圭吾','Higashino Keigo');
-INSERT INTO Author (authorName,englishName) VALUES ('約翰·麥可·克萊頓','John Michael Crichton');
+INSERT INTO author (authorName,englishName) VALUES ('乙一','Otsuichi');
+INSERT INTO author (authorName,englishName) VALUES ('J·K·羅琳','J. K. Rowling');
+INSERT INTO author (authorName,englishName) VALUES ('尚・卡羅','Sean Carroll');
+INSERT INTO author (authorName,englishName) VALUES ('東野圭吾','Higashino Keigo');
+INSERT INTO author (authorName,englishName) VALUES ('約翰·麥可·克萊頓','John Michael Crichton');
 
 -- 書籍類別 --
 CREATE TABLE book_class(
@@ -198,7 +185,6 @@ INSERT INTO book_author (bookNumber,authorNumber) VALUES (3,4);
 INSERT INTO book_author (bookNumber,authorNumber) VALUES (4,1);
 INSERT INTO book_author (bookNumber,authorNumber) VALUES (5,5);
 
--- 2. --
 -- 採購 --
 CREATE TABLE purchase (
 	purchaseNumber	INT PRIMARY KEY AUTO_INCREMENT COMMENT '採購編號',
@@ -261,7 +247,6 @@ INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, p
 INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, promotionPrice) VALUES (4, 4, 420.00);
 INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, promotionPrice) VALUES (5, 5, 300.00);
 
--- 3. --
 -- 會員狀態 --
 CREATE TABLE IF NOT EXISTS user_status (
     userStatus INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '狀態編號',
@@ -307,11 +292,16 @@ CREATE TABLE IF NOT EXISTS user (
 
 INSERT INTO user (accountStatusNumber, accessNumber, account, passcode, name, registerDate, sex, eMail, introduceOneself, birthday, photo, nationalIdNumber, telephoneNumber, address, statusStartDate) 
 VALUES 
-    (1, 1, '134', '123', 'abc', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
-    (1, 1, '1765', '456', 'def', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
-    (1, 1, '1876', '3423', 'vcxv', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
-    (1, 1, '112', '789', 'ghi', '1984-02-20', '1', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
-	(1, 1, '2132', '6757', 'kyty', '1984-02-11', '1', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, '1', '1', '1', '1985-03-01');
+    (1, 1, '134', '123', 'Tina Wang', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
+    (1, 1, '1765', '456', '王小明', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
+    (1, 1, '1876', '3423', 'David Wu', '1983-01-30', '2', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
+    (1, 1, '112', '789', '天天小飛', '1984-02-20', '2', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
+	(1, 1, 'xx35f23', '6757', '黃依依', '1984-02-11', '2', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, '1', '1', '1', '1985-03-01'),
+    (1, 1, 'flji424', '4fa4adfa', '麥當勞', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
+    (1, 1, '1lafiv', '455afaf', 'kobe', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
+    (1, 1, '345daf', 'adfggwert', 'LeBron James', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
+    (1, 1, 'mary', '565608', 'Anthony Davis', '1984-02-20', '2', 'mary3423@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
+    (1, 1, 'john1445', '123456fs', 'Russell', '1984-02-20', '1', 'johnere@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21');
 
 -- 登入記錄 --
 CREATE TABLE IF NOT EXISTS login_record (
@@ -340,7 +330,6 @@ CREATE TABLE IF NOT EXISTS complaint (
 
 INSERT INTO complaint (userNumber, processingStatus, complaintTypeNumber, content, complaintTime, completedDate, response) VALUES (1, 1, 1, '123', '1981-11-17 00:00:00', '1981-11-17 00:00:00', '1');
 
--- 4. --
 -- 管理員 --
 CREATE TABLE administrator(
 	account VARCHAR(20) PRIMARY KEY COMMENT'帳號',
@@ -375,23 +364,34 @@ CREATE TABLE customer_order (
     orderNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '訂單編號',
     userNumber INT NOT NULL COMMENT '會員編號',
     orderStatus INT COMMENT '訂單狀態編號',
-    establishmentTime DATETIME COMMENT '成立時間',
-    note LONGTEXT COMMENT '備註內容',
+    establishmentTime DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '成立時間',
     shippingTime DATETIME COMMENT '出貨時間',
+    completeTime DATETIME COMMENT '完成時間',
     receiver VARCHAR(255) COMMENT '收件人',
     shippingAddress VARCHAR(255) COMMENT '收件地址',
     deliveryFee DECIMAL(10, 2) COMMENT '運費',
     total DECIMAL(10, 2) COMMENT '總金額' ,
+    note LONGTEXT COMMENT '備註內容',
     CONSTRAINT fk_customer_order_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '訂單表格 customer_order';
 
-INSERT INTO customer_order (userNumber, orderStatus, establishmentTime, note, shippingTime, receiver, shippingAddress, deliveryFee, total)
+INSERT INTO customer_order (userNumber, orderStatus, shippingTime, completeTime, receiver, shippingAddress, deliveryFee, total, note)
 VALUES
-(1, 1, '2022-04-15 10:00:00', '第一筆訂單', '2022-04-16 10:00:00', '收件人A', '地址A', 100.00, 500.00),
-(2, 2, '2022-04-16 11:00:00', '第二筆訂單', '2022-04-17 11:00:00', '收件人B', '地址B', 150.00, 600.00),
-(3, 1, '2022-04-17 12:00:00', '第三筆訂單', '2022-04-18 12:00:00', '收件人C', '地址C', 200.00, 700.00),
-(4, 2, '2022-04-18 13:00:00', '第四筆訂單', '2022-04-19 13:00:00', '收件人D', '地址D', 250.00, 800.00),
-(5, 1, '2022-04-19 14:00:00', '第五筆訂單', '2022-04-20 14:00:00', '收件人E', '地址E', 300.00, 900.00);
+(1, 1, null, null, 'Tina Wang', '110台北市信義區信義路五段7號', 100.00, 500.00, '第1筆訂單'),
+(2, 2, null, null, '王小明', '244新北市林口區文化二路二段299號', 150.00, 600.00, '第2筆訂單'),
+(3, 3, null, null, 'David Wu', '114台北市內湖區內湖路一段', 200.00, 700.00, '第3筆訂單'),
+(4, 4, null, null, '天天小飛', '114台北市內湖區洲子街12號', 250.00, 800.00, '第4筆訂單'),
+(5, 2, null, null, '黃依依', '265宜蘭縣羅東鎮南昌街83號', 300.00, 900.00, '第5筆訂單'),
+(6, 1, null, null, '麥當勞', '920屏東縣潮州鎮中山八巷', 100.00, 500.00, '第6筆訂單'),
+(2, 0, null, null, '漢堡王', '970花蓮縣花蓮市國聯五路101號', 150.00, 600.00, '第7筆訂單'),
+(3, 3, null, null, '頂呱呱', '71005台南市永康區南台街1號', 200.00, 700.00, '第8筆訂單'),
+(4, 4, null, null, '摩斯漢堡', '744台南市新市區南科三路10號', 250.00, 800.00, '第9筆訂單'),
+(5, 2, null, null, '還沒有名字', '63341雲林縣土庫鎮中正路109號', 300.00, 900.00, '第10筆訂單'),
+(7, 1, null, null, 'kobe', '268宜蘭縣五結鄉五濱路二段201號', 100.00, 500.00, '第11筆訂單'),
+(2, 0, null, null, '大谷翔平', '310新竹縣竹東鎮沿河街411號', 150.00, 600.00, '第12筆訂單'),
+(8, 3, null, null, 'LeBron James', '97346花蓮縣吉安鄉民治路436號', 200.00, 700.00, '第13筆訂單'),
+(9, 4, null, null, 'Anthony Davis', '920屏東縣潮州鎮五福路20號', 250.00, 800.00, '第14筆訂單'),
+(10, 2, null, null, 'Russell', '114台北市內湖區康寧路一段33巷21號', 300.00, 900.00, '第15筆訂單');
 
 
 --  訂單明細 --
@@ -402,6 +402,7 @@ CREATE TABLE order_details (
     quantity INT COMMENT '數量',
     unitPrice DECIMAL(10, 2) COMMENT '單價',
     subtotal DECIMAL(10, 2) COMMENT '小計',
+    ratingScore INT DEFAULT 0 COMMENT '評分',
     evaluateContent LONGTEXT COMMENT '評價內容',
     PRIMARY KEY (orderNumber, bookNumber),
     CONSTRAINT order_details_orderNumber FOREIGN KEY (orderNumber) REFERENCES customer_order(orderNumber),
@@ -411,13 +412,23 @@ CREATE TABLE order_details (
 
 INSERT INTO order_details (orderNumber, bookNumber, promotionProjectNumber, quantity, unitPrice, subtotal, evaluateContent)
 VALUES
-(1, 1, 1, 2, 100.00, 200.00, '第一筆評價'),
-(1, 2, 2, 1, 150.00, 150.00, '第二筆評價'),
-(2, 3, 1, 3, 200.00, 600.00, '第三筆評價'),
-(3, 1, 2, 1, 250.00, 250.00, '第四筆評價'),
-(3, 2, 3, 2, 300.00, 600.00, '第五筆評價');
+(1, 1, 1, 2, 100.00, 200.00, '還不錯'),
+(1, 2, 2, 1, 150.00, 150.00, '這是我看過最好懂的一本書'),
+(2, 3, 1, 3, 200.00, 600.00, '沒有話說，就是讚~!!!'),
+(3, 4, 4, 1, 250.00, 250.00, '不如預期'),
+(4, 2, 3, 6, 300.00, 1800.00, '沒話說'),
+(1, 5, 1, 2, 100.00, 200.00, '.....'),
+(8, 2, 2, 1, 150.00, 150.00, '可以拿來當枕頭了'),
+(2, 4, 1, 4, 200.00, 800.00, '評價評價評價評價評價'),
+(10, 5, 2, 1, 250.00, 250.00, '@.@'),
+(3, 2, 3, 2, 300.00, 600.00, '不好看'),
+(5, 4, 5, 3, 100.00, 300.00, '原本應該還可以，但翻譯的很爛'),
+(7, 2, 2, 1, 150.00, 150.00, '期待第二集的出現'),
+(8, 3, 4, 3, 200.00, 600.00, '支持作者，加油'),
+(9, 1, 2, 1, 250.00, 250.00, '原來，比想像中還好'),
+(6, 2, 3, 2, 300.00, 600.00, '作者就是這領域的霸主，當然要來支持');
 
--- 5. --
+
 -- 版類 --
 	CREATE TABLE forum (
 		forumNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '版類編號',
