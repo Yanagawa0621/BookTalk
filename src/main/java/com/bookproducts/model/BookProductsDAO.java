@@ -58,7 +58,7 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 		BookProductsDAO bp = new BookProductsDAO();
 		Session session = bp.getSession();
 		Transaction transaction = session.beginTransaction();
-		System.out.println(bp.singleQuery(4));
+		System.out.println(bp.singleQuery(5));
 		transaction.commit();
 	}
 }
