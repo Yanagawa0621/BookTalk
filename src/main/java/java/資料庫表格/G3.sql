@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS G3;
 use G3;
 
@@ -25,6 +26,7 @@ DROP TABLE IF EXISTS book_products; -- 書籍商品 --
 DROP TABLE IF EXISTS book_class; -- 書籍類別 --
 DROP TABLE IF EXISTS author; -- 作者 --
 DROP TABLE IF EXISTS publishing_house; -- 出版社 --
+
 
 
 
