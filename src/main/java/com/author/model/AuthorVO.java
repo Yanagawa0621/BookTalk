@@ -31,8 +31,8 @@ public class AuthorVO implements java.io.Serializable {
 	@Column(name = "englishName")
 	private String englishName;
 
-	@OneToMany(mappedBy = "bookNumber",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@OrderBy("authorNumber asc")
+	@OneToMany(mappedBy = "compositeKey.authorVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OrderBy("authorVO.authorNumber asc")
 	private List<BookAuthorVO> baVO=new ArrayList<>();
 	
 	public Integer getAuthorNumber() {

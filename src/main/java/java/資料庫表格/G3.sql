@@ -1,47 +1,35 @@
-CREATE DATABASE IF NOT EXISTS G3;
 
+CREATE DATABASE IF NOT EXISTS G3;
 use G3;
 
--- 刪除表資料庫 --
-DROP DATABASE IF EXISTS G3;
-
-1. --
-DROP TABLE IF EXISTS book_author; -- 書籍作者 --
-DROP TABLE IF EXISTS books_and_picture; -- 書籍圖片 --
-DROP TABLE IF EXISTS book_products; -- 書籍商品 (需先刪除 4.訂單明細)--
-DROP TABLE IF EXISTS book_class; -- 書籍類別 (需先刪除 書籍商品)--
-DROP TABLE IF EXISTS Author; -- 作者 (需先刪除 書籍作者)--
-DROP TABLE IF EXISTS publishing_house; -- 出版社 (需先刪除 書籍商品)--
-
-2. --
-DROP TABLE IF EXISTS purchase_details; -- 採購明細 (需先刪除 1.書籍商品)--
-DROP TABLE IF EXISTS Purchase; -- 採購 (需先刪除 採購明細)--
-DROP TABLE IF EXISTS promotion_details; -- 促銷明細 (需先刪除 1.書籍商品)--
-DROP TABLE IF EXISTS promotion_project; -- 促銷專案 (需先刪除 促銷明細、4.訂單明細)--
-
-3.--
-DROP TABLE IF EXISTS login_record; -- 登入紀錄 --
-DROP TABLE IF EXISTS Complaint; -- 申訴 --
-DROP TABLE IF EXISTS user; -- 會員 (需先刪除 申訴、登入紀錄、4.訂單、5.文章、5.留言、5.點讚、5.檢舉)--
-DROP TABLE IF EXISTS Access; -- 權限 (需先刪除 會員)--
-DROP TABLE IF EXISTS user_status; -- 會員狀態 (需先刪除 會員、1.檢舉)--
-
-4. --
-DROP TABLE IF EXISTS administrator; -- 管理員 --
-DROP TABLE IF EXISTS QA; -- QA --
-DROP TABLE IF EXISTS order_details; --  訂單明細 --
-DROP TABLE IF EXISTS customer_order; -- 訂單 (需先刪除 訂單明細)--
-
-5. --
 DROP TABLE IF EXISTS report; -- 檢舉 --
 DROP TABLE IF EXISTS my_like; -- 點讚 --
 DROP TABLE IF EXISTS message; -- 留言 --
-DROP TABLE IF EXISTS article; -- 文章 (需先刪除 留言、點讚、檢舉)--
-DROP TABLE IF EXISTS forum; -- 版類 (需先刪除 文章、點讚、檢舉)--
+DROP TABLE IF EXISTS article; -- 文章 --
+DROP TABLE IF EXISTS forum; -- 版類 --
+DROP TABLE IF EXISTS order_details; --  訂單明細 --
+DROP TABLE IF EXISTS customer_order; -- 訂單 --
+DROP TABLE IF EXISTS login_record; -- 登入紀錄 --
+DROP TABLE IF EXISTS complaint; -- 申訴 --
+DROP TABLE IF EXISTS user; -- 會員 --
+DROP TABLE IF EXISTS access; -- 權限 --
+DROP TABLE IF EXISTS user_status; -- 會員狀態 --
+DROP TABLE IF EXISTS administrator; -- 管理員 --
+DROP TABLE IF EXISTS qa; -- QA --
+DROP TABLE IF EXISTS purchase_details; -- 採購明細 --
+DROP TABLE IF EXISTS purchase; -- 採購 --
+DROP TABLE IF EXISTS promotion_details; -- 促銷明細 --
+DROP TABLE IF EXISTS promotion_project; -- 促銷專案 --
+DROP TABLE IF EXISTS book_author; -- 書籍作者 --
+DROP TABLE IF EXISTS books_and_picture; -- 書籍圖片 --
+DROP TABLE IF EXISTS book_products; -- 書籍商品 --
+DROP TABLE IF EXISTS book_class; -- 書籍類別 --
+DROP TABLE IF EXISTS author; -- 作者 --
+DROP TABLE IF EXISTS publishing_house; -- 出版社 --
+
 
 
 -- 建立表格及輸入測試用資料 --
--- 1. --
 -- 出版社 --
 CREATE TABLE publishing_house(
 	publishingHouseNumber int PRIMARY KEY AUTO_INCREMENT COMMENT '出版社編號',
@@ -58,17 +46,17 @@ INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUE
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('鼎文','802高雄市苓雅區五福一路67號','吳志成','0956428719');
 
 -- 作者 --
-CREATE TABLE Author(
+CREATE TABLE author(
 	authorNumber int PRIMARY KEY AUTO_INCREMENT COMMENT '作者編號',
 	authorName varchar(225) COMMENT '作者名稱',
 	englishName varchar(225) COMMENT '英文名稱'
-) COMMENT '作者 Author';
+) COMMENT '作者 author';
 
-INSERT INTO Author (authorName,englishName) VALUES ('乙一','Otsuichi');
-INSERT INTO Author (authorName,englishName) VALUES ('J·K·羅琳','J. K. Rowling');
-INSERT INTO Author (authorName,englishName) VALUES ('尚・卡羅','Sean Carroll');
-INSERT INTO Author (authorName,englishName) VALUES ('東野圭吾','Higashino Keigo');
-INSERT INTO Author (authorName,englishName) VALUES ('約翰·麥可·克萊頓','John Michael Crichton');
+INSERT INTO author (authorName,englishName) VALUES ('乙一','Otsuichi');
+INSERT INTO author (authorName,englishName) VALUES ('J·K·羅琳','J. K. Rowling');
+INSERT INTO author (authorName,englishName) VALUES ('尚・卡羅','Sean Carroll');
+INSERT INTO author (authorName,englishName) VALUES ('東野圭吾','Higashino Keigo');
+INSERT INTO author (authorName,englishName) VALUES ('約翰·麥可·克萊頓','John Michael Crichton');
 
 -- 書籍類別 --
 CREATE TABLE book_class(
@@ -93,13 +81,16 @@ CREATE TABLE book_products(
 	price decimal(10,2) COMMENT '價格',
 	publicationDate date COMMENT '出版日期',
 	stock int COMMENT '庫存量',
+	releaseDate date COMMENT '發布日期',
 	introductionContent LONGTEXT COMMENT '介紹內容',
+	
 	CONSTRAINT fk_book_products_bookClassNumber FOREIGN KEY (bookClassNumber) REFERENCES book_class (classNumber),
     CONSTRAINT fk_book_products_publishiingHouseCode FOREIGN KEY (publishiingHouseCode) REFERENCES publishing_house (publishingHouseNumber),
     CONSTRAINT uk_book_products_isbn UNIQUE (isbn)
 ) COMMENT '書籍商品 book_products';
 
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (3,2,0,'潛藏的宇宙：量子世界與時空的湧現','9786269762156',550.00,'2023-12-04',10,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (3,2,0,'潛藏的宇宙：量子世界與時空的湧現','9786269762156',550.00,'2023-12-04',10,'2024-01-20',
+
 	'　　當代最活躍的理論物理學家之一尚・卡羅，在本書中集中火力，暢談被物理學界視為「不夠嚴肅」的量子力學基礎研究，以無礙的思路與生花妙筆，描繪出量子宇宙觀的完整圖像，並大聲而謹慎地宣告，多重宇宙論中的多世界詮釋，是已知對於現實最深刻、最全面的理解：
 
 　　「量子力學並非只是真理的一個近似值，它就是真理本身。」
@@ -119,13 +110,12 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 　　第二部，瞄準多世界詮釋的宇宙，邀請你這個觀察者一起進入其中，成為和「宇宙波函數」水乳交融的一部分，這裡沒有古典力學，沒有哥本哈根式的崩陷（或譯為塌縮）這個牽強的解釋。對於量子力學最容易引起投射的一點：意識或自由意志，也細細剖析了一番。
 
 　　第三部，帶我們回到無垠的疆界中看時空的「湧現」，會用這個看起來很潮的名詞是有道理的，提醒我們必須抗拒「眼見為真」的想法，才能認識到重力的本質，以及一切的可能性都是持續存在，導致多世界是目前最簡潔的、可能最接近「真相」的物理描述。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (1,4,0,'哈利波特(1)：神秘的魔法石','9789573317241',250.00,'2000-06-01',17,
-	'　　　在世界的另一個角落裡，有一個神秘的國度，裡面住滿了巫師，貓頭鷹是他們的信差，飛天掃帚是交通工具，西洋棋子會思考，幽靈頑皮鬼滿天飛，畫像裡的人還會跑出來串門子。
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (1,4,0,'哈利波特(1)：神秘的魔法石','9789573317241',250.00,'2000-06-01',17,'2002-06-10',	'　　　在世界的另一個角落裡，有一個神秘的國度，裡面住滿了巫師，貓頭鷹是他們的信差，飛天掃帚是交通工具，西洋棋子會思考，幽靈頑皮鬼滿天飛，畫像裡的人還會跑出來串門子。
 
 　　　十一歲的哈利波特，從小被阿姨一家當成怪胎，經常得滿屋子躲避表哥達力的追打。他一直以為自己只是個平凡的小男孩，直到一封又一封神秘的信，將他帶入這個充滿神奇魔法的巫師世界，而他的身世之謎與魔法石的秘密也將同時解開。
 
 　　　「哈利波特」已成為一種蔓延全世界的閱讀現象。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (4,3,0,'拉普拉斯的魔女','9789863668916',360.00,'2016-01-29',8,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (4,3,0,'拉普拉斯的魔女','9789863668916',360.00,'2016-01-29',8,'2016-03-11',
 	'在這個世界上，
 	沒有一個個體能夠獨自存在，而不具備任何意義──
 
@@ -140,7 +130,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 
 　　【拉普拉斯之魔】D　mon de Laplace
 　　為法國數學家皮埃爾-西蒙‧拉普拉斯於1814年提出的理論。其理論假設若有一生物能掌握宇宙中每個原子確切的位置和動量，即能夠運用力學規律推算出宇宙所有事件的發生歷程、過去以及未來。後人將此假定生物定名為「拉普拉斯之魔」。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (2,5,0,'ZOO【經典回歸版】','9789865580704',340.00,'2021-07-01',5,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (2,5,0,'ZOO【經典回歸版】','9789865580704',340.00,'2021-07-01',5,'2022-01-10',
 	'受虐的少年少女、瀕死的父親、
 	純真的機器女孩、寂寞的男孩、
 	懷抱著祕密的男人女人、
@@ -148,7 +138,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 	
 	有人想活下來、想死得其所、想藏住真相、想得到幸福。
 	這些重量不一的執念，化做十一個深入人心的晶瑩物語。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,introductionContent) VALUES (5,1,0,'侏羅紀公園','9789862272237',380.00,'2017-06-15',9,
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,1,0,'侏羅紀公園','9789862272237',380.00,'2017-06-15',9,'2020-4-15',
 	'進化史就是一部生命逃脫一切障礙的歷史。
 	這過程是痛苦的，甚至充滿危險，但生命卻找到了出路。
 
@@ -198,7 +188,6 @@ INSERT INTO book_author (bookNumber,authorNumber) VALUES (3,4);
 INSERT INTO book_author (bookNumber,authorNumber) VALUES (4,1);
 INSERT INTO book_author (bookNumber,authorNumber) VALUES (5,5);
 
--- 2. --
 -- 採購 --
 CREATE TABLE purchase (
 	purchaseNumber	INT PRIMARY KEY AUTO_INCREMENT COMMENT '採購編號',
@@ -261,7 +250,6 @@ INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, p
 INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, promotionPrice) VALUES (4, 4, 420.00);
 INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, promotionPrice) VALUES (5, 5, 300.00);
 
--- 3. --
 -- 會員狀態 --
 CREATE TABLE IF NOT EXISTS user_status (
     userStatus INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '狀態編號',
@@ -307,11 +295,16 @@ CREATE TABLE IF NOT EXISTS user (
 
 INSERT INTO user (accountStatusNumber, accessNumber, account, passcode, name, registerDate, sex, eMail, introduceOneself, birthday, photo, nationalIdNumber, telephoneNumber, address, statusStartDate) 
 VALUES 
-    (1, 1, '134', '123', 'abc', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
-    (1, 1, '1765', '456', 'def', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
-    (1, 1, '1876', '3423', 'vcxv', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
-    (1, 1, '112', '789', 'ghi', '1984-02-20', '1', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
-	(1, 1, '2132', '6757', 'kyty', '1984-02-11', '1', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, '1', '1', '1', '1985-03-01');
+    (1, 1, '134', '123', 'Tina Wang', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
+    (1, 1, '1765', '456', '王小明', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
+    (1, 1, '1876', '3423', 'David Wu', '1983-01-30', '2', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
+    (1, 1, '112', '789', '天天小飛', '1984-02-20', '2', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
+	(1, 1, 'xx35f23', '6757', '黃依依', '1984-02-11', '2', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, '1', '1', '1', '1985-03-01'),
+    (1, 1, 'flji424', '4fa4adfa', '麥當勞', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
+    (1, 1, '1lafiv', '455afaf', 'kobe', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
+    (1, 1, '345daf', 'adfggwert', 'LeBron James', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
+    (1, 1, 'mary', '565608', 'Anthony Davis', '1984-02-20', '2', 'mary3423@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
+    (1, 1, 'john1445', '123456fs', 'Russell', '1984-02-20', '1', 'johnere@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21');
 
 -- 登入記錄 --
 CREATE TABLE IF NOT EXISTS login_record (
@@ -340,7 +333,6 @@ CREATE TABLE IF NOT EXISTS complaint (
 
 INSERT INTO complaint (userNumber, processingStatus, complaintTypeNumber, content, complaintTime, completedDate, response) VALUES (1, 1, 1, '123', '1981-11-17 00:00:00', '1981-11-17 00:00:00', '1');
 
--- 4. --
 -- 管理員 --
 CREATE TABLE administrator(
 	account VARCHAR(20) PRIMARY KEY COMMENT'帳號',
@@ -375,23 +367,34 @@ CREATE TABLE customer_order (
     orderNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '訂單編號',
     userNumber INT NOT NULL COMMENT '會員編號',
     orderStatus INT COMMENT '訂單狀態編號',
-    establishmentTime DATETIME COMMENT '成立時間',
-    note LONGTEXT COMMENT '備註內容',
+    establishmentTime DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '成立時間',
     shippingTime DATETIME COMMENT '出貨時間',
+    completeTime DATETIME COMMENT '完成時間',
     receiver VARCHAR(255) COMMENT '收件人',
     shippingAddress VARCHAR(255) COMMENT '收件地址',
     deliveryFee DECIMAL(10, 2) COMMENT '運費',
     total DECIMAL(10, 2) COMMENT '總金額' ,
+    note LONGTEXT COMMENT '備註內容',
     CONSTRAINT fk_customer_order_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '訂單表格 customer_order';
 
-INSERT INTO customer_order (userNumber, orderStatus, establishmentTime, note, shippingTime, receiver, shippingAddress, deliveryFee, total)
+INSERT INTO customer_order (userNumber, orderStatus, shippingTime, completeTime, receiver, shippingAddress, deliveryFee, total, note)
 VALUES
-(1, 1, '2022-04-15 10:00:00', '第一筆訂單', '2022-04-16 10:00:00', '收件人A', '地址A', 100.00, 500.00),
-(2, 2, '2022-04-16 11:00:00', '第二筆訂單', '2022-04-17 11:00:00', '收件人B', '地址B', 150.00, 600.00),
-(3, 1, '2022-04-17 12:00:00', '第三筆訂單', '2022-04-18 12:00:00', '收件人C', '地址C', 200.00, 700.00),
-(4, 2, '2022-04-18 13:00:00', '第四筆訂單', '2022-04-19 13:00:00', '收件人D', '地址D', 250.00, 800.00),
-(5, 1, '2022-04-19 14:00:00', '第五筆訂單', '2022-04-20 14:00:00', '收件人E', '地址E', 300.00, 900.00);
+(1, 1, null, null, 'Tina Wang', '110台北市信義區信義路五段7號', 100.00, 500.00, '第1筆訂單'),
+(2, 2, null, null, '王小明', '244新北市林口區文化二路二段299號', 150.00, 600.00, '第2筆訂單'),
+(3, 3, null, null, 'David Wu', '114台北市內湖區內湖路一段', 200.00, 700.00, '第3筆訂單'),
+(4, 4, null, null, '天天小飛', '114台北市內湖區洲子街12號', 250.00, 800.00, '第4筆訂單'),
+(5, 2, null, null, '黃依依', '265宜蘭縣羅東鎮南昌街83號', 300.00, 900.00, '第5筆訂單'),
+(6, 1, null, null, '麥當勞', '920屏東縣潮州鎮中山八巷', 100.00, 500.00, '第6筆訂單'),
+(2, 0, null, null, '漢堡王', '970花蓮縣花蓮市國聯五路101號', 150.00, 600.00, '第7筆訂單'),
+(3, 3, null, null, '頂呱呱', '71005台南市永康區南台街1號', 200.00, 700.00, '第8筆訂單'),
+(4, 4, null, null, '摩斯漢堡', '744台南市新市區南科三路10號', 250.00, 800.00, '第9筆訂單'),
+(5, 2, null, null, '還沒有名字', '63341雲林縣土庫鎮中正路109號', 300.00, 900.00, '第10筆訂單'),
+(7, 1, null, null, 'kobe', '268宜蘭縣五結鄉五濱路二段201號', 100.00, 500.00, '第11筆訂單'),
+(2, 0, null, null, '大谷翔平', '310新竹縣竹東鎮沿河街411號', 150.00, 600.00, '第12筆訂單'),
+(8, 3, null, null, 'LeBron James', '97346花蓮縣吉安鄉民治路436號', 200.00, 700.00, '第13筆訂單'),
+(9, 4, null, null, 'Anthony Davis', '920屏東縣潮州鎮五福路20號', 250.00, 800.00, '第14筆訂單'),
+(10, 2, null, null, 'Russell', '114台北市內湖區康寧路一段33巷21號', 300.00, 900.00, '第15筆訂單');
 
 
 --  訂單明細 --
@@ -402,6 +405,7 @@ CREATE TABLE order_details (
     quantity INT COMMENT '數量',
     unitPrice DECIMAL(10, 2) COMMENT '單價',
     subtotal DECIMAL(10, 2) COMMENT '小計',
+    ratingScore INT DEFAULT 0 COMMENT '評分',
     evaluateContent LONGTEXT COMMENT '評價內容',
     PRIMARY KEY (orderNumber, bookNumber),
     CONSTRAINT order_details_orderNumber FOREIGN KEY (orderNumber) REFERENCES customer_order(orderNumber),
@@ -411,13 +415,23 @@ CREATE TABLE order_details (
 
 INSERT INTO order_details (orderNumber, bookNumber, promotionProjectNumber, quantity, unitPrice, subtotal, evaluateContent)
 VALUES
-(1, 1, 1, 2, 100.00, 200.00, '第一筆評價'),
-(1, 2, 2, 1, 150.00, 150.00, '第二筆評價'),
-(2, 3, 1, 3, 200.00, 600.00, '第三筆評價'),
-(3, 1, 2, 1, 250.00, 250.00, '第四筆評價'),
-(3, 2, 3, 2, 300.00, 600.00, '第五筆評價');
+(1, 1, 1, 2, 100.00, 200.00, '還不錯'),
+(1, 2, 2, 1, 150.00, 150.00, '這是我看過最好懂的一本書'),
+(2, 3, 1, 3, 200.00, 600.00, '沒有話說，就是讚~!!!'),
+(3, 4, 4, 1, 250.00, 250.00, '不如預期'),
+(4, 2, 3, 6, 300.00, 1800.00, '沒話說'),
+(1, 5, 1, 2, 100.00, 200.00, '.....'),
+(8, 2, 2, 1, 150.00, 150.00, '可以拿來當枕頭了'),
+(2, 4, 1, 4, 200.00, 800.00, '評價評價評價評價評價'),
+(10, 5, 2, 1, 250.00, 250.00, '@.@'),
+(3, 2, 3, 2, 300.00, 600.00, '不好看'),
+(5, 4, 5, 3, 100.00, 300.00, '原本應該還可以，但翻譯的很爛'),
+(7, 2, 2, 1, 150.00, 150.00, '期待第二集的出現'),
+(8, 3, 4, 3, 200.00, 600.00, '支持作者，加油'),
+(9, 1, 2, 1, 250.00, 250.00, '原來，比想像中還好'),
+(6, 2, 3, 2, 300.00, 600.00, '作者就是這領域的霸主，當然要來支持');
 
--- 5. --
+
 -- 版類 --
 	CREATE TABLE forum (
 		forumNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '版類編號',
