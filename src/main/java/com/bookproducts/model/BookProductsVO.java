@@ -2,7 +2,6 @@ package com.bookproducts.model;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,11 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.bookauthor.model.BookAuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
-import com.orderdetails.model.OrderDetailsVO;
 import com.publishinghouse.model.PublishingHouseVO;
 
 @Entity
@@ -71,6 +70,9 @@ public class BookProductsVO implements java.io.Serializable {
 	@OneToMany(mappedBy = "compositeKey.bpVO",cascade = CascadeType.ALL)
 	@OrderBy("authorVO.authorNumber asc")
 	private List<BookAuthorVO> baVO;
+	
+	@Transient
+	List<String> img;
 	
 //	@OneToMany(mappedBy = "bookProductsVO",cascade = CascadeType.ALL)
 //	@OrderBy("bookNumber asc")
@@ -180,6 +182,23 @@ public class BookProductsVO implements java.io.Serializable {
 		this.baVO = baVO;
 	}
 
+	public BookClassVO getBcVO() {
+		return bcVO;
+	}
+
+	public void setBcVO(BookClassVO bcVO) {
+		this.bcVO = bcVO;
+	}
+
+	public List<String> getImg() {
+		return img;
+	}
+
+	public void setImg(List<String> img) {
+		this.img = img;
+	}
+
+	
 //	public Set<OrderDetailsVO> getOrderDetailsVO() {
 //		return orderDetailsVO;
 //	}
