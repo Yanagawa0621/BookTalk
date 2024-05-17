@@ -168,9 +168,12 @@ CREATE TABLE books_and_picture(
 ) COMMENT '書籍圖片 books_and_picture';
 
 INSERT INTO books_and_picture (bookNumber) VALUES (1);
+INSERT INTO books_and_picture (bookNumber) VALUES (1);
 INSERT INTO books_and_picture (bookNumber) VALUES (2);
 INSERT INTO books_and_picture (bookNumber) VALUES (3);
 INSERT INTO books_and_picture (bookNumber) VALUES (4);
+INSERT INTO books_and_picture (bookNumber) VALUES (5);
+INSERT INTO books_and_picture (bookNumber) VALUES (5);
 INSERT INTO books_and_picture (bookNumber) VALUES (5);
 
  -- 書籍作者 --
