@@ -12,26 +12,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bookproducts.model.BookProductsVO;
 import com.order.model.OrderVO;
-import com.promotionproject.model.PromotionProjectVO;
 
 @Entity
 @Table(name = "order_details")
 public class OrderDetailsVO implements Serializable {
 	
 	@EmbeddedId
-	private CompositeDetail compositeKey;
+	private OrderDetailsId orderDetailsId;
 
 	@ManyToOne
 	@JoinColumn(name = "orderNumber", referencedColumnName = "orderNumber", insertable = false, updatable = false)
-	private OrderVO orderVO;	
-	
-	@Column(name = "promotionProjectNumber")
-	private Integer promotionProjectNumber;
+	private OrderVO orderVO;
 	
 	@ManyToOne
-	@JoinColumn(name = "promotionProjectNumber", referencedColumnName = "promotionProjectNumber", insertable = false, updatable = false)
-	private PromotionProjectVO promotionProjectVO;	
+	@JoinColumn(name = "bookNumber", referencedColumnName = "bookNumber", insertable = false, updatable = false)
+	private BookProductsVO bookProductsVO;
+	
+	@Column(name = "promotionProjectNumber")
+	private Integer promotionProjectNumber;	
 	
 	@Column(name = "quantity")
 	private Integer quantity;
@@ -42,6 +42,9 @@ public class OrderDetailsVO implements Serializable {
 	@Column(name = "subtotal")
 	private BigDecimal subtotal;
 	
+	@Column(name = "ratingScore", insertable = false)
+	private Integer ratingScore;
+	
 	@Column(name = "evaluateContent", columnDefinition = "longtext")
 	private String evaluateContent;
 	
@@ -50,70 +53,34 @@ public class OrderDetailsVO implements Serializable {
 		super();
 	}
 	
-	@Embeddable
-	public static class CompositeDetail implements Serializable{
-		private static final long serialVersionUID = 1L;
-		
-		@Column(name = "orderNumber")
-		private Integer orderNumber;
-
-		@Column(name = "bookNumber")
-		private Integer bookNumber;
-
-		public CompositeDetail() {
-			super();
-		}
-
-		public CompositeDetail(Integer orderNumber, Integer bookNumber) {
-			super();
-			this.orderNumber = orderNumber;
-			this.bookNumber = bookNumber;
-		}
-
-		public Integer getOrderNumber() {
-			return orderNumber;
-		}
-
-		public void setOrderNumber(Integer orderNumber) {
-			this.orderNumber = orderNumber;
-		}
-
-		public Integer getBookNumber() {
-			return bookNumber;
-		}
-
-		public void setBookNumber(Integer bookNumber) {
-			this.bookNumber = bookNumber;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(bookNumber, orderNumber);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			CompositeDetail other = (CompositeDetail) obj;
-			return Objects.equals(bookNumber, other.bookNumber) && Objects.equals(orderNumber, other.orderNumber);
-		}
-		
+	public OrderDetailsVO(OrderDetailsId orderDetailsId) {
+		super();
+		this.orderDetailsId = orderDetailsId;
 	}
 	
+	public OrderDetailsId getOrderDetailsId() {
+		return orderDetailsId;
+	}
+
+	public void setOrderDetailsId(OrderDetailsId orderDetailsId) {
+		this.orderDetailsId = orderDetailsId;
+	}
 	
-	public CompositeDetail getCompositeKey() {
-		return compositeKey;
+	public OrderVO getOrderVO() {
+		return orderVO;
 	}
 
-	public void setCompositeKey(CompositeDetail compositeKey) {
-		this.compositeKey = compositeKey;
+	public void setOrderVO(OrderVO orderVO) {
+		this.orderVO = orderVO;
+	}
+	
+	public BookProductsVO getBookProductsVO() {
+		return bookProductsVO;
 	}
 
+	public void setBookProductsVO(BookProductsVO bookProductsVO) {
+		this.bookProductsVO = bookProductsVO;
+	}
 
 	public Integer getPromotionProjectNumber() {
 		return promotionProjectNumber;
@@ -147,6 +114,14 @@ public class OrderDetailsVO implements Serializable {
 		this.subtotal = subtotal;
 	}
 
+	public Integer getRatingScore() {
+		return ratingScore;
+	}
+
+	public void setRatingScore(Integer ratingScore) {
+		this.ratingScore = ratingScore;
+	}
+
 	public String getEvaluateContent() {
 		return evaluateContent;
 	}
@@ -155,27 +130,65 @@ public class OrderDetailsVO implements Serializable {
 		this.evaluateContent = evaluateContent;
 	}
 
-	public OrderVO getOrderVO() {
-		return orderVO;
-	}
-
-	public void setOrderVO(OrderVO orderVO) {
-		this.orderVO = orderVO;
-	}
-
-	public PromotionProjectVO getPromotionProjectVO() {
-		return promotionProjectVO;
-	}
-
-	public void setPromotionProjectVO(PromotionProjectVO promotionProjectVO) {
-		this.promotionProjectVO = promotionProjectVO;
-	}
 
 	@Override
 	public String toString() {
-		return "OrderDetailsVO [compositeKey=" + compositeKey + ", promotionProjectNumber=" + promotionProjectNumber
-				+ ", quantity=" + quantity + ", unitPrice=" + unitPrice + ", subtotal=" + subtotal
+		return "OrderDetailsVO [promotionProjectNumber=" + promotionProjectNumber + ", quantity=" + quantity
+				+ ", unitPrice=" + unitPrice + ", subtotal=" + subtotal + ", ratingScore=" + ratingScore
 				+ ", evaluateContent=" + evaluateContent + "]";
+	}
+
+
+
+	@Embeddable
+	public static class OrderDetailsId implements Serializable{
+		private static final long serialVersionUID = 1L;
+		
+		@Column(name = "orderNumber")
+		private Integer orderNumber;
+
+		@Column(name = "bookNumber")
+		private Integer bookNumber;
+
+		public OrderDetailsId() {
+			super();
+		}
+
+		public OrderDetailsId(Integer orderNumber, Integer bookNumber) {
+			super();
+			this.orderNumber = orderNumber;
+			this.bookNumber = bookNumber;
+		}
+
+		public Integer getOrderNumber() {
+			return orderNumber;
+		}
+
+		public Integer getBookNumber() {
+			return bookNumber;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(bookNumber, orderNumber);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			OrderDetailsId other = (OrderDetailsId) obj;
+			return Objects.equals(bookNumber, other.bookNumber) && Objects.equals(orderNumber, other.orderNumber);
+		}
+
+		@Override
+		public String toString() {
+			return "OrderDetailsId [orderNumber=" + orderNumber + ", bookNumber=" + bookNumber + "]";
+		}
 	}
 
 }

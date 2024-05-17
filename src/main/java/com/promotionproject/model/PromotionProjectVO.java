@@ -28,10 +28,6 @@ public class PromotionProjectVO implements Serializable  {
 	private Integer promotionProjectNumber;
 	
 	@OneToMany(mappedBy = "promotionProjectVO", cascade = CascadeType.ALL)
-	@OrderBy("orderNumber asc")
-	private Set<OrderDetailsVO> orderDetails;
-	
-	@OneToMany(mappedBy = "promotionProjectVO", cascade = CascadeType.ALL)
 	@OrderBy("promotionProjectNumber asc")
 	private Set<PromotionDetailsVO> promotionDetailsVO;
 	
@@ -56,7 +52,6 @@ public class PromotionProjectVO implements Serializable  {
 	public PromotionProjectVO() {
 		super();
 	}
-	
 	
 	public Integer getPromotionProjectNumber() {
 		return promotionProjectNumber;
@@ -99,14 +94,6 @@ public class PromotionProjectVO implements Serializable  {
 	}
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
-	}
-
-	public Set<OrderDetailsVO> getOrderDetails() {
-		return orderDetails;
-	}
-	
-	public void setOrderDetails(Set<OrderDetailsVO> orderDetails) {
-		this.orderDetails = orderDetails;
 	}
 
 	public Set<PromotionDetailsVO> getPromotionDetailsVO() {
