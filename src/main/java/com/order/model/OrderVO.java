@@ -16,24 +16,20 @@ public class OrderVO implements Serializable {
 	@Column(name = "orderNumber", insertable = false, updatable = false)
 	private Integer orderNumber;
 	
-	@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
-	@OrderBy("orderNumber asc")
-	private Set<OrderDetailsVO> orderDetails;
-	
 	@Column(name = "userNumber", updatable = false)
 	private Integer userNumber;
 	
 	@Column(name = "orderStatus")
 	private Integer orderStatus;
 	
-	@Column(name = "establishmentTime", updatable = false)
+	@Column(name = "establishmentTime", insertable = false, updatable = false)
 	private Timestamp establishmentTime;
-	
-	@Column(name = "note", columnDefinition = "longtext")
-	private String note;
 	
 	@Column(name = "shippingTime")
 	private Timestamp shippingTime;
+	
+	@Column(name = "completeTime")
+	private Timestamp completeTime;
 	
 	@Column(name = "receiver")
 	private String receiver;
@@ -46,6 +42,14 @@ public class OrderVO implements Serializable {
 	
 	@Column(name = "total")
 	private BigDecimal total;
+	
+	@Column(name = "note", columnDefinition = "longtext")
+	private String note;
+	
+	@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
+	@OrderBy("orderNumber asc")
+	private Set<OrderDetailsVO> orderDetails;
+	
 	
 	public OrderVO() {
 		super();
@@ -82,21 +86,21 @@ public class OrderVO implements Serializable {
 	public void setEstablishmentTime(Timestamp establishmentTime) {
 		this.establishmentTime = establishmentTime;
 	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
+	
 	public Timestamp getShippingTime() {
 		return shippingTime;
 	}
 
 	public void setShippingTime(Timestamp shippingTime) {
 		this.shippingTime = shippingTime;
+	}
+
+	public Timestamp getCompleteTime() {
+		return completeTime;
+	}
+
+	public void setCompleteTime(Timestamp completeTime) {
+		this.completeTime = completeTime;
 	}
 
 	public String getReceiver() {
@@ -130,6 +134,14 @@ public class OrderVO implements Serializable {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 
 	public Set<OrderDetailsVO> getOrderDetails() {
 		return orderDetails;
@@ -141,11 +153,11 @@ public class OrderVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "OrderVO [orderNumber=" + orderNumber + ", orderDetails=" + orderDetails + ", userNumber=" + userNumber
-				+ ", orderStatus=" + orderStatus + ", establishmentTime=" + establishmentTime + ", note=" + note
-				+ ", shippingTime=" + shippingTime + ", receiver=" + receiver + ", shippingAddress=" + shippingAddress
-				+ ", deliveryFee=" + deliveryFee + ", total=" + total + "]";
+		return "OrderVO [orderNumber=" + orderNumber + ", userNumber=" + userNumber + ", orderStatus=" + orderStatus
+				+ ", establishmentTime=" + establishmentTime + ", shippingTime=" + shippingTime + ", completeTime="
+				+ completeTime + ", receiver=" + receiver + ", shippingAddress=" + shippingAddress + ", deliveryFee="
+				+ deliveryFee + ", total=" + total + ", note=" + note + "]";
 	}
-	
+
 
 }
