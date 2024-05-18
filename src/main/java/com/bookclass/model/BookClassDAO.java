@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.bookproducts.model.BookProductsVO;
+import com.booksandpicture.model.BooksAndPictureVO;
+
 import util.HibernateUtil;
 
 public class BookClassDAO implements BookClassDAO_Impl {
@@ -59,7 +62,7 @@ public class BookClassDAO implements BookClassDAO_Impl {
 	//模糊搜尋
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BookClassVO> keywords(String keywords) {
+	public List<BookClassVO> keywordQuery(String keywords) {
 		List<BookClassVO> list = getSession().createQuery("from BookClassVO where className like :keywords")
 				.setParameter("keywords", "%"+keywords+"%").list();
 		return list;
@@ -71,8 +74,14 @@ public class BookClassDAO implements BookClassDAO_Impl {
 		BookClassDAO bc = new BookClassDAO();
 		Session session = bc.getSession();
 		Transaction transaction = session.beginTransaction();
-
-		System.out.println(bc.singleQuery(3));
+		BookClassVO bcVO=bc.singleQuery(1);
+		List<BookProductsVO> bpVOs=bcVO.getBpVO();
+		System.out.println(bpVOs.size());
+		for(BookProductsVO bpVO:bpVOs) {
+			for(BooksAndPictureVO bapVOs:bpVO.getBapVO()) {
+				System.out.println(bapVOs.getPictureNumber());
+			}
+		}
 		transaction.commit();
 	}
 }

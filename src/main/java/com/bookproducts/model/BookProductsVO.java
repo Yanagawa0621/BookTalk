@@ -11,13 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.bookauthor.model.BookAuthorVO;
+import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
 import com.publishinghouse.model.PublishingHouseVO;
@@ -67,9 +69,9 @@ public class BookProductsVO implements java.io.Serializable {
 	@OrderBy("pictureNumber asc")
 	private List<BooksAndPictureVO> bapVO;
 	
-	@OneToMany(mappedBy = "compositeKey.bpVO",cascade = CascadeType.ALL)
-	@OrderBy("authorVO.authorNumber asc")
-	private List<BookAuthorVO> baVO;
+	@ManyToMany
+	@JoinTable(name="book_author",joinColumns = {@JoinColumn(name="bookNumber",referencedColumnName = "bookNumber")},inverseJoinColumns = {@JoinColumn(name="authorNumber",referencedColumnName = "authorNumber")})
+	private List<AuthorVO> authorVO;
 	
 	@Transient
 	List<String> img;
@@ -174,12 +176,12 @@ public class BookProductsVO implements java.io.Serializable {
 		this.bapVO = bapVO;
 	}
 
-	public List<BookAuthorVO> getBaVO() {
-		return baVO;
+	public List<AuthorVO> getAuthorVO() {
+		return authorVO;
 	}
 
-	public void setBaVO(List<BookAuthorVO> baVO) {
-		this.baVO = baVO;
+	public void setAuthorVO(List<AuthorVO> authorVO) {
+		this.authorVO = authorVO;
 	}
 
 	public BookClassVO getBcVO() {
@@ -197,7 +199,7 @@ public class BookProductsVO implements java.io.Serializable {
 	public void setImg(List<String> img) {
 		this.img = img;
 	}
-
+	
 	
 //	public Set<OrderDetailsVO> getOrderDetailsVO() {
 //		return orderDetailsVO;
