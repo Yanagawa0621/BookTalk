@@ -1,20 +1,22 @@
 package com.author.model;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 import javax.persistence.Table;
 
-import com.bookauthor.model.BookAuthorVO;
+
+import com.bookproducts.model.BookProductsVO;
 
 @Entity
 @Table(name = "author")
@@ -31,9 +33,9 @@ public class AuthorVO implements java.io.Serializable {
 	@Column(name = "englishName")
 	private String englishName;
 
-	@OneToMany(mappedBy = "compositeKey.authorVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@OrderBy("authorVO.authorNumber asc")
-	private List<BookAuthorVO> baVO=new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name="book_author",joinColumns = {@JoinColumn(name="authorNumber",referencedColumnName = "authorNumber")},inverseJoinColumns = {@JoinColumn(name="bookNumber",referencedColumnName = "bookNumber")})
+	private List<BookProductsVO> bpVO;
 	
 	public Integer getAuthorNumber() {
 		return authorNumber;
@@ -59,13 +61,12 @@ public class AuthorVO implements java.io.Serializable {
 		this.englishName = englishName;
 	}
 
-	public List<BookAuthorVO> getBaVO() {
-		return baVO;
+	public List<BookProductsVO> getBpVO() {
+		return bpVO;
 	}
 
-	public void setBaVO(List<BookAuthorVO> baVO) {
-		this.baVO = baVO;
+	public void setBaVO(List<BookProductsVO> bpVO) {
+		this.bpVO = bpVO;
 	}
-	
 	
 }
