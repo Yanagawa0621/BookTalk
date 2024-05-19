@@ -1,9 +1,7 @@
 package com.bookproducts.model;
 
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -96,10 +94,10 @@ public class BookProductsService {
 
 	// 單筆書籍資料的圖片轉換
 	private BookProductsVO singleConversion(BookProductsVO bpVO) {
-		List<String> base64 = new ArrayList<>();
 		List<BooksAndPictureVO> imgs = bpVO.getBapVO();
 
 		if (imgs != null) {
+			List<String> base64 = new ArrayList<>();
 			for (BooksAndPictureVO img : imgs) {
 				byte[] pictureFile = img.getPictureFile();
 				String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
@@ -113,10 +111,10 @@ public class BookProductsService {
 	// 多筆書籍資料的圖片轉換
 	private List<BookProductsVO> multipleConversions(List<BookProductsVO> list) {
 		for (BookProductsVO myCollection : list) {
-			List<String> base64 = new ArrayList<>();
 			List<BooksAndPictureVO> imgs = myCollection.getBapVO();
 
 			if (imgs != null) {
+				List<String> base64 = new ArrayList<>();
 				for (BooksAndPictureVO img : imgs) {
 					byte[] pictureFile = img.getPictureFile();
 					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
@@ -133,9 +131,9 @@ public class BookProductsService {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
-		BookProductsService bp=new BookProductsService();
+		BookProductsService bp = new BookProductsService();
 		System.out.println(bp.singleQueryBp(6));
-		
+
 		transaction.commit();
 
 	}

@@ -46,11 +46,11 @@ public class BookClassService {
 
 	// 單筆書籍資料的圖片轉換
 	private BookClassVO singleConversion(BookClassVO bcVO) {
-		List<String> base64 = new ArrayList<>();
 		
 		for (BookProductsVO bpVOs : bcVO.getBpVO()) {
 			List<BooksAndPictureVO> imgs = bpVOs.getBapVO();
 			if (imgs != null) {
+				List<String> base64 = new ArrayList<>();
 				for (BooksAndPictureVO img : imgs) {
 					byte[] pictureFile = img.getPictureFile();
 					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
@@ -65,11 +65,11 @@ public class BookClassService {
 
 	// 多筆書籍資料的圖片轉換
 	private List<BookClassVO> multipleConversions(List<BookClassVO> list) {
-		List<String> base64 = new ArrayList<>();
 		for (BookClassVO bcVOs : list) {
 			for (BookProductsVO myCollection : bcVOs.getBpVO()) {
 				List<BooksAndPictureVO> imgs = myCollection.getBapVO();
 				if (imgs != null) {
+					List<String> base64 = new ArrayList<>();
 					for (BooksAndPictureVO img : imgs) {
 						byte[] pictureFile = img.getPictureFile();
 						String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);

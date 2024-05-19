@@ -45,7 +45,7 @@ public class PublishingHouseDAO implements PublishingHouseDAO_Impl {
 	}
 
 	@Override
-	public List<PublishingHouseVO> KeywordQuery(String Keywords) {
+	public List<PublishingHouseVO> keywordQuery(String Keywords) {
 		return getSession().createQuery("from PublishingHouseVO where name like :Keywords", PublishingHouseVO.class)
 				.setParameter("Keywords", "%" + Keywords + "%").list();
 	}
@@ -62,7 +62,7 @@ public class PublishingHouseDAO implements PublishingHouseDAO_Impl {
 		Session session = factory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		PublishingHouseDAO dao = new PublishingHouseDAO();
-		System.out.println(dao.KeywordQuery("文庫").get(0).getName());
+		System.out.println(dao.keywordQuery("文庫").get(0).getName());
 
 		transaction.commit();
 	}
