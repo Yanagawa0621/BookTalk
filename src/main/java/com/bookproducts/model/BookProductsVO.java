@@ -28,6 +28,11 @@ import com.publishinghouse.model.PublishingHouseVO;
 @Table(name = "book_products")
 public class BookProductsVO implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bookNumber",updatable=false)
