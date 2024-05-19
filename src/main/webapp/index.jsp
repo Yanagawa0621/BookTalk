@@ -1,397 +1,23 @@
-<!doctype html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Dorno – Fashion eCommerce HTML Template  </title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    
-    <!-- CSS 
-    ========================= -->
-    <!--bootstrap min css-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <!--owl carousel min css-->
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <!--slick min css-->
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <!--magnific popup min css-->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <!--font awesome css-->
-    <link rel="stylesheet" href="assets/css/font.awesome.css">
-    <!--ionicons min css-->
-    <link rel="stylesheet" href="assets/css/ionicons.min.css">
-    <!--animate css-->
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <!--jquery ui min css-->
-    <link rel="stylesheet" href="assets/css/jquery-ui.min.css">
-    <!--slinky menu css-->
-    <link rel="stylesheet" href="assets/css/slinky.menu.css">
-    <!--plugins css-->
-    <link rel="stylesheet" href="assets/css/plugins.css">
-    
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    
-    <!--modernizr min js here-->
-    <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script>
-</head>
+<!-- head -->
+<%@include file="/front-end/component/head.jsp" %>
 
 <body>
    
     <!--header area start-->
+    <%@include file="/front-end/component/header.jsp" %>
     
-    <!--offcanvas menu area start-->
-    <div class="off_canvars_overlay">
-                
-    </div>
-    <div class="offcanvas_menu">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="canvas_open">
-                        <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
-                    </div>
-                    <div class="offcanvas_menu_wrapper">
-                        <div class="canvas_close">
-                            <a href="javascript:void(0)"><i class="ion-android-close"></i></a>  
-                        </div>
-                        <div class="header_account_area">
-                            <div class="header_account-list search_bar">
-                               <a href="javascript:void(0)"><span class="icon icon-Search"></span></a>
-                                <div class="dropdown_search">
-                                    <div class="search_close_btn">
-                                        <a href="#"><i class="ion-close-round"></i></a>
-                                    </div>
-                                    <form action="#">
-                                        <input placeholder="Search entire store here ..." type="text">
-                                        <button type="submit"><span class="icon icon-Search"></span></button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="header_account-list  mini_cart_wrapper">
-                               <a href="javascript:void(0)"><i class="icon icon-FullShoppingCart"></i><span class="item_count">2</span></a>
-                                <!--mini cart-->
-                                <div class="mini_cart">
-                                    <div class="cart_gallery">
-                                        <div class="cart_item">
-                                           <div class="cart_img">
-                                               <a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a>
-                                           </div>
-                                            <div class="cart_info">
-                                                <a href="#">Lorem ipsum dolor sit amet, consectetur</a>
-                                                <p>1 x <span> $65.00 </span></p>    
-                                            </div>
-                                            <div class="cart_remove">
-                                                <a href="#"><i class="ion-ios-close-outline"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="cart_item">
-                                           <div class="cart_img">
-                                               <a href="#"><img src="assets/img/s-product/product2.jpg" alt=""></a>
-                                           </div>
-                                            <div class="cart_info">
-                                                <a href="#">impedit dolor sed soluta natus voluptas.</a>
-                                                <p>1 x <span> $60.00 </span></p>    
-                                            </div>
-                                            <div class="cart_remove">
-                                                 <a href="#"><i class="ion-ios-close-outline"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mini_cart_table">
-                                        <div class="cart_table_border">
-                                            <div class="cart_total">
-                                                <span>Sub total:</span>
-                                                <span class="price">$125.00</span>
-                                            </div>
-                                            <div class="cart_total mt-10">
-                                                <span>total:</span>
-                                                <span class="price">$125.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mini_cart_footer">
-                                       <div class="cart_button">
-                                            <a href="cart.html"><i class="fa fa-shopping-cart"></i> View cart</a>
-                                        </div>
-                                        <div class="cart_button">
-                                            <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <!--mini cart end-->
-                           </div>
-                            <div class="header_account-list top_links">
-                                <a href="javascript:void(0)"><i class="icon icon-Settings"></i></a>
-                                <div class="dropdown_links">
-                                    <div class="dropdown_links_list">
-                                        <h3>$Currency</h3>
-                                        <ul>
-                                            <li><a href="#">€ Euro</a></li>
-                                            <li><a href="#">£ Pound Sterling</a></li>
-                                            <li><a href="#">$ US Dollar</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="dropdown_links_list">
-                                        <h3><img src="assets/img/icon/language.png" alt=""> English</h3>
-                                        <ul>
-                                            <li><a href="#"><img src="assets/img/icon/language.png" alt=""> English</a></li>
-                                            <li><a href="#"><img src="assets/img/icon/language2.png" alt="">  Germany</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="dropdown_links_list">
-                                        <h3>$Currency</h3>
-                                        <ul>
-                                            <li><a href="#">€ Euro</a></li>
-                                            <li><a href="#">£ Pound Sterling</a></li>
-                                            <li><a href="#">$ US Dollar</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="menu" class="text-left ">
-                            <ul class="offcanvas_main_menu">
-                                <li class="menu-item-has-children active">
-                                    <a href="#">Home</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                        <li><a href="index-3.html">Home 3</a></li>
-                                        <li><a href="index-4.html">Home 4</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Shop</a>
-                                    <ul class="sub-menu">
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Shop Layouts</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="shop.html">shop</a></li>
-                                                <li><a href="shop-fullwidth.html">Full Width</a></li>
-                                                <li><a href="shop-fullwidth-list.html">Full Width list</a></li>
-                                                <li><a href="shop-right-sidebar.html">Right Sidebar </a></li>
-                                                <li><a href="shop-right-sidebar-list.html"> Right Sidebar list</a></li>
-                                                <li><a href="shop-list.html">List View</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="#">other Pages</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="cart.html">cart</a></li>
-                                                <li><a href="wishlist.html">Wishlist</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="my-account.html">my account</a></li>
-                                                <li><a href="404.html">Error 404</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a href="#">Product Types</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="product-details.html">product details</a></li>
-                                                <li><a href="product-sidebar.html">product sidebar</a></li>
-                                                <li><a href="product-grouped.html">product grouped</a></li>
-                                                <li><a href="variable-product.html">product variable</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">blog</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="blog.html">blog</a></li>
-                                        <li><a href="blog-details.html">blog details</a></li>
-                                        <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
-                                        <li><a href="blog-sidebar.html">blog sidebar</a></li>
-                                    </ul>
-
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="#">pages </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="services.html">services</a></li>
-                                        <li><a href="faq.html">Frequently Questions</a></li>
-                                        <li><a href="contact.html">contact</a></li>
-                                        <li><a href="login.html">login</a></li>
-                                        <li><a href="404.html">Error 404</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="contact.html"> Contact Us</a> 
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="shop.html"> Specials</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="offcanvas_footer">
-                            <span><a href="#"><i class="fa fa-envelope-o"></i> info@yourdomain.com</a></span>
-                            <ul>
-                                <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li class="pinterest"><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!--offcanvas menu area end-->
-    <header>
-        <div class="main_header sticky-header">
-            <div class="container-fluid">
-                <div class="header_container color_two">
-                    <div class="row align-items-center">
-                        <div class="col-lg-2">
-                            <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo3.png" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <!--main menu start-->
-                            <div class="main_menu menu_position"> 
-                                <nav>  
-                                    <ul style="justify-content: center;">
-                                        <li style="margin: 0;"><a class="active"  href="index-2.html">首頁</a></li>
-                                        <li class="mega_items" style="margin: 0;"><a href="shop.html">書籍商城</a></li>
-                                        <li style="margin: 0;"><a href="shop.html">特價商品</a></li>
-                                        <li style="margin: 0;"><a href="blog.html">論壇</a></li>
-                                        <li style="margin: 0;"><a href="contact.html">聯絡我們</a></li>
-                                        <li style="margin: 0;"><a href="#">客服相關<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="services.html">services</a></li>
-                                                <li><a href="faq.html">Frequently Questions</a></li>
-                                                <li><a href="contact.html">contact</a></li>
-                                                <li><a href="login.html">login</a></li>
-                                                <li><a href="404.html">Error 404</a></li>
-                                            </ul>
-                                        </li> 
-                                    </ul>  
-                                </nav> 
-                            </div>
-                            <!--main menu end-->
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="header_account_area">
-                                <div class="header_account-list search_bar">
-                                   <a href="javascript:void(0)"><span class="icon icon-Search"></span></a>
-                                    <div class="dropdown_search">
-                                        <div class="search_close_btn">
-                                            <a href="#"><i class="ion-close-round"></i></a>
-                                        </div>
-                                        <form action="#">
-                                            <input placeholder="Search entire store here ..." type="text">
-                                            <button type="submit"><span class="icon icon-Search"></span></button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="header_account-list  mini_cart_wrapper">
-                                   <a href="javascript:void(0)"><i class="icon icon-FullShoppingCart"></i><span class="item_count">2</span></a>
-                                    <!--mini cart-->
-                                    <div class="mini_cart">
-                                        <div class="cart_gallery">
-                                            <div class="cart_item">
-                                               <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a>
-                                               </div>
-                                                <div class="cart_info">
-                                                    <a href="#">Lorem ipsum dolor sit amet, consectetur</a>
-                                                    <p>1 x <span> $65.00 </span></p>    
-                                                </div>
-                                                <div class="cart_remove">
-                                                    <a href="#"><i class="ion-ios-close-outline"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="cart_item">
-                                               <div class="cart_img">
-                                                   <a href="#"><img src="assets/img/s-product/product2.jpg" alt=""></a>
-                                               </div>
-                                                <div class="cart_info">
-                                                    <a href="#">impedit dolor sed soluta natus voluptas.</a>
-                                                    <p>1 x <span> $60.00 </span></p>    
-                                                </div>
-                                                <div class="cart_remove">
-                                                     <a href="#"><i class="ion-ios-close-outline"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mini_cart_table">
-                                            <div class="cart_table_border">
-                                                <div class="cart_total">
-                                                    <span>Sub total:</span>
-                                                    <span class="price">$125.00</span>
-                                                </div>
-                                                <div class="cart_total mt-10">
-                                                    <span>total:</span>
-                                                    <span class="price">$125.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mini_cart_footer">
-                                           <div class="cart_button">
-                                                <a href="cart.html"><i class="fa fa-shopping-cart"></i> View cart</a>
-                                            </div>
-                                            <div class="cart_button">
-                                                <a href="checkout.html"><i class="fa fa-sign-in"></i> Checkout</a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <!--mini cart end-->
-                               </div>
-                                <div class="header_account-list top_links">
-                                    <a href="javascript:void(0)"><i class="icon icon-Settings"></i></a>
-                                    <div class="dropdown_links">
-                                        <div class="dropdown_links_list">
-                                            <h3>$Currency</h3>
-                                            <ul>
-                                                <li><a href="#">€ Euro</a></li>
-                                                <li><a href="#">£ Pound Sterling</a></li>
-                                                <li><a href="#">$ US Dollar</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="dropdown_links_list">
-                                            <h3><img src="assets/img/icon/language.png" alt=""> English</h3>
-                                            <ul>
-                                                <li><a href="#"><img src="assets/img/icon/language.png" alt=""> English</a></li>
-                                                <li><a href="#"><img src="assets/img/icon/language2.png" alt="">  Germany</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="dropdown_links_list">
-                                            <h3>$Currency</h3>
-                                            <ul>
-                                                <li><a href="#">€ Euro</a></li>
-                                                <li><a href="#">£ Pound Sterling</a></li>
-                                                <li><a href="#">$ US Dollar</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </header>
     <!--header area end-->
     
     <!--slider area start-->
     <section class="slider_section slider_s_two color_two mb-30">
         <div class="slider_area owl-carousel">
-            <div class="single_slider d-flex align-items-center" data-bgimg="assets/img/slider/slider3.jpg">
+            <div class="single_slider d-flex align-items-center" data-bgimg="${pageContext.request.contextPath}/front-end/assets/img/slider/slider3.jpg">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
@@ -405,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="single_slider d-flex align-items-center" data-bgimg="assets/img/slider/slider4.jpg">
+            <div class="single_slider d-flex align-items-center" data-bgimg="${pageContext.request.contextPath}/front-end/assets/img/slider/slider4.jpg">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
@@ -430,21 +56,21 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <figure class="single_banner">
                         <div class="banner_thumb">
-                            <a href="shop.html"><img src="assets/img/bg/banner4.jpg" alt=""></a> 
+                            <a href="shop.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/bg/banner4.jpg" alt=""></a> 
                         </div>
                     </figure>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <figure class="single_banner">
                         <div class="banner_thumb">
-                            <a href="shop.html"><img src="assets/img/bg/banner5.jpg" alt=""></a> 
+                            <a href="shop.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/bg/banner5.jpg" alt=""></a> 
                         </div>
                     </figure>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <figure class="single_banner">
                         <div class="banner_thumb">
-                            <a href="shop.html"><img src="assets/img/bg/banner6.jpg" alt=""></a> 
+                            <a href="shop.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/bg/banner6.jpg" alt=""></a> 
                         </div>
                     </figure>
                 </div>
@@ -473,8 +99,8 @@
                                        <span class="label_new">new</span>
                                         <span class="label_sale">12%</span>
                                     </div>
-                                    <a class="primary_img" href="product-details.html"><img src="assets/img/product/product11.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product12.jpg" alt=""></a>
+                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
+                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product12.jpg" alt=""></a>
                                     <div class="action_links">
                                         <ul>
                                             <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -520,8 +146,8 @@
                                    <div class="label_product">
                                         <span class="label_new">new</span>
                                     </div>
-                                    <a class="primary_img" href="product-details.html"><img src="assets/img/product/product13.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product14.jpg" alt=""></a>
+                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a>
+                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a>
                                     <div class="action_links">
                                         <ul>
                                             <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -567,8 +193,8 @@
                                    <div class="label_product">
                                         <span class="label_new">new</span>
                                     </div>
-                                    <a class="primary_img" href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
+                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
+                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
                                     <div class="action_links">
                                         <ul>
                                             <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -607,8 +233,8 @@
                                         <span class="label_new">new</span>
                                         <span class="label_sale">10%</span>
                                     </div>
-                                    <a class="primary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
+                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
+                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
                                     <div class="action_links">
                                         <ul>
                                             <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -654,8 +280,8 @@
                                    <div class="label_product">
                                         <span class="label_new">new</span>
                                     </div>
-                                    <a class="primary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
+                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
+                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
                                     <div class="action_links">
                                         <ul>
                                             <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -740,8 +366,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product21.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product11.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -780,8 +406,8 @@
                                                 <span class="label_new">new</span>
                                                 <span class="label_sale">10%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product11.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -827,8 +453,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product12.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product12.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -867,8 +493,8 @@
                                                <span class="label_new">new</span>
                                                 <span class="label_sale">12%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product13.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -914,8 +540,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product14.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -968,8 +594,8 @@
                                                <span class="label_new">new</span>
                                                 <span class="label_sale">12%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1015,8 +641,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1062,8 +688,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1102,8 +728,8 @@
                                                 <span class="label_new">new</span>
                                                 <span class="label_sale">10%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product21.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1149,8 +775,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1195,8 +821,8 @@
                                                 <span class="label_new">new</span>
                                                 <span class="label_sale">10%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1242,8 +868,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product21.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1281,8 +907,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1321,8 +947,8 @@
                                                <span class="label_new">new</span>
                                                 <span class="label_sale">12%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1368,8 +994,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1421,8 +1047,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product13.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product21.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1461,8 +1087,8 @@
                                                <span class="label_new">new</span>
                                                 <span class="label_sale">12%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product14.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1508,8 +1134,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1555,8 +1181,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1595,8 +1221,8 @@
                                                 <span class="label_new">new</span>
                                                 <span class="label_sale">10%</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product11.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -1659,7 +1285,7 @@
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog6.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
@@ -1677,7 +1303,7 @@
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog7.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html"> est ad quia aperiam unde quam hic, quae optio quis, is.</a></h4>
@@ -1695,7 +1321,7 @@
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog8.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog8.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html"> Aut doloremque, optio optio delectus est quae molestiae. </a></h4>
@@ -1713,7 +1339,7 @@
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog6.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html">est ad quia aperiam unde quam hic, quae optio quis, is. </a></h4>
@@ -1731,7 +1357,7 @@
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog7.jpg" alt=""></a>
+                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
@@ -1784,105 +1410,7 @@
     <!--newsletter area end-->
 
     <!--footer area start-->
-    <footer class="footer_widgets color_two">
-        <div class="footer_top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-8 col-sm-8">
-                        <div class="widgets_container footer_contact">
-                            <h3>About us</h3>
-                            <p>We are a team of designers and developers that 
-                                create high quality HTML Template, Woocommerce, Shopify Theme.</p>
-                            <p><i class="icon icon-Pointer"></i> The Barn, Ullenhall, Henley in Arden 
-                            B578 5CC, England</p>
-                            <p><i class="icon icon-Phone"></i> <a href="tel:+123.456.789">+123.456.789</a> - <a href="tel:+123.456.678">+123.456.678</a></p>
-                            <p><i class="icon icon-Mail"></i> <a href="#">#</a></p>
-                        </div>          
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-4">
-                        <div class="widgets_container widget_menu">
-                            <h3>Information</h3>
-                            <div class="footer_menu">
-                                <ul>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="#">Delivery Information</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="widgets_container footer-linkup">
-                            <h3>Our Twitter Feed</h3>
-                            <p>Check out "Alice - Multipurpose Responsive #Magento #Theme" on <br> #Envato by <a href="#">@Plazathemes</a> <br> #Themeforest <a href="#">https://t.co/DNdhAwzm88</a></p>
-                            <p>Check Out "Emos - Multi Store Responsive #Magento #Theme" on #Envato by <br>  <a href="#">@Plazathemes</a> #Themeforest <a href="#">https://t.co/08oCVAr5dy</a></p>
-                            
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-10">
-                        <div class="widgets_container footer_instragam">
-                            <h3>instagram</h3>
-                            <div class="instagram_container">
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam1.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam2.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam3.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam4.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam5.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam2.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer_bottom">
-            <div class="container">
-                <div class="row align-items-center">
-                    
-                </div>
-            </div>
-        </div>   
-    </footer>
+    <%@include file="/front-end/component/footer.jsp" %>
     <!--footer area end-->
    
     <!-- modal area start-->
@@ -1900,38 +1428,38 @@
                                     <div class="tab-content product-details-large">
                                         <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="assets/img/product/productbig1.jpg" alt=""></a>    
+                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig1.jpg" alt=""></a>    
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab2" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="assets/img/product/productbig2.jpg" alt=""></a>    
+                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig2.jpg" alt=""></a>    
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab3" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="assets/img/product/productbig3.jpg" alt=""></a>    
+                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig3.jpg" alt=""></a>    
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tab4" role="tabpanel">
                                             <div class="modal_tab_img">
-                                                <a href="#"><img src="assets/img/product/productbig4.jpg" alt=""></a>    
+                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig4.jpg" alt=""></a>    
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal_tab_button">    
                                         <ul class="nav product_navactive owl-carousel" role="tablist">
                                             <li >
-                                                <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="assets/img/product/product1.jpg" alt=""></a>
+                                                <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product1.jpg" alt=""></a>
                                             </li>
                                             <li>
-                                                 <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="assets/img/product/product2.jpg" alt=""></a>
+                                                 <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product2.jpg" alt=""></a>
                                             </li>
                                             <li>
-                                               <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="assets/img/product/product3.jpg" alt=""></a>
+                                               <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product3.jpg" alt=""></a>
                                             </li>
                                             <li>
-                                               <a class="nav-link" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="assets/img/product/product8.jpg" alt=""></a>
+                                               <a class="nav-link" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product8.jpg" alt=""></a>
                                             </li>
 
                                         </ul>
@@ -2000,36 +1528,8 @@
     
 <!-- JS
 ============================================ -->
-<!--jquery min js-->
-<script src="assets/js/vendor/jquery-3.4.1.min.js"></script>
-<!--popper min js-->
-<script src="assets/js/popper.js"></script>
-<!--bootstrap min js-->
-<script src="assets/js/bootstrap.min.js"></script>
-<!--owl carousel min js-->
-<script src="assets/js/owl.carousel.min.js"></script>
-<!--slick min js-->
-<script src="assets/js/slick.min.js"></script>
-<!--magnific popup min js-->
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<!--counterup min js-->
-<script src="assets/js/jquery.counterup.min.js"></script>
-<!--jquery countdown min js-->
-<script src="assets/js/jquery.countdown.js"></script>
-<!--jquery ui min js-->
-<script src="assets/js/jquery.ui.js"></script>
-<!--jquery elevatezoom min js-->
-<script src="assets/js/jquery.elevatezoom.js"></script>
-<!--isotope packaged min js-->
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<!--slinky menu js-->
-<script src="assets/js/slinky.menu.js"></script>
-<!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
 
-<!-- Main JS -->
-<script src="assets/js/main.js"></script>
-
+<%@include file="/front-end/component/script.jsp" %>
 
 
 </body>
