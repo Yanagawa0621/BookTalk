@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,12 +22,17 @@ import com.promotionproject.model.PromotionProjectVO;
 @Table(name = "promotion_details")
 public class PromotionDetailsVO implements Serializable {
 	
-	@EmbeddedId
-	private CompositeDetail compositeKey;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "promotionDetailsNumber", insertable = false, updatable = false)
+	private Integer promotionDetailsNumber;
 	
 	@ManyToOne
-	@JoinColumn(name = "promotionProjectNumber", referencedColumnName = "promotionProjectNumber", insertable = false, updatable = false)
+	@JoinColumn(name = "promotionProjectNumber", referencedColumnName = "promotionProjectNumber")
 	private PromotionProjectVO promotionProjectVO;	
+	
+	@Column(name = "promotionProductNumber")
+	private Integer promotionProductNumber;
 
 	@Column(name = "promotionPrice")
 	private BigDecimal promotionPrice;
@@ -32,78 +40,13 @@ public class PromotionDetailsVO implements Serializable {
 	public PromotionDetailsVO() {
 		super();
 	}
-	
-	@Embeddable
-	public static class CompositeDetail implements Serializable{
-		private static final long serialVersionUID = 1L;
-		
-		@Column(name = "promotionProjectNumber")
-		private Integer promotionProjectNumber;
-		
-		@Column(name = "promotionProductNumber")
-		private Integer promotionProductNumber;
 
-		public CompositeDetail() {
-			super();
-		}
-
-		public CompositeDetail(Integer promotionProjectNumber, Integer promotionProductNumber) {
-			super();
-			this.promotionProjectNumber = promotionProjectNumber;
-			this.promotionProductNumber = promotionProductNumber;
-		}
-		
-		public Integer getPromotionProjectNumber() {
-			return promotionProjectNumber;
-		}
-	
-		public void setPromotionProjectNumber(Integer promotionProjectNumber) {
-			this.promotionProjectNumber = promotionProjectNumber;
-		}
-	
-		public Integer getPromotionProductNumber() {
-			return promotionProductNumber;
-		}
-	
-		public void setPromotionProductNumber(Integer promotionProductNumber) {
-			this.promotionProductNumber = promotionProductNumber;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(promotionProductNumber, promotionProjectNumber);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			CompositeDetail other = (CompositeDetail) obj;
-			return Objects.equals(promotionProductNumber, other.promotionProductNumber)
-					&& Objects.equals(promotionProjectNumber, other.promotionProjectNumber);
-		}
-
-	}
-	
-
-	public CompositeDetail getCompositeKey() {
-		return compositeKey;
+	public Integer getPromotionDetailsNumber() {
+		return promotionDetailsNumber;
 	}
 
-	public void setCompositeKey(CompositeDetail compositeKey) {
-		this.compositeKey = compositeKey;
-	}
-
-	public BigDecimal getPromotionPrice() {
-		return promotionPrice;
-	}
-
-	public void setPromotionPrice(BigDecimal promotionPrice) {
-		this.promotionPrice = promotionPrice;
+	public void setPromotionDetailsNumber(Integer promotionDetailsNumber) {
+		this.promotionDetailsNumber = promotionDetailsNumber;
 	}
 
 	public PromotionProjectVO getPromotionProjectVO() {
@@ -114,10 +57,26 @@ public class PromotionDetailsVO implements Serializable {
 		this.promotionProjectVO = promotionProjectVO;
 	}
 
+	public Integer getPromotionProductNumber() {
+		return promotionProductNumber;
+	}
+
+	public void setPromotionProductNumber(Integer promotionProductNumber) {
+		this.promotionProductNumber = promotionProductNumber;
+	}
+
+	public BigDecimal getPromotionPrice() {
+		return promotionPrice;
+	}
+
+	public void setPromotionPrice(BigDecimal promotionPrice) {
+		this.promotionPrice = promotionPrice;
+	}
+
 	@Override
 	public String toString() {
-		return "PromotionDetailsVO [compositeKey=" + compositeKey + ", promotionPrice=" + promotionPrice + "]";
+		return "PromotionDetailsVO [promotionDetailsNumber=" + promotionDetailsNumber + ", promotionProductNumber="
+				+ promotionProductNumber + ", promotionPrice=" + promotionPrice + "]";
 	}
-	
-	
+
 }

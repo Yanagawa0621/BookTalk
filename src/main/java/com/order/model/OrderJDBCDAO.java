@@ -14,7 +14,7 @@ import util.JDBCUtil;
 
 public class OrderJDBCDAO implements OrderDAO_interface {
 	private static final String INSERT_STMT = 
-			"INSERT INTO customer_order (userNumber, orderStatus, shippingTime, completeTime, receiver, shippingAddress, deliveryFee, total, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO customer_order (userNumber, receiver, shippingAddress, deliveryFee, total, note) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String UPDATE = 
 			"UPDATE customer_order set orderStatus=?, shippingTime=?, completeTime=?, receiver=?, shippingAddress=?, deliveryFee=?, total=?, note=? where orderNumber = ?";
 	private static final String GET_ONE_STMT_BY_PK = 
@@ -48,14 +48,11 @@ public class OrderJDBCDAO implements OrderDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setInt(1, orderVO.getUserNumber());
-			pstmt.setInt(2, orderVO.getOrderStatus());
-			pstmt.setTimestamp(3, orderVO.getShippingTime());
-			pstmt.setTimestamp(4, orderVO.getCompleteTime());
-			pstmt.setString(5, orderVO.getReceiver());
-			pstmt.setString(6, orderVO.getShippingAddress());
-			pstmt.setBigDecimal(7, orderVO.getDeliveryFee());
-			pstmt.setBigDecimal(8, orderVO.getTotal());
-			pstmt.setString(9, orderVO.getNote());
+			pstmt.setString(2, orderVO.getReceiver());
+			pstmt.setString(3, orderVO.getShippingAddress());
+			pstmt.setBigDecimal(4, orderVO.getDeliveryFee());
+			pstmt.setBigDecimal(5, orderVO.getTotal());
+			pstmt.setString(6, orderVO.getNote());
 			
 			return pstmt.executeUpdate();
 			
@@ -116,7 +113,7 @@ public class OrderJDBCDAO implements OrderDAO_interface {
 			
 			while(rs.next()) {
 				orderVO = new OrderVO();
-				orderVO.setOrderNumber(rs.getInt("orderNumber"));
+				orderVO.setOrderNumber(orderNumber);
 				orderVO.setUserNumber(rs.getInt("userNumber"));
 				orderVO.setOrderStatus(rs.getInt("orderStatus"));
 				orderVO.setEstablishmentTime(rs.getTimestamp("establishmentTime"));
@@ -302,7 +299,6 @@ public class OrderJDBCDAO implements OrderDAO_interface {
 		//新增
 //		OrderVO order1 = new OrderVO();
 //		order1.setUserNumber(4);
-//		order1.setOrderStatus(1);		
 //		order1.setReceiver("測試新增收件人");
 //		order1.setShippingAddress("測試新增地址");
 //		order1.setDeliveryFee(new BigDecimal(50.0));
