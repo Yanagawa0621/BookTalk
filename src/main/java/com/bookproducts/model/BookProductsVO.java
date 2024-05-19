@@ -2,6 +2,7 @@ package com.bookproducts.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,7 @@ import javax.persistence.Transient;
 import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
+import com.orderdetails.model.OrderDetailsVO;
 import com.publishinghouse.model.PublishingHouseVO;
 
 @Entity
@@ -81,9 +83,9 @@ public class BookProductsVO implements java.io.Serializable {
 	@Transient
 	List<String> img;
 	
-//	@OneToMany(mappedBy = "bookProductsVO",cascade = CascadeType.ALL)
-//	@OrderBy("bookNumber asc")
-//	private Set<OrderDetailsVO> orderDetailsVO;
+	@OneToMany(mappedBy = "bookProductsVO",cascade = CascadeType.ALL)
+	@OrderBy("bookNumber asc")
+	private Set<OrderDetailsVO> orderDetailsVO;
 	
 	public Integer getBookNumber() {
 		return bookNumber;
@@ -206,12 +208,12 @@ public class BookProductsVO implements java.io.Serializable {
 	}
 	
 	
-//	public Set<OrderDetailsVO> getOrderDetailsVO() {
-//		return orderDetailsVO;
-//	}
-//
-//	public void setOrderDetailsVO(Set<OrderDetailsVO> orderDetailsVO) {
-//		this.orderDetailsVO = orderDetailsVO;
-//	}
+	public Set<OrderDetailsVO> getOrderDetailsVO() {
+		return orderDetailsVO;
+	}
+
+	public void setOrderDetailsVO(Set<OrderDetailsVO> orderDetailsVO) {
+		this.orderDetailsVO = orderDetailsVO;
+	}
 	
 }

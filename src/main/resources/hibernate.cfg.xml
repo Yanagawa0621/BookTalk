@@ -19,11 +19,15 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 		
 		<!--<mapping class="idv.david.dept.entity.Dept"/>-->  <!--範例-->
-		<mapping class="com.bookproducts.model.BookProductsVO"/>
-		<mapping class="com.bookclass.model.BookClassVO"/>
-		<mapping class="com.author.model.AuthorVO"/>
-		<mapping class="com.bookauthor.model.BookAuthorVO"/>
-		<mapping class="com.booksandpicture.model.BooksAndPictureVO"/>
-		<mapping class="com.publishinghouse.model.PublishingHouseVO"/>
+		<mapping class="com.order.model.OrderVO" />		
+		<mapping class="com.orderdetails.model.OrderDetailsVO" />
+		<mapping class="com.promotionproject.model.PromotionProjectVO" />
+		<mapping class="com.promotiondetails.model.PromotionDetailsVO" />
+		<mapping class="com.bookproducts.model.BookProductsVO" />
+		<mapping class="com.bookclass.model.BookClassVO" />
+		<mapping class="com.author.model.AuthorVO" />
+		<mapping class="com.bookauthor.model.BookAuthorVO" />
+		<mapping class="com.booksandpicture.model.BooksAndPictureVO" />
+		<mapping class="com.publishinghouse.model.PublishingHouseVO" />
 	</session-factory>
 </hibernate-configuration>

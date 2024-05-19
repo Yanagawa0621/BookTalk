@@ -19,7 +19,7 @@ public class OrderVO implements Serializable {
 	@Column(name = "userNumber", updatable = false)
 	private Integer userNumber;
 	
-	@Column(name = "orderStatus")
+	@Column(name = "orderStatus", insertable = false)
 	private Integer orderStatus;
 	
 	@Column(name = "establishmentTime", insertable = false, updatable = false)
