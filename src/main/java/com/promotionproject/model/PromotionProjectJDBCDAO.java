@@ -31,7 +31,7 @@ public class PromotionProjectJDBCDAO implements PromotionProjectDAO_interface {
 	}
 	
 	@Override
-	public void insert(PromotionProjectVO promotionProjectVO) {
+	public int insert(PromotionProjectVO promotionProjectVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -46,7 +46,7 @@ public class PromotionProjectJDBCDAO implements PromotionProjectDAO_interface {
 			pstmt.setString(5, promotionProjectVO.getContent());
 			pstmt.setBytes(6, promotionProjectVO.getPicture());
 			
-			pstmt.executeUpdate();
+			return pstmt.executeUpdate();
 			
 			
 		}catch(SQLException se) {
@@ -58,7 +58,7 @@ public class PromotionProjectJDBCDAO implements PromotionProjectDAO_interface {
 	}
 
 	@Override
-	public void update(PromotionProjectVO promotionProjectVO) {
+	public int update(PromotionProjectVO promotionProjectVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -74,7 +74,7 @@ public class PromotionProjectJDBCDAO implements PromotionProjectDAO_interface {
 			pstmt.setBytes(6, promotionProjectVO.getPicture());
 			pstmt.setInt(7, promotionProjectVO.getPromotionProjectNumber());
 			
-			pstmt.executeUpdate();
+			return pstmt.executeUpdate();
 			
 			
 		}catch(SQLException se) {
