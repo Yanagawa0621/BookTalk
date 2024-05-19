@@ -89,7 +89,7 @@
 							<!--mini cart end-->
 						</div>
 						<div class="header_account-list top_links">
-							<a href="javascript:void(0)"><i class="fa fa-user"></i></a>
+							<a href="javascript:void(0)"><i class="far fa-user"></i></a>
 							<div class="dropdown_links">
 								<div class="dropdown_links_list">
 									<h3>$Currency</h3>
@@ -297,7 +297,7 @@
 											<a href="${pageContext.request.contextPath}/front-end/cart.jsp"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
 										</div>
 										<div class="cart_button">
-											<a href="checkout.html"><i class="fa fa-sign-in"></i> 結帳</a>
+											<a href="checkout.html"><i class="fas fa-sign-in-alt"></i> 結帳</a>
 										</div>
 
 									</div>
@@ -305,11 +305,11 @@
 								<!--mini cart end-->
 							</div>
 							<div class="header_account-list top_links">
-								<a href="#"><i class="fa fa-user-o"></i></a>
+								<a href="#"><i class="far fa-user"></i></a>
 								<div class="dropdown_links">
 									<div class="dropdown_links_list">
 										<h3>
-											<i class="fa fa-user-circle"></i> 會員資訊
+											<i class="fas fa-user-circle"></i> 會員資訊
 										</h3>
 										<ul>
 											<li><a href="#">€ Euro</a></li>

@@ -10,7 +10,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index.jsp"><img src="${pageContext.request.contextPath}/back-end/dist/img/svg/icon-home.svg" height="35" width="35"></a>        
+        <a href="${pageContext.request.contextPath}/back-end/bk_index.jsp"><img src="${pageContext.request.contextPath}/back-end/dist/img/svg/icon-home.svg" height="35" width="35"></a>        
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <h3 class="font-weight-bold">不可說 (Book Talk)【後台管理】</h3>        

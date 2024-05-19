@@ -5,7 +5,7 @@
  <!-- Main Sidebar Container -->
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index.jsp" class="brand-link">
+    <a href="${pageContext.request.contextPath}/back-end/bk_index.jsp" class="brand-link">
       <img src="${pageContext.request.contextPath}/back-end/dist/img/logo.png" alt="BookTalk Logo" height="80" width="80" class="brand-image elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">不可說 (Book Talk)</span>
     </a>

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-end/assets/css/slick.css">
     <!--magnific popup min css-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-end/assets/css/magnific-popup.css">
-    <!--font awesome css-->
+    <!--font awesome css v4.7.0-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-end/assets/css/font.awesome.css">
     <!--ionicons min css-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-end/assets/css/ionicons.min.css">
@@ -35,4 +35,6 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-end/assets/css/style.css">
     
+    <!-- Font Awesome v5.15.4-->
+  	<link rel="stylesheet" href="${pageContext.request.contextPath}/back-end/plugins/fontawesome-free/css/all.min.css">
 </head>

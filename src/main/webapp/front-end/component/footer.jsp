@@ -18,7 +18,7 @@
 							- <a href="tel:+123.456.678">+123.456.678</a>
 						</p>
 						<p>
-							<i class="icon icon-Mail"></i> <a href="#">#</a>
+							<i class="fas fa-user-cog"></i> <a href="${pageContext.request.contextPath}/back-end/bk_index.jsp">後台管理</a>
 						</p>
 					</div>
 				</div>
@@ -58,49 +58,37 @@
 						<h3>instagram</h3>
 						<div class="instagram_container">
 							<div class="instagram_thumb">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam1.jpg"
-									alt=""></a>
+								<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam1.jpg"	alt=""></a>
 								<div class="instagram_boxcmt">
 									<span class="likecount">5</span> <span class="commentcount">1</span>
 								</div>
 							</div>
 							<div class="instagram_thumb">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"
-									alt=""></a>
+								<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"	alt=""></a>
 								<div class="instagram_boxcmt">
 									<span class="likecount">5</span> <span class="commentcount">1</span>
 								</div>
 							</div>
 							<div class="instagram_thumb">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam3.jpg"
-									alt=""></a>
+								<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam3.jpg"	alt=""></a>
 								<div class="instagram_boxcmt">
 									<span class="likecount">5</span> <span class="commentcount">1</span>
 								</div>
 							</div>
 							<div class="instagram_thumb">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam4.jpg"
-									alt=""></a>
+								<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam4.jpg"	alt=""></a>
 								<div class="instagram_boxcmt">
 									<span class="likecount">5</span> <span class="commentcount">1</span>
 								</div>
 							</div>
 							<div class="instagram_thumb">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam5.jpg"
-									alt=""></a>
+								<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam5.jpg"	alt=""></a>
 								<div class="instagram_boxcmt">
 									<span class="likecount">5</span> <span class="commentcount">1</span>
 								</div>
 							</div>
 							<div class="instagram_thumb">
-								<a href="#"><img
-									src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"
-									alt=""></a>
+								<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"	alt=""></a>
 								<div class="instagram_boxcmt">
 									<span class="likecount">5</span> <span class="commentcount">1</span>
 								</div>

@@ -1290,8 +1290,8 @@
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
                                    <div class="articles_date">
-                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fa fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
+                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
                                     <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
                                     <a href="#">+ Read More</a>
@@ -1308,8 +1308,8 @@
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html"> est ad quia aperiam unde quam hic, quae optio quis, is.</a></h4>
                                    <div class="articles_date">
-                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fa fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
+                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
                                     <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
                                     <a href="#">+ Read More</a>
@@ -1326,8 +1326,8 @@
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html"> Aut doloremque, optio optio delectus est quae molestiae. </a></h4>
                                    <div class="articles_date">
-                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fa fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
+                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
                                     <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
                                     <a href="#">+ Read More</a>
@@ -1344,8 +1344,8 @@
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html">est ad quia aperiam unde quam hic, quae optio quis, is. </a></h4>
                                    <div class="articles_date">
-                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fa fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
+                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
                                     <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
                                     <a href="#">+ Read More</a>
@@ -1362,8 +1362,8 @@
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
                                    <div class="articles_date">
-                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fa fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
+                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
                                     <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
                                     <a href="#">+ Read More</a>
