@@ -1,6 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%
+    // 從URL參數或Session屬性中獲取當前頁面
+    String selectPage = request.getParameter("selectPage");
+    if (selectPage == null) {
+    	selectPage = (String) session.getAttribute("currentPage");
+        if (selectPage == null) {
+        	selectPage = "home"; // 預設分頁
+        }
+    } else {
+        session.setAttribute("currentPage", selectPage);
+    }
+%>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
