@@ -26,7 +26,6 @@
 		<mapping class="com.bookproducts.model.BookProductsVO" />
 		<mapping class="com.bookclass.model.BookClassVO" />
 		<mapping class="com.author.model.AuthorVO" />
-		<mapping class="com.bookauthor.model.BookAuthorVO" />
 		<mapping class="com.booksandpicture.model.BooksAndPictureVO" />
 		<mapping class="com.publishinghouse.model.PublishingHouseVO" />
 	</session-factory>

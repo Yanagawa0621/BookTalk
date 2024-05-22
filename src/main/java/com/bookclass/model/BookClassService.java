@@ -10,12 +10,13 @@ import org.hibernate.Transaction;
 
 import com.bookproducts.model.BookProductsVO;
 import com.booksandpicture.model.BooksAndPictureVO;
+import com.orderdetails.model.OrderDetailsDAOHibernate;
 
 import util.HibernateUtil;
 
 public class BookClassService {
 	BookClassDAO dao = new BookClassDAO();
-
+	OrderDetailsDAOHibernate odDAO=new OrderDetailsDAOHibernate();
 	public int increaseBc(String className) {
 		BookClassVO bcVO = new BookClassVO();
 		bcVO.setClassName(className);
@@ -46,19 +47,9 @@ public class BookClassService {
 
 	// 單筆書籍資料的圖片轉換
 	private BookClassVO singleConversion(BookClassVO bcVO) {
-		
-		for (BookProductsVO bpVOs : bcVO.getBpVO()) {
-			List<BooksAndPictureVO> imgs = bpVOs.getBapVO();
-			if (imgs != null) {
-				List<String> base64 = new ArrayList<>();
-				for (BooksAndPictureVO img : imgs) {
-					byte[] pictureFile = img.getPictureFile();
-					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-					base64.add(base64Encoded);
-				}
-				bpVOs.setImg(base64);
-			}
 
+		for (BookProductsVO bpVOs : bcVO.getBpVO()) {
+			bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
 		}
 		return bcVO;
 	}
@@ -67,16 +58,7 @@ public class BookClassService {
 	private List<BookClassVO> multipleConversions(List<BookClassVO> list) {
 		for (BookClassVO bcVOs : list) {
 			for (BookProductsVO myCollection : bcVOs.getBpVO()) {
-				List<BooksAndPictureVO> imgs = myCollection.getBapVO();
-				if (imgs != null) {
-					List<String> base64 = new ArrayList<>();
-					for (BooksAndPictureVO img : imgs) {
-						byte[] pictureFile = img.getPictureFile();
-						String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-						base64.add(base64Encoded);
-					}
-					myCollection.setImg(base64);
-				}
+				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
 			}
 		}
 		return list;
@@ -90,14 +72,14 @@ public class BookClassService {
 		Transaction transaction = session.beginTransaction();
 		BookClassService bcSce = new BookClassService();
 		List<BookClassVO> list = bcSce.keywordsBc("文學");
-		for(BookClassVO bcVOs:list) {
-			for(BookProductsVO bpVOs:bcVOs.getBpVO()) {
-				for(String img:bpVOs.getImg()) {
+		for (BookClassVO bcVOs : list) {
+			for (BookProductsVO bpVOs : bcVOs.getBpVO()) {
+				for (String img : bpVOs.getImg()) {
 					System.out.println(img);
 				}
 			}
 		}
-		
+
 		transaction.commit();
 	}
 }

@@ -1,7 +1,11 @@
 package com.booksandpicture.model;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import com.bookproducts.model.BookProductsVO;
 
 import util.HibernateUtil;
 
@@ -35,4 +39,12 @@ public class BooksAndPictureDAO implements BooksAndPictureDAO_Impl {
 			return -1;
 		}
 	}
+	
+
+
+		public List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO){
+			return getSession().createQuery("from BooksAndPictureVO where bpVO =:bpVO",BooksAndPictureVO.class)
+					.setParameter("bpVO", bpVO)
+					.list();
+		}
 }

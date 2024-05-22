@@ -1,6 +1,7 @@
 package com.booksandpicture.model;
 
 import java.util.Base64;
+import java.util.List;
 
 import com.bookproducts.model.BookProductsVO;
 
@@ -26,6 +27,12 @@ public class BooksAndPictureService {
 	bapVO.setPictureFile(pictureFile);
 	
 	return dao.update(bapVO);
+	}
+	
+	public List<BooksAndPictureVO> getimg(Integer bookNumber){
+		BookProductsVO bpVO=new BookProductsVO();
+		bpVO.setBookNumber(bookNumber);
+		return dao.relatedPictures(bpVO);
 	}
 	
 	//=================================以下做圖片處理用========================================
