@@ -8,14 +8,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-
 import com.bookproducts.model.BookProductsVO;
 import com.booksandpicture.model.BooksAndPictureVO;
+import com.orderdetails.model.OrderDetailsDAOHibernate;
 
 import util.HibernateUtil;
 
 public class PublishingHouseService {
 	PublishingHouseDAO dao = new PublishingHouseDAO();
+	OrderDetailsDAOHibernate odDAO = new OrderDetailsDAOHibernate();
 
 	public int addPh(String name, String address, String personInCharge, String telephoneNumber) {
 		PublishingHouseVO phVO = new PublishingHouseVO();
@@ -62,17 +63,7 @@ public class PublishingHouseService {
 	private PublishingHouseVO singleConversion(PublishingHouseVO phVO) {
 
 		for (BookProductsVO bpVOs : phVO.getBpVO()) {
-			List<BooksAndPictureVO> imgs = bpVOs.getBapVO();
-			if (imgs != null) {
-				List<String> base64 = new ArrayList<>();
-				for (BooksAndPictureVO img : imgs) {
-					byte[] pictureFile = img.getPictureFile();
-					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-					base64.add(base64Encoded);
-				}
-				bpVOs.setImg(base64);
-			}
-
+			bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
 		}
 		return phVO;
 	}
@@ -81,16 +72,7 @@ public class PublishingHouseService {
 	private List<PublishingHouseVO> multipleConversions(List<PublishingHouseVO> list) {
 		for (PublishingHouseVO phVOs : list) {
 			for (BookProductsVO myCollection : phVOs.getBpVO()) {
-				List<BooksAndPictureVO> imgs = myCollection.getBapVO();
-				if (imgs != null) {
-					List<String> base64 = new ArrayList<>();
-					for (BooksAndPictureVO img : imgs) {
-						byte[] pictureFile = img.getPictureFile();
-						String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-						base64.add(base64Encoded);
-					}
-					myCollection.setImg(base64);
-				}
+				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
 			}
 		}
 		return list;

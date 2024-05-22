@@ -1,5 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.bookproducts.model.*" %>
+<%@ page import="java.util.*"%>
+
+<%  
+	BookProductsService bpsce=new BookProductsService();
+	List<BookProductsVO> list=bpsce.npiBp();
+	pageContext.setAttribute("list",list);
+%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -329,28 +337,28 @@
                            <h2><span>本月新品</span></h2>
                         </div>
                         <div class="product_tab_btn">
-                            <ul class="nav" role="tablist">
-                                <li>
-                                    <a class="active" data-toggle="tab" href="#classic" role="tab" aria-controls="classic" aria-selected="true"> 
-                                       classic
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#display" role="tab" aria-controls="display" aria-selected="false">
-                                        Display 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#processor" role="tab" aria-controls="processor" aria-selected="false">
-                                        Processor 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#accessories" role="tab" aria-controls="accessories" aria-selected="false">
-                                        Accessories 
-                                    </a>
-                                </li>
-                            </ul>
+<!--                             <ul class="nav" role="tablist"> -->
+<!--                                 <li> -->
+<!--                                     <a class="active" data-toggle="tab" href="#classic" role="tab" aria-controls="classic" aria-selected="true">  -->
+<!--                                        classic -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <a data-toggle="tab" href="#display" role="tab" aria-controls="display" aria-selected="false"> -->
+<!--                                         Display  -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <a data-toggle="tab" href="#processor" role="tab" aria-controls="processor" aria-selected="false"> -->
+<!--                                         Processor  -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                                 <li> -->
+<!--                                     <a data-toggle="tab" href="#accessories" role="tab" aria-controls="accessories" aria-selected="false"> -->
+<!--                                         Accessories  -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                             </ul> -->
                         </div>
                     </div>
                 </div>
@@ -359,6 +367,9 @@
                 <div class="tab-pane fade show active" id="classic" role="tabpanel">
                     <div class="row">
                         <div class="product_carousel product_column4 owl-carousel">
+                        
+                        
+                        <c:forEach var="bpVO" items="${list}">
                             <div class="col-lg-3">
                                 <article class="single_product">
                                     <figure>
@@ -366,8 +377,8 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗"></a>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a> --%>
                                             <div class="action_links">
                                                 <ul>
                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
@@ -379,17 +390,17 @@
                                         <figcaption class="product_content">
                                             <div class="product_rating">
                                                <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
                                                </ul>
                                             </div>
-                                            <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4>
+                                            <h4 class="product_name"><a href="product-details.html">${bpVO.bookTitle}</a></h4>
                                             <div class="price_box"> 
-                                                <span class="current_price">$142.00</span>
-                                                <span class="old_price">$173.00</span>
+                                                <span class="current_price">$${bpVO.price}</span>
+<!--                                                 <span class="old_price">$173.00</span> -->
                                             </div>
                                             <div class="add_to_cart">
                                                 <a href="cart.html" title="Add to cart">Add to Cart</a>
@@ -398,872 +409,873 @@
                                     </figure>
                                 </article>
                             </div>
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                                <span class="label_sale">10%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$145.00</span>
-                                                <span class="old_price">$178.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product12.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$179.00</span>
-                                                <span class="old_price">$190.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                               <span class="label_new">new</span>
-                                                <span class="label_sale">12%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$220.00</span>
-                                                <span class="old_price">$240.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$225.00</span>
-                                                <span class="old_price">$235.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>  
+                            </c:forEach>
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">10%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$145.00</span> -->
+<!--                                                 <span class="old_price">$178.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product12.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$179.00</span> -->
+<!--                                                 <span class="old_price">$190.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">12%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$220.00</span> -->
+<!--                                                 <span class="old_price">$240.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$225.00</span> -->
+<!--                                                 <span class="old_price">$235.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>   -->
                         </div> 
                     </div>   
                 </div>
-                <div class="tab-pane fade" id="display" role="tabpanel">
-                    <div class="row">
-                        <div class="product_carousel product_column4 owl-carousel">
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                               <span class="label_new">new</span>
-                                                <span class="label_sale">12%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$220.00</span>
-                                                <span class="old_price">$240.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$225.00</span>
-                                                <span class="old_price">$235.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>  
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$142.00</span>
-                                                <span class="old_price">$173.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                                <span class="label_sale">10%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$145.00</span>
-                                                <span class="old_price">$178.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$179.00</span>
-                                                <span class="old_price">$190.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>  
-                        </div> 
-                    </div> 
-                </div>
-                <div class="tab-pane fade" id="processor" role="tabpanel">
-                    <div class="row">
-                        <div class="product_carousel product_column4 owl-carousel">
-                             <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                                <span class="label_sale">10%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$145.00</span>
-                                                <span class="old_price">$178.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$179.00</span>
-                                                <span class="old_price">$190.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$142.00</span>
-                                                <span class="old_price">$173.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                               <span class="label_new">new</span>
-                                                <span class="label_sale">12%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$220.00</span>
-                                                <span class="old_price">$240.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$225.00</span>
-                                                <span class="old_price">$235.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>  
-                        </div> 
-                    </div> 
-                </div>
-                <div class="tab-pane fade" id="accessories" role="tabpanel">
-                    <div class="row">
-                        <div class="product_carousel product_column4 owl-carousel">
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$179.00</span>
-                                                <span class="old_price">$190.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                               <span class="label_new">new</span>
-                                                <span class="label_sale">12%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$220.00</span>
-                                                <span class="old_price">$240.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$225.00</span>
-                                                <span class="old_price">$235.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div> 
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$142.00</span>
-                                                <span class="old_price">$173.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                                <span class="label_sale">10%</span>
-                                            </div>
-                                            <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                                   <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                               </ul>
-                                            </div>
-                                            <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4>
-                                            <div class="price_box"> 
-                                                <span class="current_price">$145.00</span>
-                                                <span class="old_price">$178.00</span>
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                            </div>
-                                            <div class="swatches-colors">
-                                                <ul>
-                                                    <li><a class="color1" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color2" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color3" href="javascript:void(0)"></a></li>
-                                                    <li><a class="color4" href="javascript:void(0)"></a></li>
-                                                </ul>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>  
-                        </div> 
-                    </div> 
-                </div>
+<!--                 <div class="tab-pane fade" id="display" role="tabpanel"> -->
+<!--                     <div class="row"> -->
+<!--                         <div class="product_carousel product_column4 owl-carousel"> -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">12%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$220.00</span> -->
+<!--                                                 <span class="old_price">$240.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$225.00</span> -->
+<!--                                                 <span class="old_price">$235.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>   -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$142.00</span> -->
+<!--                                                 <span class="old_price">$173.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div> -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">10%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$145.00</span> -->
+<!--                                                 <span class="old_price">$178.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$179.00</span> -->
+<!--                                                 <span class="old_price">$190.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>   -->
+<!--                         </div>  -->
+<!--                     </div>  -->
+<!--                 </div> -->
+<!--                 <div class="tab-pane fade" id="processor" role="tabpanel"> -->
+<!--                     <div class="row"> -->
+<!--                         <div class="product_carousel product_column4 owl-carousel"> -->
+<!--                              <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">10%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$145.00</span> -->
+<!--                                                 <span class="old_price">$178.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$179.00</span> -->
+<!--                                                 <span class="old_price">$190.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$142.00</span> -->
+<!--                                                 <span class="old_price">$173.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div> -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">12%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$220.00</span> -->
+<!--                                                 <span class="old_price">$240.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$225.00</span> -->
+<!--                                                 <span class="old_price">$235.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>   -->
+<!--                         </div>  -->
+<!--                     </div>  -->
+<!--                 </div> -->
+<!--                 <div class="tab-pane fade" id="accessories" role="tabpanel"> -->
+<!--                     <div class="row"> -->
+<!--                         <div class="product_carousel product_column4 owl-carousel"> -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product21.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$179.00</span> -->
+<!--                                                 <span class="old_price">$190.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">12%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$220.00</span> -->
+<!--                                                 <span class="old_price">$240.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$225.00</span> -->
+<!--                                                 <span class="old_price">$235.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$142.00</span> -->
+<!--                                                 <span class="old_price">$173.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div> -->
+<!--                             <div class="col-lg-3"> -->
+<!--                                 <article class="single_product"> -->
+<!--                                     <figure> -->
+<!--                                         <div class="product_thumb"> -->
+<!--                                            <div class="label_product"> -->
+<!--                                                 <span class="label_new">new</span> -->
+<!--                                                 <span class="label_sale">10%</span> -->
+<!--                                             </div> -->
+<%--                                             <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a> --%>
+<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a> --%>
+<!--                                             <div class="action_links"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li> -->
+<!--                                                     <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>   -->
+<!--                                                     <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <figcaption class="product_content"> -->
+<!--                                             <div class="product_rating"> -->
+<!--                                                <ul> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                </ul> -->
+<!--                                             </div> -->
+<!--                                             <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4> -->
+<!--                                             <div class="price_box">  -->
+<!--                                                 <span class="current_price">$145.00</span> -->
+<!--                                                 <span class="old_price">$178.00</span> -->
+<!--                                             </div> -->
+<!--                                             <div class="add_to_cart"> -->
+<!--                                                 <a href="cart.html" title="Add to cart">Add to Cart</a> -->
+<!--                                             </div> -->
+<!--                                             <div class="swatches-colors"> -->
+<!--                                                 <ul> -->
+<!--                                                     <li><a class="color1" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color2" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color3" href="javascript:void(0)"></a></li> -->
+<!--                                                     <li><a class="color4" href="javascript:void(0)"></a></li> -->
+<!--                                                 </ul> -->
+<!--                                             </div> -->
+<!--                                         </figcaption> -->
+<!--                                     </figure> -->
+<!--                                 </article> -->
+<!--                             </div>   -->
+<!--                         </div>  -->
+<!--                     </div>  -->
+<!--                 </div> -->
             </div>
         </div> 
     </div>

@@ -214,8 +214,8 @@
 							<nav>
 								<ul style>
 									<li><a class="active" href="${pageContext.request.contextPath}/index.jsp">首頁</a></li>
-									<li><a href="shop.html">書籍商城</a></li>
-									<li><a href="shop.html">特價商品</a></li>
+									<li><a href="${pageContext.request.contextPath}/front-end/shop.jsp">書籍商城</a></li>
+									<li><a href="${pageContext.request.contextPath}/front-end/shop.jsp">特價商品</a></li>
 									<li><a href="blog.html">論壇</a></li>
 									<li><a href="contact.html">聯絡我們</a></li>
 									<li><a href="#">客服相關<i class="fa fa-angle-down"></i></a>

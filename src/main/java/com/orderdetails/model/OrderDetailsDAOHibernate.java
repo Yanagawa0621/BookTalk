@@ -4,6 +4,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.bookproducts.model.BookProductsVO;
+import com.oracle.wls.shaded.org.apache.bcel.generic.GETFIELD;
 import com.order.model.OrderVO;
 import com.orderdetails.model.OrderDetailsVO.OrderDetailsId;
 import util.HibernateUtil;
@@ -45,5 +47,10 @@ public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
 		return getSession().createQuery("from OrderDetailsVO", OrderDetailsVO.class)
 				.getResultList();
 	}
-
+	
+	public Double ratingScoreAvg(BookProductsVO bpVO) {
+	return	(Double) getSession().createQuery("select avg(od.ratingScore) from OrderDetailsVO od where od.bookProductsVO=:bookProductsVO")
+		.setParameter("bookProductsVO", bpVO)
+		.uniqueResult();
+	}
 }

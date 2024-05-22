@@ -38,7 +38,7 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 
 	// 依上架的年月查詢
 	@Override
-	public List<BookProductsVO> npi(Integer year, Integer month) {
+	public List<BookProductsVO> npi(int year, int month) {
 		return getSession()
 				.createQuery("from BookProductsVO where year(releaseDate)=:year and month(releaseDate)=:month",
 						BookProductsVO.class)
