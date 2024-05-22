@@ -13,7 +13,7 @@ import org.hibernate.SessionFactory;
 
 import util.HibernateUtil;
 
-//@WebFilter(urlPatterns = { "/*" })
+@WebFilter(urlPatterns = { "/*" })
 public class OpenSessionInViewFilter implements Filter {
 
 	@Override

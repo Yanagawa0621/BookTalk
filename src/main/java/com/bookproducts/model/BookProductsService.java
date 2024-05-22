@@ -2,9 +2,9 @@ package com.bookproducts.model;
 
 import java.sql.Date;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
-
 import java.util.List;
 
 import org.hibernate.Session;
@@ -13,13 +13,14 @@ import org.hibernate.Transaction;
 
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
+import com.orderdetails.model.OrderDetailsDAOHibernate;
 import com.publishinghouse.model.PublishingHouseVO;
 
 import util.HibernateUtil;
 
 public class BookProductsService {
 	BookProductsDAO bpDAO = new BookProductsDAO();
-
+	OrderDetailsDAOHibernate odDAO=new OrderDetailsDAOHibernate();
 	public int addBp(Integer classNumber, Integer publishingHouseNumber, Integer productStatus, String bookTitle,
 			String isbn, Double price, java.sql.Date publicationDate, Integer stock, String introductionContent,
 			Date releaseDate) {
@@ -78,7 +79,10 @@ public class BookProductsService {
 		return multipleConversions(bpDAO.priceQuery(min, max));
 	}
 
-	public List<BookProductsVO> npiBp(Integer year, Integer month) {
+	public List<BookProductsVO> npiBp() {
+		LocalDate today = LocalDate.now();
+		int year = today.getYear();
+		int month = today.getMonthValue();
 		return multipleConversions(bpDAO.npi(year, month));
 	}
 
@@ -95,13 +99,15 @@ public class BookProductsService {
 	// 單筆書籍資料的圖片轉換
 	private BookProductsVO singleConversion(BookProductsVO bpVO) {
 		List<BooksAndPictureVO> imgs = bpVO.getBapVO();
-
+		bpVO.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVO));
 		if (imgs != null) {
 			List<String> base64 = new ArrayList<>();
 			for (BooksAndPictureVO img : imgs) {
 				byte[] pictureFile = img.getPictureFile();
-				String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-				base64.add(base64Encoded);
+				if (pictureFile != null) {
+					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
+					base64.add(base64Encoded);
+				}
 			}
 			bpVO.setImg(base64);
 		}
@@ -111,28 +117,18 @@ public class BookProductsService {
 	// 多筆書籍資料的圖片轉換
 	private List<BookProductsVO> multipleConversions(List<BookProductsVO> list) {
 		for (BookProductsVO myCollection : list) {
-			List<BooksAndPictureVO> imgs = myCollection.getBapVO();
-
-			if (imgs != null) {
-				List<String> base64 = new ArrayList<>();
-				for (BooksAndPictureVO img : imgs) {
-					byte[] pictureFile = img.getPictureFile();
-					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-					base64.add(base64Encoded);
-				}
-				myCollection.setImg(base64);
-			}
+			myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
 		}
 		return list;
 	}
-
+	
 	// =================================以下是測試用的main方法========================================
 	public static void main(String[] args) throws ParseException {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		BookProductsService bp = new BookProductsService();
-		System.out.println(bp.singleQueryBp(6));
+		System.out.println(bp.singleQueryBp(1).getRatingScoreAvg());
 
 		transaction.commit();
 

@@ -17,6 +17,11 @@ import com.bookproducts.model.BookProductsVO;
 @Table(name="books_and_picture")
 public class BooksAndPictureVO implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pictureNumber",updatable=false)

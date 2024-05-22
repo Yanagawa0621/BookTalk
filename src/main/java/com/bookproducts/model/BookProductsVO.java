@@ -23,6 +23,8 @@ import javax.persistence.Transient;
 import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
+import com.order.model.OrderDAOHibernate;
+import com.orderdetails.model.OrderDetailsDAOHibernate;
 import com.orderdetails.model.OrderDetailsVO;
 import com.publishinghouse.model.PublishingHouseVO;
 
@@ -72,7 +74,7 @@ public class BookProductsVO implements java.io.Serializable {
 	@Column(name="releaseDate")
 	private Date releaseDate;
 	
-	@OneToMany(mappedBy = "bpVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bpVO",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@OrderBy("pictureNumber asc")
 	private List<BooksAndPictureVO> bapVO;
 	
@@ -81,7 +83,10 @@ public class BookProductsVO implements java.io.Serializable {
 	private List<AuthorVO> authorVO;
 	
 	@Transient
-	List<String> img;
+	private List<String> img;
+	
+	@Transient
+	private Double ratingScoreAvg;
 	
 	@OneToMany(mappedBy = "bookProductsVO",cascade = CascadeType.ALL)
 	@OrderBy("bookNumber asc")
@@ -215,5 +220,13 @@ public class BookProductsVO implements java.io.Serializable {
 	public void setOrderDetailsVO(Set<OrderDetailsVO> orderDetailsVO) {
 		this.orderDetailsVO = orderDetailsVO;
 	}
-	
+
+	public Double getRatingScoreAvg() {
+		return ratingScoreAvg;
+	}
+
+	public void setRatingScoreAvg(Double ratingScoreAvg) {
+		this.ratingScoreAvg = ratingScoreAvg;
+	}
+
 }

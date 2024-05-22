@@ -220,9 +220,11 @@
 						<div class="main_menu menu_three menu_position">
 							<nav>
 								<ul style>
+
 									<li><a class="${currentPage == 'home' ? 'active' : ''}" href="${pageContext.request.contextPath}/index.jsp?selectPage=home">首頁</a></li>
 									<li><a class="${currentPage == 'shop' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=shop">書籍商城</a></li>
 									<li><a class="${currentPage == 'promotion' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li>
+
 									<li><a href="blog.html">論壇</a></li>
 									<li><a href="contact.html">聯絡我們</a></li>
 									<li><a href="#">客服相關<i class="fa fa-angle-down"></i></a>
