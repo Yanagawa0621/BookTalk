@@ -610,5 +610,5 @@ VALUES
 	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (3, NULL, 3, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (4, NULL, 4, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (5, NULL, 5, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-
-	--這裡是底部--
+	
+-- 這裡是底部 --
