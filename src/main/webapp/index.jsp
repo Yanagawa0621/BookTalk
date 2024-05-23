@@ -18,7 +18,7 @@
 <body>
    
     <!--header area start-->
-    <%@include file="/front-end/component/header.jsp" %>
+    <%@include file="/front-end/component/menu.jsp" %>
     
     <!--header area end-->
     
