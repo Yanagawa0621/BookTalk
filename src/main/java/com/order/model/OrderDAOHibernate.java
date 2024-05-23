@@ -1,8 +1,10 @@
 package com.order.model;
 
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import util.HibernateUtil;
 
 public class OrderDAOHibernate implements OrderDAO_interface {
@@ -41,14 +43,16 @@ public class OrderDAOHibernate implements OrderDAO_interface {
 
 	@Override
 	public List<OrderVO> getAll() {
-		return getSession().createQuery("from OrderVO order by orderNumber", OrderVO.class)
-				.getResultList();
+		List<OrderVO> allOrdersList = getSession().createQuery("SELECT DISTINCT o FROM OrderVO o LEFT JOIN FETCH o.orderDetails od LEFT JOIN FETCH od.bookProductsVO", OrderVO.class)
+				.getResultList();	
+		return allOrdersList;
 	}
 
 	@Override
 	public List<OrderVO> findByUserNumber(Integer userNumber) {
-		return getSession().createQuery("from OrderVO where userNumber = ?0 order by userNumber", OrderVO.class)
-				.setParameter(0, userNumber)
+		return getSession().createQuery("SELECT DISTINCT o FROM OrderVO o LEFT JOIN FETCH o.orderDetails od LEFT JOIN FETCH od.bookProductsVO WHERE o.userNumber = :userNumber", 
+				OrderVO.class)
+				.setParameter("userNumber", userNumber)
 				.getResultList();
 	}
 	
@@ -61,9 +65,14 @@ public class OrderDAOHibernate implements OrderDAO_interface {
 
 	@Override
 	public List<OrderVO> findByOrderStatus(Integer orderStatus) {
-		return getSession().createQuery("from OrderVO where orderStatus = ?0 order by orderNumber", OrderVO.class)
-				.setParameter(0, orderStatus)
+		return getSession().createQuery("SELECT DISTINCT o FROM OrderVO o LEFT JOIN FETCH o.orderDetails od LEFT JOIN FETCH od.bookProductsVO WHERE o.orderStatus = :orderStatus", 
+				OrderVO.class)
+				.setParameter("orderStatus", orderStatus)
 				.getResultList();
+		
+//		return getSession().createQuery("from OrderVO where orderStatus = ?0 order by orderNumber", OrderVO.class)
+//				.setParameter(0, orderStatus)
+//				.getResultList();
 	}
 
 }
