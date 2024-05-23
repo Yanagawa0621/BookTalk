@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.cart.model.*"%>
+<%@ page import="java.util.*"%>
 
 <%
     // 確認當前頁面
@@ -7,7 +9,15 @@
     if (currentPage == null) {
         currentPage = "home"; // 預設分頁
     }
+    
+    CartService cartSev = new CartService();
+	List<CartVO> cartList = cartSev.getCartItems(2);
+	int count = cartList.size();
+	pageContext.setAttribute("cartList", cartList);
+	pageContext.setAttribute("count", count);
+	System.out.println(cartList);
 %>
+
 <!--offcanvas menu area start-->
 <div class="off_canvars_overlay"></div>
 <div class="offcanvas_menu">
@@ -258,48 +268,26 @@
 							</div>
 							<div class="header_account-list  mini_cart_wrapper">
 								<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count">2</span></a>
+									class="icon icon-FullShoppingCart"></i><span class="item_count">${count}</span></a>
 								<!--mini cart-->
 								<div class="mini_cart">
 									<div class="cart_gallery">
+									<c:forEach var="cartItem" items="${cartList}">
 										<div class="cart_item">
 											<div class="cart_img">
 												<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/s-product/product.jpg" alt=""></a>
 											</div>
 											<div class="cart_info">
-												<a href="#">Lorem ipsum dolor sit amet, consectetur</a>
+												<a href="#">${cartItem.bookTitle}</a>
 												<p>
-													1 x <span> $65.00 </span>
+													${cartItem.quantity} x <span> ${cartItem.bookPrice} </span>
 												</p>
 											</div>
 											<div class="cart_remove">
 												<a href="#"><i class="ion-ios-close-outline"></i></a>
 											</div>
 										</div>
-										<div class="cart_item">
-											<div class="cart_img">
-												<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/s-product/product2.jpg" alt=""></a>
-											</div>
-											<div class="cart_info">
-												<a href="#">impedit dolor sed soluta natus voluptas.</a>
-												<p>
-													1 x <span> $60.00 </span>
-												</p>
-											</div>
-											<div class="cart_remove">
-												<a href="#"><i class="ion-ios-close-outline"></i></a>
-											</div>
-										</div>
-									</div>
-									<div class="mini_cart_table">
-										<div class="cart_table_border">
-											<div class="cart_total">
-												<span>Sub total:</span> <span class="price">$125.00</span>
-											</div>
-											<div class="cart_total mt-10">
-												<span>total:</span> <span class="price">$125.00</span>
-											</div>
-										</div>
+									</c:forEach>
 									</div>
 									<div class="mini_cart_footer">
 										<div class="cart_button">
