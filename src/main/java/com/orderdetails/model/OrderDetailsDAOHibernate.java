@@ -5,9 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.bookproducts.model.BookProductsVO;
-import com.oracle.wls.shaded.org.apache.bcel.generic.GETFIELD;
 import com.order.model.OrderVO;
-import com.orderdetails.model.OrderDetailsVO.OrderDetailsId;
 import util.HibernateUtil;
 
 public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
@@ -23,8 +21,8 @@ public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
 	}
 
 	@Override
-	public void insert(OrderDetailsVO orderDetailsVO) {
-		getSession().save(orderDetailsVO);		
+	public int insert(OrderDetailsVO orderDetailsVO) {
+		return (Integer) getSession().save(orderDetailsVO);		
 	}
 
 	@Override
@@ -38,19 +36,15 @@ public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
 	}
 	
 	@Override
-	public OrderDetailsVO findByOrderDetailsId(OrderDetailsId orderDetailsId) {
-		return getSession().get(OrderDetailsVO.class, orderDetailsId);
-	}
-	
-	@Override
 	public List<OrderDetailsVO> getAll() {
 		return getSession().createQuery("from OrderDetailsVO", OrderDetailsVO.class)
 				.getResultList();
 	}
-	
+
+	@Override
 	public Double ratingScoreAvg(BookProductsVO bpVO) {
-	return	(Double) getSession().createQuery("select avg(od.ratingScore) from OrderDetailsVO od where od.bookProductsVO=:bookProductsVO")
-		.setParameter("bookProductsVO", bpVO)
-		.uniqueResult();
+		return (Double) getSession().createQuery("select avg(od.ratingScore) from OrderDetailsVO od where od.bookProductsVO=:bookProductsVO")
+				.setParameter("bookProductsVO", bpVO)
+				.uniqueResult();
 	}
 }
