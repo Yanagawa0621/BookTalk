@@ -9,10 +9,10 @@
 <%@include file="/front-end/component/head.jsp" %>
 
 <body>
-	<!--header area start-->
+	<!--menu area start-->
     <%@include file="/front-end/component/menu.jsp" %>
     
-    <!--header area end-->
+    <!--menu area end-->
 	<!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">   
