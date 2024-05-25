@@ -9,10 +9,10 @@
 <%@include file="/front-end/component/head.jsp" %>
 
 <body>
-	<!--header area start-->
-    <%@include file="/front-end/component/header.jsp" %>
+	<!--menu area start-->
+    <%@include file="/front-end/component/menu.jsp" %>
     
-    <!--header area end-->
+    <!--menu area end-->
 	<!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">   
@@ -32,82 +32,54 @@
     <!--breadcrumbs area end-->
     
      <!--shopping cart area start -->
+
     <div class="shopping_cart_area mt-100">
         <div class="container">  
-            <form action="#"> 
+            <form method="post" action="${pageContext.request.contextPath}/cart/cart.do"> 
                 <div class="row">
                     <div class="col-12">
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
                                 <table>
-                            <thead>
-                                <tr>
-                                    <th class="product_remove">刪除</th>
-                                    <th class="product_thumb">圖片</th>
-                                    <th class="product_name">書籍名稱</th>
-                                    <th class="product-price">價格</th>
-                                    <th class="product_quantity">數量</th>
-                                    <th class="product_total">金額</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                   <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    <td class="product_thumb"><a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a></td>
-                                    <td class="product_name"><a href="#">Handbag fringilla</a></td>
-                                    <td class="product-price">£65.00</td>
-                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                    <td class="product_total">£130.00</td>
-
-
-                                </tr>
-
-                                <tr>
-                                   <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    <td class="product_thumb"><a href="#"><img src="assets/img/s-product/product2.jpg" alt=""></a></td>
-                                    <td class="product_name"><a href="#">Handbags justo</a></td>
-                                    <td class="product-price">£90.00</td>
-                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                    <td class="product_total">£180.00</td>
-
-
-                                </tr>
-                                <tr>
-                                   <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                    <td class="product_thumb"><a href="#"><img src="assets/img/s-product/product3.jpg" alt=""></a></td>
-                                    <td class="product_name"><a href="#">Handbag elit</a></td>
-                                    <td class="product-price">£80.00</td>
-                                    <td class="product_quantity"><label>Quantity</label> <input min="1" max="100" value="1" type="number"></td>
-                                    <td class="product_total">£160.00</td>
-
-
-                                </tr>
-
-                            </tbody>
-                        </table>   
+		                            <thead>
+		                                <tr>
+		                                    <th>刪除</th>
+		                                    <th>圖片</th>
+		                                    <th>書籍名稱</th>
+		                                    <th>價格</th>
+		                                    <th>數量</th>
+		                                    <th>剩餘數量</th>
+		                                    <th>金額</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody>
+		                            	<c:forEach var="cartItem" items="${cartList}">
+		                            		<tr>
+			                                   <td><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
+			                                   <td><a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="100px" alt=""></a></td>
+			                                   <td><a href="#">${cartItem.bookTitle}</a></td>
+			                                   <td>${cartItem.bookPrice}</td>
+			                                   <td class="product_quantity"><label>數量</label><input min="1" max="${cartItem.bookStock}" value="${cartItem.quantity}" type="number"></td>
+			                                   <td>${cartItem.bookStock}</td>
+			                                   <td>${cartItem.subtotal}</td>
+		                                	</tr>
+		                                	<input type="hidden" name="userNumber" value="${cartItem.userNumber}">
+		                            	</c:forEach>
+		                            </tbody>
+                        		</table>   
                             </div>  
                             <div class="cart_submit">
-                                <button type="submit">update cart</button>
+                                <button type="submit">更新購物車</button>                                
                             </div>      
                         </div>
                      </div>
                  </div>
                  <!--coupon code area start-->
                 <div class="coupon_area">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="coupon_code left">
-                                <h3>Coupon</h3>
-                                <div class="coupon_inner">   
-                                    <p>Enter your coupon code if you have one.</p>                                
-                                    <input placeholder="Coupon code" type="text">
-                                    <button type="submit">Apply coupon</button>
-                                </div>    
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
+                    <div class="row">                        
+                        <div class="col-lg-12 col-md-12">
                             <div class="coupon_code right">
-                                <h3>Cart Totals</h3>
+                                <h3>購物車總金額</h3>
                                 <div class="coupon_inner">
                                    <div class="cart_subtotal">
                                        <p>商品總金額</p>
@@ -124,7 +96,7 @@
                                        <p class="cart_amount">£215.00</p>
                                    </div>
                                    <div class="checkout_btn">
-                                       <a href="#">Proceed to Checkout</a>
+                                       <a href="${pageContext.request.contextPath}/front-end/checkout.jsp">去買單</a>
                                    </div>
                                 </div>
                             </div>

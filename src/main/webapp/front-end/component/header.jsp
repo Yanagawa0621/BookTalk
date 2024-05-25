@@ -1,13 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
-    // 確認當前頁面
-    String currentPage = (String) session.getAttribute("currentPage");
-    if (currentPage == null) {
-        currentPage = "home"; // 預設分頁
-    }
-%>
 <!--offcanvas menu area start-->
 <div class="off_canvars_overlay"></div>
 <div class="offcanvas_menu">

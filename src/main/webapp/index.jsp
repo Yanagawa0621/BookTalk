@@ -25,10 +25,10 @@
 
 <body>
    
-    <!--header area start-->
-    <%@include file="/front-end/component/header.jsp" %>
+    <!--menu area start-->
+    <%@include file="/front-end/component/menu.jsp" %>
     
-    <!--header area end-->
+    <!--menu area end-->
     
     <!--slider area start-->
     <section class="slider_section slider_s_two color_two mb-30">
