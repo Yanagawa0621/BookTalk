@@ -55,8 +55,8 @@
 		                            <tbody>
 		                            	<c:forEach var="cartItem" items="${cartList}">
 		                            		<tr>
-			                                   <td><a href="#"><i class="far fa-trash-alt fa-2x"></i></a></td>
-			                                   <td><a href="#"><img src="assets/img/s-product/product.jpg" alt=""></a></td>
+			                                   <td><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
+			                                   <td><a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="100px" alt=""></a></td>
 			                                   <td><a href="#">${cartItem.bookTitle}</a></td>
 			                                   <td>${cartItem.bookPrice}</td>
 			                                   <td class="product_quantity"><label>數量</label><input min="1" max="${cartItem.bookStock}" value="${cartItem.quantity}" type="number"></td>

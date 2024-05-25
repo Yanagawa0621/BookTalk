@@ -5,7 +5,7 @@
 
 <%
     CartService cartSev = new CartService();
-	List<CartVO> cartList = cartSev.getCartItems(2);
+	List<CartVO> cartList = cartSev.getCartItems(4);
 	int count = cartList.size();
 	pageContext.setAttribute("cartList", cartList);
 	pageContext.setAttribute("count", count);
@@ -49,7 +49,7 @@
 								<c:forEach var="cartItem" items="${cartList}">
 									<div class="cart_item">
 										<div class="cart_img">
-											<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/s-product/product.jpg" alt=""></a>
+											<a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="60px" alt=""></a>
 										</div>
 										<div class="cart_info">
 											<a href="#">${cartItem.bookTitle}</a>
@@ -68,14 +68,14 @@
 										<a href="${pageContext.request.contextPath}/front-end/cart.jsp"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
 									</div>
 									<div class="cart_button">
-										<a href="checkout.html"><i class="fas fa-sign-in-alt"></i> 結帳</a>
+										<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
 									</div>
 								</div>
 							</div>
 							<!--mini cart end-->
 						</div>						
 						<div class="header_account-list top_links">
-							<a href="#"><i class="far fa-user"></i></a>
+							<a href="${pageContext.request.contextPath}/front-end/my-account.jsp"><i class="far fa-user"></i></a>
 							<div class="dropdown_links">
 								<div class="dropdown_links_list">
 									<h3>
@@ -113,8 +113,8 @@
 		</div>
 	</div>
 </div>
-
 <!-- offcanvas menu area end -->
+
 <header>
 	<div class="main_header sticky-header">
 		<div class="container-fluid">
@@ -174,7 +174,7 @@
 									<c:forEach var="cartItem" items="${cartList}">
 										<div class="cart_item">
 											<div class="cart_img">
-												<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/s-product/product.jpg" alt=""></a>
+												<a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="60px" alt=""></a>
 											</div>
 											<div class="cart_info">
 												<a href="#">${cartItem.bookTitle}</a>
@@ -193,7 +193,7 @@
 											<a href="${pageContext.request.contextPath}/front-end/cart.jsp"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
 										</div>
 										<div class="cart_button">
-											<a href="checkout.html"><i class="fas fa-sign-in-alt"></i> 結帳</a>
+											<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
 										</div>
 
 									</div>
@@ -201,7 +201,7 @@
 								<!--mini cart end-->
 							</div>
 							<div class="header_account-list top_links">
-								<a href="#"><i class="far fa-user"></i></a>
+								<a href="${pageContext.request.contextPath}/front-end/my-account.jsp"><i class="far fa-user"></i></a>
 								<div class="dropdown_links">
 									<div class="dropdown_links_list">
 										<h3>

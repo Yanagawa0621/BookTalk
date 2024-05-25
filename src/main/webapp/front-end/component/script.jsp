@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!--jquery min js-->
-<script src="${pageContext.request.contextPath}/front-end/assets/js/vendor/jquery-3.4.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/front-end/assets/js/vendor/jquery-3.7.1.min.js"></script>
+<!--jquery migrate min js-->
+<script src="${pageContext.request.contextPath}/front-end/assets/js/vendor/jquery-migrate-3.4.0.min.js"></script>
 <!--popper min js-->
 <script src="${pageContext.request.contextPath}/front-end/assets/js/popper.js"></script>
 <!--bootstrap min js-->
