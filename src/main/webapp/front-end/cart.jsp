@@ -96,7 +96,7 @@
                                        <p class="cart_amount">£215.00</p>
                                    </div>
                                    <div class="checkout_btn">
-                                       <a href="#">去買單</a>
+                                       <a href="${pageContext.request.contextPath}/front-end/checkout.jsp">去買單</a>
                                    </div>
                                 </div>
                             </div>

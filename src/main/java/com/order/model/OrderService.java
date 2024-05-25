@@ -1,18 +1,22 @@
 package com.order.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
-import com.bookproducts.model.BookProductsDAO_Impl;
 import com.bookproducts.model.BookProductsService;
 import com.bookproducts.model.BookProductsVO;
 import com.cart.model.CartService;
 import com.cart.model.CartService_inteface;
 import com.cart.model.CartVO;
 import com.orderdetails.model.OrderDetailsVO;
+
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutOneTime;
 
 public class OrderService implements OrderService_inteface{
 	private OrderDAO_interface dao;
@@ -63,10 +67,11 @@ public class OrderService implements OrderService_inteface{
 	}
 
 	@Override
-	public String checkout(Integer userNumber, OrderVO ordreVO) {
+	public String checkout(Integer userNumber, OrderVO ordreVO, String contextPath) {
 		List<CartVO> cartItems = cartSev.getCartItems(userNumber);
 		Set<OrderDetailsVO> details = new LinkedHashSet<>();
 		BigDecimal total = new BigDecimal(0);
+		String itemNames = "";	//放ECPay商品名稱用
 		
 		if(cartItems.isEmpty()) {	//購物車為空，無需結帳，回傳null
 			return null;
@@ -75,6 +80,7 @@ public class OrderService implements OrderService_inteface{
 		for(CartVO item : cartItems) {
 			OrderDetailsVO orderDetail = new OrderDetailsVO();
 			BookProductsVO bookProductsVO = bookProductsSev.singleQueryBp(item.getBookNumber());
+			itemNames += bookProductsVO.getBookTitle()+"#";	//多個名稱用"#"分隔
 			orderDetail.setUnitPrice(new BigDecimal(item.getBookPrice()));
 			orderDetail.setQuantity(item.getQuantity());
 			orderDetail.setSubtotal(new BigDecimal(item.getSubtotal()));
@@ -99,9 +105,28 @@ public class OrderService implements OrderService_inteface{
 		//此訂單要新增時，跟著要一起新增的訂單明細
 		ordreVO.setOrderDetails(details);
 		
-		addOrder(ordreVO);
-		cartSev.clearCart(userNumber);
-
-		return null;
+		Integer newOrderNumber = addOrder(ordreVO).getOrderNumber();
+		
+//		cartSev.clearCart(userNumber);	//新增完訂單刪除購物車
+		
+		Integer totalAmount = ordreVO.getTotal().intValue();
+		
+		System.out.println("此次新增訂單的編號：" + newOrderNumber);
+		System.out.println("訂單總金額：" + totalAmount);
+		System.out.println("產品名稱串聯：" + itemNames);
+		
+		//ECPay 支付請求
+		AllInOne cardPay = new AllInOne("");
+		AioCheckOutOneTime payOneTimeObj = new AioCheckOutOneTime();
+		payOneTimeObj.setMerchantTradeNo(newOrderNumber + "BB" +UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5));	//BB前面為此次結帳的訂單編號
+		payOneTimeObj.setMerchantTradeDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
+		payOneTimeObj.setTotalAmount(String.valueOf(totalAmount));
+		payOneTimeObj.setTradeDesc("購物車結帳");
+		payOneTimeObj.setItemName(itemNames);
+		payOneTimeObj.setClientBackURL("http://localhost:8081"+contextPath+"/front-end/shop.jsp");
+		payOneTimeObj.setReturnURL("http://localhost:8081"+contextPath+"/index.jsp");
+		payOneTimeObj.setNeedExtraPaidInfo("N");
+				
+		return cardPay.aioCheckOut(payOneTimeObj, null);
 	}
 }
