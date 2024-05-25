@@ -35,78 +35,70 @@
     <!--Checkout page section-->
     <div class="Checkout_section mt-100">
        <div class="container">
-            <div class="row">
-               <div class="col-12">
-                    <div class="user-actions">
-                        <h3> 
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                            Returning customer?
-                            <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">Click here to login</a>     
+<!--             <div class="row"> -->
+<!--                <div class="col-12"> -->
+<!--                     <div class="user-actions"> -->
+<!--                         <h3>  -->
+<!--                             <i class="fa fa-file-o" aria-hidden="true"></i> -->
+<!--                             Returning customer? -->
+<!--                             <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">Click here to login</a>      -->
 
-                        </h3>
-                         <div id="checkout_login" class="collapse" data-parent="#accordion">
-                            <div class="checkout_info">
-                                <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing & Shipping section.</p>  
-                                <form action="#">  
-                                    <div class="form_group">
-                                        <label>Username or email <span>*</span></label>
-                                        <input type="text">     
-                                    </div>
-                                    <div class="form_group">
-                                        <label>Password  <span>*</span></label>
-                                        <input type="text">     
-                                    </div> 
-                                    <div class="form_group group_3 ">
-                                        <button type="submit">Login</button>
-                                        <label for="remember_box">
-                                            <input id="remember_box" type="checkbox">
-                                            <span> Remember me </span>
-                                        </label>     
-                                    </div>
-                                    <a href="#">Lost your password?</a>
-                                </form>          
-                            </div>
-                        </div>    
-                    </div>
-                    <div class="user-actions">
-                        <h3> 
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                            Returning customer?
-                            <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_coupon" aria-expanded="true">Click here to enter your code</a>     
+<!--                         </h3> -->
+<!--                          <div id="checkout_login" class="collapse" data-parent="#accordion"> -->
+<!--                             <div class="checkout_info"> -->
+<!--                                 <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing & Shipping section.</p>   -->
+<!--                                 <form action="#">   -->
+<!--                                     <div class="form_group"> -->
+<!--                                         <label>Username or email <span>*</span></label> -->
+<!--                                         <input type="text">      -->
+<!--                                     </div> -->
+<!--                                     <div class="form_group"> -->
+<!--                                         <label>Password  <span>*</span></label> -->
+<!--                                         <input type="text">      -->
+<!--                                     </div>  -->
+<!--                                     <div class="form_group group_3 "> -->
+<!--                                         <button type="submit">Login</button> -->
+<!--                                         <label for="remember_box"> -->
+<!--                                             <input id="remember_box" type="checkbox"> -->
+<!--                                             <span> Remember me </span> -->
+<!--                                         </label>      -->
+<!--                                     </div> -->
+<!--                                     <a href="#">Lost your password?</a> -->
+<!--                                 </form>           -->
+<!--                             </div> -->
+<!--                         </div>     -->
+<!--                     </div> -->
+<!--                     <div class="user-actions"> -->
+<!--                         <h3>  -->
+<!--                             <i class="fa fa-file-o" aria-hidden="true"></i> -->
+<!--                             Returning customer? -->
+<!--                             <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_coupon" aria-expanded="true">Click here to enter your code</a>      -->
 
-                        </h3>
-                         <div id="checkout_coupon" class="collapse" data-parent="#accordion">
-                            <div class="checkout_info coupon_info">
-                                <form action="#">
-                                    <input placeholder="Coupon code" type="text">
-                                    <button type="submit">Apply coupon</button>
-                                </form>
-                            </div>
-                        </div>    
-                    </div>    
-               </div>
-            </div>
+<!--                         </h3> -->
+<!--                          <div id="checkout_coupon" class="collapse" data-parent="#accordion"> -->
+<!--                             <div class="checkout_info coupon_info"> -->
+<!--                                 <form action="#"> -->
+<!--                                     <input placeholder="Coupon code" type="text"> -->
+<!--                                     <button type="submit">Apply coupon</button> -->
+<!--                                 </form> -->
+<!--                             </div> -->
+<!--                         </div>     -->
+<!--                     </div>     -->
+<!--                </div> -->
+<!--             </div> -->
             <div class="checkout_form">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
-                        <form action="#">
-                            <h3>Billing Details</h3>
+                        <form method="post" id="form1" action="${pageContext.request.contextPath}/order/order.do">
+                            <h3>收貨人明細</h3>
                             <div class="row">
+                                <div class="col-12 mb-20">
+                                    <label>收件人 <span>*</span></label>
+                                    <input type="text" name="receiver" required>    
+                                </div>
 
-                                <div class="col-lg-6 mb-20">
-                                    <label>First Name <span>*</span></label>
-                                    <input type="text">    
-                                </div>
-                                <div class="col-lg-6 mb-20">
-                                    <label>Last Name  <span>*</span></label>
-                                    <input type="text"> 
-                                </div>
                                 <div class="col-12 mb-20">
-                                    <label>Company Name</label>
-                                    <input type="text">     
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <label for="country">country <span>*</span></label>
+                                    <label for="country">收件地址 <span>*</span></label>
                                     <select class="select_option" name="cuntry" id="country"> 
                                         <option value="2">bangladesh</option>      
                                         <option value="3">Algeria</option> 
@@ -121,20 +113,10 @@
                                 </div>
 
                                 <div class="col-12 mb-20">
-                                    <label>Street address  <span>*</span></label>
-                                    <input placeholder="House number and street name" type="text">     
+                                    <label>收件地址  <span>*</span></label>
+                                    <input type="text" name="shippingAddress"  required>     
                                 </div>
-                                <div class="col-12 mb-20">
-                                    <input placeholder="Apartment, suite, unit etc. (optional)" type="text">     
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <label>Town / City <span>*</span></label>
-                                    <input  type="text">    
-                                </div> 
-                                 <div class="col-12 mb-20">
-                                    <label>State / County <span>*</span></label>
-                                    <input type="text">    
-                                </div> 
+ 
                                 <div class="col-lg-6 mb-20">
                                     <label>Phone<span>*</span></label>
                                     <input type="text"> 
@@ -221,16 +203,16 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="order-notes">
-                                         <label for="order_note">Order Notes</label>
-                                        <textarea id="order_note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                         <label for="order_note">備註</label>
+                                        <textarea name="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                     </div>    
                                 </div>     	    	    	    	    	    	    
                             </div>
                         </form>    
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <form action="#">    
-                            <h3>Your order</h3> 
+                        <form method="post" id="form2" name="newOrderDetailsForm" action="${pageContext.request.contextPath}/order/order.do">    
+                            <h3>訂單明細</h3> 
                             <div class="order_table table-responsive">
                                 <table>
                                     <thead>
@@ -259,15 +241,15 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Cart Subtotal</th>
+                                            <th>小計</th>
                                             <td>$215.00</td>
                                         </tr>
                                         <tr>
-                                            <th>Shipping</th>
+                                            <th>運費</th>
                                             <td><strong>$5.00</strong></td>
                                         </tr>
                                         <tr class="order_total">
-                                            <th>Order Total</th>
+                                            <th>訂單總金額</th>
                                             <td><strong>$220.00</strong></td>
                                         </tr>
                                     </tfoot>
@@ -295,10 +277,12 @@
                                     </div>
                                 </div>
                                 <div class="order_button">
-                                    <button  type="submit">Proceed to PayPal</button> 
+                                    <button type="button" onclick="submitForms()">去付款</button>
+                                    <input type="hidden" name="userNumber" value="4">	<!-- 先將會員編號設死，實際要動態取得 -->
+                                    <input type="hidden" name="action" value="checkout">	
                                 </div>    
                             </div> 
-                        </form>         
+                        </form>                            
                     </div>
                 </div> 
             </div> 
@@ -315,6 +299,12 @@
 ============================================ -->
 
 <%@include file="/front-end/component/script.jsp" %>
+<script type="text/javascript">
+        function submitForms() {
+            document.getElementById("form1").submit();
+            document.getElementById("form2").submit();
+        }
+</script>
 
 
 </body>

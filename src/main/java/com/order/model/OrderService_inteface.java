@@ -10,5 +10,5 @@ public interface OrderService_inteface {
 	public List<OrderVO> getOrderByUserNumber(Integer userNumber);
 	public List<Integer> getUserNumber();
 	public List<OrderVO> getOrderByOrderStatus(Integer orderStatus);
-	public String checkout(Integer userNumber, OrderVO ordreVO);
+	public String checkout(Integer userNumber, OrderVO ordreVO, String contextPath);
 }

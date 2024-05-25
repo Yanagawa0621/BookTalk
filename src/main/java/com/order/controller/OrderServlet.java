@@ -361,6 +361,56 @@ public class OrderServlet extends HttpServlet {
 			
 		}
 		
+		/**************************** checkout ****************************/
+		if("checkout".equals(action)) {
+			List<String> errorMsgs = new LinkedList<>();			
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String contextPath = req.getContextPath();	//取得專案名稱，給結帳時回傳網頁用
+
+			
+//			String receiver = req.getParameter("receiver").trim();
+//			if(receiver == null || receiver.length() == 0) {
+//				errorMsgs.add("收件人請勿空白");		
+//			}
+//			
+//			String shippingAddress = req.getParameter("shippingAddress").trim();
+//			if(shippingAddress == null || shippingAddress.length() == 0) {
+//				errorMsgs.add("收件地址請勿空白");		
+//			}
+//			
+//			String note = req.getParameter("note").trim();
+			String userNumber = req.getParameter("userNumber");
+			
+			
+			OrderVO orderVO = new OrderVO();
+
+			orderVO.setUserNumber(Integer.valueOf(userNumber));
+//			orderVO.setReceiver(receiver);
+//			orderVO.setShippingAddress(shippingAddress);
+//			orderVO.setNote(note);
+			System.out.println(orderVO);
+			
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("orderVO", orderVO); // 含有輸入格式錯誤的orderVO物件，也存入req
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/checkout.jsp");
+				failureView.forward(req, res);
+				return; //程式中斷
+			}
+			
+			String paymentForm = orderService.checkout(orderVO.getUserNumber(), orderVO, contextPath);
+			
+			if (paymentForm != null) {
+                res.setContentType("text/html;charset=UTF-8");
+                res.getWriter().write(paymentForm);
+            } else {
+                String url = "/front-end/checkout.jsp";
+                RequestDispatcher failureView = req.getRequestDispatcher(url); // 如果沒有成功，再回到結帳畫面
+                failureView.forward(req, res);
+            }
+
+		}
 	}
 
 }
