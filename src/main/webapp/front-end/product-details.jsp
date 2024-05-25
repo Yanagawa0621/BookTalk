@@ -9,7 +9,7 @@
 <html class="no-js" lang="en">
 
 <head>
-<%@include file="/front-end/component/head.jsp"%>
+<%@include file="/front-end/component/head.jsp" %>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
     
     <!--offcanvas menu area start-->
     <!--offcanvas menu area end-->
-    <%@include file="/front-end/component/header.jsp" %>
+    <%@include file="/front-end/component/menu.jsp" %>
     <!--header area end-->
 
     <!--breadcrumbs area start-->

@@ -32,7 +32,7 @@ pageContext.setAttribute("bcList", bcList);
 <html class="no-js" lang="en">
 
 <!-- head -->
-<%@include file="/front-end/component/head.jsp"%>
+<%@include file="/front-end/component/head.jsp" %>
 
 <body>
 
@@ -40,7 +40,7 @@ pageContext.setAttribute("bcList", bcList);
 	<!--offcanvas menu area start-->
 
 	<!--offcanvas menu area end-->
-	<%@include file="/front-end/component/header.jsp"%>
+	<%@include file="/front-end/component/menu.jsp" %>
 	<!--header area end-->
 
 
