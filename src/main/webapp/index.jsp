@@ -2,11 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.bookproducts.model.*" %>
 <%@ page import="java.util.*"%>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.YearMonth" %>
 
 <%  
 	BookProductsService bpsce=new BookProductsService();
 	List<BookProductsVO> list=bpsce.npiBp();
 	pageContext.setAttribute("list",list);
+%>
+
+<% 
+	LocalDate date=LocalDate.now();
+	int year=date.getYear();
+	int month=date.getMonthValue();
 %>
 
 <!DOCTYPE html>
@@ -377,13 +385,15 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="product-details.html"><img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗"></a>
-<%--                                             <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a> --%>
+                                            <a class="primary_img" href="javascript:void(0);" onclick="document.getElementById('bookForm_${bpVO.bookNumber}').submit();"><img
+												src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}"
+												alt="預覽失敗"></a>
                                             <div class="action_links">
                                                 <ul>
-                                                    <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                                    <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                                    <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
+                                                    <li class="quick_button">詳細資訊<a href="#"
+														data-toggle="modal" data-target="#modal_box"
+														title="quick view"> <input type="hidden" name="bookNumber" value="${bpVO.bookNumber}"><i class="icon icon-Eye"></i></a>
+													</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -397,9 +407,15 @@
 <!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
                                                </ul>
                                             </div>
-                                            <h4 class="product_name"><a href="product-details.html">${bpVO.bookTitle}</a></h4>
+                                            <FORM METHOD="GET"  ACTION="${pageContext.request.contextPath}/bookproducts.do" id="bookForm_${bpVO.bookNumber}">
+											<h4 class="product_name">
+												<input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
+												<input type="hidden" name="action" value="single_product_page">
+												<input type="submit" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" value="${bpVO.bookTitle}" >
+											</h4>
+											</FORM>
                                             <div class="price_box"> 
-                                                <span class="current_price">$${bpVO.price}</span>
+                                                <span class="current_price">NT$ ${bpVO.price}</span>
 <!--                                                 <span class="old_price">$173.00</span> -->
                                             </div>
                                             <div class="add_to_cart">
@@ -1433,105 +1449,105 @@
                   <span aria-hidden="true"><i class="ion-android-close"></i></span>
                 </button>
                 <div class="modal_body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="modal_tab">  
-                                    <div class="tab-content product-details-large">
-                                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig1.jpg" alt=""></a>    
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig2.jpg" alt=""></a>    
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab3" role="tabpanel">
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig3.jpg" alt=""></a>    
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab4" role="tabpanel">
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig4.jpg" alt=""></a>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal_tab_button">    
-                                        <ul class="nav product_navactive owl-carousel" role="tablist">
-                                            <li >
-                                                <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product1.jpg" alt=""></a>
-                                            </li>
-                                            <li>
-                                                 <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product2.jpg" alt=""></a>
-                                            </li>
-                                            <li>
-                                               <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product3.jpg" alt=""></a>
-                                            </li>
-                                            <li>
-                                               <a class="nav-link" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product8.jpg" alt=""></a>
-                                            </li>
+<!--                     <div class="container"> -->
+<!--                         <div class="row"> -->
+<!--                             <div class="col-lg-5 col-md-5 col-sm-12"> -->
+<!--                                 <div class="modal_tab">   -->
+<!--                                     <div class="tab-content product-details-large"> -->
+<!--                                         <div class="tab-pane fade show active" id="tab1" role="tabpanel" > -->
+<!--                                             <div class="modal_tab_img"> -->
+<%--                                                 <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig1.jpg" alt=""></a>     --%>
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <div class="tab-pane fade" id="tab2" role="tabpanel"> -->
+<!--                                             <div class="modal_tab_img"> -->
+<%--                                                 <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig2.jpg" alt=""></a>     --%>
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <div class="tab-pane fade" id="tab3" role="tabpanel"> -->
+<!--                                             <div class="modal_tab_img"> -->
+<%--                                                 <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig3.jpg" alt=""></a>     --%>
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                         <div class="tab-pane fade" id="tab4" role="tabpanel"> -->
+<!--                                             <div class="modal_tab_img"> -->
+<%--                                                 <a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/productbig4.jpg" alt=""></a>     --%>
+<!--                                             </div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="modal_tab_button">     -->
+<!--                                         <ul class="nav product_navactive owl-carousel" role="tablist"> -->
+<!--                                             <li > -->
+<%--                                                 <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product1.jpg" alt=""></a> --%>
+<!--                                             </li> -->
+<!--                                             <li> -->
+<%--                                                  <a class="nav-link" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product2.jpg" alt=""></a> --%>
+<!--                                             </li> -->
+<!--                                             <li> -->
+<%--                                                <a class="nav-link button_three" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product3.jpg" alt=""></a> --%>
+<!--                                             </li> -->
+<!--                                             <li> -->
+<%--                                                <a class="nav-link" data-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product8.jpg" alt=""></a> --%>
+<!--                                             </li> -->
 
-                                        </ul>
-                                    </div>    
-                                </div>  
-                            </div> 
-                            <div class="col-lg-7 col-md-7 col-sm-12">
-                                <div class="modal_right">
-                                    <div class="modal_title mb-10">
-                                        <h2>Donec Ac Tempus</h2> 
-                                    </div>
-                                    <div class="modal_price mb-10">
-                                        <span class="new_price">$64.99</span>    
-                                        <span class="old_price" >$78.99</span>    
-                                    </div>
-                                    <div class="modal_description mb-15">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>    
-                                    </div> 
-                                    <div class="variants_selects">
-                                        <div class="variants_size">
-                                           <h2>size</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">s</option>
-                                               <option value="1">m</option>
-                                               <option value="1">l</option>
-                                               <option value="1">xl</option>
-                                               <option value="1">xxl</option>
-                                           </select>
-                                        </div>
-                                        <div class="variants_color">
-                                           <h2>color</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">purple</option>
-                                               <option value="1">violet</option>
-                                               <option value="1">black</option>
-                                               <option value="1">pink</option>
-                                               <option value="1">orange</option>
-                                           </select>
-                                        </div>
-                                        <div class="modal_add_to_cart">
-                                            <form action="#">
-                                                <input min="1" max="100" step="2" value="1" type="number">
-                                                <button type="submit">add to cart</button>
-                                            </form>
-                                        </div>   
-                                    </div>
-                                    <div class="modal_social">
-                                        <h2>Share this product</h2>
-                                        <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        </ul>    
-                                    </div>      
-                                </div>    
-                            </div>    
-                        </div>     
-                    </div>
+<!--                                         </ul> -->
+<!--                                     </div>     -->
+<!--                                 </div>   -->
+<!--                             </div>  -->
+<!--                             <div class="col-lg-7 col-md-7 col-sm-12"> -->
+<!--                                 <div class="modal_right"> -->
+<!--                                     <div class="modal_title mb-10"> -->
+<!--                                         <h2>Donec Ac Tempus</h2>  -->
+<!--                                     </div> -->
+<!--                                     <div class="modal_price mb-10"> -->
+<!--                                         <span class="new_price">$64.99</span>     -->
+<!--                                         <span class="old_price" >$78.99</span>     -->
+<!--                                     </div> -->
+<!--                                     <div class="modal_description mb-15"> -->
+<!--                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>     -->
+<!--                                     </div>  -->
+<!--                                     <div class="variants_selects"> -->
+<!--                                         <div class="variants_size"> -->
+<!--                                            <h2>size</h2> -->
+<!--                                            <select class="select_option"> -->
+<!--                                                <option selected value="1">s</option> -->
+<!--                                                <option value="1">m</option> -->
+<!--                                                <option value="1">l</option> -->
+<!--                                                <option value="1">xl</option> -->
+<!--                                                <option value="1">xxl</option> -->
+<!--                                            </select> -->
+<!--                                         </div> -->
+<!--                                         <div class="variants_color"> -->
+<!--                                            <h2>color</h2> -->
+<!--                                            <select class="select_option"> -->
+<!--                                                <option selected value="1">purple</option> -->
+<!--                                                <option value="1">violet</option> -->
+<!--                                                <option value="1">black</option> -->
+<!--                                                <option value="1">pink</option> -->
+<!--                                                <option value="1">orange</option> -->
+<!--                                            </select> -->
+<!--                                         </div> -->
+<!--                                         <div class="modal_add_to_cart"> -->
+<!--                                             <form action="#"> -->
+<!--                                                 <input min="1" max="100" step="2" value="1" type="number"> -->
+<!--                                                 <button type="submit">add to cart</button> -->
+<!--                                             </form> -->
+<!--                                         </div>    -->
+<!--                                     </div> -->
+<!--                                     <div class="modal_social"> -->
+<!--                                         <h2>Share this product</h2> -->
+<!--                                         <ul> -->
+<!--                                             <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li> -->
+<!--                                             <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li> -->
+<!--                                             <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li> -->
+<!--                                             <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
+<!--                                             <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
+<!--                                         </ul>     -->
+<!--                                     </div>       -->
+<!--                                 </div>     -->
+<!--                             </div>     -->
+<!--                         </div>      -->
+<!--                     </div> -->
                 </div>    
             </div>
         </div>
@@ -1543,6 +1559,112 @@
 
 <%@include file="/front-end/component/script.jsp" %>
 
+<script>
+		$(document).ready(function() {
+		    $('.quick_button').find('a').on('click', function(e) {
+		    	
+		        e.preventDefault();
+		        let bookNumber = $(this).find('input[name="bookNumber"]').val();
+		        $.ajax({
+		            url: '${pageContext.request.contextPath}/bookproducts.do?action=product_page_ajax',
+		            type: 'GET',
+		            data: { bookNumber: bookNumber },
+		            success: function(response) {
+					let bookNumber=response.bookNumber;
+					let bookClassName=response.bookClassName;
+					let publishingHouseName=response.publishingHouseName;
+					let productStatus=response.productStatus;
+					let bookTitle=response.bookTitle;
+					let isbn=response.isbn;
+					let price=response.price;
+					let publicationDate=response.publicationDate;
+					let stock=response.stock;
+					let introductionContent=response.introductionContent;
+					let releaseDate=response.releaseDate;
+					let img=response.img[0];
+					let ratingScoreAvg=response.ratingScoreAvg;
+// 					console.log(ratingScoreAvg)
+					let AuthorVO=response.AuthorVO;
+					
+					let htmlContent = ``
+						htmlContent +=`<div class="container">`
+						    htmlContent +=`<div class="row">`
+                                htmlContent +=`<div class="col-lg-5 col-md-5 col-sm-12">`
+						            htmlContent +=`<div class="modal_tab">`
+						                htmlContent +=`<div class="tab-content product-details-large">`
+						                    htmlContent +=`<div class="tab-pane fade show active" id="tab1" role="tabpanel" >`
+                                                htmlContent +=`<div class="modal_tab_img">`
+                                                    htmlContent +=`<img src="data:image/jpeg;base64,`+img+`" alt=""></a>`
+                                                htmlContent +=`</div>`
+                                            htmlContent +=`</div>`
+						                htmlContent +=`</div>`
+						            htmlContent +=`</div>`
+						        htmlContent +=`</div>`
+						        htmlContent +=`<div class="col-lg-7 col-md-7 col-sm-12">`
+						            htmlContent +=`	<div class="modal_right">`
+						                htmlContent +=`<div class="modal_title mb-10">`
+						                    htmlContent +=`<h2>`+bookTitle+`</h2>`
+						                htmlContent +=`</div>`
+						                htmlContent +=`<div class="modal_price mb-10">`
+						                    htmlContent +=`<span class="new_price">NT$ `+price+`</span>`
+						                htmlContent +=`</div>`
+						                htmlContent +=`<div class="modal_description mb-15">`
+						                    htmlContent +=`<p>`+introductionContent+`</p>`
+						                htmlContent +=`</div>`
+						                	htmlContent +=`<div class="product_rating">`
+						                		htmlContent +=`<h2 style="font-size: 20px; font-weight:bold;">評分</h2><ul>`
+						                		if(ratingScoreAvg!=null){
+													if(ratingScoreAvg>=0){
+														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+			            							}
+													if(ratingScoreAvg>=1.5){
+														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+													}
+													if(ratingScoreAvg>=2.5){
+														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+													}
+													if(ratingScoreAvg>=3.5){
+														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+													}
+													if(ratingScoreAvg>=4.5){
+														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+													}
+						                		}else {htmlContent +=`<p style="font-size: 16px; color: grey;">尚無評分<p>`}
+												htmlContent +=`</ul>`
+											htmlContent +=`</div>`
+						                htmlContent +=`<div class="variants_selects">`
+						                    htmlContent +=`<div class="variants_size">`
+						                        htmlContent +=`<h2>出版社:`+publishingHouseName+`</h2>`
+						                        htmlContent +=`<h2>出版日期:`+publicationDate+`</h2>`
+						                        htmlContent +=`<h2>書籍分類:`+bookClassName+`</h2>`
+						                        AuthorVO.forEach(function(imgUrl, index){
+						                        	htmlContent +=`<h2>作者:`+imgUrl+`</h2>`
+						                        });
+						                    htmlContent +=`</div>`
+						                    htmlContent +=`<div class="variants_color">`
+						                    htmlContent +=`</div>`
+						                    htmlContent +=`<div class="modal_add_to_cart">`
+						                        htmlContent +=`<form action="#">`
+                                                    htmlContent +=`<input min="1" max="100" step="2" value="1" type="number">`
+                                                    htmlContent +=`<button type="submit">加入購物車</button>`
+						                        htmlContent +=`</form>`
+						                    htmlContent +=`</div>`
+						                htmlContent +=`</div>`
+						            
+						        htmlContent +=`</div>`
+						    htmlContent +=`</div>`
+						htmlContent +=`</div>`
+                    htmlContent +=`</div>`
+				    $('#modal_box .modal_body').html(htmlContent);
+		            $('#modal_box').modal('show');
+		            },
+		            error: function(xhr, status, error) {
+		                console.error('Ajax请求失败:', error);
+		            }
+		        });
+		    })
+		});
+	</script>
 
 </body>
 
