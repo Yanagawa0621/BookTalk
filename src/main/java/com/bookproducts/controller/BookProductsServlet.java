@@ -39,7 +39,8 @@ public class BookProductsServlet extends HttpServlet {
 		if ("query_bar".equals(action)) {
 			String searchMain = req.getParameter("searchMain");
 			if ("bookTitle".equals(searchMain)) {
-
+				
+				
 			} else if ("author".equals(searchMain)) {
 
 			} else if ("publishing_house".equals(searchMain)) {
