@@ -71,15 +71,7 @@ public class BookClassService {
 		Session session = factory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		BookClassService bcSce = new BookClassService();
-		List<BookClassVO> list = bcSce.keywordsBc("文學");
-		for (BookClassVO bcVOs : list) {
-			for (BookProductsVO bpVOs : bcVOs.getBpVO()) {
-				for (String img : bpVOs.getImg()) {
-					System.out.println(img);
-				}
-			}
-		}
-
+		System.out.println(bcSce.getAllBc().get(0).getClassName());
 		transaction.commit();
 	}
 }

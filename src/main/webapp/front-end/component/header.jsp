@@ -243,19 +243,23 @@
 					<div class="col-lg-2">
 						<div class="header_account_area">
 							<div class="header_account-list search_bar">
-								<a href="javascript:void(0)"><span class="icon icon-Search"></span></a>
-								<div class="dropdown_search">
-									<div class="search_close_btn">
-										<a href="#"><i class="ion-close-round"></i></a>
-									</div>
-									<form action="#">
-										<input placeholder="Search entire store here ..." type="text">
-										<button type="submit">
-											<span class="icon icon-Search"></span>
-										</button>
-									</form>
-								</div>
-							</div>
+                                   <a href="javascript:void(0)"><span class="icon icon-Search"></span></a>
+                                    <div class="dropdown_search">
+                                        <div class="search_close_btn">
+                                            <a href="#"><i class="ion-close-round"></i></a>
+                                        </div>
+                                        <form method="get" action="${pageContext.request.contextPath}/bookproducts.do">
+                                            <select name="searchMain" style="opacity: 0.8; font-size: 20px; border-radius: 40px;">
+                                                <option value="bookTitle">書籍名稱</option>
+                                                <option value="author">作者</option>
+                                                <option value="publishing_house">出版社</option>
+                                                <option value="isbn">國際書碼(ISBN)</option>
+                                            </select>
+                                            <input placeholder="請輸入關鍵字" type="text">
+                                            <button type="submit"><span class="icon icon-Search"></span></button>
+                                        </form>
+                                    </div>
+                                </div>
 							<div class="header_account-list  mini_cart_wrapper">
 								<a href="javascript:void(0)"><i
 									class="icon icon-FullShoppingCart"></i><span class="item_count">2</span></a>

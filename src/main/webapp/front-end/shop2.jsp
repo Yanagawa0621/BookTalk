@@ -1,3 +1,4 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="com.bookclass.model.*"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,10 +8,8 @@
 <%@ page import="java.time.LocalDate"%>
 <%@ page import="java.time.YearMonth"%>
 
-<%
-BookProductsService bpsce = new BookProductsService();
-List<BookProductsVO> list = bpsce.getAllBp();
-pageContext.setAttribute("list", list);
+<% 
+BookClassVO oneBcVO=(BookClassVO) request.getAttribute("bcVO");
 %>
 
 <%
@@ -52,7 +51,7 @@ pageContext.setAttribute("bcList", bcList);
 					<div class="breadcrumb_content">
 						<h3>商城</h3>
 						<ul>
-							<li><a href="${pageContext.request.contextPath}/index.jsp">首頁</a></li>
+							<li><a href="/BoolTalk/index.jsp">首頁</a></li>
 							<li style="padding: 0;">商城</li>
 						</ul>
 					</div>
@@ -113,6 +112,7 @@ pageContext.setAttribute("bcList", bcList);
 
 							<button data-role="grid_3" type="button"
 								class="active btn-grid-3" data-toggle="tooltip" title="3"></button>
+
 							<button data-role="grid_4" type="button" class=" btn-grid-4"
 								data-toggle="tooltip" title="4"></button>
 						</div>
@@ -134,7 +134,7 @@ pageContext.setAttribute("bcList", bcList);
 					</div>
 					<!--shop toolbar end-->
 					<div class="row shop_wrapper">
-						<c:forEach var="bpVO" items="${list}">
+						<c:forEach var="bpVO" items="<%=oneBcVO.getBpVO()%>">
 							<div class="col-lg-4 col-md-4 col-sm-6 col-12 ">
 								<article class="single_product">
 									<figure>
@@ -277,42 +277,42 @@ pageContext.setAttribute("bcList", bcList);
 							<h3>instagram</h3>
 							<div class="instagram_container">
 								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam1.jpg"
+									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam1.jpg"
 										alt=""></a>
 									<div class="instagram_boxcmt">
 										<span class="likecount">5</span> <span class="commentcount">1</span>
 									</div>
 								</div>
 								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam2.jpg"
+									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"
 										alt=""></a>
 									<div class="instagram_boxcmt">
 										<span class="likecount">5</span> <span class="commentcount">1</span>
 									</div>
 								</div>
 								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam3.jpg"
+									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam3.jpg"
 										alt=""></a>
 									<div class="instagram_boxcmt">
 										<span class="likecount">5</span> <span class="commentcount">1</span>
 									</div>
 								</div>
 								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam4.jpg"
+									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam4.jpg"
 										alt=""></a>
 									<div class="instagram_boxcmt">
 										<span class="likecount">5</span> <span class="commentcount">1</span>
 									</div>
 								</div>
 								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam5.jpg"
+									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam5.jpg"
 										alt=""></a>
 									<div class="instagram_boxcmt">
 										<span class="likecount">5</span> <span class="commentcount">1</span>
 									</div>
 								</div>
 								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam2.jpg"
+									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"
 										alt=""></a>
 									<div class="instagram_boxcmt">
 										<span class="likecount">5</span> <span class="commentcount">1</span>
@@ -342,6 +342,120 @@ pageContext.setAttribute("bcList", bcList);
 					<span aria-hidden="true"><i class="ion-android-close"></i></span>
 				</button>
 				<div class="modal_body">
+<!-- 					<div class="container"> -->
+<!-- 						<div class="row"> -->
+<!-- 							<div class="col-lg-5 col-md-5 col-sm-12"> -->
+<!-- 								<div class="modal_tab"> -->
+<!-- 									<div class="tab-content product-details-large"> -->
+<!-- 										<div class="tab-pane fade show active" id="tab1" -->
+<!-- 											role="tabpanel"> -->
+<!-- 											<div class="modal_tab_img"> -->
+<!-- 												<a href="#"><img -->
+<!-- 													src="assets/img/product/productbig1.jpg" alt=""></a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="tab-pane fade" id="tab2" role="tabpanel"> -->
+<!-- 											<div class="modal_tab_img"> -->
+<!-- 												<a href="#"><img -->
+<!-- 													src="assets/img/product/productbig2.jpg" alt=""></a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="tab-pane fade" id="tab3" role="tabpanel"> -->
+<!-- 											<div class="modal_tab_img"> -->
+<!-- 												<a href="#"><img -->
+<!-- 													src="assets/img/product/productbig3.jpg" alt=""></a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="tab-pane fade" id="tab4" role="tabpanel"> -->
+<!-- 											<div class="modal_tab_img"> -->
+<!-- 												<a href="#"><img -->
+<!-- 													src="assets/img/product/productbig4.jpg" alt=""></a> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="modal_tab_button"> -->
+<!-- 										<ul class="nav product_navactive owl-carousel" role="tablist"> -->
+<!-- 											<li><a class="nav-link active" data-toggle="tab" -->
+<!-- 												href="#tab1" role="tab" aria-controls="tab1" -->
+<!-- 												aria-selected="false"><img -->
+<!-- 													src="assets/img/product/product1.jpg" alt=""></a></li> -->
+<!-- 											<li><a class="nav-link" data-toggle="tab" href="#tab2" -->
+<!-- 												role="tab" aria-controls="tab2" aria-selected="false"><img -->
+<!-- 													src="assets/img/product/product2.jpg" alt=""></a></li> -->
+<!-- 											<li><a class="nav-link button_three" data-toggle="tab" -->
+<!-- 												href="#tab3" role="tab" aria-controls="tab3" -->
+<!-- 												aria-selected="false"><img -->
+<!-- 													src="assets/img/product/product3.jpg" alt=""></a></li> -->
+<!-- 											<li><a class="nav-link" data-toggle="tab" href="#tab4" -->
+<!-- 												role="tab" aria-controls="tab4" aria-selected="false"><img -->
+<!-- 													src="assets/img/product/product8.jpg" alt=""></a></li> -->
+
+<!-- 										</ul> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="col-lg-7 col-md-7 col-sm-12"> -->
+<!-- 								<div class="modal_right"> -->
+<!-- 									<div class="modal_title mb-10"> -->
+<!-- 										<h2>Donec Ac Tempus</h2> -->
+<!-- 									</div> -->
+<!-- 									<div class="modal_price mb-10"> -->
+<!-- 										<span class="new_price">$64.99</span> <span class="old_price">$78.99</span> -->
+<!-- 									</div> -->
+<!-- 									<div class="modal_description mb-15"> -->
+<!-- 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing -->
+<!-- 											elit. Mollitia iste laborum ad impedit pariatur esse optio -->
+<!-- 											tempora sint ullam autem deleniti nam in quos qui nemo ipsum -->
+<!-- 											numquam, reiciendis maiores quidem aperiam, rerum vel -->
+<!-- 											recusandae</p> -->
+<!-- 									</div> -->
+<!-- 									<div class="variants_selects"> -->
+<!-- 										<div class="variants_size"> -->
+<!-- 											<h2>size</h2> -->
+<!-- 											<select class="select_option"> -->
+<!-- 												<option selected value="1">s</option> -->
+<!-- 												<option value="1">m</option> -->
+<!-- 												<option value="1">l</option> -->
+<!-- 												<option value="1">xl</option> -->
+<!-- 												<option value="1">xxl</option> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
+<!-- 										<div class="variants_color"> -->
+<!-- 											<h2>color</h2> -->
+<!-- 											<select class="select_option"> -->
+<!-- 												<option selected value="1">purple</option> -->
+<!-- 												<option value="1">violet</option> -->
+<!-- 												<option value="1">black</option> -->
+<!-- 												<option value="1">pink</option> -->
+<!-- 												<option value="1">orange</option> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
+<!-- 										<div class="modal_add_to_cart"> -->
+<!-- 											<form action="#"> -->
+<!-- 												<input min="1" max="100" step="2" value="1" type="number"> -->
+<!-- 												<button type="submit">add to cart</button> -->
+<!-- 											</form> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="modal_social"> -->
+<!-- 										<h2>Share this product</h2> -->
+<!-- 										<ul> -->
+<!-- 											<li class="facebook"><a href="#"><i -->
+<!-- 													class="fa fa-facebook"></i></a></li> -->
+<!-- 											<li class="twitter"><a href="#"><i -->
+<!-- 													class="fa fa-twitter"></i></a></li> -->
+<!-- 											<li class="pinterest"><a href="#"><i -->
+<!-- 													class="fa fa-pinterest"></i></a></li> -->
+<!-- 											<li class="google-plus"><a href="#"><i -->
+<!-- 													class="fa fa-google-plus"></i></a></li> -->
+<!-- 											<li class="linkedin"><a href="#"><i -->
+<!-- 													class="fa fa-linkedin"></i></a></li> -->
+<!-- 										</ul> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 		</div>
@@ -351,7 +465,7 @@ pageContext.setAttribute("bcList", bcList);
 
 	<!-- JS
 ============================================ -->
-<%@include file="/front-end/component/script.jsp" %>
+	<%@include file="/front-end/component/script.jsp" %>
 
 	<script>
 		$(document).ready(function() {

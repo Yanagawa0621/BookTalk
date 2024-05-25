@@ -32,7 +32,7 @@ public class BookClassVO implements java.io.Serializable {
 	@Column(name = "className",nullable = false)
 	private String className;
 	
-	@OneToMany(mappedBy = "bcVO",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "bcVO",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
 	@OrderBy("bookNumber asc")
 	private List<BookProductsVO> bpVO;
 	

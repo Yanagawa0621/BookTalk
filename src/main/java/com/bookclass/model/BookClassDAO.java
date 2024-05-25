@@ -74,14 +74,7 @@ public class BookClassDAO implements BookClassDAO_Impl {
 		BookClassDAO bc = new BookClassDAO();
 		Session session = bc.getSession();
 		Transaction transaction = session.beginTransaction();
-		BookClassVO bcVO=bc.singleQuery(1);
-		List<BookProductsVO> bpVOs=bcVO.getBpVO();
-		System.out.println(bpVOs.size());
-		for(BookProductsVO bpVO:bpVOs) {
-			for(BooksAndPictureVO bapVOs:bpVO.getBapVO()) {
-				System.out.println(bapVOs.getPictureNumber());
-			}
-		}
+		System.out.println(bc.getAll());
 		transaction.commit();
 	}
 }

@@ -23,8 +23,7 @@ import javax.persistence.Transient;
 import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
-import com.order.model.OrderDAOHibernate;
-import com.orderdetails.model.OrderDetailsDAOHibernate;
+import com.google.gson.annotations.Expose;
 import com.orderdetails.model.OrderDetailsVO;
 import com.publishinghouse.model.PublishingHouseVO;
 
@@ -40,38 +39,49 @@ public class BookProductsVO implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bookNumber",updatable=false)
+	@Expose
 	private Integer bookNumber;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bookClassNumber", referencedColumnName = "classNumber", nullable = false)
+	@Expose
 	private BookClassVO bcVO;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publishiingHouseCode", referencedColumnName = "publishingHouseNumber", nullable = false)
+	@Expose
 	private PublishingHouseVO phVO;
 
 	@Column(name = "productStatus",nullable = false)
+	@Expose
 	private Integer productStatus;
 
 	@Column(name = "bookTitle",nullable = false)
+	@Expose
 	private String bookTitle;
 
 	@Column(name = "isbn", length = 13, unique = true,nullable = false)
+	@Expose
 	private String isbn;
 
 	@Column(name = "price",nullable = false,columnDefinition="DECIMAL")
+	@Expose
 	private Double price;
 
 	@Column(name = "publicationDate",nullable = false)
+	@Expose
 	private Date publicationDate;
 
 	@Column(name = "stock",nullable = false)
+	@Expose
 	private Integer stock;
 
 	@Column(name = "introductionContent",columnDefinition = "longtext")
+	@Expose
 	private String introductionContent;
 
 	@Column(name="releaseDate")
+	@Expose
 	private Date releaseDate;
 	
 	@OneToMany(mappedBy = "bpVO",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -83,14 +93,17 @@ public class BookProductsVO implements java.io.Serializable {
 	private List<AuthorVO> authorVO;
 	
 	@Transient
+	@Expose
 	private List<String> img;
 	
 	@Transient
+	@Expose
 	private Double ratingScoreAvg;
 	
 	@OneToMany(mappedBy = "bookProductsVO",cascade = CascadeType.ALL)
 	@OrderBy("bookNumber asc")
 	private Set<OrderDetailsVO> orderDetailsVO;
+	
 	
 	public Integer getBookNumber() {
 		return bookNumber;
@@ -173,6 +186,8 @@ public class BookProductsVO implements java.io.Serializable {
 	}
 	
 	public Date getReleaseDate() {
+//		Calendar releaseDate=Calendar.getInstance();
+//		releaseDate.setTime(this.releaseDate);
 		return releaseDate;
 	}
 
