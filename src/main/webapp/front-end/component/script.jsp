@@ -34,3 +34,6 @@
 
 <!-- Main JS -->
 <script src="${pageContext.request.contextPath}/front-end/assets/js/main.js"></script>
+
+<!-- Mini Cart JS -->
+<script src="${pageContext.request.contextPath}/front-end/assets/js/cart/cart-mini.js"></script>
