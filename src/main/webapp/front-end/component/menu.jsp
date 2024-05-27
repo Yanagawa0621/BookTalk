@@ -3,14 +3,6 @@
 <%@ page import="com.cart.model.*"%>
 <%@ page import="java.util.*"%>
 
-<%
-    CartService cartSev = new CartService();
-	List<CartVO> cartList = cartSev.getCartItems(4);
-	int count = cartList.size();
-	pageContext.setAttribute("cartList", cartList);
-	pageContext.setAttribute("count", count);
-	System.out.println(cartList);
-%>
 
 <!-- offcanvas menu area start -->
 <div class="off_canvars_overlay"></div>
@@ -42,30 +34,15 @@
 						</div>
 						<div class="header_account-list  mini_cart_wrapper">
 							<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count">${count}</span></a>
+									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
 							<!--mini cart-->
 							<div class="mini_cart">
-								<div class="cart_gallery">
-								<c:forEach var="cartItem" items="${cartList}">
-									<div class="cart_item">
-										<div class="cart_img">
-											<a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="60px" alt=""></a>
-										</div>
-										<div class="cart_info">
-											<a href="#">${cartItem.bookTitle}</a>
-											<p>
-												${cartItem.quantity} x <span> ${cartItem.bookPrice} </span>
-											</p>
-										</div>
-										<div class="cart_remove">
-											<a href="#"><i class="ion-ios-close-outline"></i></a>
-										</div>
-									</div>
-								</c:forEach>
+								<div id= "offcanvas_mini_cart" class="cart_gallery">
+								
 								</div>
 								<div class="mini_cart_footer">
 									<div class="cart_button">
-										<a href="${pageContext.request.contextPath}/front-end/cart.jsp"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+										<a href="#" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
 									</div>
 									<div class="cart_button">
 										<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
@@ -167,35 +144,20 @@
                                             <input type="hidden" name="action" value="query_bar">
                                             <input placeholder="請輸入關鍵字" type="text" name="Keywords" required autocomplete="off">
                                             <button type="submit"><span class="icon icon-Search"></span></button>
-                                        </form>
+                                   </form>
 								</div>
 							</div>
 							<div class="header_account-list  mini_cart_wrapper">
 								<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count">${count}</span></a>
+									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
 								<!--mini cart-->
 								<div class="mini_cart">
-									<div class="cart_gallery">
-									<c:forEach var="cartItem" items="${cartList}">
-										<div class="cart_item">
-											<div class="cart_img">
-												<a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="60px" alt=""></a>
-											</div>
-											<div class="cart_info">
-												<a href="#">${cartItem.bookTitle}</a>
-												<p>
-													${cartItem.quantity} x <span> ${cartItem.bookPrice} </span>
-												</p>
-											</div>
-											<div class="cart_remove">
-												<a href="#"><i class="ion-ios-close-outline"></i></a>
-											</div>
-										</div>
-									</c:forEach>
+									<div id= "menu_mini_cart" class="cart_gallery">
+									
 									</div>
 									<div class="mini_cart_footer">
 										<div class="cart_button">
-											<a href="${pageContext.request.contextPath}/front-end/cart.jsp"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+											<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="menu-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
 										</div>
 										<div class="cart_button">
 											<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
