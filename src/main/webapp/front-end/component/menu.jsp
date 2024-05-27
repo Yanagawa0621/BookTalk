@@ -42,7 +42,7 @@
 								</div>
 								<div class="mini_cart_footer">
 									<div class="cart_button">
-										<a href="#" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+										<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
 									</div>
 									<div class="cart_button">
 										<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>

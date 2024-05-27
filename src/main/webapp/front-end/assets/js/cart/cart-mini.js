@@ -9,14 +9,6 @@ $(function(){
 	initMiniCart();	//呼叫頁面載入時取得資料
 	console.log(contextPath);
 	console.log(path);
-	
-//	$(document).on("click", "#offcanvas-view-cart-items", function(event){
-//			event.preventDefault(); //阻止預設行為
-//		initFullCart();
-//	});
-//	$(document).on("click", "#menu-view-cart-items", function(event){
-//		console.log("我有被按到");
-//	});
 });
 
 function initMiniCart(){
@@ -31,7 +23,6 @@ function initMiniCart(){
 		dataType: "json",
 		success:function(items){
 			console.log(items);
-//			sessionStorage.setItem("ajaxData", JSON.stringify(items));
 			let listHtml = '';
 			$.each(items, function(index, item){
 				listHtml += `
@@ -54,6 +45,7 @@ function initMiniCart(){
 			$(".mini_cart #offcanvas_mini_cart").html(listHtml);
 			$(".mini_cart #menu_mini_cart").html(listHtml);
 			$("span.item_count").text(items.length);
+			showFullCart(items);
 		}
 	});
 }
@@ -93,22 +85,22 @@ function initMiniCart(){
 //	});	
 //}
 
-//function showFullCart(cart){
-//	console.log(cart);
-//	let listHtml = '';
-//	$.each(cart, function(index, item){
-//				listHtml += `
-//					<tr>
-//						<td><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
-//			            <td><a href="#"><img src="${contextPath}/bap/Img?bookNumber=${item.bookNumber}" width="100px" alt=""></a></td>
-//			            <td><a href="#">${item.bookTitle}</a></td>
-//			            <td>${item.bookPrice}</td>
-//			            <td class="product_quantity"><label>數量</label><input min="1" max="${item.bookStock}" value="${item.quantity}" type="number"></td>
-//			            <td>${item.bookStock}</td>
-//			            <td>${item.subtotal}</td>
-//		            </tr>
-//		                <input type="hidden" name="userNumber" value="${item.userNumber}">
-//					`;
-//	});			
-//	$("#full_cart .cart_tbody").html(listHtml);			
-//}
+function showFullCart(cart){
+	console.log(cart);
+	let listHtml = '';
+	$.each(cart, function(index, item){
+				listHtml += `
+					<tr>
+						<td><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
+			            <td><a href="#"><img src="${contextPath}/bap/Img?bookNumber=${item.bookNumber}" width="100px" alt=""></a></td>
+			            <td><a href="#">${item.bookTitle}</a></td>
+			            <td>${item.bookPrice}</td>
+			            <td class="product_quantity"><label>數量</label><input min="1" max="${item.bookStock}" value="${item.quantity}" type="number"></td>
+			            <td>${item.bookStock}</td>
+			            <td>${item.subtotal}</td>
+		            </tr>
+		                <input type="hidden" name="userNumber" value="${item.userNumber}">
+					`;
+	});			
+	$("#full_cart .cart_tbody").html(listHtml);			
+}
