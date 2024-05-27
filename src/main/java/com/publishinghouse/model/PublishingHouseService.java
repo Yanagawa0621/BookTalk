@@ -80,15 +80,15 @@ public class PublishingHouseService {
 
 	// =================================以下是測試用的main方法========================================
 
-	public static void main(String[] args) {
-		SessionFactory factory;
-		factory = HibernateUtil.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		PublishingHouseService phSce = new PublishingHouseService();
-		List<PublishingHouseVO> list = phSce.getAllPh();
-		System.out.println(list.get(0).getBpVO());
-
-		transaction.commit();
-	}
+//	public static void main(String[] args) {
+//		SessionFactory factory;
+//		factory = HibernateUtil.getSessionFactory();
+//		Session session = factory.getCurrentSession();
+//		Transaction transaction = session.beginTransaction();
+//		PublishingHouseService phSce = new PublishingHouseService();
+//		List<PublishingHouseVO> list = phSce.getAllPh();
+//		System.out.println(list.get(0).getBpVO());
+//
+//		transaction.commit();
+//	}
 }

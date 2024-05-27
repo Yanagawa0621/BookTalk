@@ -56,14 +56,14 @@ public class PublishingHouseDAO implements PublishingHouseDAO_Impl {
 	}
 
 	// =================================以下是測試用的main方法========================================
-	public static void main(String[] args) {
-		SessionFactory factory;
-		factory = HibernateUtil.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		PublishingHouseDAO dao = new PublishingHouseDAO();
-		System.out.println(dao.keywordQuery("文庫").get(0).getName());
-
-		transaction.commit();
-	}
+//	public static void main(String[] args) {
+//		SessionFactory factory;
+//		factory = HibernateUtil.getSessionFactory();
+//		Session session = factory.getCurrentSession();
+//		Transaction transaction = session.beginTransaction();
+//		PublishingHouseDAO dao = new PublishingHouseDAO();
+//		System.out.println(dao.keywordQuery("文庫").get(0).getName());
+//
+//		transaction.commit();
+//	}
 }

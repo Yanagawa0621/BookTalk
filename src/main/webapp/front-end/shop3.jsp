@@ -9,7 +9,11 @@
 <%@ page import="java.time.YearMonth"%>
 
 <% 
-BookClassVO oneBcVO=(BookClassVO) request.getAttribute("bcVO");
+List<BookProductsVO> list=(List<BookProductsVO>) request.getAttribute("list");
+%>
+
+<%
+String message = (String) request.getAttribute("message");
 %>
 
 <%
@@ -32,6 +36,18 @@ pageContext.setAttribute("bcList", bcList);
 
 <!-- head -->
 <%@include file="/front-end/component/head.jsp" %>
+
+<style>
+    .message {
+        position: absolute; /* 絕對定位 */
+        left: 50%; /* 距離父元素左側50%處 */
+        transform: translate(-50%, -50%); /* 將元素向左和向上移動自身寬高的一半，即將其置於正中間 */
+        font-size: 40px; /* 字體大小 */
+        color: grey; /* 字體顏色 */
+        font-style: italic; /* 斜體 */
+        text-align: center; /* 文字居中對齊 */
+    }
+</style>
 
 <body>
 
@@ -134,8 +150,8 @@ pageContext.setAttribute("bcList", bcList);
 					</div>
 					<!--shop toolbar end-->
 					<div class="row shop_wrapper">
-						<c:forEach var="bpVO" items="<%=oneBcVO.getBpVO()%>">
-						<c:if test="${bpVO.productStatus==1}">
+					<c:if test="${not empty list}">
+						<c:forEach var="bpVO" items="${list}">
 							<div class="col-lg-4 col-md-4 col-sm-6 col-12 ">
 								<article class="single_product">
 									<figure>
@@ -195,9 +211,11 @@ pageContext.setAttribute("bcList", bcList);
 									</figure>
 								</article>
 							</div>
-							</c:if>
 						</c:forEach>
-						
+						</c:if>
+						<c:if test="${empty list}">
+							<div class="message">${message}</div>
+						</c:if>
 					</div>
 
 					<div class="shop_toolbar t_bottom">

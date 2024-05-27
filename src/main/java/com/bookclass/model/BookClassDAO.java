@@ -70,11 +70,11 @@ public class BookClassDAO implements BookClassDAO_Impl {
 
 	// =================================以下是測試用的main方法========================================
 
-	public static void main(String[] args) {
-		BookClassDAO bc = new BookClassDAO();
-		Session session = bc.getSession();
-		Transaction transaction = session.beginTransaction();
-		System.out.println(bc.getAll());
-		transaction.commit();
-	}
+//	public static void main(String[] args) {
+//		BookClassDAO bc = new BookClassDAO();
+//		Session session = bc.getSession();
+//		Transaction transaction = session.beginTransaction();
+//		System.out.println(bc.getAll());
+//		transaction.commit();
+//	}
 }

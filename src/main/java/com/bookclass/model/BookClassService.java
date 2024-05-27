@@ -65,13 +65,13 @@ public class BookClassService {
 	}
 	// =================================以下是測試用的main方法========================================
 
-	public static void main(String[] args) {
-		SessionFactory factory;
-		factory = HibernateUtil.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		BookClassService bcSce = new BookClassService();
-		System.out.println(bcSce.getAllBc().get(0).getClassName());
-		transaction.commit();
-	}
+//	public static void main(String[] args) {
+//		SessionFactory factory;
+//		factory = HibernateUtil.getSessionFactory();
+//		Session session = factory.getCurrentSession();
+//		Transaction transaction = session.beginTransaction();
+//		BookClassService bcSce = new BookClassService();
+//		System.out.println(bcSce.getAllBc().get(0).getClassName());
+//		transaction.commit();
+//	}
 }

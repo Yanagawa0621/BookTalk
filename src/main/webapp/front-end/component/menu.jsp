@@ -164,7 +164,8 @@
                                                 <option value="publishing_house">出版社</option>
                                                 <option value="isbn">國際書碼(ISBN)</option>
                                             </select>
-                                            <input placeholder="請輸入關鍵字" type="text">
+                                            <input type="hidden" name="action" value="query_bar">
+                                            <input placeholder="請輸入關鍵字" type="text" name="Keywords" required autocomplete="off">
                                             <button type="submit"><span class="icon icon-Search"></span></button>
                                         </form>
 								</div>
