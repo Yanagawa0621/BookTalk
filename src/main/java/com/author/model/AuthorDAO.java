@@ -60,15 +60,15 @@ public class AuthorDAO implements AuthorDAO_Impl {
 	}
 	
 	// =================================以下是測試用的main方法========================================
-		public static void main(String[] args) {
-			SessionFactory factory;
-			factory = HibernateUtil.getSessionFactory();
-			Session session = factory.getCurrentSession();
-			Transaction transaction = session.beginTransaction();
-			AuthorDAO dao = new AuthorDAO();
-			
-			System.out.println(dao.getAll());
-
-			transaction.commit();
-		}
+//		public static void main(String[] args) {
+//			SessionFactory factory;
+//			factory = HibernateUtil.getSessionFactory();
+//			Session session = factory.getCurrentSession();
+//			Transaction transaction = session.beginTransaction();
+//			AuthorDAO dao = new AuthorDAO();
+//			
+//			System.out.println(dao.getAll());
+//
+//			transaction.commit();
+//		}
 }

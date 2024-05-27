@@ -83,12 +83,12 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 	
 //=================================以下是測試用的main方法========================================
 
-	public static void main(String[] args) {
-		BookProductsDAO bp = new BookProductsDAO();
-		Session session = bp.getSession();
-		Transaction transaction = session.beginTransaction();
-		System.out.println(bp.singleQuery(1).getBookTitle());
-		transaction.commit();
-	}
+//	public static void main(String[] args) {
+//		BookProductsDAO bp = new BookProductsDAO();
+//		Session session = bp.getSession();
+//		Transaction transaction = session.beginTransaction();
+////		System.out.println(bp.singleQuery(1).getBookTitle());
+//		transaction.commit();
+//	}
 
 }

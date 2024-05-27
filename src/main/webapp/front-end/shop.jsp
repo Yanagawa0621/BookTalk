@@ -32,7 +32,23 @@ pageContext.setAttribute("bcList", bcList);
 <html class="no-js" lang="en">
 
 <!-- head -->
-<%@include file="/front-end/component/head.jsp"%>
+<%@include file="/front-end/component/head.jsp" %>
+
+ <style>
+        input[type="text"]::selection {
+            background: transparent; /* 将选中的背景颜色设置为透明 */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const input = document.querySelector('input[name="Keywords"]');
+            input.addEventListener('input', () => {
+                if (input.value) {
+                    input.setSelectionRange(input.value.length, input.value.length); // 取消选中文本
+                }
+            });
+        });
+    </script>
 
 <body>
 
@@ -40,7 +56,7 @@ pageContext.setAttribute("bcList", bcList);
 	<!--offcanvas menu area start-->
 
 	<!--offcanvas menu area end-->
-	<%@include file="/front-end/component/header.jsp"%>
+	<%@include file="/front-end/component/menu.jsp" %>
 	<!--header area end-->
 
 
@@ -100,7 +116,6 @@ pageContext.setAttribute("bcList", bcList);
 								</c:forEach>
 								</ul>
 							</div>
-
 						</div>
 					</aside>
 					<!--sidebar widget end-->
@@ -135,6 +150,7 @@ pageContext.setAttribute("bcList", bcList);
 					<!--shop toolbar end-->
 					<div class="row shop_wrapper">
 						<c:forEach var="bpVO" items="${list}">
+						<c:if test="${bpVO.productStatus==1}">
 							<div class="col-lg-4 col-md-4 col-sm-6 col-12 ">
 								<article class="single_product">
 									<figure>
@@ -145,9 +161,9 @@ pageContext.setAttribute("bcList", bcList);
 													<span class="label_new">new</span>
 												</c:if>
 											</div>
-											<a class="primary_img" href="javascript:void(0);" onclick="document.getElementById('bookForm_${bpVO.bookNumber}').submit();"><img
-												src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}"
-												alt="預覽失敗"></a>
+											<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" target="_blank">
+									            <img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗">
+									        </a>
 											<div class="action_links">
 												<ul>
 													<li class="quick_button">詳細資訊<a href="#"
@@ -181,7 +197,7 @@ pageContext.setAttribute("bcList", bcList);
 											<h4 class="product_name">
 												<input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
 												<input type="hidden" name="action" value="single_product_page">
-												<input type="submit" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" value="${bpVO.bookTitle}" >
+												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
 											</h4>
 											</FORM>
 											<div class="price_box">
@@ -194,6 +210,7 @@ pageContext.setAttribute("bcList", bcList);
 									</figure>
 								</article>
 							</div>
+							</c:if>
 						</c:forEach>
 						
 					</div>

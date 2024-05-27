@@ -157,12 +157,17 @@
 									<div class="search_close_btn">
 										<a href="#"><i class="ion-close-round"></i></a>
 									</div>
-									<form action="#">
-										<input placeholder="Search entire store here ..." type="text">
-										<button type="submit">
-											<span class="icon icon-Search"></span>
-										</button>
-									</form>
+									<form method="get" action="${pageContext.request.contextPath}/bookproducts.do">
+                                            <select name="searchMain" style="opacity: 0.8; font-size: 20px; border-radius: 40px;">
+                                                <option value="bookTitle">書籍名稱</option>
+                                                <option value="author">作者</option>
+                                                <option value="publishing_house">出版社</option>
+                                                <option value="isbn">國際書碼(ISBN)</option>
+                                            </select>
+                                            <input type="hidden" name="action" value="query_bar">
+                                            <input placeholder="請輸入關鍵字" type="text" name="Keywords" required autocomplete="off">
+                                            <button type="submit"><span class="icon icon-Search"></span></button>
+                                        </form>
 								</div>
 							</div>
 							<div class="header_account-list  mini_cart_wrapper">

@@ -123,14 +123,14 @@ public class BookProductsService {
 	}
 	
 	// =================================以下是測試用的main方法========================================
-	public static void main(String[] args) throws ParseException {
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		BookProductsService bp = new BookProductsService();
-		System.out.println(bp.singleQueryBp(1).getReleaseDate().getTime());
-
-		transaction.commit();
-
-	}
+//	public static void main(String[] args) throws ParseException {
+//		SessionFactory factory = HibernateUtil.getSessionFactory();
+//		Session session = factory.getCurrentSession();
+//		Transaction transaction = session.beginTransaction();
+//		BookProductsService bp = new BookProductsService();
+////		System.out.println(bp.singleQueryBp(1).getReleaseDate().getTime());
+//
+//		transaction.commit();
+//
+//	}
 }

@@ -69,15 +69,15 @@ public class AuthorService {
 
 	// =================================以下是測試用的main方法========================================
 
-	public static void main(String[] args) {
-		SessionFactory factory;
-		factory = HibernateUtil.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		AuthorService authSce = new AuthorService();
-
-		System.out.println(authSce.getAllArth().get(4).getBpVO().get(0).getImg().size());
-
-		transaction.commit();
-	}
+//	public static void main(String[] args) {
+//		SessionFactory factory;
+//		factory = HibernateUtil.getSessionFactory();
+//		Session session = factory.getCurrentSession();
+//		Transaction transaction = session.beginTransaction();
+//		AuthorService authSce = new AuthorService();
+//
+////		System.out.println(authSce.getAllArth().get(4).getBpVO().get(0).getImg().size());
+//
+//		transaction.commit();
+//	}
 }
