@@ -34,22 +34,6 @@ pageContext.setAttribute("bcList", bcList);
 <!-- head -->
 <%@include file="/front-end/component/head.jsp" %>
 
- <style>
-        input[type="text"]::selection {
-            background: transparent; /* 将选中的背景颜色设置为透明 */
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const input = document.querySelector('input[name="Keywords"]');
-            input.addEventListener('input', () => {
-                if (input.value) {
-                    input.setSelectionRange(input.value.length, input.value.length); // 取消选中文本
-                }
-            });
-        });
-    </script>
-
 <body>
 
 	<!--header area start-->
@@ -397,6 +381,9 @@ pageContext.setAttribute("bcList", bcList);
 // 					console.log(ratingScoreAvg)
 					let AuthorVO=response.AuthorVO;
 					
+					let contextPath = '<%=request.getContextPath()%>';
+			        let imgUrl = contextPath + '/bap/Img?bookNumber=' + bookNumber;
+					
 					let htmlContent = ``
 						htmlContent +=`<div class="container">`
 						    htmlContent +=`<div class="row">`
@@ -405,7 +392,7 @@ pageContext.setAttribute("bcList", bcList);
 						                htmlContent +=`<div class="tab-content product-details-large">`
 						                    htmlContent +=`<div class="tab-pane fade show active" id="tab1" role="tabpanel" >`
                                                 htmlContent +=`<div class="modal_tab_img">`
-                                                    htmlContent +=`<img src="data:image/jpeg;base64,`+img+`" alt=""></a>`
+                                                    htmlContent +=`<img src="`+imgUrl+`" alt=""></a>`
                                                 htmlContent +=`</div>`
                                             htmlContent +=`</div>`
 						                htmlContent +=`</div>`
@@ -456,7 +443,7 @@ pageContext.setAttribute("bcList", bcList);
 						                    htmlContent +=`</div>`
 						                    htmlContent +=`<div class="modal_add_to_cart">`
 						                        htmlContent +=`<form action="#">`
-                                                    htmlContent +=`<input min="1" max="100" step="2" value="1" type="number">`
+                                                    htmlContent +=`<input min="1" max="100" step="1" value="1" type="number">`
                                                     htmlContent +=`<button type="submit">加入購物車</button>`
 						                        htmlContent +=`</form>`
 						                    htmlContent +=`</div>`
