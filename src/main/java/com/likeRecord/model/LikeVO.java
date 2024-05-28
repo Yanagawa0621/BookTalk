@@ -26,7 +26,6 @@ public class LikeVO {
 	// private Integer commentNumber;
 	private CommentVO commentVO;
 	private Integer userNumber;
-	private Integer likeState;
 	public LikeVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -37,7 +36,7 @@ public class LikeVO {
 		this.articleVO = articleVO;
 		this.commentVO = commentVO;
 		this.userNumber = userNumber;
-		this.likeState = likeState;
+		
 	}
 	public Integer getNumber() {
 		return number;
@@ -63,12 +62,7 @@ public class LikeVO {
 	public void setUserNumber(Integer userNumber) {
 		this.userNumber = userNumber;
 	}
-	public Integer getLikeState() {
-		return likeState;
-	}
-	public void setLikeState(Integer likeState) {
-		this.likeState = likeState;
-	}
+	
 	
 		
 
