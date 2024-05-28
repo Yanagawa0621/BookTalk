@@ -21,6 +21,7 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 
 		<!--<mapping class="idv.david.dept.entity.Dept"/>-->  <!--範例-->
+
 		<mapping class="com.order.model.OrderVO" />
 		<mapping class="com.orderdetails.model.OrderDetailsVO" />
 		<mapping class="com.promotionproject.model.PromotionProjectVO" />
@@ -34,5 +35,6 @@
 <!--		<mapping class="com.article.model.ArticleVO" />-->
 <!--		<mapping class="com.comment.model.CommentVO" />-->
 <!--		<mapping class="com.likeRecord.model.LikeVO" />-->
+
 	</session-factory>
 </hibernate-configuration>

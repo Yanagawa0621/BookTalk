@@ -5,7 +5,7 @@ import java.util.List;
 public interface ArticleDAO_interface {
 	public void insert(ArticleVO articleVO);
 	public void update(ArticleVO articleVO);
-	public List<ArticleVO> findByForumName(String name);
+	public List<ArticleVO> findByForumNumber(Integer forumNumber);
 	public List<ArticleVO> findByKeyWord(String keyword);
 	public List<ArticleVO> findByUserName(String userName);
 	public List<ArticleVO> findByOrderByPageView();

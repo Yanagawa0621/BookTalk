@@ -30,4 +30,7 @@ public class ArticleService {
 		
 		return articleVO;
 	}
+	public List<ArticleVO> findForumsArticle(Integer forumNumber){
+		return dao.findByForumNumber(forumNumber);
+	}
 }

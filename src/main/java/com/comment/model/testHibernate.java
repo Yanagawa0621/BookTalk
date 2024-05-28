@@ -1,9 +1,11 @@
 package com.comment.model;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import com.article.model.ArticleVO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 
 public class testHibernate {
 	public static void main (String[]args) {
@@ -19,10 +21,15 @@ public class testHibernate {
 //		a.setArticleNumber(1);
 //		c.setArticleVO(a);
 //		dao.insert(c);
+      SessionFactory factory = HibernateUtil.getSessionFactory();
+      Session session = factory.getCurrentSession();
+      Transaction transaction = session.beginTransaction();
+
 		List<CommentVO> co =dao.findByArticleNumber(1);
 		for(CommentVO commentVO :co) {
 			System.out.println(commentVO.getContent());
 		}
+		transaction.commit();
 //		dao.updateCommentStatus(1, 0);
 	}
 }
