@@ -217,27 +217,17 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Total</th>
+                                            <th>書籍名稱</th>
+                                            <th>價格</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td> Handbag  fringilla <strong> Ã 2</strong></td>
-                                            <td> $165.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>  Handbag  justo	 <strong> Ã 2</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>  Handbag elit	<strong> Ã 2</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td> Handbag Rutrum	 <strong> Ã 1</strong></td>
-                                            <td> $50.00</td>
-                                        </tr>
+                                    	<c:forEach var="cartItem" items="${cartList}">
+	                                        <tr>
+	                                            <td>${cartItem.bookTitle}</td>
+	                                            <td>$${cartItem.bookPrice}</td>
+	                                        </tr>
+                                      	</c:forEach>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -246,7 +236,7 @@
                                         </tr>
                                         <tr>
                                             <th>運費</th>
-                                            <td><strong>$5.00</strong></td>
+                                            <td><strong>$50</strong></td>
                                         </tr>
                                         <tr class="order_total">
                                             <th>訂單總金額</th>

@@ -40,7 +40,7 @@
                     <div class="col-12">
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
-                                <table>
+                                <table id= "full_cart">
 		                            <thead>
 		                                <tr>
 		                                    <th>刪除</th>
@@ -52,19 +52,8 @@
 		                                    <th>金額</th>
 		                                </tr>
 		                            </thead>
-		                            <tbody>
-		                            	<c:forEach var="cartItem" items="${cartList}">
-		                            		<tr>
-			                                   <td><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
-			                                   <td><a href="#"><img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${cartItem.bookNumber}" width="100px" alt=""></a></td>
-			                                   <td><a href="#">${cartItem.bookTitle}</a></td>
-			                                   <td>${cartItem.bookPrice}</td>
-			                                   <td class="product_quantity"><label>數量</label><input min="1" max="${cartItem.bookStock}" value="${cartItem.quantity}" type="number"></td>
-			                                   <td>${cartItem.bookStock}</td>
-			                                   <td>${cartItem.subtotal}</td>
-		                                	</tr>
-		                                	<input type="hidden" name="userNumber" value="${cartItem.userNumber}">
-		                            	</c:forEach>
+		                            <tbody class="cart_tbody">
+		                            	
 		                            </tbody>
                         		</table>   
                             </div>  
@@ -116,7 +105,8 @@
 <!-- JS
 ============================================ -->
 
+
 <%@include file="/front-end/component/script.jsp" %>
-	
+
 </body>
 </html>

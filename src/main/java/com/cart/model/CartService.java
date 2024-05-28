@@ -1,11 +1,6 @@
 package com.cart.model;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import util.JedisUtil;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 public class CartService implements CartService_inteface{
 	private CartDAO_inteface dao;

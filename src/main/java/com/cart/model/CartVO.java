@@ -30,7 +30,7 @@ public class CartVO {
 
 
 	public CartVO(Integer userNumber, Integer bookNumber, String bookTitle, Double bookPrice, Integer quantity,
-			Double subtotal, byte[] image) {
+			Double subtotal, Integer bookStock, byte[] image) {
 		super();
 		this.userNumber = userNumber;
 		this.bookNumber = bookNumber;
@@ -38,6 +38,7 @@ public class CartVO {
 		this.bookPrice = bookPrice;
 		this.quantity = quantity;
 		this.subtotal = subtotal;
+		this.bookStock = bookStock;
 		this.image = image;
 	}
 
