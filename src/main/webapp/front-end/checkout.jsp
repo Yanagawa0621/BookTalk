@@ -231,7 +231,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>小計</th>
+                                            <th>商品總金額</th>
                                             <td>$215.00</td>
                                         </tr>
                                         <tr>

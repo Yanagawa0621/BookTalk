@@ -35,7 +35,9 @@ public class ArticleVO implements java.io.Serializable {
 	private String title;
 	private Integer articleState;
 	private Integer likeSum;
-	private Integer pageView;
+	@Column(name = "articleImage", columnDefinition = "LONGTEXT")
+	private String articleImage;
+	private String articleSummary;
 
 	@ManyToOne
 	@JoinColumn(name = "forumNumber", referencedColumnName = "forumNumber")
@@ -64,10 +66,11 @@ public class ArticleVO implements java.io.Serializable {
 		this.title = title;
 		this.articleState = articleState;
 		this.likeSum = likeSum;
-		this.pageView = pageView;
 		this.forumVO = forumVO;
 		this.commentVO = commentVO;
 		this.likeVO = likeVO;
+		this.articleImage = articleImage;
+		this.articleSummary = articleSummary;
 	}
 
 	public ForumVO getForumVO() {
@@ -142,14 +145,6 @@ public class ArticleVO implements java.io.Serializable {
 		this.likeSum = likeSum;
 	}
 
-	public Integer getPageView() {
-		return pageView;
-	}
-
-	public void setPageView(Integer pageView) {
-		this.pageView = pageView;
-	}
-
 	public Set<CommentVO> getCommentVO() {
 		return commentVO;
 	}
@@ -165,5 +160,22 @@ public class ArticleVO implements java.io.Serializable {
 	public void setLikeVO(Set<LikeVO> likeVO) {
 		this.likeVO = likeVO;
 	}
+
+	public String getArticleImage() {
+		return articleImage;
+	}
+
+	public void setArticleImage(String articleImage) {
+		this.articleImage = articleImage;
+	}
+
+	public String getArticleSummary() {
+		return articleSummary;
+	}
+
+	public void setArticleSummary(String articleSummary) {
+		this.articleSummary = articleSummary;
+	}
+	
 
 }

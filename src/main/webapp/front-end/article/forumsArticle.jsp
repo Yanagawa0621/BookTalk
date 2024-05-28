@@ -88,7 +88,7 @@
                         <article class="single_blog">
                             <figure>
                                 <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blogpage1.jpg" alt=""></a>
+                                    ${articleVO.articleImage }
                                 </div>
                                 <figcaption class="blog_content">
                                    <h4 class="post_title"><a href="#" onclick="event.preventDefault();"data-toggle="modal" data-target="#lightboxModal${loop.index}"><i class="fa fa-paper-plane"></i>${articleVO.title}</a></h4>
@@ -126,7 +126,7 @@
                                     <div class="blog_meta">
                                         <p>作者: <a href="#">${articleVO.userNumber}</a> / 發文日期: ${articleVO.issueTime} / 看板: <a href="#">${articleVO.forumVO.name}</a></p>
                                     </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent ornare.</p>
+                                    <p class="post_desc">${articleVO.articleSummary}</p>
                                     <footer class="btn_more">
                                         <a href="blog-details.html"> Read more</a>
                                     </footer>
@@ -154,8 +154,9 @@
                             <div class="widget_title">
                                 <h3>搜尋</h3>
                             </div>
-                            <form action="#">
-                                <input placeholder="Search..." type="text">
+                            <form action="<%= request.getContextPath()%>/article/article.do">
+                                <input placeholder="Search..." type="text" name="title" required>
+                                <input type="hidden" name="action" value="getName_For_Display">
                                 <button type="submit">搜尋</button>
                             </form>
                         </div>

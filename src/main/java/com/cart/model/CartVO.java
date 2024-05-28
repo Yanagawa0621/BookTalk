@@ -1,6 +1,5 @@
 package com.cart.model;
 
-import java.util.Arrays;
 
 public class CartVO {
 	private Integer userNumber;
@@ -10,7 +9,6 @@ public class CartVO {
 	private Integer quantity;
 	private Double subtotal;
 	private Integer bookStock;
-	private byte[] image;
 	
 	public CartVO() {
 		super();
@@ -28,19 +26,6 @@ public class CartVO {
 		this.bookStock = bookStock;
 	}
 
-
-	public CartVO(Integer userNumber, Integer bookNumber, String bookTitle, Double bookPrice, Integer quantity,
-			Double subtotal, Integer bookStock, byte[] image) {
-		super();
-		this.userNumber = userNumber;
-		this.bookNumber = bookNumber;
-		this.bookTitle = bookTitle;
-		this.bookPrice = bookPrice;
-		this.quantity = quantity;
-		this.subtotal = subtotal;
-		this.bookStock = bookStock;
-		this.image = image;
-	}
 
 	public Integer getUserNumber() {
 		return userNumber;
@@ -98,19 +83,11 @@ public class CartVO {
 		this.bookStock = bookStock;
 	}
 
-	public byte[] getImage() {
-		return image;
-	}
-
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
-
 	@Override
 	public String toString() {
 		return "CartVO [userNumber=" + userNumber + ", bookNumber=" + bookNumber + ", bookTitle=" + bookTitle
-				+ ", bookPrice=" + bookPrice + ", quantity=" + quantity + ", subtotal=" + subtotal + ", image="
-				+ Arrays.toString(image) + "]";
+				+ ", bookPrice=" + bookPrice + ", quantity=" + quantity + ", subtotal=" + subtotal + ", bookStock="
+				+ bookStock + "]";
 	}
 	
 }

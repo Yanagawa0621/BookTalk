@@ -55,10 +55,10 @@
 		                            <tbody class="cart_tbody">
 		                            	
 		                            </tbody>
-                        		</table>   
+                        		</table>
                             </div>  
                             <div class="cart_submit">
-                                <button type="submit">更新購物車</button>                                
+                                <button type="button" class="btn_empty">全部清空</button>                                
                             </div>      
                         </div>
                      </div>
@@ -66,23 +66,21 @@
                  <!--coupon code area start-->
                 <div class="coupon_area">
                     <div class="row">                        
-                        <div class="col-lg-12 col-md-12">
+                        <div class="col-lg-6 col-md-6 offset-md-6">
                             <div class="coupon_code right">
                                 <h3>購物車總金額</h3>
                                 <div class="coupon_inner">
                                    <div class="cart_subtotal">
                                        <p>商品總金額</p>
-                                       <p class="cart_amount">£215.00</p>
+                                       <p class="cart_amount" id="data-subtotal"></p>
                                    </div>
-                                   <div class="cart_subtotal ">
-                                       <p>運費總金額</p>
-                                       <p class="cart_amount"><span>Flat Rate:</span> £255.00</p>
-                                   </div>
-                                   <a href="#">Calculate shipping</a>
-
                                    <div class="cart_subtotal">
-                                       <p>總付款金額</p>
-                                       <p class="cart_amount">£215.00</p>
+                                       <p>運費</p>
+                                       <p class="cart_amount" id="data-deliveryfee"></p>
+                                   </div>
+                                   <div class="cart_subtotal">
+                                       <p>訂單總金額</p>
+                                       <p class="cart_amount" id="data-total"></p>
                                    </div>
                                    <div class="checkout_btn">
                                        <a href="${pageContext.request.contextPath}/front-end/checkout.jsp">去買單</a>

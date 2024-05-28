@@ -27,13 +27,13 @@ public class CartService implements CartService_inteface{
 	}
 
 	@Override
-	public void removeItemFromCart(Integer userNumber, Integer bookNumber) {
-		dao.removeItemFromCart(userNumber, bookNumber);
+	public long removeItemFromCart(Integer userNumber, Integer bookNumber) {
+		return dao.removeItemFromCart(userNumber, bookNumber);
 	}
 
 	@Override
-	public void clearCart(Integer userNumber) {
-		dao.clearCart(userNumber);
+	public long clearCart(Integer userNumber) {
+		return dao.clearCart(userNumber);
 	}
 
 }
