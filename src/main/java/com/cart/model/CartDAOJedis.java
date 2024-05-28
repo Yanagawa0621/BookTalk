@@ -1,19 +1,10 @@
 package com.cart.model;
 
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import com.bookproducts.model.BookProductsDAO;
-import com.bookproducts.model.BookProductsDAO_Impl;
-import com.bookproducts.model.BookProductsVO;
-import com.order.model.OrderDAOHibernate;
-import com.order.model.OrderDAO_interface;
-import com.order.model.OrderVO;
-import com.orderdetails.model.OrderDetailsVO;
 import util.JedisUtil;
 
 import redis.clients.jedis.Jedis;
