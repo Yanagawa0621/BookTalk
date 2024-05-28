@@ -27,6 +27,10 @@ public class CartServlet extends HttpServlet {
     public void init() throws ServletException{
     	cartService = new CartService();
     }
+    
+    protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    	doPost(req, res);
+    }
 
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -42,22 +46,18 @@ public class CartServlet extends HttpServlet {
 		switch(action) {
 			case "add":
 				forwardPath = addItem(req, res);
-				break;
-			case "update":
-				break;
-			case "remove":
-				break;
-			case "clear":
-				break;
-			case "getAll":
-				forwardPath = getAllItems(req, res);
-				break;
-			case "miniCartGetAll":
-				getMiniCartAllItems(req, res);
-				return;	//這裡用return是因為已經要回傳json的資料，不需要再往下進行，以免被導向別的頁面
-			case "fullCartGetAll":
-				getFullCartAllItems(req, res);
 				return;
+			case "update":
+				return;
+			case "remove":
+				removeOne(req, res);
+				return;
+			case "clear":
+				cleanAll(req, res);
+				return;
+			case "getAll":
+				getAllItems(req, res);
+				return;	//這裡用return是因為已經要回傳json的資料，不需要再往下進行，以免被導向別的頁面
 			default:
 				forwardPath = "/index.jsp";
 		}
@@ -74,37 +74,43 @@ public class CartServlet extends HttpServlet {
 		return null;
 	}
 	
-	private String getAllItems(HttpServletRequest req, HttpServletResponse res) {
-		String userNubmer = req.getParameter("userNubmer");
-		List<CartVO> cartVO = cartService.getCartItems(Integer.parseInt(userNubmer));
+	private void getAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		String userNumber = req.getParameter("userNumber");
+		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
+		String jsonStr = new Gson().toJson(cartList);
 		
-		req.setAttribute("cartVO", cartVO);
-		
-		
-		return "/front-end/cart.jsp";
+		System.out.println(jsonStr);
+
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(jsonStr);
 	}
 	
-	private void getMiniCartAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		String userNumber = req.getParameter("userNumber");
-		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
-		String jsonStr = new Gson().toJson(cartList);
+	private void removeOne(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+		String status = "";
+		if(cartService.removeItemFromCart(userNumber, bookNumber) == 1) {
+			status = "{\"msg\":\"remove success\"}";
+		}
 		
-		System.out.println(jsonStr);
-
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write(jsonStr);
+        res.getWriter().write(status);
 	}
+	
+	private void cleanAll(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
 
-	private void getFullCartAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		String userNumber = req.getParameter("userNumber");
-		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
-		String jsonStr = new Gson().toJson(cartList);
+		String status = "";
+		if(cartService.clearCart(userNumber) == 1) {
+			status = "{\"msg\":\"clean success\"}";
+		}
 		
-		System.out.println(jsonStr);
-
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write(jsonStr);
+        res.getWriter().write(status);
 	}
+	
+
 }
