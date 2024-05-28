@@ -7,11 +7,29 @@
 <%
 	BookProductsService bpSce=new BookProductsService();
 	List<BookProductsVO> list=bpSce.getAllBp();
+	pageContext.setAttribute("list", list);
 %>
     
 <!DOCTYPE html>
 <html>
 <!-- head -->
+<style>
+	th,tr {
+	  white-space: nowrap; /* 讓文字不換行 */
+	}
+
+    .fixed-size-form {
+        width: 300px; /* 固定寬度 */
+    }
+     .form-row { 
+         margin-bottom: 10px; /* 行間距 10px */ 
+     } 
+	
+	.input-group {
+        margin-bottom: 20px; /* 調整 input-group 的下邊距 */
+    }
+</style>
+
 <%@include file="/back-end/component/header.jsp" %>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -45,139 +63,149 @@
 						</c:if>
 					</div>
 				</div>
-			 
-				<div class="row gy-5">
-					<div class= "g-col-6 offset-md-1">
-						<form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="needs-validation" novalidate>
-							<label for="orderInput">搜尋書籍名稱</label>
-							<div class="input-group">		
-								<input type="search" id="orderInput" name="Keywords" class="form-control" placeholder="搜尋書籍名稱" required>
-								<input type="hidden" name="action" value="query_bar">	
-								<div class="invalid-tooltip">
-          							請輸入書籍名稱         							
-        						</div>
-        						<button type="submit" class="btn btn-default">
-								<i class="fa fa-search"></i>
-								</button>
-							</div>				
-						</form>	
-					</div>	<!-- /.col -->
-					
-					<div class= "g-col-6 offset-md-1">
-						<form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="needs-validation" novalidate>
-							<label for="orderInput">搜尋國際書碼(ISBN)</label>
-							<div class="input-group">		
-								<input type="search" id="orderInput" name="Keywords" class="form-control" placeholder="搜尋書籍名稱" required>
-								<input type="hidden" name="action" value="query_bar">	
-								<div class="invalid-tooltip">
-          							請輸入書籍名稱         							
-        						</div>
-        						<button type="submit" class="btn btn-default">
-								<i class="fa fa-search"></i>
-								</button>
-							</div>				
-						</form>	
-					</div>	<!-- /.col -->
-					
-					<div class= "g-col-6 offset-md-1">
-						<form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="needs-validation" novalidate>
-							<label for="orderInput">搜尋書籍編號</label>
-							<div class="input-group">		
-								<input type="search" id="orderInput" name="Keywords" class="form-control" placeholder="搜尋書籍名稱" required>
-								<input type="hidden" name="action" value="query_bar">	
-								<div class="invalid-tooltip">
-          							請輸入書籍名稱         							
-        						</div>
-        						<button type="submit" class="btn btn-default">
-								<i class="fa fa-search"></i>
-								</button>
-							</div>				
-						</form>	
-					</div>	<!-- /.col -->
-					
-					<div class= "g-col-6 offset-md-1">
-						<form method="post" action="${pageContext.request.contextPath}/order/order.do">
-							<label for="orderStatusChoice">請選擇訂單狀態</label>
-							<div class="input-group-append">
-								<select id="orderStatusChoice" name="orderStatus" class="form-control" >	
-									<option value="1">待處理</option>
-									<option value="2">已確認</option>	
-									<option value="3">已出貨/運送中</option>	
-									<option value="4">已送達/已完成</option>	
-									<option value="0">取消</option>						
-								</select>
-								<input type="hidden" name="action" value="getOneOrderStatus_For_Display">
-								<button type="submit" class="btn btn-default">
-								<i class="fa fa-search"></i>
-								</button>
-							</div>							
-						</form>	
-					</div>	<!-- /.col -->
-					
-					
-					<div class= "g-col-6 offset-md-2 align-self-end" >
-						<a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp">
-							<button type="submit" class="btn btn-block bg-gradient-success">新增訂單</button>
-						</a>						
-					</div>	
-					
-				</div> <!-- /.row -->
 				
+
+				<div class="container">
+				    <div class="row gy-5 gx-5">
+				        <!-- 第一個表單 -->
+				        <div class="col-md-4 d-flex justify-content-center mb-2">
+				            <form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="needs-validation fixed-size-form" novalidate>
+				                <label for="orderInput">搜尋書籍名稱</label>
+				                <div class="input-group">
+				                    <input type="search" name="Keywords" class="form-control" placeholder="搜尋書籍名稱" required>
+				                    <input type="hidden" name="searchMain" value="bookTitle">
+				                    <input type="hidden" name="action" value="book_search">
+				                    <div class="invalid-tooltip">
+				                        請輸入書籍名稱
+				                    </div>
+				                    <div class="input-group-append">
+				                        <button type="submit" class="btn btn-default">
+				                            <i class="fa fa-search"></i>
+				                        </button>
+				                    </div>
+				                </div>
+				            </form>
+				        </div>
+				
+				        <!-- 第二個表單 -->
+				        <div class="col-md-4 d-flex justify-content-center mb-2">
+				            <form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="needs-validation fixed-size-form" novalidate>
+				                <label for="orderInput">搜尋國際書碼(ISBN)</label>
+				                <div class="input-group">
+				                    <input type="search" name="Keywords" class="form-control" placeholder="搜尋書籍名稱" required>
+				                    <input type="hidden" name="searchMain" value="isbn">
+				                    <input type="hidden" name="action" value="book_search">
+				                    <div class="invalid-tooltip">
+				                        請輸入國際書碼(ISBN)
+				                    </div>
+				                    <div class="input-group-append">
+				                        <button type="submit" class="btn btn-default">
+				                            <i class="fa fa-search"></i>
+				                        </button>
+				                    </div>
+				                </div>
+				            </form>
+				        </div>
+				
+				        <!-- 第三個表單 -->
+				        <div class="col-md-4 d-flex justify-content-center mb-2">
+				            <form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="needs-validation fixed-size-form" novalidate>
+				                <label for="orderInput">搜尋書籍編號</label>
+				                <div class="input-group">
+				                    <input type="search" name="Keywords" class="form-control" placeholder="搜尋書籍名稱" required>
+				                    <input type="hidden" name="searchMain" value="bookNumber">
+				                    <input type="hidden" name="action" value="book_search">
+				                    <div class="invalid-tooltip">
+				                        請輸入書籍編號
+				                    </div>
+				                    <div class="input-group-append">
+				                        <button type="submit" class="btn btn-default">
+				                            <i class="fa fa-search"></i>
+				                        </button>
+				                    </div>
+				                </div>
+				            </form>
+				        </div>
+				
+				        <!-- 第四個表單 -->
+				        <div class="col-md-4 d-flex justify-content-center mb-2">
+				            <form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="fixed-size-form">
+				                <label for="orderStatusChoice">請選擇書籍狀態</label>
+				                <div class="input-group">
+				                    <select id="orderStatusChoice" name="orderStatus" class="form-control">
+				                        <option value="1">上架</option>
+				                        <option value="2">下架</option>
+				                        <option value="0">未上架</option>
+				                    </select>
+				                    <input type="hidden" name="searchMain" value="bookClassNumber">
+				                    <input type="hidden" name="action" value="book_search">
+				                    <div class="input-group-append">
+				                        <button type="submit" class="btn btn-default">
+				                            <i class="fa fa-search"></i>
+				                        </button>
+				                    </div>
+				                </div>
+				            </form>
+				        </div>
+				
+				        <!-- 新增書籍按鈕 -->
+				        <div class="col-md-4 d-flex justify-content-center align-self-end">
+				            <a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp">
+				                <button type="button" class="btn btn-block bg-gradient-success">新增書籍</button>
+				            </a>
+				        </div>
+				    </div>
+				</div>
+	
 				<br>
 				<div class="card">
 	              <div class="card-header">
-	                <h3 class="card-title">所有訂單</h3>
+	                <h3 class="card-title">所有書籍</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
 	                <table id="orderlist" class="table table-bordered table-hover">
 	                  <thead>
 		                  <tr>
-		                    <th>訂單編號</th>
-		                    <th>會員編號</th>
-		                    <th>訂單狀態</th>
-		                    <th>成立時間</th>		                    
-		                    <th>出貨時間</th>
-		                    <th>收件人</th>
-		                    <th>收件地址</th>
-		                    <th>運費</th>
-		                    <th>總金額</th>
-		                    <th>備註</th>
-		                    <th>修改</th>
+		                    <th>書籍編號</th>
+		                    <th>書籍名稱</th>
+		                    <th>ISBN</th>
+		                    <th>書籍類別</th>
+		                    <th>書籍狀態</th>
+		                    <th>發布時間</th>		                    
+		                    <th>出版社</th>
+		                    <th>出版時間</th>
+		                    <th>數量</th>
+		                    <th>價格</th>
+		                    <th></th>
 		                  </tr>
 	                  </thead>
 	                  <tbody>
-		                  <c:forEach var="orderVO" items="${list}">
+		                  <c:forEach var="bpVO" items="${list}">
 			                  <tr>
-			                    <td>${orderVO.orderNumber}</td>
-			                    <td>${orderVO.userNumber}</td>
+			                    <td>${bpVO.bookNumber}</td>
+			                    <td>${bpVO.bookTitle}</td>
+			                    <td>${bpVO.isbn}</td>	                    
+			                    <td>${bpVO.bcVO.className}</td>
 			                    <td>
-			                    	<c:if test = "${orderVO.orderStatus == 0}">
-			                    		取消
+			                    	<c:if test = "${bpVO.productStatus == 0}">
+			                    		未上架
 			                    	</c:if>
-			                    	<c:if test = "${orderVO.orderStatus == 1}">
-			                    		待處理
+			                    	<c:if test = "${bpVO.productStatus == 1}">
+			                    		上架
 			                    	</c:if>
-			                    	<c:if test = "${orderVO.orderStatus == 2}">
-			                    		已確認
-			                    	</c:if>
-			                    	<c:if test = "${orderVO.orderStatus == 3}">
-			                    		已出貨/運送中
-			                    	</c:if>
-			                    	<c:if test = "${orderVO.orderStatus == 4}">
-			                    		已送達/已完成
+			                    	<c:if test = "${bpVO.productStatus == 2}">
+			                    		下架
 			                    	</c:if>
 			                    </td>
-			                    <td>${orderVO.establishmentTime}</td>	                    
-			                    <td>${orderVO.shippingTime}</td>
-			                    <td>${orderVO.receiver}</td>
-			                    <td>${orderVO.shippingAddress}</td>
-			                    <td>${orderVO.deliveryFee}</td>
-			                    <td>${orderVO.total}</td>
-			                    <td>${orderVO.note}</td>
+			                    <td>${bpVO.releaseDate}</td>
+			                    <td>${bpVO.phVO.name}</td>
+			                    <td>${bpVO.publicationDate}</td>
+			                    <td>${bpVO.stock}</td>
+			                    <td>${bpVO.price}</td>
 			                    <td>
 			                    	<form method="post" action="${pageContext.request.contextPath}/order/order.do">
-			                    		<button type="submit" class="btn btn-block bg-gradient-primary btn-sm">修改</button>
-									    <input type="hidden" name="orderNumber"  value="${orderVO.orderNumber}">
+			                    		<button type="submit" class="btn btn-block bg-gradient-primary btn-sm">詳細內容和修改</button>
+									    <input type="hidden" name="orderNumber"  value="${bpVO.bookNumber}">
 									    <input type="hidden" name="action"	value="getOne_For_Update">
 			                    	</form>
 			                    </td>

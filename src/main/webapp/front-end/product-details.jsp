@@ -13,9 +13,9 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 <!doctype html>
 <html class="no-js" lang="en">
 
-<head>
+
 <%@include file="/front-end/component/head.jsp"%>
-</head>
+
 
 <body>
 
@@ -197,7 +197,7 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 												</div>
 												<a class="primary_img"
 													href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page"
-													id="submitLink_${bpVO.bookNumber}" target="_blank"> <img
+													id="submitLink_${bpVO.bookNumber}"> <img
 													src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}"
 													alt="預覽失敗">
 												</a>
@@ -242,23 +242,14 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 														</c:if>
 													</ul>
 												</div>
-												<FORM METHOD="GET"
-													ACTION="${pageContext.request.contextPath}/bookproducts.do"
-													id="bookForm_${bpVO.bookNumber}">
-													<h4 class="product_name">
-														<input type="hidden" name="bookNumber"
-															value="${bpVO.bookNumber}"> <input type="hidden"
-															name="action" value="single_product_page"> <a
-															href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page"
-															id="submitLink_${bpVO.bookNumber}"
-															style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
+													<h4 class="product_name"> 
+													<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;"><span style="font-weight: bold;">${bpVO.bookTitle}</span></a>
 													</h4>
-												</FORM>
 												<div class="price_box">
 													<span class="current_price">NT$ ${bpVO.price}</span>
 												</div>
 												<div class="add_to_cart">
-													<a href="cart.html" title="Add to cart">加入購物車</a>
+													<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
 												</div>
 											</div>
 										</figure>

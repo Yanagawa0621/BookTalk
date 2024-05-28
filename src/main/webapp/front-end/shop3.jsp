@@ -31,6 +31,11 @@ List<BookClassVO> bcList= bcSce.getAllBc();
 pageContext.setAttribute("bcList", bcList);
 %>
 
+<%
+String searchMain=(String)request.getAttribute("searchMain");
+String Keywords=(String)request.getAttribute("Keywords");
+%>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -67,8 +72,9 @@ pageContext.setAttribute("bcList", bcList);
 					<div class="breadcrumb_content">
 						<h3>商城</h3>
 						<ul>
-							<li><a href="/BoolTalk/index.jsp">首頁</a></li>
-							<li style="padding: 0;">商城</li>
+							<li><a href="${pageContext.request.contextPath}/index.jsp">首頁</a></li>
+							<li><a href="${pageContext.request.contextPath}/front-end/shop.jsp">商城</a></li>
+							<li style="padding: 0;">${searchMain} 關鍵字:${Keywords}</li>
 						</ul>
 					</div>
 				</div>
@@ -162,7 +168,7 @@ pageContext.setAttribute("bcList", bcList);
 													<span class="label_new">new</span>
 												</c:if>
 											</div>
-											<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" target="_blank">
+											<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}">
 									            <img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗">
 									        </a>
 											<div class="action_links">
@@ -194,18 +200,14 @@ pageContext.setAttribute("bcList", bcList);
 												</c:if>
 												</ul>
 											</div>
-											<FORM METHOD="GET"  ACTION="${pageContext.request.contextPath}/bookproducts.do" id="bookForm_${bpVO.bookNumber}">
 											<h4 class="product_name">
-												<input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
-												<input type="hidden" name="action" value="single_product_page">
-												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
+												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;"><span style="font-weight: bold;">${bpVO.bookTitle}</span></a>
 											</h4>
-											</FORM>
 											<div class="price_box">
 												<span class="current_price">NT$ ${bpVO.price}</span>
 											</div>
 											<div class="add_to_cart">
-												<a href="cart.html" title="Add to cart">加入購物車</a>
+												<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
 											</div>
 										</div>
 									</figure>

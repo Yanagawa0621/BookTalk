@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.author.model.AuthorVO;
-import com.bookclass.model.BookClassService;
-import com.bookclass.model.BookClassVO;
 import com.bookproducts.model.BookProductsService;
 import com.bookproducts.model.BookProductsVO;
 import com.google.gson.Gson;
@@ -65,6 +64,12 @@ public class BookProductsServlet extends HttpServlet {
 					return ;
 				}
 				// ===轉交資料===
+				if("bookTitle".equals(searchMain)) {
+					req.setAttribute("searchMain", "書籍名稱");	
+				}else if("isbn".equals(searchMain)) {
+					req.setAttribute("searchMain", "國際書碼(ISBN)");
+				}
+				req.setAttribute("Keywords", Keywords);
 				req.setAttribute("list", list);
 				String url="/front-end/shop3.jsp";
 				RequestDispatcher successView=req.getRequestDispatcher(url);
@@ -143,5 +148,26 @@ public class BookProductsServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		String searchMain=req.getParameter("searchMain");
+		String Keywords=req.getParameter("Keywords");
+				
+		if("book_search".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			if(!"bookTitle".equals(searchMain)||!"isbn".equals(searchMain)||!"bookNumber".equals(searchMain)||!"bookClassNumber".equals(searchMain)) {
+				errorMsgs.add("你查詢的方法不存在");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookProducts.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			if("isbn".equals(searchMain)) {
+				String reg="^[0-9]{1,13}$";
+				if(Keywords.matches(reg)) {
+					errorMsgs.add("請輸入數字");
+				}
+			}
+		}
 	}
 }
