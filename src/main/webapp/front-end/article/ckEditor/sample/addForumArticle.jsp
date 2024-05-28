@@ -50,13 +50,18 @@
 			<div class="row row-editor">
 				<div class="editor-container" style="padding:32px;">
 					<form class="thisforum" action="<%=request.getContextPath()%>/article/article.do" method="post"  onsubmit="return validateForm()">
-						看板:${forumVO.name}
+						<div id = "select-forum">
+							<select size="1" name="forumNumber">
+						         <c:forEach var="forum" items="${forumSvc.all}" > 
+						          	<option value="${forum.forumNumber}">${forum.name}</option>
+						         </c:forEach>   
+					       </select>
+						</div>
 						作者:${sessionScope.userNumber}
 						<br>
 						標題:
 						<input type="text" name = "title" required style="width:94.5%; height:30px;">
 						<textarea id="content" name="content" class="editor"></textarea>
-						<input type="hidden" name="forumNumber" value="${forumVO.forumNumber}">
 						<input type="hidden" name="action" value="insert">
 						<input type="submit" value="送出新增">
 					</form>

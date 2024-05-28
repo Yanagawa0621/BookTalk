@@ -41,7 +41,7 @@ public class ArticleDAO implements ArticleDAO_interface {
 
     @Override
     public List<ArticleVO> findByKeyWord(String keyword) {
-        String hql = "FROM ArticleVO WHERE forumVO.name like :keyword";
+        String hql = "FROM ArticleVO WHERE title like :keyword";
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         query.setParameter("keyword", "%" + keyword + "%");
         return query.list();
@@ -56,33 +56,12 @@ public class ArticleDAO implements ArticleDAO_interface {
     }
 
     @Override
-    public List<ArticleVO> findByOrderByPageView() {
-        String hql = "FROM ArticleVO ORDER BY pageView DESC";
-        Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
-        return query.list();
-    }
-
-    @Override
     public List<ArticleVO> findByOrderByLikeSum() {
         String hql = "FROM ArticleVO ORDER BY likeSum DESC";
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         return query.list();
     }
 
-    @Override
-    public List<ArticleVO> findByOrderByPageViewThisMonth(String name) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
-        LocalDateTime firstDayOfNextMonth = firstDayOfMonth.plusMonths(1);
-
-        String hql = "FROM ArticleVO a WHERE a.forumVO.name = :forumName AND a.issueTime >= :startDate AND a.issueTime < :endDate ORDER BY a.pageView DESC";
-
-        Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
-        query.setParameter("forumName", name);
-        query.setParameter("startDate", firstDayOfMonth);
-        query.setParameter("endDate", firstDayOfNextMonth);
-        return query.list();
-    }
 
     @Override
     public List<ArticleVO> findByOrderByLikeSumThisMont(String name) {
@@ -100,21 +79,6 @@ public class ArticleDAO implements ArticleDAO_interface {
     }
 
     @Override
-    public List<ArticleVO> findByOrderByPageViewThisWeek(Integer forumNumber) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        LocalDateTime startOfNextWeek = startOfWeek.plusWeeks(1);
-
-        String hql = "FROM ArticleVO a WHERE a.forumVO.forumNumber = :forumNumber AND a.issueTime >= :startOfWeek AND a.issueTime < :startOfNextWeek ORDER BY a.pageView DESC";
-
-        Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
-        query.setParameter("forumNumber", forumNumber);
-        query.setParameter("startOfWeek", startOfWeek);
-        query.setParameter("startOfNextWeek", startOfNextWeek);
-        return query.list();
-    }
-
-    @Override
     public boolean updateArticleStatus(Integer articleNumber, Integer articleState) {
         ArticleVO articleVO = getSession().get(ArticleVO.class, articleNumber);
         if (articleVO != null) {
@@ -126,7 +90,7 @@ public class ArticleDAO implements ArticleDAO_interface {
     }
 
     @Override
-    public List<ArticleVO> findAllByOrderByPageViewThisMonth() {
+    public List<ArticleVO> findAllByOrderByLikeSumThisMonth() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
         LocalDateTime firstDayOfNextMonth = firstDayOfMonth.plusMonths(1);

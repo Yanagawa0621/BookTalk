@@ -3,11 +3,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
 <%@ page import="com.forum.model.*"%>
-<%
-	ArticleService articleSvc = new ArticleService();
-	List<ArticleVO> list = articleSvc.getPopularArticle();
-	pageContext.setAttribute("list",list);
-%>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -54,10 +49,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb_content">
-                        <h3>熱門文章</h3>
+                        <h3>搜尋結果</h3>
                         <ul>
                             <li><a href="index.html">home</a></li>
-                            <li>熱門文章</li>
+                            <li>搜尋結果</li>
                         </ul>
                     </div>
                 </div>
@@ -72,56 +67,65 @@
             <div class="row">
                 <div class="col-lg-9 col-md-12">
                     <div class="blog_wrapper">
-                    <c:forEach var="articleVO" items="${list}" varStatus="loop">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    ${articleVO.articleImage }
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="#" onclick="event.preventDefault();"data-toggle="modal" data-target="#lightboxModal${loop.index}"><i class="fa fa-paper-plane"></i>${articleVO.title}</a></h4>
-                                   <!-- Modal -->
-									<div class="modal fade" id="lightboxModal${loop.index}" tabindex="-1" role="dialog" aria-labelledby="lightboxModalLabel" aria-hidden="true">
-									  <div class="modal-dialog modal-lg" role="document">
-									    <div class="modal-content">
-									      <div class="modal-header">
-									        <h5 class="modal-title" id="lightboxModalLabel"style="font-size: 30px;">${articleVO.title}</h5>
-									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									          <span aria-hidden="true">&times;</span>
-									        </button>
-									      </div>
-									      <div class="modal-body" style="font-size: 18px; padding: 30px;">
-									        <!-- 燈箱内容區域 -->
-										    ${articleVO.content}
-										    <hr>
-										    <c:forEach var="commentVO" items="${articleVO.commentVO}">
-											    <div class="comment-area"> 
-											    	<p>${commentVO.userNumber}</p> 
-											    	<p>${commentVO.content}</p> 
+                    	<c:if test="${not empty errorMsgs}">
+					        <ul>
+					            <c:forEach var="msg" items="${errorMsgs}">
+					                <li>${msg}</li>
+					            </c:forEach>
+					        </ul>
+					    </c:if>
+	                    <c:if test="${not empty list}">
+		                    <c:forEach var="articleVO" items="${list}" varStatus="loop">
+		                        <article class="single_blog">
+		                            <figure>
+		                                <div class="blog_thumb">
+		                                    ${articleVO.articleImage }
+		                                </div>
+		                                <figcaption class="blog_content">
+		                                   <h4 class="post_title"><a href="#" onclick="event.preventDefault();"data-toggle="modal" data-target="#lightboxModal${loop.index}"><i class="fa fa-paper-plane"></i>${articleVO.title}</a></h4>
+		                                   <!-- Modal -->
+											<div class="modal fade" id="lightboxModal${loop.index}" tabindex="-1" role="dialog" aria-labelledby="lightboxModalLabel" aria-hidden="true">
+											  <div class="modal-dialog modal-lg" role="document">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="lightboxModalLabel"style="font-size: 30px;">${articleVO.title}</h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+											      </div>
+											      <div class="modal-body" style="font-size: 18px; padding: 30px;">
+											        <!-- 燈箱内容區域 -->
+												    ${articleVO.content}
+												    <hr>
+												    <c:forEach var="commentVO" items="${articleVO.commentVO}">
+													    <div class="comment-area"> 
+													    	<p>${commentVO.userNumber}</p> 
+													    	<p>${commentVO.content}</p> 
+													    </div>
+											        </c:forEach>
+											      </div>
+											      <div class="modal-footer">
+											        <form class="modal-form" onsubmit="event.preventDefault(); submitComment(${articleVO.articleNumber});">
+														<textarea id="comment${articleVO.articleNumber}" class="comment-input" placeholder="输入留言..."></textarea>
+														<input class ="form-input" type="submit" value="新增">
+													</form>
+											      </div>
 											    </div>
-									        </c:forEach>
-									      </div>
-									      <div class="modal-footer">
-									        <form class="modal-form" onsubmit="event.preventDefault(); submitComment(${articleVO.articleNumber});">
-												<textarea id="comment${articleVO.articleNumber}" class="comment-input" placeholder="输入留言..."></textarea>
-												<input class ="form-input" type="submit" value="新增">
-											</form>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-									
-                                    <div class="blog_meta">
-                                        <p>作者: <a href="#">${articleVO.userNumber}</a> / 發文日期: ${articleVO.issueTime} / 看板: <a href="#">${articleVO.forumVO.name}</a></p>
-                                    </div>
-                                    <p class="post_desc">${articleVO.articleSummary}</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </c:forEach> 
+											  </div>
+											</div>
+											
+		                                    <div class="blog_meta">
+		                                        <p>作者: <a href="#">${articleVO.userNumber}</a> / 發文日期: ${articleVO.issueTime} / 看板: <a href="#">${articleVO.forumVO.name}</a></p>
+		                                    </div>
+		                                    <p class="post_desc">${articleVO.articleSummary}</p>
+		                                    <footer class="btn_more">
+		                                        <a href="blog-details.html"> Read more</a>
+		                                    </footer>
+		                                </figcaption>
+		                            </figure>
+		                        </article>
+		                    </c:forEach> 
+		            	</c:if>
                     </div>
                 </div>  
                 <div class="col-lg-3 col-md-12">
