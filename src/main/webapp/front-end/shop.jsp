@@ -443,7 +443,7 @@ pageContext.setAttribute("bcList", bcList);
 						                    htmlContent +=`</div>`
 						                    htmlContent +=`<div class="modal_add_to_cart">`
 						                        htmlContent +=`<form action="#">`
-                                                    htmlContent +=`<input min="1" max="100" step="2" value="1" type="number">`
+                                                    htmlContent +=`<input min="1" max="100" step="1" value="1" type="number">`
                                                     htmlContent +=`<button type="submit">加入購物車</button>`
 						                        htmlContent +=`</form>`
 						                    htmlContent +=`</div>`

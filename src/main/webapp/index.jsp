@@ -5,6 +5,7 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.YearMonth" %>
 
+
 <%  
 	BookProductsService bpsce=new BookProductsService();
 	List<BookProductsVO> list=bpsce.npiBp();
@@ -688,7 +689,7 @@
 						                    htmlContent +=`</div>`
 						                    htmlContent +=`<div class="modal_add_to_cart">`
 						                        htmlContent +=`<form action="#">`
-                                                    htmlContent +=`<input min="1" max="100" step="2" value="1" type="number">`
+                                                    htmlContent +=`<input min="1" max="100" step="1" value="1" type="number">`
                                                     htmlContent +=`<button type="submit">加入購物車</button>`
 						                        htmlContent +=`</form>`
 						                    htmlContent +=`</div>`
@@ -708,7 +709,16 @@
 		    })
 		});
 	</script>
-
+	
+	<script type="text/javascript">
+        window.onload = function() {
+            // Check if the URL already has the selectPage parameter
+            if (!window.location.search.includes('selectPage=home')) {
+                // Redirect to the same URL with the selectPage parameter
+                window.location.href = window.location.pathname + "?selectPage=home";
+            }
+        };
+    </script>
 </body>
 
 </html>
