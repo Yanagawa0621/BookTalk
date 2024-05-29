@@ -34,7 +34,7 @@
 						</div>
 						<div class="header_account-list  mini_cart_wrapper">
 							<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
+									class="icon icon-FullShoppingCart"></i><span id= "offcanvas_item_count" class="item_count"></span></a>
 							<!--mini cart-->
 							<div class="mini_cart">
 								<div id= "offcanvas_mini_cart" class="cart_gallery">
@@ -149,7 +149,7 @@
 							</div>
 							<div class="header_account-list  mini_cart_wrapper">
 								<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
+									class="icon icon-FullShoppingCart"></i><span id="menu_item_count" class="item_count"></span></a>
 								<!--mini cart-->
 								<div class="mini_cart">
 									<div id= "menu_mini_cart" class="cart_gallery">
