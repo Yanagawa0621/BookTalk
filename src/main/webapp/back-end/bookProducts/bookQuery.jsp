@@ -5,9 +5,8 @@
 <%@ page import="com.bookproducts.model.*"%>
 
 <%
-	BookProductsService bpSce=new BookProductsService();
-	List<BookProductsVO> list=bpSce.getAllBp();
-	pageContext.setAttribute("list", list);
+	List<BookProductsVO> list= (List<BookProductsVO>) request.getAttribute("list");
+	pageContext.setAttribute("list",list);
 %>
     
 <!DOCTYPE html>
@@ -158,17 +157,17 @@
 				                </div>
 				            </form>
 				        </div>
-						
-						<!-- 全部書籍按鈕 -->
+				
+				        <!-- 全部書籍按鈕 -->
 				        <div class="col-md-4 d-flex justify-content-center align-self-end">
 				            <a href="${pageContext.request.contextPath}/back-end/bookProducts/bookProducts.jsp">
 				                <button type="button" class="btn btn-block bg-gradient-success">全部書籍</button>
 				            </a>
 				        </div>
-						
+				        
 				        <!-- 新增書籍按鈕 -->
 				        <div class="col-md-4 d-flex justify-content-center align-self-end">
-				            <a href="${pageContext.request.contextPath}/back-end/bookProducts/addBookProducts.jsp">
+				            <a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp">
 				                <button type="button" class="btn btn-block bg-gradient-success">新增書籍</button>
 				            </a>
 				        </div>

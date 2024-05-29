@@ -89,12 +89,23 @@ public class BookProductsService {
 	public List<BookProductsVO> keywordSearchBp(String searchMain, String keywords) {
 		return multipleConversions(bpDAO.keywordQuery(searchMain, keywords));
 	}
-
+	
+	
 	public BookProductsVO singleQueryBp(Integer bookNumber) {
 		return singleConversion(bpDAO.singleQuery(bookNumber));
 	}
+	public List<BookProductsVO> keywordSearchBpNp (String searchMain, String keywords) {
+		return bpDAO.keywordQuery(searchMain, keywords);
+	}
+	
+	public BookProductsVO singleQueryBpNp(Integer bookNumber) {
+		return bpDAO.singleQuery(bookNumber);
+	}
 
-	// =================================以下做圖片處理用========================================
+	public List<BookProductsVO> statusQueryBpNp(Integer productStatus){
+		return bpDAO.statusQuery(productStatus);
+	}
+	// =================================以下做圖片及添加資料處理用========================================
 
 	// 單筆書籍資料的圖片轉換
 	private BookProductsVO singleConversion(BookProductsVO bpVO) {
