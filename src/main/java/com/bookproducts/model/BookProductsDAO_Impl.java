@@ -9,5 +9,6 @@ public interface BookProductsDAO_Impl{
 	List<BookProductsVO> npi(int year,int month);
 	List<BookProductsVO> priceQuery(Double min,Double max);
 	List<BookProductsVO> keywordQuery(String searchMain,String keywords);
+	List<BookProductsVO> statusQuery(Integer productStatus);
 	BookProductsVO singleQuery(Integer bookNumber);
 }

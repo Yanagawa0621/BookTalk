@@ -52,7 +52,15 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 				.createQuery("from BookProductsVO where " + searchMain + " like :keywords", BookProductsVO.class)
 				.setParameter("keywords", "%" + keywords + "%").list();
 	}
-
+	
+	//書籍狀態查詢
+	@Override
+	public List<BookProductsVO> statusQuery(Integer productStatus) {
+		return getSession().createQuery("from BookProductsVO where productStatus =:productStatus", BookProductsVO.class)
+				.setParameter("productStatus", productStatus)
+				.list();
+	}
+	
 	// 單筆查詢
 	@Override
 	public BookProductsVO singleQuery(Integer bookNumber) {
@@ -80,6 +88,7 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 			return bpVO.getBookNumber();
 		}
 	}
+
 	
 //=================================以下是測試用的main方法========================================
 

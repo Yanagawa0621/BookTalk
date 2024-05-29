@@ -1,10 +1,34 @@
+<%@page import="com.bookproducts.model.BookProductsVO"%>
+<%@page import="com.publishinghouse.model.PublishingHouseService"%>
+<%@page import="com.bookclass.model.BookClassService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.order.model.*"%>
+<%@ page import="com.bookclass.model.*"%>
+<%@ page import="com.publishinghouse.model.*"%>
+<%@ page import="com.author.model.*"%>
+<%@ page import="java.util.*"%>
+
+<%
+	BookProductsVO bpVO= (BookProductsVO) request.getAttribute("bpVO");
+%>
 
 <% 
-	OrderVO orderVO = (OrderVO) request.getAttribute("orderVO");
+	BookClassService bcSce=new BookClassService();
+	List<BookClassVO> bcList=bcSce.getAllBc();
+	pageContext.setAttribute("bcList", bcList);
+%>
+
+<%
+	PublishingHouseService phSce=new PublishingHouseService();
+	List<PublishingHouseVO> phList=phSce.getAllPh();
+	pageContext.setAttribute("phList", phList);
+%>
+
+<%
+	AuthorService authorSce=new AuthorService();
+	List<AuthorVO> authorList=authorSce.getAllArth();
+	pageContext.setAttribute("authorList", authorList);
 %>
 
 <!DOCTYPE html>
@@ -21,7 +45,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">新增訂單</h1>
+							<h1 class="m-0">新增書籍</h1>
 						</div>	<!-- /.col -->						
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
@@ -45,50 +69,96 @@
 				
 				<div class="card">
 	              <div class="card-header">
-	                <h3 class="card-title">輸入訂單資訊</h3>
+	                <h3 class="card-title">輸入書籍資訊</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
-		              <form method="post" name="newOrderForm" action="${pageContext.request.contextPath}/order/order.do" class="needs-validation" novalidate>
+		              <form id="bookForm" method="post" name="newOrderForm" action="${pageContext.request.contextPath}/order/order.do" class="needs-validation" novalidate>
 		                <table id="newOrder" class="table table-bordered table-hover">
 		                	<tbody>
 		                		<tr>
-		                			<th class="align-middle">收件人：</th>
+		                			<th class="align-middle">書籍名稱：</th>
 		                			<td>
-		                				<div class="input-group" style="width: 20%" >	
-			                				<input type="text" name="receiver" class="form-control" value="<%= (orderVO==null)? "" : orderVO.getReceiver()%>" required>
+		                				<div class="input-group" style="width: 50%" >	
+			                				<input type="text" name="receiver" class="form-control" value="<%= (bpVO==null)? "" : bpVO.getBookTitle()%>" required>
 			                				<div class="invalid-tooltip">
-	          									收件人請勿空白         							
+	          									書籍名稱請勿空白         							
 	        								</div>
         								</div>
 		                			</td>
 		                		</tr>
 		                		<tr>		                			
-		                			<th class="align-middle">收件地址：</th>		                			
+		                			<th class="align-middle">ISBN：</th>		                			
 		                			<td>
 		                				<div class="input-group" style="width: 50%" >		                			
-		                					<input type="text" name="shippingAddress" class="form-control" value="<%= (orderVO==null)? "" : orderVO.getShippingAddress()%>" required>
+		                					<input type="text" name="shippingAddress" class="form-control" value="<%= (bpVO==null)? "" : bpVO.getIsbn()%>" required>
 		                					<div class="invalid-tooltip">
-	          									收件地址請勿空白      							
+	          									ISBN請勿空白      							
 	        								</div>
 		                				</div>
 		                			</td>
 		                		</tr>
 		                		<tr>
-		                			<th class="align-middle">運費：</th>
+		                			<th class="align-middle">書籍類別：</th>
 		                			<td>
 		                				<div class="input-group" style="width: 20%" >		                			
-		                					<input type="text" name="deliveryFee" class="form-control" required>
-		                					<div class="invalid-tooltip">
-	          									請輸入運費      							
-	        								</div>
+		                					<select class="form-control" name="bookClassNumber">
+		                					<c:forEach var="bcVO" items="${bcList}">
+		                						<option value="${bcVO.classNumber}" <c:if test="${bpVO != null && bcVO.classNumber == bpVO.bcVO.bookClassNumber}">selected</c:if>>${bcVO.className}</option>
+		                					</c:forEach>
+		                					</select>
 		                				</div>
 		                			</td>
 		                		</tr>
 		                		<tr>
-		                			<th class="align-middle">總金額：</th>
+		                			<th class="align-middle">出版社：</th>
+		                			<td>
+		                				<div class="input-group" style="width: 20%" >
+		                					<select name="publishiingHouseCode" class="form-control">
+						                     	<c:forEach var="phVO" items="${phList}">
+		                							<option value="${phVO.publishingHouseNumber}" <c:if test="${bpVO != null && phVO.publishingHouseNumber == bpVO.phVO.publishingHouseNumber}">selected</c:if>>${phVO.name}</option>
+		                						</c:forEach>
+						                    </select>
+		                				</div>
+		                			</td>
+		                		</tr>
+		                		<tr>
+		                			<th class="align-middle">出版時間：</th>
 		                			<td>
 		                				<div class="input-group" style="width: 20%" >		                			
-		                					<input type="text" name="total" class="form-control" required>
+		                					<label for="reservationdatetime">選擇日期和時間</label>
+							                <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+							                    <input type="text" name="publicationDate" class="form-control datetimepicker-input" data-target="#reservationdatetime" required value="<%= (bpVO==null)? "" : bpVO.getPublicationDate()%>"/>
+							                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+							                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+							                    </div>
+							                    <div class="invalid-tooltip">
+							                        請選擇日期和時間
+							                    </div>
+							                </div>
+		                				</div>
+		                			</td>
+		                		</tr>
+		                		<tbody id="authorTableBody">
+		                		<tr>
+			                        <th class="align-middle">作者：</th>
+			                        <td>
+			                            <div class="input-group author-input" style="width: 80%">
+			                                <input type="text" name="author" class="form-control" required>
+			                                <div class="invalid-tooltip">
+			                                    請輸入作者名稱
+			                                </div>
+			                                <div class="input-group-append">
+			                                    <button type="button" class="btn btn-success add-author-btn">+</button>
+			                                </div>
+			                            </div>
+			                        </td>
+			                    </tr>
+			                    </tbody>
+		                		<tr>
+		                			<th class="align-middle">庫存量：</th>
+		                			<td>
+		                				<div class="input-group" style="width: 20%" >		                			
+		                					<input type="text" name="total" class="form-control" required value="<%= (bpVO==null)? "" : bpVO.getStock()%>">
 		                					<div class="invalid-tooltip">
 	          									請輸入總金額     							
 	        								</div>
@@ -96,9 +166,29 @@
 		                			</td>
 		                		</tr>
 		                		<tr>
-		                			<th class="align-middle">備註：</th>
+		                			<th class="align-middle">價格：</th>
 		                			<td>
-		                				<textarea name="note" class="form-control" style="width: 50%;"><%= (orderVO==null)? "" : orderVO.getNote()%></textarea>
+		                				<div class="input-group" style="width: 20%" >		                			
+		                					<input type="text" name="total" class="form-control" required value="<%= (bpVO==null)? "" : bpVO.getPrice()%>">
+		                					<div class="invalid-tooltip">
+	          									請輸入總金額     							
+	        								</div>
+		                				</div>
+		                			</td>
+		                		</tr>
+		                		<tr>
+							        <th class="align-middle">上傳圖片：</th>
+							        <td>
+							            <div class="input-group" style="width: 20%">
+							                <input type="file" name="images" class="form-control" multiple onchange="previewImages(event)">
+							            </div>
+							            <div id="image-preview" style="margin-top: 10px;"></div>
+							        </td>
+							    </tr>
+		                		<tr>
+		                			<th class="align-middle">書籍介紹：</th>
+		                			<td>
+		                				<textarea name="note" class="form-control" style="width: 50%;"><c:out value="${bpVO == null ? '' : bpVO.getIntroductionContent()}" /></textarea>
 		                			</td>
 		                		</tr>					               
 			              	</tbody>
@@ -140,7 +230,7 @@
 		//Date and time picker
 	    $('#reservationdatetime').datetimepicker({
 	    	locale: 'zh-tw',
-	        format: 'YYYY-MM-DD HH:mm',
+	        format: 'YYYY-MM-DD',
 	    	icons: { time: 'far fa-clock' }
 	    });
 		
@@ -167,7 +257,75 @@
 	});
 		
 	</script>
-	
+	<script>
+        $(document).ready(function() {
+            // 添加新作者欄位
+            $('#authorTableBody').on('click', '.add-author-btn', function() {
+                const newAuthorRow = `
+                    <tr>
+                        <th class="align-middle">作者：</th>
+                        <td>
+                            <div class="input-group author-input" style="width: 80%">
+                                <input type="text" name="author" class="form-control" required>
+                                <div class="invalid-tooltip">
+                                    請輸入作者名稱
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-danger remove-author-btn">-</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                $('#authorTableBody').append(newAuthorRow);
+            });
+
+            // 移除作者欄位
+            $('#authorTableBody').on('click', '.remove-author-btn', function() {
+                $(this).closest('tr').remove();
+            });
+
+            // 表單提交時的處理
+            $('#bookForm').submit(function(event) {
+                const authors = [];
+                $('input[name="author"]').each(function() {
+                    authors.push($(this).val());
+                });
+                console.log(authors); // 這裡你可以看到所有的作者名稱
+
+                // 你可以選擇將作者名稱陣列序列化後提交到後端
+                // 例如：使用hidden input來傳送
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'authors',
+                    value: JSON.stringify(authors)
+                }).appendTo('#bookForm');
+            });
+        });
+    </script>
+    
+    <script>
+		function previewImages(event) {
+		    const previewContainer = document.getElementById('image-preview');
+		    previewContainer.innerHTML = ""; // 清空預覽容器
+		
+		    const files = event.target.files;
+		    if (files) {
+		        Array.from(files).forEach(file => {
+		            const reader = new FileReader();
+		            reader.onload = function(e) {
+		                const img = document.createElement('img');
+		                img.src = e.target.result;
+		                img.style.width = "100px";
+		                img.style.marginRight = "10px";
+		                img.style.marginBottom = "10px";
+		                previewContainer.appendChild(img);
+		            };
+		            reader.readAsDataURL(file);
+		        });
+		    }
+		}
+	</script>
 
 </body>
 </html>
