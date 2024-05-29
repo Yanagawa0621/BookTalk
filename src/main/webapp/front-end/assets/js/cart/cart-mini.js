@@ -80,16 +80,68 @@ $(function(){
 			$("button.shop_add_cart").on("click", function(event){
 				event.preventDefault();
 				event.stopPropagation();
-				let quantity = $(this).closest("form").children("input").val();
-				let bookStock = $(this).closest("form").children("input").attr("max");
-				addMiniCart(bookNumber, quantity, bookStock);	//呼叫新增商品的function
+				if(!$(this).hasClass("-disabled")){
+					let quantity = $(this).closest("form").children("input").val();
+					let bookStock = $(this).closest("form").children("input").attr("max");
+					addMiniCart(bookNumber, quantity, bookStock);	//呼叫新增商品的function
+				}		
 			});
 			
 			$("#modal_box").on("hide.bs.modal", function () {	//當Modal隱藏取消綁定，不然會造成資料抓取不正確
 				$("#modal_box").off("shown.bs.modal");
 	   		});
 		});
-	});	
+	});
+	
+	
+	//新增商品按鈕綁定(單頁商品視窗用)
+	$("#detail_add_cart").on("click", function(event){
+		event.preventDefault();
+		if(!$(this).hasClass("-disabled")){
+			addMiniCartOne();	//呼叫新增商品的function
+		}
+	});
+	
+	//更新購買數量綁定
+	$(document).on("change", "td.product_quantity", function(event){
+		event.preventDefault();
+		if(!$(this).hasClass("-disabled")){
+			let bookNumber = $(this).closest("tr").attr("data-id");
+			let bookPrice = $(this).prev().text().slice(1);
+			let quantity = $(this).children("input").val();
+	
+			let formData = {
+					"action" : "update",
+					"userNumber" : userNumber,
+					"bookNumber" : bookNumber,
+					"bookPrice" : bookPrice,
+					"quantity" : quantity
+			};
+			
+			let that = this;
+	
+			$.ajax({
+				url: path,
+				type: "POST",
+				data: formData,
+				dataType: "json",
+				success:function(item){	
+					console.log(item);	
+					let listHtml = `
+						<td>$${item.subtotal}</td>
+					`;
+					let row = $(that).closest("tr");
+					let cells = row.find("td");
+					cells.eq(6).replaceWith(listHtml);
+					reloadMiniCart();
+				},
+				complete:function(xhr){
+					$("td.product_quantity").removeClass("-disabled");
+				}
+			});
+		}
+	});
+
 });
 
 
@@ -186,12 +238,10 @@ function reloadMiniCart(){
 
 //購物車頁面載入
 function showFullCart(cart){
-	console.log(cart);
+//	console.log(cart);
 	var subtotalSum = 0, deliveryFee = 0, total = 0;
 	let listHtml = '';
 	$.each(cart, function(index, item){
-		console.log(index);
-		console.log(item);
 				listHtml += `
 					<tr data-id="${item.bookNumber}">
 						<td class="remove_one"><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
@@ -225,10 +275,11 @@ function showFullCart(cart){
 }
 
 
-//更新購物車頁面
+//更新購物車價錢
 function reloadFullCartPrice(cart){
+//	console.log(cart);
 	var subtotalSum = 0, deliveryFee = 0, total = 0;
-	$.each(cart, function(item){
+	$.each(cart, function(index, item){
 		subtotalSum += (parseInt(item.bookPrice) * parseInt(item.quantity));
 	});
 	if(subtotalSum >= 1000){
@@ -245,53 +296,102 @@ function reloadFullCartPrice(cart){
 }
 
 
-//新增商品
+//新增商品(Modal視窗用)
 function addMiniCart(bookNumber, quantity, bookStock){
 	let bookTitle = $("div.modal_title").children("h2").text();
 	let bookPrice = $("span.new_price").text().slice(4);
-	
-	console.log(userNumber);
-	console.log(bookNumber);
-	console.log(bookTitle);
-	console.log(bookPrice);
-	console.log(quantity);
-	console.log(bookStock);
 	
 	let formData = {
 			"action" : "add",
 			"userNumber" : userNumber,
 			"bookNumber" : bookNumber,
 			"bookTitle" : bookTitle,
-			"bookPrice" : bookPrice
-		};
+			"bookPrice" : bookPrice,
+			"quantity" : quantity,
+			"bookStock" : bookStock
+	};
+			
+	$.ajax({
+		url: path,
+		type: "POST",
+		data: formData,
+		dataType: "json",
+		success:function(item){
+			let listHtml = `
+				<div class="cart_item" data-id="${item.bookNumber}">
+					<div class="cart_img" style="text-align: center;">
+						<a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">
+						<img src="${contextPath}/bap/Img?bookNumber=${item.bookNumber}" width="70px" alt=""></a>
+					</div>
+					<div class="cart_info">
+						<a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">${item.bookTitle}</a>
+						<p>
+							<strong>${item.quantity}  x  <span> $${item.bookPrice} </span></strong>
+						</p>
+					</div>
+				</div>
+			`;
+			$(".mini_cart #offcanvas_mini_cart").prepend(listHtml);
+			$(".mini_cart #menu_mini_cart").prepend(listHtml);
+			reloadMiniCart();
+		},
+		complete:function(xhr){
+			$("button.shop_add_cart").removeClass("-disabled");
+			$("#modal_box").modal("hide");
+		}
+		
+	});
+}
+
+//新增商品(單頁商品視窗用)
+function addMiniCartOne(){
+	let bookNumber = $("#zoom1").attr("data-zoom-image");
+	let bookTitle = $("form").children("h1").text();
 	
+	let pointIndex = $("span.current_price").text().indexOf(".");
+	let bookPrice = $("span.current_price").text().slice(4, pointIndex);	
 	
-//	$.ajax({
-//		url: path,
-//		type: "POST",
-//		data: formData,
-//		dataType: "json",
-//		success:function(items){
-//			//console.log(items);
-//			let listHtml = `
-//				<div class="cart_item" data-id="${item.bookNumber}">
-//					<div class="cart_img" style="text-align: center;">
-//						<a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">
-//						<img src="${contextPath}/bap/Img?bookNumber=${item.bookNumber}" width="70px" alt=""></a>
-//					</div>
-//					<div class="cart_info">
-//						<a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">${item.bookTitle}</a>
-//						<p>
-//							<strong>${item.quantity}  x  <span> $${item.bookPrice} </span></strong>
-//						</p>
-//					</div>
-//				</div>
-//			`;
-//			$(".mini_cart #offcanvas_mini_cart").prepend(listHtml);
-//			$(".mini_cart #menu_mini_cart").prepend(listHtml);
-//			reloadMiniCart();
-//		}
-//		
-//		
-//	});
+	let quantity = $("div.product_variant").children("input").val();
+	let bookStock = $("div.product_variant").children("input").attr("max");
+
+	
+	let formData = {
+			"action" : "add",
+			"userNumber" : userNumber,
+			"bookNumber" : bookNumber,
+			"bookTitle" : bookTitle,
+			"bookPrice" : bookPrice,
+			"quantity" : quantity,
+			"bookStock" : bookStock
+	};
+	
+	$.ajax({
+		url: path,
+		type: "POST",
+		data: formData,
+		dataType: "json",
+		success:function(item){
+			let listHtml = `
+				<div class="cart_item" data-id="${item.bookNumber}">
+					<div class="cart_img" style="text-align: center;">
+						<a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">
+						<img src="${contextPath}/bap/Img?bookNumber=${item.bookNumber}" width="70px" alt=""></a>
+					</div>
+					<div class="cart_info">
+						<a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">${item.bookTitle}</a>
+						<p>
+							<strong>${item.quantity}  x  <span> $${item.bookPrice} </span></strong>
+						</p>
+					</div>
+				</div>
+			`;
+			$(".mini_cart #offcanvas_mini_cart").prepend(listHtml);
+			$(".mini_cart #menu_mini_cart").prepend(listHtml);
+			reloadMiniCart();
+		},
+		complete:function(xhr){
+			$("#detail_add_cart").removeClass("-disabled");
+		}
+	});
+
 }

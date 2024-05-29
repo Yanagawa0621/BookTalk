@@ -123,7 +123,7 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 							<div class="product_variant quantity">
 								<label>quantity</label> <input min="1" max="${bpVO.stock}" value="1"
 									type="number">
-								<button type="button" class="button" data-cart=" detail_add_cart">加入購物車</button>
+								<button type="button" class="button" id="detail_add_cart">加入購物車</button>
 							</div>
 
 							<div class="product_desc">

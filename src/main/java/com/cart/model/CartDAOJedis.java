@@ -62,7 +62,7 @@ public class CartDAOJedis implements CartDAO_inteface{
                 Integer quantity = Integer.parseInt(itemData.get("quantity"));
                 Double subtotal = Double.parseDouble(itemData.get("subtotal"));
                 Integer bookStock = Integer.parseInt(itemData.get("bookStock"));
-//              byte[] image = itemData.get("image").getBytes();  // 將字符串轉換回 BLOB
+
 
                 listCart.add(new CartVO(userNumber, bookNumber, bookTitle, bookPrice, quantity, subtotal, bookStock));
             }
