@@ -97,6 +97,20 @@
 											        <!-- 燈箱内容區域 -->
 												    ${articleVO.content}
 												    <hr>
+												     <jsp:useBean id="likeSvc" scope="page" class="com.likeRecord.model.LikeService"/>
+											<c:set var="userNumber" value="${sessionScope.userNumber}" />
+											<c:set var="articleNumber" value="${articleVO.articleNumber}" />
+											<c:set var="likeStatus" value="${likeSvc.getArticleLike(userNumber, articleNumber)}" />
+											<c:choose>
+											    <c:when test="${likeStatus == 1}">
+											        <button id="like-button-${articleVO.articleNumber}" class="like-button" style="background:white; display: none;" onclick="like(${articleVO.articleNumber});">讚</button>
+											        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="background:red;" onclick="unlike(${articleVO.articleNumber});">讚</button>
+											    </c:when>
+											    <c:otherwise>
+											        <button id="like-button-${articleVO.articleNumber}" class="like-button" style="background:white;" onclick="like(${articleVO.articleNumber});">讚</button>
+											        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="background:red; display: none;" onclick="unlike(${articleVO.articleNumber});">讚</button>
+											    </c:otherwise>
+											</c:choose>
 												    <c:forEach var="commentVO" items="${articleVO.commentVO}">
 													    <div class="comment-area"> 
 													    	<p>${commentVO.userNumber}</p> 
@@ -106,7 +120,7 @@
 											      </div>
 											      <div class="modal-footer">
 											        <form class="modal-form" onsubmit="event.preventDefault(); submitComment(${articleVO.articleNumber});">
-														<textarea id="comment${articleVO.articleNumber}" class="comment-input" placeholder="输入留言..."></textarea>
+														<textarea id="comment${articleVO.articleNumber}" class="comment-input" placeholder="输入留言..." required></textarea>
 														<input class ="form-input" type="submit" value="新增">
 													</form>
 											      </div>
@@ -273,11 +287,10 @@
 
 <%@include file="/front-end/component/script.jsp" %>
 <script type="text/javascript">
-//新增留言 之後須加上userNumber
+var contextPath = "<%= request.getContextPath() %>";
+var userID=${sessionScope.userNumber};
 function submitComment(articleNumber) {
-    var comment = $("#comment" + articleNumber).val();
-    var contextPath = "<%= request.getContextPath() %>";
-
+	var comment = $("#comment" + articleNumber).val();
     $.ajax({
         type: "POST",
         url: contextPath + "/comment/comment.do",
@@ -297,6 +310,49 @@ function submitComment(articleNumber) {
             alert("新增留言失敗");
         }
     });
+}
+function like(articleNumber){
+	console.log("按")
+	 $.ajax({
+	        type: "POST",
+	        url: contextPath + "/like/like.do",
+	        data: {
+	            action: "insert",
+	            userNumber: userID,
+	            articleNumber: articleNumber
+	        },
+	        success: function(response) {
+	            alert("按讚成功");
+	            // 更新留言區域
+	            document.getElementById("like-button-" + articleNumber).style.display = "none";
+                document.getElementById("unlike-button-" + articleNumber).style.display = "inline-block";
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(error);
+	            alert("按讚失敗");
+	        }
+	    });
+}
+function unlike(articleNumber){
+	 $.ajax({
+	        type: "POST",
+	        url: contextPath + "/like/like.do",
+	        data: {
+	            action: "delete",
+	            userNumber: userID,
+	            articleNumber: articleNumber
+	        },
+	        success: function(response) {
+	            alert("取消按讚");
+	            // 更新留言區域
+	            document.getElementById("like-button-" + articleNumber).style.display = "inline-block";
+                document.getElementById("unlike-button-" + articleNumber).style.display = "none";
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(error);
+	            alert("取消按讚失敗");
+	        }
+	    });
 }
 </script>
 
