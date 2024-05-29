@@ -189,7 +189,9 @@ function showFullCart(cart){
 	console.log(cart);
 	var subtotalSum = 0, deliveryFee = 0, total = 0;
 	let listHtml = '';
-	$.each(cart, function(index, item){	
+	$.each(cart, function(index, item){
+		console.log(index);
+		console.log(item);
 				listHtml += `
 					<tr data-id="${item.bookNumber}">
 						<td class="remove_one"><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
