@@ -34,20 +34,15 @@
 						</div>
 						<div class="header_account-list  mini_cart_wrapper">
 							<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
+									class="icon icon-FullShoppingCart"></i><span id= "offcanvas_item_count" class="item_count"></span></a>
 							<!--mini cart-->
 							<div class="mini_cart">
 								<div id= "offcanvas_mini_cart" class="cart_gallery">
 								
-								</div>
-								<div class="mini_cart_footer">
-									<div class="cart_button">
-										<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
-									</div>
-									<div class="cart_button">
-										<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
-									</div>
-								</div>
+								</div>						
+								<div class="cart_button">
+									<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+								</div>					
 							</div>
 							<!--mini cart end-->
 						</div>						
@@ -149,21 +144,15 @@
 							</div>
 							<div class="header_account-list  mini_cart_wrapper">
 								<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
+									class="icon icon-FullShoppingCart"></i><span id="menu_item_count" class="item_count"></span></a>
 								<!--mini cart-->
 								<div class="mini_cart">
 									<div id= "menu_mini_cart" class="cart_gallery">
 									
-									</div>
-									<div class="mini_cart_footer">
-										<div class="cart_button">
-											<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="menu-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
-										</div>
-										<div class="cart_button">
-											<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
-										</div>
-
-									</div>
+									</div>									
+									<div class="cart_button">
+										<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="menu-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+									</div>						
 								</div>
 								<!--mini cart end-->
 							</div>

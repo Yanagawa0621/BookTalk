@@ -386,7 +386,7 @@
                                            <div class="label_product">
                                                 <span class="label_new">new</span>
                                             </div>
-                                            <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}">
+                                            <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" target="_blank">
 									            <img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗">
 									        </a>
                                             <div class="action_links">
@@ -408,9 +408,13 @@
 <!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
                                                </ul>
                                             </div>
+                                            <FORM METHOD="GET"  ACTION="${pageContext.request.contextPath}/bookproducts.do" id="bookForm_${bpVO.bookNumber}">
 											<h4 class="product_name">
-												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;"><span style="font-weight: bold;">${bpVO.bookTitle}</span></a>
+												<input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
+												<input type="hidden" name="action" value="single_product_page">
+												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
 											</h4>
+											</FORM>
                                             <div class="price_box"> 
                                                 <span class="current_price">NT$ ${bpVO.price}</span>
 <!--                                                 <span class="old_price">$173.00</span> -->
@@ -685,8 +689,8 @@
 						                    htmlContent +=`</div>`
 						                    htmlContent +=`<div class="modal_add_to_cart">`
 						                        htmlContent +=`<form action="#">`
-                                                    htmlContent +=`<input min="1" max="100" step="1" value="1" type="number">`
-                                                    htmlContent +=`<button type="submit">加入購物車</button>`
+                                                    htmlContent +=`<input min="1" max="`+stock+`" step="1" value="1" type="number">`
+                                                    htmlContent +=`<button type="button" class="shop_add_cart">加入購物車</button>`
 						                        htmlContent +=`</form>`
 						                    htmlContent +=`</div>`
 						                htmlContent +=`</div>`

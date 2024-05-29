@@ -45,7 +45,7 @@ public class CartServlet extends HttpServlet {
 		
 		switch(action) {
 			case "add":
-				forwardPath = addItem(req, res);
+				addItem(req, res);
 				return;
 			case "update":
 				return;
@@ -58,6 +58,9 @@ public class CartServlet extends HttpServlet {
 			case "getAll":
 				getAllItems(req, res);
 				return;	//這裡用return是因為已經要回傳json的資料，不需要再往下進行，以免被導向別的頁面
+			case "goToCheck":
+				forwardPath = getCheckItems(req, res);
+				break;
 			default:
 				forwardPath = "/index.jsp";
 		}
@@ -67,11 +70,11 @@ public class CartServlet extends HttpServlet {
 		dispatcher.forward(req, res);
 	}
 	
-	private String addItem(HttpServletRequest req, HttpServletResponse res) {
+	private void addItem(HttpServletRequest req, HttpServletResponse res) {
 		
 		
 		
-		return null;
+		
 	}
 	
 	private void getAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -112,5 +115,13 @@ public class CartServlet extends HttpServlet {
         res.getWriter().write(status);
 	}
 	
+	private String getCheckItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		String userNumber = req.getParameter("userNumber");
+		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
+		System.out.println(userNumber);
+
+		return "/front-end/checkout.jsp";
+	
+	}
 
 }
