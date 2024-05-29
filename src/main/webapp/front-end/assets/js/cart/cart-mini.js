@@ -272,6 +272,14 @@ function showFullCart(cart){
 	$("p#data-deliveryfee").text("$"+deliveryFee);
 	$("p#data-total").text("$"+total);
 	
+	//隱藏欄位，給之後checkout.jsp頁面用
+	let hiddenHtml = `
+			<input type="hidden" name="subtotalSum" value=${subtotalSum}>
+			<input type="hidden" name="deliveryFee" value=${deliveryFee}>
+			<input type="hidden" name="total" value=${total}>
+	`;
+	$("div.checkout_btn").append(hiddenHtml);
+	
 }
 
 

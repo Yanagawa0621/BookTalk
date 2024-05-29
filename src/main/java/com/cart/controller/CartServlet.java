@@ -158,7 +158,16 @@ public class CartServlet extends HttpServlet {
 	private String getCheckItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String userNumber = req.getParameter("userNumber");
 		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
-		System.out.println(userNumber);
+		
+
+		String subtotalSum = req.getParameter("subtotalSum");
+        String deliveryFee = req.getParameter("deliveryFee");
+        String total = req.getParameter("total");
+
+        req.setAttribute("subtotalSum", subtotalSum);
+        req.setAttribute("deliveryFee", deliveryFee);
+        req.setAttribute("total", total);
+        req.setAttribute("cartList", cartList);
 
 		return "/front-end/checkout.jsp";
 	

@@ -369,26 +369,26 @@ public class OrderServlet extends HttpServlet {
 			String contextPath = req.getContextPath();	//取得專案名稱，給結帳時回傳網頁用
 
 			
-//			String receiver = req.getParameter("receiver").trim();
-//			if(receiver == null || receiver.length() == 0) {
-//				errorMsgs.add("收件人請勿空白");		
-//			}
-//			
-//			String shippingAddress = req.getParameter("shippingAddress").trim();
-//			if(shippingAddress == null || shippingAddress.length() == 0) {
-//				errorMsgs.add("收件地址請勿空白");		
-//			}
-//			
-//			String note = req.getParameter("note").trim();
+			String receiver = req.getParameter("receiver").trim();
+			if(receiver == null || receiver.length() == 0) {
+				errorMsgs.add("收件人請勿空白");		
+			}
+			
+			String shippingAddress = req.getParameter("shippingAddress").trim();
+			if(shippingAddress == null || shippingAddress.length() == 0) {
+				errorMsgs.add("收件地址請勿空白");		
+			}
+			
+			String note = req.getParameter("note").trim();
 			String userNumber = req.getParameter("userNumber");
 			
 			
 			OrderVO orderVO = new OrderVO();
 
 			orderVO.setUserNumber(Integer.valueOf(userNumber));
-//			orderVO.setReceiver(receiver);
-//			orderVO.setShippingAddress(shippingAddress);
-//			orderVO.setNote(note);
+			orderVO.setReceiver(receiver);
+			orderVO.setShippingAddress(shippingAddress);
+			orderVO.setNote(note);
 			System.out.println(orderVO);
 			
 			if (!errorMsgs.isEmpty()) {

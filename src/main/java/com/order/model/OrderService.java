@@ -105,8 +105,7 @@ public class OrderService implements OrderService_inteface{
 		//此訂單要新增時，跟著要一起新增的訂單明細
 		ordreVO.setOrderDetails(details);
 		
-		Integer newOrderNumber = addOrder(ordreVO).getOrderNumber();
-		
+		Integer newOrderNumber = addOrder(ordreVO).getOrderNumber();		
 //		cartSev.clearCart(userNumber);	//新增完訂單刪除購物車
 		
 		Integer totalAmount = ordreVO.getTotal().intValue();
@@ -126,7 +125,10 @@ public class OrderService implements OrderService_inteface{
 		payOneTimeObj.setClientBackURL("http://localhost:8081"+contextPath+"/front-end/shop.jsp");
 		payOneTimeObj.setReturnURL("http://localhost:8081"+contextPath+"/index.jsp");
 		payOneTimeObj.setNeedExtraPaidInfo("N");
-				
-		return cardPay.aioCheckOut(payOneTimeObj, null);
+		
+		String paymentForm = cardPay.aioCheckOut(payOneTimeObj, null);
+	
+		return paymentForm;
+
 	}
 }
