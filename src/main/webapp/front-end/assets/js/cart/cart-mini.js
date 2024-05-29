@@ -89,9 +89,7 @@ $(function(){
 				$("#modal_box").off("shown.bs.modal");
 	   		});
 		});
-	});		
-	
-	
+	});	
 });
 
 
@@ -188,10 +186,10 @@ function reloadMiniCart(){
 
 //購物車頁面載入
 function showFullCart(cart){
-	//console.log(cart);
+	console.log(cart);
 	var subtotalSum = 0, deliveryFee = 0, total = 0;
 	let listHtml = '';
-	$.each(cart, function(item){
+	$.each(cart, function(index, item){	
 				listHtml += `
 					<tr data-id="${item.bookNumber}">
 						<td class="remove_one"><a href="#"><i class="far fa-trash-alt fa-lg"></i></a></td>
@@ -215,7 +213,7 @@ function showFullCart(cart){
 	}
 		
 	total = subtotalSum + deliveryFee;
-	
+
 	listHtml += `<input type="hidden" name="userNumber" value="${userNumber}">`;
 	$("#full_cart .cart_tbody").html(listHtml);
 	$("p#data-subtotal").text("$"+subtotalSum);
