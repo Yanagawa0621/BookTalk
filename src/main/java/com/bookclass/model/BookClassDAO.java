@@ -48,8 +48,7 @@ public class BookClassDAO implements BookClassDAO_Impl {
 	//收尋全部
 	@Override
 	public List<BookClassVO> getAll() {
-		List<BookClassVO> list = getSession().createQuery("from BookClassVO", BookClassVO.class).list();
-		return list;
+		return getSession().createQuery("from BookClassVO", BookClassVO.class).list();
 	}
 	
 	//單筆搜尋

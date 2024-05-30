@@ -61,18 +61,21 @@ public class PublishingHouseService {
 
 	// 單筆書籍資料的圖片轉換
 	private PublishingHouseVO singleConversion(PublishingHouseVO phVO) {
-
-		for (BookProductsVO bpVOs : phVO.getBpVO()) {
-			bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+		if (phVO != null) {
+			for (BookProductsVO bpVOs : phVO.getBpVO()) {
+				bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+			}
 		}
 		return phVO;
 	}
 
 	// 多筆書籍資料的圖片轉換
 	private List<PublishingHouseVO> multipleConversions(List<PublishingHouseVO> list) {
-		for (PublishingHouseVO phVOs : list) {
-			for (BookProductsVO myCollection : phVOs.getBpVO()) {
-				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+		if (list.size() != 0) {
+			for (PublishingHouseVO phVOs : list) {
+				for (BookProductsVO myCollection : phVOs.getBpVO()) {
+					myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+				}
 			}
 		}
 		return list;
