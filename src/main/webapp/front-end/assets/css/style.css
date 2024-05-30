@@ -10107,3 +10107,69 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 /*privacy policy css end*/
 
 /*# sourceMappingURL=style.css.map */
+
+
+/*qa css start*/
+* {
+  box-sizing: border-box;
+}
+ul.qalist{
+    margin: 24px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+ul.qalist > li{
+  margin-bottom: 30px;
+}
+
+ul.qalist > li:last-child{
+  margin-bottom: 0;
+}
+
+ul.qalist > li > a.link_title{
+  display: block;
+  width: 100%;
+  color: white;
+  background-color: #c0c0c0;
+  box-shadow: 2px 2px 8px 0 rgba(56, 55, 53, 0.33);
+  border-radius: 26px;
+  padding: 8px 40px;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+ul.qalist > li > a.link_title::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+            
+ul.qalist > li > a.link_title button.switch_btn{
+  float: right;
+  display: inline-block;
+  background: none;
+  border: 0;
+  outline: none;
+  color: white;
+  font-size: 24px;
+}
+            
+ul.qalist > li > a.link_title button.switch_btn span.-minus{
+  display: none;
+}
+ul.qalist > li > div.inner_block{
+  font-size: 18px;
+  color: #4a4a4a;
+  margin-top: 8px;
+  padding: 0 40px;
+  line-height: 1.6;
+  display: none;
+}
+ul.qalist > li.-on > a.link_title button.switch_btn span.-plus{
+  display: none;
+}
+ul.qalist > li.-on > a.link_title button.switch_btn span.-minus{
+  display: inline-block;
+}
+/*qa css end*/

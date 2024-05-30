@@ -31,6 +31,7 @@
 		<mapping class="com.author.model.AuthorVO" />
 		<mapping class="com.booksandpicture.model.BooksAndPictureVO" />
 		<mapping class="com.publishinghouse.model.PublishingHouseVO" />
+		<mapping class="com.qa.model.QaVO" />
 <!--		<mapping class="com.forum.model.ForumVO" />-->
 <!--		<mapping class="com.article.model.ArticleVO" />-->
 <!--		<mapping class="com.comment.model.CommentVO" />-->

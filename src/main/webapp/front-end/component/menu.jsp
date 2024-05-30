@@ -71,6 +71,8 @@
 							<li class="menu-item-has-children"><a href="#">聯絡我們</a></li>
 							<li class="menu-item-has-children"><a href="#">客服相關</a>
 								<ul class="sub-menu">
+									<li><a href="${pageContext.request.contextPath}/front-end/callCenter.jsp?selectPage=callCenter">客服中心</a></li>
+									<li><a href="${pageContext.request.contextPath}/front-end/qa.jsp?selectPage=qa">常見問題Q&A</a></li>
 									<li><a href="#">關於我們</a></li>
 									<li><a href="#">Frequently Questions</a></li>
 									<li><a href="#">contact</a></li>
@@ -110,6 +112,8 @@
 									<li><a href="#">聯絡我們</a></li>
 									<li><a href="#">客服相關<i class="fa fa-angle-down"></i></a>
 										<ul class="sub_menu pages">
+											<li><a href="${pageContext.request.contextPath}/front-end/callCenter.jsp?selectPage=callCenter">客服中心</a></li>
+											<li><a href="${pageContext.request.contextPath}/front-end/qa.jsp?selectPage=qa">常見問題Q&A</a></li>
 											<li><a href="#">關於我們</a></li>
 											<li><a href="#">Frequently Questions</a></li>
 											<li><a href="#">contact</a></li>
