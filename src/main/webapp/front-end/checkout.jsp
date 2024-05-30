@@ -35,61 +35,10 @@
     <!--Checkout page section-->
     <div class="Checkout_section mt-100">
        <div class="container">
-<!--             <div class="row"> -->
-<!--                <div class="col-12"> -->
-<!--                     <div class="user-actions"> -->
-<!--                         <h3>  -->
-<!--                             <i class="fa fa-file-o" aria-hidden="true"></i> -->
-<!--                             Returning customer? -->
-<!--                             <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">Click here to login</a>      -->
-
-<!--                         </h3> -->
-<!--                          <div id="checkout_login" class="collapse" data-parent="#accordion"> -->
-<!--                             <div class="checkout_info"> -->
-<!--                                 <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer please proceed to the Billing & Shipping section.</p>   -->
-<!--                                 <form action="#">   -->
-<!--                                     <div class="form_group"> -->
-<!--                                         <label>Username or email <span>*</span></label> -->
-<!--                                         <input type="text">      -->
-<!--                                     </div> -->
-<!--                                     <div class="form_group"> -->
-<!--                                         <label>Password  <span>*</span></label> -->
-<!--                                         <input type="text">      -->
-<!--                                     </div>  -->
-<!--                                     <div class="form_group group_3 "> -->
-<!--                                         <button type="submit">Login</button> -->
-<!--                                         <label for="remember_box"> -->
-<!--                                             <input id="remember_box" type="checkbox"> -->
-<!--                                             <span> Remember me </span> -->
-<!--                                         </label>      -->
-<!--                                     </div> -->
-<!--                                     <a href="#">Lost your password?</a> -->
-<!--                                 </form>           -->
-<!--                             </div> -->
-<!--                         </div>     -->
-<!--                     </div> -->
-<!--                     <div class="user-actions"> -->
-<!--                         <h3>  -->
-<!--                             <i class="fa fa-file-o" aria-hidden="true"></i> -->
-<!--                             Returning customer? -->
-<!--                             <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_coupon" aria-expanded="true">Click here to enter your code</a>      -->
-
-<!--                         </h3> -->
-<!--                          <div id="checkout_coupon" class="collapse" data-parent="#accordion"> -->
-<!--                             <div class="checkout_info coupon_info"> -->
-<!--                                 <form action="#"> -->
-<!--                                     <input placeholder="Coupon code" type="text"> -->
-<!--                                     <button type="submit">Apply coupon</button> -->
-<!--                                 </form> -->
-<!--                             </div> -->
-<!--                         </div>     -->
-<!--                     </div>     -->
-<!--                </div> -->
-<!--             </div> -->
-            <div class="checkout_form">
+       	  <form method="post" id="form2" name="newOrderDetailsForm" action="${pageContext.request.contextPath}/order/order.do">  
+            <div class="checkout_form">          	
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <form method="post" id="form1" action="${pageContext.request.contextPath}/order/order.do">
+                    <div class="col-lg-6 col-md-6">                
                             <h3>收貨人明細</h3>
                             <div class="row">
                                 <div class="col-12 mb-20">
@@ -207,11 +156,10 @@
                                         <textarea name="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                     </div>    
                                 </div>     	    	    	    	    	    	    
-                            </div>
-                        </form>    
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <form method="post" id="form2" name="newOrderDetailsForm" action="${pageContext.request.contextPath}/order/order.do">    
+                            </div>                   
+                    	</div>
+                    
+            			<div class="col-lg-6 col-md-6">                          
                             <h3>訂單明細</h3> 
                             <div class="order_table table-responsive">
                                 <table>
@@ -225,57 +173,35 @@
                                     	<c:forEach var="cartItem" items="${cartList}">
 	                                        <tr>
 	                                            <td>${cartItem.bookTitle}</td>
-	                                            <td>$${cartItem.bookPrice}</td>
+	                                            <td>$ ${cartItem.bookPrice}</td>
 	                                        </tr>
                                       	</c:forEach>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>商品總金額</th>
-                                            <td>$215.00</td>
+                                            <td>$ ${subtotalSum}</td>
                                         </tr>
                                         <tr>
                                             <th>運費</th>
-                                            <td><strong>$50</strong></td>
+                                            <td><strong>$ ${deliveryFee}</strong></td>
                                         </tr>
                                         <tr class="order_total">
                                             <th>訂單總金額</th>
-                                            <td><strong>$220.00</strong></td>
+                                            <td><strong>$ ${total}</strong></td>
                                         </tr>
                                     </tfoot>
-                                </table>     
+                                </table>                                
                             </div>
-                            <div class="payment_method">
-                               <div class="panel-default">
-                                    <input id="payment" name="check_method" type="radio" data-target="createp_account" />
-                                    <label for="payment" data-toggle="collapse" data-target="#method" aria-controls="method">Create an account?</label>
-
-                                    <div id="method" class="collapse one" data-parent="#accordion">
-                                        <div class="card-body1">
-                                           <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                        </div>
-                                    </div>
-                                </div> 
-                               <div class="panel-default">
-                                    <input id="payment_defult" name="check_method" type="radio" data-target="createp_account" />
-                                    <label for="payment_defult" data-toggle="collapse" data-target="#collapsedefult" aria-controls="collapsedefult">PayPal <img src="assets/img/icon/papyel.png" alt=""></label>
-
-                                    <div id="collapsedefult" class="collapse one" data-parent="#accordion">
-                                        <div class="card-body1">
-                                           <p>Pay via PayPal; you can pay with your credit card if you donât have a PayPal account.</p> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order_button">
-                                    <button type="button" onclick="submitForms()">去付款</button>
-                                    <input type="hidden" name="userNumber" value="4">	<!-- 先將會員編號設死，實際要動態取得 -->
-                                    <input type="hidden" name="action" value="checkout">	
-                                </div>    
-                            </div> 
-                        </form>                            
-                    </div>
-                </div> 
-            </div> 
+                             <div class="order_button" align="right">
+                                <button type="submit" class="btn bg-gradient-primary btn-sm">去付款</button>
+                                <input type="hidden" name="userNumber" value="4">	<!-- 先將會員編號設死，實際要動態取得 -->
+                                <input type="hidden" name="action" value="checkout">	
+                            </div>              
+                    	</div>
+                	</div> 
+            	</div>
+          	</form> 
         </div>       
     </div>
     <!--Checkout page section end-->
@@ -289,12 +215,7 @@
 ============================================ -->
 
 <%@include file="/front-end/component/script.jsp" %>
-<script type="text/javascript">
-        function submitForms() {
-            document.getElementById("form1").submit();
-            document.getElementById("form2").submit();
-        }
-</script>
+
 
 
 </body>

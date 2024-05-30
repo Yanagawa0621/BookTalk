@@ -546,35 +546,7 @@
     <!--blog area end-->
     
     <!--newsletter area start-->
-    <div class="newsletter_area_start color_two">
-        <div class="container">
-            <div class="newsletter_container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section_title">
-                           <h2>Sign <span>Up For Latest News</span></h2>
-                            <p>Newsletter</p>
-                        </div>
-                         <div class="subscribe_form">
-                            <form id="mc-form" class="mc-form footer-newsletter" >
-                                <input id="mc-email" type="email" autocomplete="off" placeholder="Please enter your email to subscribe" />
-                                <button id="mc-submit">Subscribe</button>
-                                <div class="email_icon">
-                                    <i class="icon-mail"></i>
-                                </div>
-                            </form>
-                            <!-- mailchimp-alerts Start -->
-                            <div class="mailchimp-alerts text-centre">
-                                <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                                <div class="mailchimp-success"></div><!-- mailchimp-success end -->
-                                <div class="mailchimp-error"></div><!-- mailchimp-error end -->
-                            </div><!-- mailchimp-alerts end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!--newsletter area end-->
 
     <!--footer area start-->
