@@ -16,7 +16,8 @@ import util.HibernateUtil;
 
 public class BookClassService {
 	BookClassDAO dao = new BookClassDAO();
-	OrderDetailsDAOHibernate odDAO=new OrderDetailsDAOHibernate();
+	OrderDetailsDAOHibernate odDAO = new OrderDetailsDAOHibernate();
+
 	public int increaseBc(String className) {
 		BookClassVO bcVO = new BookClassVO();
 		bcVO.setClassName(className);
@@ -27,7 +28,7 @@ public class BookClassService {
 		BookClassVO bcVO = new BookClassVO();
 		bcVO.setClassNumber(classNumber);
 		bcVO.setClassName(className);
-		return dao.increase(bcVO);
+		return dao.update(bcVO);
 	}
 
 	public List<BookClassVO> getAllBc() {
@@ -42,23 +43,42 @@ public class BookClassService {
 		BookClassVO bcVO = dao.singleQuery(classNumber);
 		return singleConversion(bcVO);
 	}
+	public List<BookClassVO> getAllBcNp() {
+		return dao.getAll();
+	}
+	
+	public List<BookClassVO> keywordsBcNp(String keywords) {
+		return dao.keywordQuery(keywords);
+	}
+	
+	public BookClassVO singleQueryBcNp(Integer classNumber) {
+		BookClassVO bcVO = dao.singleQuery(classNumber);
+		return bcVO;
+	}
 
 	// =================================以下做圖片處理用========================================
 
 	// 單筆書籍資料的圖片轉換
 	private BookClassVO singleConversion(BookClassVO bcVO) {
-
-		for (BookProductsVO bpVOs : bcVO.getBpVO()) {
-			bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+		if (bcVO != null) {
+			for (BookProductsVO bpVOs : bcVO.getBpVO()) {
+				if (bpVOs != null) {
+					bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+				}
+			}
 		}
 		return bcVO;
 	}
 
 	// 多筆書籍資料的圖片轉換
 	private List<BookClassVO> multipleConversions(List<BookClassVO> list) {
-		for (BookClassVO bcVOs : list) {
-			for (BookProductsVO myCollection : bcVOs.getBpVO()) {
-				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+		if (list.size() != 0) {
+			for (BookClassVO bcVOs : list) {
+				for (BookProductsVO myCollection : bcVOs.getBpVO()) {
+					if (myCollection != null) {
+						myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+					}
+				}
 			}
 		}
 		return list;
@@ -71,7 +91,7 @@ public class BookClassService {
 //		Session session = factory.getCurrentSession();
 //		Transaction transaction = session.beginTransaction();
 //		BookClassService bcSce = new BookClassService();
-//		System.out.println(bcSce.getAllBc().get(0).getClassName());
+//		System.out.println(bcSce.singleQueryBc(10));
 //		transaction.commit();
 //	}
 }

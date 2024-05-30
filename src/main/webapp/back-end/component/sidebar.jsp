@@ -72,13 +72,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/back-end/bookProducts/bookProducts.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>商品列表</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/back-end/bookClass/bookClass.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>書籍類別資料</p>
                 </a>
