@@ -58,7 +58,7 @@
                         		</table>
                             </div>  
                             <div class="cart_submit">
-                                <button type="button" class="btn_empty">全部清空</button>                                
+                                <button type="button" class="btn_empty">全部清空</button>                              
                             </div>      
                         </div>
                      </div>
@@ -82,8 +82,9 @@
                                        <p>訂單總金額</p>
                                        <p class="cart_amount" id="data-total"></p>
                                    </div>
-                                   <div class="checkout_btn">
-                                       <a href="${pageContext.request.contextPath}/front-end/checkout.jsp">去買單</a>
+                                   <div class="checkout_btn">                                 		
+			                           <button type="submit" class="btn bg-gradient-primary btn-sm" >去買單</button>   
+			                           <input type="hidden" name="action" value="goToCheck">
                                    </div>
                                 </div>
                             </div>
