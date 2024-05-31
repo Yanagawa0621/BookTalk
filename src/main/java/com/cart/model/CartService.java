@@ -11,13 +11,13 @@ public class CartService implements CartService_inteface{
 
 	@Override
 	public CartVO addItemToCart(CartVO cartVO) {
-		List<CartVO> carList = dao.getCartItems(cartVO.getUserNumber());
-		for(CartVO check : carList) {
-			if(check.getBookNumber() == cartVO.getBookNumber()) {	//判斷使用者加入的商品是否已在購物車內
-				cartVO.setQuantity(check.getQuantity() + cartVO.getQuantity());
-				cartVO.setSubtotal(cartVO.getBookPrice() * cartVO.getQuantity());
-			}
-		}
+//		List<CartVO> carList = dao.getCartItems(cartVO.getUserNumber());
+//		for(CartVO check : carList) {
+//			if(check.getBookNumber() == cartVO.getBookNumber()) {	//判斷使用者加入的商品是否已在購物車內
+//				cartVO.setQuantity(check.getQuantity() + cartVO.getQuantity());
+//				cartVO.setSubtotal(cartVO.getBookPrice() * cartVO.getQuantity());
+//			}
+//		}
 		dao.addItemToCart(cartVO);
 		return cartVO;
 	}

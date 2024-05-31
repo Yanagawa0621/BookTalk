@@ -35,7 +35,7 @@
 
     <div class="shopping_cart_area mt-100">
         <div class="container">  
-            <form method="post" action="${pageContext.request.contextPath}/cart/cart.do"> 
+            <form method="post" id="cartForm" action="${pageContext.request.contextPath}/cart/cart.do"> 
                 <div class="row">
                     <div class="col-12">
                         <div class="table_desc">
@@ -83,7 +83,7 @@
                                        <p class="cart_amount" id="data-total"></p>
                                    </div>
                                    <div class="checkout_btn">                                 		
-			                           <button type="submit" class="btn bg-gradient-primary btn-sm" >去買單</button>   
+			                           <button type="button" class="btn bg-gradient-primary btn-sm" id="checkoutBtn">去買單</button>   
 			                           <input type="hidden" name="action" value="goToCheck">
                                    </div>
                                 </div>
