@@ -84,12 +84,12 @@
                                 </div>
  
                                 <div class="col-lg-6 mb-20">
-                                    <label><h4>電話<span>*</span></h4></label>
+                                    <label><h4>電話<span>*</span></h4>(範例：0912345678，10個數字)</label>
                                     <input type="text" name="tel" id="checkTel" required> 
 
                                 </div> 
                                  <div class="col-lg-6 mb-20">
-                                    <label><h4>Email<span>*</span></h4></label>
+                                    <label><h4>Email<span>*</span></h4>(範例：example@gmail.com)</label>
                                       <input type="text" name="email" id="checkEmail" required> 
 
                                 </div> 
@@ -178,50 +178,7 @@
 
 <%@include file="/front-end/component/script.jsp" %>
 <script src="${pageContext.request.contextPath}/front-end/assets/js/address/tw.address.js"></script>
-<script>
-
-function checkFilled(fieldIds){
-	for(let i=0 ; i<fieldIds.length ; i++){
-		const field = $("#" + fieldIds[i]);
-		if(!field || field.val().trim() === ""){
-			return false;
-		}
-	}
-	return true;
-}
-
-function validateFields() {
-    const requiredFields = ["checkReceiver", "city", "district", "checkOtherAddress", "checkTel", "checkEmail"];
-    const confirmButton = $('#confirmButton');
-    const modalBody = $('#confirmToCheckout .modal-body');
-    if (checkFilled(requiredFields)) {
-    	confirmButton.prop('disabled', false);
-    	modalBody.text("目前只提供信用卡付款，請確認是否繼續？");
-    } else {
-        confirmButton.prop('disabled', true);
-        modalBody.text("請先填寫完整的收貨人明細資料，請按\"取消\"返回");
-    }
-}
-
-$(document).on("click", "#checkGoCheckout", function(event){
-	event.preventDefault();
-	validateFields();
-	$("#confirmToCheckout").modal("show");
-});
-		
-$(document).on("click", "#confirmButton", function(event){
-	event.preventDefault();
-	$("#form2").submit();
-});
-
-$("checkReceiver").on("input", validateFields);
-$("checkOtherAddress").on("input", validateFields);
-$("checkTel").on("input", validateFields);
-$("checkEmail").on("input", validateFields);
-
-
-</script>
-
+<script src="${pageContext.request.contextPath}/front-end/assets/js/cart/checkout.js"></script>
 
 
 </body>
