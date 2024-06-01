@@ -53,7 +53,7 @@ function validateFields() {
      if (telField != "" && telField != null){
     	 console.log("wov");
     	if (!checkTel(telField)) {
-	        modalBody.text("電話請輸入10個數字，請按\"取消\"返回");
+	        modalBody.html("<h3>電話請輸入10個數字，請按\"取消\"返回</h3>");
 	        confirmButton.prop("disabled", true);
 	        return;
     	}
@@ -61,7 +61,7 @@ function validateFields() {
     
     if (emailField != "" && emailField != null){
     	if (!checkEmail(emailField)) {
-            modalBody.text("請輸入有效的email，請按\"取消\"返回");
+            modalBody.html("<h3>請輸入有效的email，請按\"取消\"返回</h3>");
             confirmButton.prop("disabled", true);
             return;
         }
@@ -69,9 +69,9 @@ function validateFields() {
 
     if (checkFilled(requiredFields)) {
     	confirmButton.prop("disabled", false);
-    	modalBody.text("目前只提供信用卡付款，請確認是否繼續？");
+    	modalBody.html("<h3>目前只提供信用卡付款，請確認是否繼續？</h3>");
     }else {
         confirmButton.prop("disabled", true);
-        modalBody.text("請先填寫完整的收貨人明細資料，請按\"取消\"返回");
+        modalBody.html("<h3>請先填寫完整的收貨人明細資料，請按\"取消\"返回</h3>");
     }
 }
