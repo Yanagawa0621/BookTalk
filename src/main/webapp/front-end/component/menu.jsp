@@ -34,20 +34,15 @@
 						</div>
 						<div class="header_account-list  mini_cart_wrapper">
 							<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
+									class="icon icon-FullShoppingCart"></i><span id= "offcanvas_item_count" class="item_count"></span></a>
 							<!--mini cart-->
 							<div class="mini_cart">
 								<div id= "offcanvas_mini_cart" class="cart_gallery">
 								
-								</div>
-								<div class="mini_cart_footer">
-									<div class="cart_button">
-										<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
-									</div>
-									<div class="cart_button">
-										<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
-									</div>
-								</div>
+								</div>						
+								<div class="cart_button">
+									<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="offcanvas-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+								</div>					
 							</div>
 							<!--mini cart end-->
 						</div>						
@@ -71,8 +66,8 @@
 						<ul class="offcanvas_main_menu">
 							<li class="menu-item-has-children ${currentPage == 'home' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/index.jsp?selectPage=home">首頁</a></li>
 							<li class="menu-item-has-children ${currentPage == 'shop' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=shop">書籍商城</a></li>
-							<li class="menu-item-has-children ${currentPage == 'promotion' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li>
-							<li class="menu-item-has-children ${currentPage == 'article' ? 'active' : ''}"><a href="#">論壇</a></li>
+<%-- 							<li class="menu-item-has-children ${currentPage == 'promotion' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li> --%>
+							<li class="menu-item-has-children ${currentPage == 'article' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/article/popularArticle.jsp?selectPage=article">論壇</a></li>
 							<li class="menu-item-has-children"><a href="#">聯絡我們</a></li>
 							<li class="menu-item-has-children"><a href="#">客服相關</a>
 								<ul class="sub-menu">
@@ -109,9 +104,8 @@
 								<ul>
 									<li><a class="${currentPage == 'home' ? 'active' : ''}" href="${pageContext.request.contextPath}/index.jsp?selectPage=home">首頁</a></li>
 									<li><a class="${currentPage == 'shop' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=shop">書籍商城</a></li>
-									<li><a class="${currentPage == 'promotion' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li>
-
-									<li><a href="#">論壇</a></li>
+<%-- 									<li><a class="${currentPage == 'promotion' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li> --%>
+									<li><a class="${currentPage == 'article' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/article/popularArticle.jsp?selectPage=article">論壇</a></li>
 									<li><a href="#">聯絡我們</a></li>
 									<li><a href="#">客服相關<i class="fa fa-angle-down"></i></a>
 										<ul class="sub_menu pages">
@@ -149,21 +143,15 @@
 							</div>
 							<div class="header_account-list  mini_cart_wrapper">
 								<a href="javascript:void(0)"><i
-									class="icon icon-FullShoppingCart"></i><span class="item_count"></span></a>
+									class="icon icon-FullShoppingCart"></i><span id="menu_item_count" class="item_count"></span></a>
 								<!--mini cart-->
 								<div class="mini_cart">
 									<div id= "menu_mini_cart" class="cart_gallery">
 									
-									</div>
-									<div class="mini_cart_footer">
-										<div class="cart_button">
-											<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="menu-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
-										</div>
-										<div class="cart_button">
-											<a href="${pageContext.request.contextPath}/front-end/checkout.jsp"><i class="fas fa-sign-in-alt"></i> 結帳</a>
-										</div>
-
-									</div>
+									</div>									
+									<div class="cart_button">
+										<a href="${pageContext.request.contextPath}/front-end/cart.jsp" id="menu-view-cart-items"><i class="fa fa-shopping-cart"></i> 查看購物車</a>
+									</div>						
 								</div>
 								<!--mini cart end-->
 							</div>

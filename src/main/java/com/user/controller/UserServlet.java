@@ -84,7 +84,7 @@ public class UserServlet extends HttpServlet {
     private void listUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<UserVO> userList = userService.getAllUsers();
         request.setAttribute("userList", userList);
-        request.getRequestDispatcher("/back-end/user/userList.jsp").forward(request, response);
+        request.getRequestDispatcher("/back-end/user/users.jsp").forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -198,7 +198,6 @@ public class UserServlet extends HttpServlet {
         user.setAccessNumber(accessNumber);
         return user;
     }
-
 
     private void handleException(HttpServletRequest request, HttpServletResponse response, DuplicateFieldException e, String formPage, HttpServletRequest originalRequest) throws ServletException, IOException {
         // 將錯誤訊息設置到 request 中

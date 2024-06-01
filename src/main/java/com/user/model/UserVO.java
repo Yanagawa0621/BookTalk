@@ -78,7 +78,7 @@ public class UserVO implements java.io.Serializable {
 
     @Column(name = "statusStartDate")
     private Date statusStartDate;
-    
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<LoginRecordVO> loginRecords;
 
@@ -237,6 +237,23 @@ public class UserVO implements java.io.Serializable {
 
     public void setLoginRecords(List<LoginRecordVO> loginRecords) {
         this.loginRecords = loginRecords;
+    }
+
+    public String getAccountStatus() {
+        switch (this.accountStatusNumber) {
+            case 1: return "正常";
+            case 2: return "永久停權";
+            case 3: return "暫時停權7天";
+            default: return "未知狀態";
+        }
+    }
+
+    public String getUserRole() {
+        switch (this.accessNumber) {
+            case 1: return "後台管理員";
+            case 2: return "一般會員";
+            default: return "未知權限";
+        }
     }
 
     @Override

@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.metamodel.model.domain.internal.PluralAttributeBuilder;
-
+import com.cart.model.CartVO;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
 
@@ -368,27 +367,73 @@ public class OrderServlet extends HttpServlet {
 			
 			String contextPath = req.getContextPath();	//取得專案名稱，給結帳時回傳網頁用
 
+			String receiver = req.getParameter("receiver");	//取得收件人
+			if(receiver == null || receiver.length() == 0) {
+				errorMsgs.add("收件人請勿空白");		
+			}else {
+				receiver = receiver.trim();
+			}
 			
-//			String receiver = req.getParameter("receiver").trim();
-//			if(receiver == null || receiver.length() == 0) {
-//				errorMsgs.add("收件人請勿空白");		
-//			}
-//			
-//			String shippingAddress = req.getParameter("shippingAddress").trim();
-//			if(shippingAddress == null || shippingAddress.length() == 0) {
-//				errorMsgs.add("收件地址請勿空白");		
-//			}
-//			
-//			String note = req.getParameter("note").trim();
+			String cityName = req.getParameter("cityName");	//取得縣市
+			System.out.println("縣市" + cityName);
+			if(cityName == null || cityName.length() == 0) {
+				errorMsgs.add("縣市請勿空白");		
+			}else {
+				cityName = cityName.trim();
+			}
+			
+			String districtName = req.getParameter("districtName");	//取得鄉鎮市區
+			System.out.println("縣市" + districtName);
+			if(districtName == null || districtName.length() == 0) {
+				errorMsgs.add("鄉鎮市區請勿空白");		
+			}else {
+				districtName = districtName.trim();
+			}
+			
+			String postalCode = req.getParameter("postalCode");	//取得郵遞區號
+			
+			if(postalCode == null || postalCode.length() == 0) {
+				errorMsgs.add("郵遞區號請勿空白");		
+			}else {
+				postalCode = postalCode.trim();
+			}
+			
+			String otherAddress = req.getParameter("otherAddress");	//取得除了縣市、鄉縝市區之外的地址
+			
+			if(otherAddress == null || otherAddress.length() == 0) {
+				errorMsgs.add("地址請勿空白");		
+			}else {
+				otherAddress = otherAddress.trim();
+			}
+			
+			String tel = req.getParameter("tel");	//取得電話號碼
+			if(tel == null || tel.length() == 0) {
+				errorMsgs.add("電話號碼請勿空白");		
+			}else {
+				tel = tel.trim();
+			}
+			
+			String email = req.getParameter("email");	//取得email
+			if(email == null || email.length() == 0) {
+				errorMsgs.add("Email請勿空白");		
+			}else {
+				email = email.trim();
+			}
+			
+			String note = req.getParameter("note");
+			if(note != null) {
+				note = note.trim();		
+			}
+			
 			String userNumber = req.getParameter("userNumber");
-			
 			
 			OrderVO orderVO = new OrderVO();
 
 			orderVO.setUserNumber(Integer.valueOf(userNumber));
-//			orderVO.setReceiver(receiver);
-//			orderVO.setShippingAddress(shippingAddress);
-//			orderVO.setNote(note);
+			orderVO.setReceiver(receiver);
+			orderVO.setTelephoneNumber(tel);
+			orderVO.setShippingAddress(postalCode + cityName + districtName + otherAddress);
+			orderVO.setNote(note);
 			System.out.println(orderVO);
 			
 			if (!errorMsgs.isEmpty()) {
@@ -406,6 +451,7 @@ public class OrderServlet extends HttpServlet {
                 res.getWriter().write(paymentForm);
             } else {
                 String url = "/front-end/checkout.jsp";
+                errorMsgs.add("交易失敗");	
                 RequestDispatcher failureView = req.getRequestDispatcher(url); // 如果沒有成功，再回到結帳畫面
                 failureView.forward(req, res);
             }

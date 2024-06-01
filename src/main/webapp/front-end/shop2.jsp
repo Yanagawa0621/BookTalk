@@ -189,7 +189,7 @@ pageContext.setAttribute("bcList", bcList);
 												<span class="current_price">NT$ ${bpVO.price}</span>
 											</div>
 											<div class="add_to_cart">
-												<a href="cart.html" title="Add to cart">加入購物車</a>
+												<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
 											</div>
 										</div>
 									</figure>
@@ -221,118 +221,8 @@ pageContext.setAttribute("bcList", bcList);
 	<!--shop  area end-->
 
 	<!--footer area start-->
-	<footer class="footer_widgets foote_other">
-		<div class="container">
-			<div class="footer_top">
-				<div class="row">
-					<div class="col-lg-3 col-md-8 col-sm-8">
-						<div class="widgets_container footer_contact">
-							<h3>About us</h3>
-							<p>We are a team of designers and developers that create high
-								quality HTML Template, Woocommerce, Shopify Theme.</p>
-							<p>
-								<i class="icon icon-Pointer"></i> The Barn, Ullenhall, Henley in
-								Arden B578 5CC, England
-							</p>
-							<p>
-								<i class="icon icon-Phone"></i> <a href="tel:+123.456.789">+123.456.789</a>
-								- <a href="tel:+123.456.678">+123.456.678</a>
-							</p>
-							<p>
-								<i class="icon icon-Mail"></i> <a href="#">#</a>
-							</p>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-4">
-						<div class="widgets_container widget_menu">
-							<h3>Information</h3>
-							<div class="footer_menu">
-								<ul>
-									<li><a href="about.html">About Us</a></li>
-									<li><a href="#">Delivery Information</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Terms & Conditions</a></li>
-									<li><a href="contact.html">Contact us</a></li>
-									<li><a href="#">Returns</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-12">
-						<div class="widgets_container footer-linkup">
-							<h3>Our Twitter Feed</h3>
-							<p>
-								Check out "Alice - Multipurpose Responsive #Magento #Theme" on <br>
-								#Envato by <a href="#">@Plazathemes</a> <br> #Themeforest <a
-									href="#">https://t.co/DNdhAwzm88</a>
-							</p>
-							<p>
-								Check Out "Emos - Multi Store Responsive #Magento #Theme" on
-								#Envato by <br> <a href="#">@Plazathemes</a> #Themeforest <a
-									href="#">https://t.co/08oCVAr5dy</a>
-							</p>
-
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6 col-sm-10">
-						<div class="widgets_container footer_instragam">
-							<h3>instagram</h3>
-							<div class="instagram_container">
-								<div class="instagram_thumb">
-									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam1.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam3.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam4.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam5.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="${pageContext.request.contextPath}/front-end/assets/img/about/instragam2.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer_bottom">
-			<div class="container">
-				<div class="row align-items-center"></div>
-			</div>
-		</div>
-	</footer>
-	<!--footer area end-->
+    <%@include file="/front-end/component/footer.jsp" %>
+    <!--footer area end-->
 
 	<!-- modal area start-->
 	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"
@@ -555,8 +445,8 @@ pageContext.setAttribute("bcList", bcList);
 						                    htmlContent +=`</div>`
 						                    htmlContent +=`<div class="modal_add_to_cart">`
 						                        htmlContent +=`<form action="#">`
-                                                    htmlContent +=`<input min="1" max="100" step="1" value="1" type="number">`
-                                                    htmlContent +=`<button type="submit">加入購物車</button>`
+                                                    htmlContent +=`<input min="1" max="`+stock+`" step="1" value="1" type="number">`
+                                                    htmlContent +=`<button type="button" class="shop_add_cart">加入購物車</button>`
 						                        htmlContent +=`</form>`
 						                    htmlContent +=`</div>`
 						                htmlContent +=`</div>`

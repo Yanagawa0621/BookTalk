@@ -29,6 +29,8 @@ public class CommentVO implements java.io.Serializable {
 	private String content;
 	private LocalDateTime commentTime;
 	private Integer commentState;
+	
+
 	private Integer likeSum;
 	@ManyToOne
 	@JoinColumn(name = "articleNumber", referencedColumnName = "articleNumber")
@@ -41,11 +43,11 @@ public class CommentVO implements java.io.Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CommentVO(Integer commentNumber, Integer userName, String content, LocalDateTime commentTime,
+	public CommentVO(Integer commentNumber, Integer userNumber, String content, LocalDateTime commentTime,
 			Integer commentState, Integer likeSum, ArticleVO articleVO, Set<LikeVO> likeVO) {
 		super();
 		this.commentNumber = commentNumber;
-		this.userNumber = userName;
+		this.userNumber = userNumber;
 		this.content = content;
 		this.commentTime = commentTime;
 		this.commentState = commentState;

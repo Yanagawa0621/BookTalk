@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.oracle.wls.shaded.org.apache.bcel.generic.RETURN;
+
 import util.JedisUtil;
 
 import redis.clients.jedis.Jedis;
@@ -60,7 +62,7 @@ public class CartDAOJedis implements CartDAO_inteface{
                 Integer quantity = Integer.parseInt(itemData.get("quantity"));
                 Double subtotal = Double.parseDouble(itemData.get("subtotal"));
                 Integer bookStock = Integer.parseInt(itemData.get("bookStock"));
-//              byte[] image = itemData.get("image").getBytes();  // 將字符串轉換回 BLOB
+
 
                 listCart.add(new CartVO(userNumber, bookNumber, bookTitle, bookPrice, quantity, subtotal, bookStock));
             }
@@ -69,16 +71,18 @@ public class CartDAOJedis implements CartDAO_inteface{
 	}
 
 	@Override
-	public void removeItemFromCart(Integer userNumber, Integer bookNumber) {
+	public long removeItemFromCart(Integer userNumber, Integer bookNumber) {
 		String cartKey = "cart:" + userNumber + ":" + bookNumber;
-		jedis.del(cartKey);
+		return jedis.del(cartKey);
 		
 	}
 
 	@Override
-	public void clearCart(Integer userNumber) {
+	public long clearCart(Integer userNumber) {
 		for(String cartKey : jedis.keys("cart:" + userNumber + ":*")) {
 			jedis.del(cartKey);
 		}
+		return 1;
 	}
+	
 }

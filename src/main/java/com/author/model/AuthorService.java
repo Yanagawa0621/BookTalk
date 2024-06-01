@@ -16,7 +16,8 @@ import util.HibernateUtil;
 
 public class AuthorService {
 	AuthorDAO dao = new AuthorDAO();
-	OrderDetailsDAOHibernate odDAO=new OrderDetailsDAOHibernate();
+	OrderDetailsDAOHibernate odDAO = new OrderDetailsDAOHibernate();
+
 	public int addAuth(String authorName, String englishName) {
 		AuthorVO authVO = new AuthorVO();
 		authVO.setAuthorName(authorName);
@@ -51,17 +52,21 @@ public class AuthorService {
 
 	// 單筆書籍資料的圖片轉換
 	private AuthorVO singleConversion(AuthorVO authVO) {
-		for (BookProductsVO bpVOs : authVO.getBpVO()) {
-			bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+		if (authVO != null) {
+			for (BookProductsVO bpVOs : authVO.getBpVO()) {
+				bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+			}
 		}
 		return authVO;
 	}
 
 	// 多筆書籍資料的圖片轉換
 	private List<AuthorVO> multipleConversions(List<AuthorVO> list) {
-		for (AuthorVO authVOs : list) {
-			for (BookProductsVO myCollection : authVOs.getBpVO()) {
-				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+		if (list.size() != 0) {
+			for (AuthorVO authVOs : list) {
+				for (BookProductsVO myCollection : authVOs.getBpVO()) {
+					myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+				}
 			}
 		}
 		return list;

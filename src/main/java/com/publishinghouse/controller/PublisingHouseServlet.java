@@ -63,6 +63,8 @@ public class PublisingHouseServlet extends HttpServlet {
 					return;
 				}
 				// ===轉交資料===
+				req.setAttribute("searchMain", "出版社");
+				req.setAttribute("Keywords", Keywords);
 				req.setAttribute("list", list);
 				String url = "/front-end/shop3.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

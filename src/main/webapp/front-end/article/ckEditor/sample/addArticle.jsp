@@ -44,6 +44,7 @@
 			}
 		</style>
 	</head>
+	<jsp:useBean id="forumSvc" scope="page" class="com.forum.model.ForumService"/>
 	<body data-editor="ClassicEditor" data-collaboration="false" data-revision-history="false">
 		<div class="centered">
 			<div class="row row-editor">

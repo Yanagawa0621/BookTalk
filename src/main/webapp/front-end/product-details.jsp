@@ -13,9 +13,9 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 <!doctype html>
 <html class="no-js" lang="en">
 
-<head>
+
 <%@include file="/front-end/component/head.jsp"%>
-</head>
+
 
 <body>
 
@@ -55,7 +55,7 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 						<div id="img-1" class="zoomWrapper single-zoom">
 							<a href="#"> <img id="zoom1"
 								src="data:image/jpeg;base64, ${bpVO.img[0]}"
-								data-zoom-image="assets/img/product/productbig4.jpg" alt="big-1">
+								data-zoom-image="${bpVO.bookNumber}" alt="big-1">
 							</a>
 						</div>
 						<div class="single-zoom-thumb">
@@ -63,8 +63,8 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 								id="gallery_01">
 								<c:forEach var="img" items="${bpVO.img}">
 									<li><a href="#" class="elevatezoom-gallery active"
-										data-update="" data-image="assets/img/product/productbig4.jpg"
-										data-zoom-image="assets/img/product/productbig4.jpg"> <img
+										data-update="" data-image=""
+										data-zoom-image=""> <img
 											src="data:image/jpeg;base64, ${img}" alt="zo-th-1" />
 									</a></li>
 								</c:forEach>
@@ -121,9 +121,9 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 							</div>
 
 							<div class="product_variant quantity">
-								<label>quantity</label> <input min="1" max="100" value="1"
+								<label>quantity</label> <input min="1" max="${bpVO.stock}" value="1"
 									type="number">
-								<button class="button" type="submit">add to cart</button>
+								<button type="button" class="button" id="detail_add_cart">加入購物車</button>
 							</div>
 
 							<div class="product_desc">
@@ -197,7 +197,7 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 												</div>
 												<a class="primary_img"
 													href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page"
-													id="submitLink_${bpVO.bookNumber}" target="_blank"> <img
+													id="submitLink_${bpVO.bookNumber}"> <img
 													src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}"
 													alt="預覽失敗">
 												</a>
@@ -242,23 +242,14 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 														</c:if>
 													</ul>
 												</div>
-												<FORM METHOD="GET"
-													ACTION="${pageContext.request.contextPath}/bookproducts.do"
-													id="bookForm_${bpVO.bookNumber}">
-													<h4 class="product_name">
-														<input type="hidden" name="bookNumber"
-															value="${bpVO.bookNumber}"> <input type="hidden"
-															name="action" value="single_product_page"> <a
-															href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page"
-															id="submitLink_${bpVO.bookNumber}"
-															style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
+													<h4 class="product_name"> 
+													<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;"><span style="font-weight: bold;">${bpVO.bookTitle}</span></a>
 													</h4>
-												</FORM>
 												<div class="price_box">
 													<span class="current_price">NT$ ${bpVO.price}</span>
 												</div>
 												<div class="add_to_cart">
-													<a href="cart.html" title="Add to cart">加入購物車</a>
+													<a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
 												</div>
 											</div>
 										</figure>
@@ -274,118 +265,8 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 	<!--product area end-->
 
 	<!--footer area start-->
-	<footer class="footer_widgets foote_other">
-		<div class="container">
-			<div class="footer_top">
-				<div class="row">
-					<div class="col-lg-3 col-md-8 col-sm-8">
-						<div class="widgets_container footer_contact">
-							<h3>About us</h3>
-							<p>We are a team of designers and developers that create high
-								quality HTML Template, Woocommerce, Shopify Theme.</p>
-							<p>
-								<i class="icon icon-Pointer"></i> The Barn, Ullenhall, Henley in
-								Arden B578 5CC, England
-							</p>
-							<p>
-								<i class="icon icon-Phone"></i> <a href="tel:+123.456.789">+123.456.789</a>
-								- <a href="tel:+123.456.678">+123.456.678</a>
-							</p>
-							<p>
-								<i class="icon icon-Mail"></i> <a href="#">#</a>
-							</p>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-4">
-						<div class="widgets_container widget_menu">
-							<h3>Information</h3>
-							<div class="footer_menu">
-								<ul>
-									<li><a href="about.html">About Us</a></li>
-									<li><a href="#">Delivery Information</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Terms & Conditions</a></li>
-									<li><a href="contact.html">Contact us</a></li>
-									<li><a href="#">Returns</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-12">
-						<div class="widgets_container footer-linkup">
-							<h3>Our Twitter Feed</h3>
-							<p>
-								Check out "Alice - Multipurpose Responsive #Magento #Theme" on <br>
-								#Envato by <a href="#">@Plazathemes</a> <br> #Themeforest <a
-									href="#">https://t.co/DNdhAwzm88</a>
-							</p>
-							<p>
-								Check Out "Emos - Multi Store Responsive #Magento #Theme" on
-								#Envato by <br> <a href="#">@Plazathemes</a> #Themeforest <a
-									href="#">https://t.co/08oCVAr5dy</a>
-							</p>
-
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6 col-sm-10">
-						<div class="widgets_container footer_instragam">
-							<h3>instagram</h3>
-							<div class="instagram_container">
-								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam1.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam2.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam3.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam4.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam5.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-								<div class="instagram_thumb">
-									<a href="#"><img src="assets/img/about/instragam2.jpg"
-										alt=""></a>
-									<div class="instagram_boxcmt">
-										<span class="likecount">5</span> <span class="commentcount">1</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer_bottom">
-			<div class="container">
-				<div class="row align-items-center"></div>
-			</div>
-		</div>
-	</footer>
-	<!--footer area end-->
+    <%@include file="/front-end/component/footer.jsp" %>
+    <!--footer area end-->
 
 	<!-- modal area start-->
 	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog"
@@ -396,121 +277,7 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 					aria-label="Close">
 					<span aria-hidden="true"><i class="ion-android-close"></i></span>
 				</button>
-				<div class="modal_body">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-5 col-md-5 col-sm-12">
-								<div class="modal_tab">
-									<div class="tab-content product-details-large">
-										<div class="tab-pane fade show active" id="tab1"
-											role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="assets/img/product/productbig1.jpg" alt=""></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="tab2" role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="assets/img/product/productbig2.jpg" alt=""></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="tab3" role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="assets/img/product/productbig3.jpg" alt=""></a>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="tab4" role="tabpanel">
-											<div class="modal_tab_img">
-												<a href="#"><img
-													src="assets/img/product/productbig4.jpg" alt=""></a>
-											</div>
-										</div>
-									</div>
-									<div class="modal_tab_button">
-										<ul class="nav product_navactive owl-carousel" role="tablist">
-											<li><a class="nav-link active" data-toggle="tab"
-												href="#tab1" role="tab" aria-controls="tab1"
-												aria-selected="false"><img
-													src="assets/img/product/product1.jpg" alt=""></a></li>
-											<li><a class="nav-link" data-toggle="tab" href="#tab2"
-												role="tab" aria-controls="tab2" aria-selected="false"><img
-													src="assets/img/product/product2.jpg" alt=""></a></li>
-											<li><a class="nav-link button_three" data-toggle="tab"
-												href="#tab3" role="tab" aria-controls="tab3"
-												aria-selected="false"><img
-													src="assets/img/product/product3.jpg" alt=""></a></li>
-											<li><a class="nav-link" data-toggle="tab" href="#tab4"
-												role="tab" aria-controls="tab4" aria-selected="false"><img
-													src="assets/img/product/product8.jpg" alt=""></a></li>
-
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-7 col-md-7 col-sm-12">
-								<div class="modal_right">
-									<div class="modal_title mb-10">
-										<h2>Donec Ac Tempus</h2>
-									</div>
-									<div class="modal_price mb-10">
-										<span class="new_price">$64.99</span> <span class="old_price">$78.99</span>
-									</div>
-									<div class="modal_description mb-15">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Mollitia iste laborum ad impedit pariatur esse optio
-											tempora sint ullam autem deleniti nam in quos qui nemo ipsum
-											numquam, reiciendis maiores quidem aperiam, rerum vel
-											recusandae</p>
-									</div>
-									<div class="variants_selects">
-										<div class="variants_size">
-											<h2>size</h2>
-											<select class="select_option">
-												<option selected value="1">s</option>
-												<option value="1">m</option>
-												<option value="1">l</option>
-												<option value="1">xl</option>
-												<option value="1">xxl</option>
-											</select>
-										</div>
-										<div class="variants_color">
-											<h2>color</h2>
-											<select class="select_option">
-												<option selected value="1">purple</option>
-												<option value="1">violet</option>
-												<option value="1">black</option>
-												<option value="1">pink</option>
-												<option value="1">orange</option>
-											</select>
-										</div>
-										<div class="modal_add_to_cart">
-											<form action="#">
-												<input min="1" max="100" step="2" value="1" type="number">
-												<button type="submit">add to cart</button>
-											</form>
-										</div>
-									</div>
-									<div class="modal_social">
-										<h2>Share this product</h2>
-										<ul>
-											<li class="facebook"><a href="#"><i
-													class="fa fa-facebook"></i></a></li>
-											<li class="twitter"><a href="#"><i
-													class="fa fa-twitter"></i></a></li>
-											<li class="pinterest"><a href="#"><i
-													class="fa fa-pinterest"></i></a></li>
-											<li class="google-plus"><a href="#"><i
-													class="fa fa-google-plus"></i></a></li>
-											<li class="linkedin"><a href="#"><i
-													class="fa fa-linkedin"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="modal_body">					
 				</div>
 			</div>
 		</div>
@@ -609,8 +376,8 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 						                    htmlContent +=`</div>`
 						                    htmlContent +=`<div class="modal_add_to_cart">`
 						                        htmlContent +=`<form action="#">`
-                                                    htmlContent +=`<input min="1" max="100" step="1" value="1" type="number">`
-                                                    htmlContent +=`<button type="submit">加入購物車</button>`
+                                                    htmlContent +=`<input min="1" max="`+stock+`" step="1" value="1" type="number">`
+                                                    htmlContent +=`<button type="button" class="shop_add_cart">加入購物車</button>`
 						                        htmlContent +=`</form>`
 						                    htmlContent +=`</div>`
 						                htmlContent +=`</div>`

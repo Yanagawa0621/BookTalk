@@ -27,7 +27,7 @@ public class CartServlet extends HttpServlet {
     public void init() throws ServletException{
     	cartService = new CartService();
     }
-
+    
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -39,25 +39,25 @@ public class CartServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String forwardPath = "";
 		
-		switch(action) {
+		switch(action) {	//這裡有些用return，而不是break，是因為已經要回傳json的資料，不需要再往下進行，以免被導向別的頁面
 			case "add":
-				forwardPath = addItem(req, res);
-				break;
+				addItem(req, res);
+				return; 
 			case "update":
-				break;
-			case "remove":
-				break;
-			case "clear":
-				break;
-			case "getAll":
-				forwardPath = getAllItems(req, res);
-				break;
-			case "miniCartGetAll":
-				getMiniCartAllItems(req, res);
-				return;	//這裡用return是因為已經要回傳json的資料，不需要再往下進行，以免被導向別的頁面
-			case "fullCartGetAll":
-				getFullCartAllItems(req, res);
+				updateItem(req, res);
 				return;
+			case "remove":
+				removeOne(req, res);
+				return;
+			case "clear":
+				cleanAll(req, res);
+				return;
+			case "getAll":
+				getAllItems(req, res);
+				return;	
+			case "goToCheck":
+				forwardPath = getCheckItems(req, res);
+				break;
 			default:
 				forwardPath = "/index.jsp";
 		}
@@ -67,24 +67,57 @@ public class CartServlet extends HttpServlet {
 		dispatcher.forward(req, res);
 	}
 	
-	private String addItem(HttpServletRequest req, HttpServletResponse res) {
+	private void addItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+		String bookTitle = req.getParameter("bookTitle");
+		Double bookPrice = Double.valueOf(req.getParameter("bookPrice"));
+		Integer quantity = Integer.valueOf(req.getParameter("quantity"));
+		Integer bookStock = Integer.valueOf(req.getParameter("bookStock"));
 		
+		CartVO cartVO = new CartVO();
+		cartVO.setUserNumber(userNumber);
+		cartVO.setBookNumber(bookNumber);
+		cartVO.setBookTitle(bookTitle);
+		cartVO.setBookPrice(bookPrice);
+		cartVO.setQuantity(quantity);
+		cartVO.setBookStock(bookStock);
+		cartVO.setSubtotal(bookPrice * quantity);
 		
+		cartVO = cartService.addItemToCart(cartVO);
 		
-		return null;
+		String jsonStr = new Gson().toJson(cartVO);
+		
+		res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(jsonStr);
+
 	}
 	
-	private String getAllItems(HttpServletRequest req, HttpServletResponse res) {
-		String userNubmer = req.getParameter("userNubmer");
-		List<CartVO> cartVO = cartService.getCartItems(Integer.parseInt(userNubmer));
+	private void updateItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+		Double bookPrice = Double.valueOf(req.getParameter("bookPrice"));
+		Integer quantity = Integer.valueOf(req.getParameter("quantity"));
+
 		
-		req.setAttribute("cartVO", cartVO);
+		CartVO cartVO = new CartVO();
+		cartVO.setUserNumber(userNumber);
+		cartVO.setBookNumber(bookNumber);
+		cartVO.setBookPrice(bookPrice);
+		cartVO.setQuantity(quantity);
+		cartVO.setSubtotal(bookPrice * quantity);
 		
+		cartVO = cartService.updateItemQuantity(cartVO);
 		
-		return "/front-end/cart.jsp";
+		String jsonStr = new Gson().toJson(cartVO);
+		
+		res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(jsonStr);
 	}
-	
-	private void getMiniCartAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+	private void getAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String userNumber = req.getParameter("userNumber");
 		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
 		String jsonStr = new Gson().toJson(cartList);
@@ -95,16 +128,49 @@ public class CartServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         res.getWriter().write(jsonStr);
 	}
-
-	private void getFullCartAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		String userNumber = req.getParameter("userNumber");
-		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
-		String jsonStr = new Gson().toJson(cartList);
+	
+	private void removeOne(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+		String status = "";
+		if(cartService.removeItemFromCart(userNumber, bookNumber) == 1) {
+			status = "{\"msg\":\"remove success\"}";	//回傳json格式字串{"msg" : "remove success"}
+		}
 		
-		System.out.println(jsonStr);
-
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
-        res.getWriter().write(jsonStr);
+        res.getWriter().write(status);
 	}
+	
+	private void cleanAll(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+
+		String status = "";
+		if(cartService.clearCart(userNumber) == 1) {
+			status = "{\"msg\":\"clean success\"}";		//回傳json格式字串{"msg" : "clean success"}
+		}
+		
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        res.getWriter().write(status);
+	}
+	
+	private String getCheckItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		String userNumber = req.getParameter("userNumber");
+		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
+		
+
+		String subtotalSum = req.getParameter("subtotalSum");
+        String deliveryFee = req.getParameter("deliveryFee");
+        String total = req.getParameter("total");
+
+        req.setAttribute("subtotalSum", subtotalSum);
+        req.setAttribute("deliveryFee", deliveryFee);
+        req.setAttribute("total", total);
+        req.setAttribute("cartList", cartList);
+
+		return "/front-end/checkout.jsp";
+	
+	}
+
 }

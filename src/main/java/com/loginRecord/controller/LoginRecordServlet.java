@@ -2,7 +2,6 @@ package com.loginRecord.controller;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.loginRecord.model.LoginRecordDAO;
 import com.loginRecord.model.LoginRecordService;
 import com.loginRecord.model.LoginRecordServiceImpl;
 import com.loginRecord.model.LoginRecordVO;
+import com.loginRecord.model.LoginRecordDAO;
 import com.user.model.UserVO;
 
 import util.HibernateUtil;
@@ -29,9 +28,14 @@ public class LoginRecordServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer userNumber = Integer.parseInt(request.getParameter("userNumber"));
-        String ip = request.getParameter("ip");
-        String area = request.getParameter("area");
+        Integer userNumber = (Integer) request.getSession().getAttribute("userNumber");
+        if (userNumber == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        String ip = request.getRemoteAddr();
+        String area = "Taiwan"; // 假設地區固定為Taiwan，可以根據需求修改
 
         UserVO user = new UserVO();
         user.setNumber(userNumber);
