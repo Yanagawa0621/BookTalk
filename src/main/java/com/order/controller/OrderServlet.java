@@ -431,6 +431,7 @@ public class OrderServlet extends HttpServlet {
 
 			orderVO.setUserNumber(Integer.valueOf(userNumber));
 			orderVO.setReceiver(receiver);
+			orderVO.setTelephoneNumber(tel);
 			orderVO.setShippingAddress(postalCode + cityName + districtName + otherAddress);
 			orderVO.setNote(note);
 			System.out.println(orderVO);

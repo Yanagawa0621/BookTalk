@@ -34,6 +34,9 @@ public class OrderVO implements Serializable {
 	@Column(name = "receiver")
 	private String receiver;
 	
+	@Column(name = "telephoneNumber")
+	private String telephoneNumber;
+	
 	@Column(name = "shippingAddress")
 	private String shippingAddress;
 	
@@ -42,6 +45,9 @@ public class OrderVO implements Serializable {
 	
 	@Column(name = "total")
 	private BigDecimal total;
+	
+	@Column(name = "paymentNumber")
+	private String paymentNumber;
 	
 	@Column(name = "note", columnDefinition = "longtext")
 	private String note;
@@ -111,6 +117,14 @@ public class OrderVO implements Serializable {
 		this.receiver = receiver;
 	}
 
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
 	public String getShippingAddress() {
 		return shippingAddress;
 	}
@@ -135,6 +149,14 @@ public class OrderVO implements Serializable {
 		this.total = total;
 	}
 	
+	public String getPaymentNumber() {
+		return paymentNumber;
+	}
+
+	public void setPaymentNumber(String paymentNumber) {
+		this.paymentNumber = paymentNumber;
+	}
+
 	public String getNote() {
 		return note;
 	}
@@ -155,9 +177,9 @@ public class OrderVO implements Serializable {
 	public String toString() {
 		return "OrderVO [orderNumber=" + orderNumber + ", userNumber=" + userNumber + ", orderStatus=" + orderStatus
 				+ ", establishmentTime=" + establishmentTime + ", shippingTime=" + shippingTime + ", completeTime="
-				+ completeTime + ", receiver=" + receiver + ", shippingAddress=" + shippingAddress + ", deliveryFee="
-				+ deliveryFee + ", total=" + total + ", note=" + note + "]";
+				+ completeTime + ", receiver=" + receiver + ", telephoneNumber=" + telephoneNumber
+				+ ", shippingAddress=" + shippingAddress + ", deliveryFee=" + deliveryFee + ", total=" + total
+				+ ", paymentNumber=" + paymentNumber + ", note=" + note + "]";
 	}
-
 
 }
