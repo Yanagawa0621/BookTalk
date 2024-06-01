@@ -36,124 +36,68 @@
     <div class="Checkout_section mt-100">
        <div class="container">
        	  <form method="post" id="form2" name="newOrderDetailsForm" action="${pageContext.request.contextPath}/order/order.do">  
-            <div class="checkout_form">          	
+            <div class="checkout_form">
+            	<div class="row">
+					<div class= "col-md-3">
+						<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤:</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
+					</div>
+				</div>         	
                 <div class="row">
                     <div class="col-lg-6 col-md-6">                
                             <h3>收貨人明細</h3>
                             <div class="row">
                                 <div class="col-12 mb-20">
-                                    <label>收件人 <span>*</span></label>
-                                    <input type="text" name="receiver" required>    
+                                    <label><h4>收件人 <span>*</span></h4></label>
+                                    <input type="text" name="receiver" id="checkReceiver" required>    
                                 </div>
 
                                 <div class="col-12 mb-20">
-                                    <label for="country">收件地址 <span>*</span></label>
-                                    <select class="select_option" name="cuntry" id="country"> 
-                                        <option value="2">bangladesh</option>      
-                                        <option value="3">Algeria</option> 
-                                        <option value="4">Afghanistan</option>    
-                                        <option value="5">Ghana</option>    
-                                        <option value="6">Albania</option>    
-                                        <option value="7">Bahrain</option>    
-                                        <option value="8">Colombia</option>    
-                                        <option value="9">Dominican Republic</option>   
-
-                                    </select>
+                                    <label><h4>收件地址 <span>*</span></h4></label>
+                                </div>
+                                
+                                <div class="col-lg-6 mb-20">
+                                	<label for="city">縣市 <span>*</span></label>
+                                	<select id="city" class="select_option" name="cityName">
+									    <option value="">請選擇縣市</option>
+									</select>
                                 </div>
 
-                                <div class="col-12 mb-20">
-                                    <label>收件地址  <span>*</span></label>
-                                    <input type="text" name="shippingAddress"  required>     
+                                <div class="col-lg-6 mb-20">
+                                	<label for="district">鄉鎮市區 <span>*</span></label>
+                                	<select id="district" class="select_option" name="districtName" disabled>
+									    <option value="">請選擇縣市後再選擇鄉鎮市區</option>
+									</select>
+                                </div>
+                                
+                                <!-- 隱藏的input，用於儲存郵遞區號 -->
+								<input type="hidden" id="postalCode" name="postalCode">
+								
+								<div class="col-12 mb-20">
+                                    <input type="text" name="otherAddress" id="checkOtherAddress" required>    
                                 </div>
  
                                 <div class="col-lg-6 mb-20">
-                                    <label>Phone<span>*</span></label>
-                                    <input type="text"> 
+                                    <label><h4>電話<span>*</span></h4>(範例：0912345678，10個數字)</label>
+                                    <input type="text" name="tel" id="checkTel" required> 
 
                                 </div> 
                                  <div class="col-lg-6 mb-20">
-                                    <label> Email Address   <span>*</span></label>
-                                      <input type="text"> 
+                                    <label><h4>Email<span>*</span></h4>(範例：example@gmail.com)</label>
+                                      <input type="text" name="email" id="checkEmail" required> 
 
                                 </div> 
-                                <div class="col-12 mb-20">
-                                    <input id="account" type="checkbox" data-target="createp_account" />
-                                    <label for="account" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">Create an account?</label>
-
-                                    <div id="collapseOne" class="collapse one" data-parent="#accordion">
-                                        <div class="card-body1">
-                                           <label> Account password   <span>*</span></label>
-                                            <input placeholder="password" type="password">  
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-20">
-                                    <input id="address" type="checkbox" data-target="createp_account" />
-                                    <label class="righ_0" for="address" data-toggle="collapse" data-target="#collapsetwo" aria-controls="collapseOne">Ship to a different address?</label>
-
-                                    <div id="collapsetwo" class="collapse one" data-parent="#accordion">
-                                       <div class="row">
-                                            <div class="col-lg-6 mb-20">
-                                                <label>First Name <span>*</span></label>
-                                                <input type="text">    
-                                            </div>
-                                            <div class="col-lg-6 mb-20">
-                                                <label>Last Name  <span>*</span></label>
-                                                <input type="text"> 
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <label>Company Name</label>
-                                                <input type="text">     
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <div class="select_form_select">
-                                                    <label for="countru_name">country <span>*</span></label>
-                                                    <select class="select_option" name="cuntry" id="countru_name"> 
-                                                        <option value="2">bangladesh</option>      
-                                                        <option value="3">Algeria</option> 
-                                                        <option value="4">Afghanistan</option>    
-                                                        <option value="5">Ghana</option>    
-                                                        <option value="6">Albania</option>    
-                                                        <option value="7">Bahrain</option>    
-                                                        <option value="8">Colombia</option>    
-                                                        <option value="9">Dominican Republic</option>   
-
-                                                    </select>
-                                                </div> 
-                                            </div>
-
-                                            <div class="col-12 mb-20">
-                                                <label>Street address  <span>*</span></label>
-                                                <input placeholder="House number and street name" type="text">     
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <input placeholder="Apartment, suite, unit etc. (optional)" type="text">     
-                                            </div>
-                                            <div class="col-12 mb-20">
-                                                <label>Town / City <span>*</span></label>
-                                                <input  type="text">    
-                                            </div> 
-                                             <div class="col-12 mb-20">
-                                                <label>State / County <span>*</span></label>
-                                                <input type="text">    
-                                            </div> 
-                                            <div class="col-lg-6 mb-20">
-                                                <label>Phone<span>*</span></label>
-                                                <input type="text"> 
-
-                                            </div> 
-                                             <div class="col-lg-6">
-                                                <label> Email Address   <span>*</span></label>
-                                                  <input type="text"> 
-
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="col-12">
                                     <div class="order-notes">
-                                         <label for="order_note">備註</label>
-                                        <textarea name="note" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                         <label for="order_note"><h4>備註</h4></label>
+                                        <textarea name="note" placeholder=""></textarea>
                                     </div>    
                                 </div>     	    	    	    	    	    	    
                             </div>                   
@@ -194,7 +138,7 @@
                                 </table>                                
                             </div>
                              <div class="order_button" align="right">
-                                <button type="submit" class="btn bg-gradient-primary btn-sm">去付款</button>
+                                <button type="button" id="checkGoCheckout" class="btn btn-primary">去付款</button>
                                 <input type="hidden" name="userNumber" value="4">	<!-- 先將會員編號設死，實際要動態取得 -->
                                 <input type="hidden" name="action" value="checkout">	
                             </div>              
@@ -210,12 +154,31 @@
     <%@include file="/front-end/component/footer.jsp" %>
     <!--footer area end-->
     
+    <!-- Modal -->
+	<div class="modal fade" id="confirmToCheckout" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+	    <div class="modal-content">  
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="false"><i class="ion-android-close"></i></span>
+	        </button>
+	      <div class="modal-body">
+	        目前只提供信用卡付款，請確認是否繼續？
+	      </div>
+	      <div class="modal-footer">
+	     	<button type="button" class="btn btn-primary" id="confirmButton">確定</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
     
 <!-- JS
 ============================================ -->
 
 <%@include file="/front-end/component/script.jsp" %>
-
+<script src="${pageContext.request.contextPath}/front-end/assets/js/address/tw.address.js"></script>
+<script src="${pageContext.request.contextPath}/front-end/assets/js/cart/checkout.js"></script>
 
 
 </body>

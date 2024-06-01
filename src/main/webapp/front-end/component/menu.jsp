@@ -68,7 +68,6 @@
 							<li class="menu-item-has-children ${currentPage == 'shop' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=shop">書籍商城</a></li>
 <%-- 							<li class="menu-item-has-children ${currentPage == 'promotion' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li> --%>
 							<li class="menu-item-has-children ${currentPage == 'article' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/article/popularArticle.jsp?selectPage=article">論壇</a></li>
-
 							<li class="menu-item-has-children"><a href="#">聯絡我們</a></li>
 							<li class="menu-item-has-children"><a href="#">客服相關</a>
 								<ul class="sub-menu">

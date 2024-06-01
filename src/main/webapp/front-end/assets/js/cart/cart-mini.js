@@ -141,6 +141,30 @@ $(function(){
 			});
 		}
 	});
+	
+	
+	//判斷購物車是否有物品，阻擋繼續買單
+	$("#checkoutBtn").on("click", function(event){
+		event.preventDefault();	
+			let formData = {
+				"action" : "getAll",
+				"userNumber" : userNumber
+			};
+			
+			$.ajax({
+				url: path,
+				type: "POST",
+				data: formData,
+				dataType: "json",
+				success:function(item){	
+					if(item.length == 0){
+						confirm("購物車是空的，不需買單")
+					}else{
+						$("#cartForm").submit();
+					}
+				}
+			});	
+	});
 
 });
 

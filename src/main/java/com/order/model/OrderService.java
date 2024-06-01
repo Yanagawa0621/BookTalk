@@ -105,19 +105,14 @@ public class OrderService implements OrderService_inteface{
 		//此訂單要新增時，跟著要一起新增的訂單明細
 		ordreVO.setOrderDetails(details);
 		
-		Integer newOrderNumber = addOrder(ordreVO).getOrderNumber();		
-//		cartSev.clearCart(userNumber);	//新增完訂單刪除購物車
+		String tradeNo = "BT" +UUID.randomUUID().toString().replaceAll("-", "").substring(0, 6);	//產生交易付款編號		
+		Integer totalAmount = ordreVO.getTotal().intValue();	//整筆訂單的總金額
 		
-		Integer totalAmount = ordreVO.getTotal().intValue();
-		
-		System.out.println("此次新增訂單的編號：" + newOrderNumber);
-		System.out.println("訂單總金額：" + totalAmount);
-		System.out.println("產品名稱串聯：" + itemNames);
 		
 		//ECPay 支付請求
 		AllInOne cardPay = new AllInOne("");
 		AioCheckOutOneTime payOneTimeObj = new AioCheckOutOneTime();
-		payOneTimeObj.setMerchantTradeNo(newOrderNumber + "BB" +UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5));	//BB前面為此次結帳的訂單編號
+		payOneTimeObj.setMerchantTradeNo(tradeNo);
 		payOneTimeObj.setMerchantTradeDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")));
 		payOneTimeObj.setTotalAmount(String.valueOf(totalAmount));
 		payOneTimeObj.setTradeDesc("購物車結帳");
@@ -127,6 +122,16 @@ public class OrderService implements OrderService_inteface{
 		payOneTimeObj.setNeedExtraPaidInfo("N");
 		
 		String paymentForm = cardPay.aioCheckOut(payOneTimeObj, null);
+		
+		if(paymentForm != null) {	//交易成功才寫入訂單資料
+			Integer newOrderNumber = addOrder(ordreVO).getOrderNumber();					
+			cartSev.clearCart(userNumber);	//新增完訂單刪除購物車
+			
+			System.out.println("此次新增訂單的編號：" + newOrderNumber);
+			System.out.println("訂單總金額：" + totalAmount);
+			System.out.println("產品名稱串聯：" + itemNames);
+		}
+		
 	
 		return paymentForm;
 
