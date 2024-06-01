@@ -162,7 +162,7 @@
 	          <span aria-hidden="false"><i class="ion-android-close"></i></span>
 	        </button>
 	      <div class="modal-body">
-	        目前只提供信用卡付款，請確認是否繼續？
+	        <h3>目前只提供信用卡付款，請確認是否繼續？</h3>
 	      </div>
 	      <div class="modal-footer">
 	     	<button type="button" class="btn btn-primary" id="confirmButton">確定</button>

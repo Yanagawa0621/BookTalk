@@ -108,6 +108,7 @@ public class OrderService implements OrderService_inteface{
 		String tradeNo = "BT" +UUID.randomUUID().toString().replaceAll("-", "").substring(0, 6);	//產生交易付款編號		
 		Integer totalAmount = ordreVO.getTotal().intValue();	//整筆訂單的總金額
 		
+		ordreVO.setPaymentNumber(tradeNo);
 		
 		//ECPay 支付請求
 		AllInOne cardPay = new AllInOne("");
