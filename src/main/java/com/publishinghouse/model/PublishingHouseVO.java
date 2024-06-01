@@ -38,7 +38,7 @@ public class PublishingHouseVO implements java.io.Serializable {
 	@Column(name = "personInCharge",nullable = false)
 	private String personInCharge;
 
-	@Column(name = "telephoneNumber", length = 15,nullable = false)
+	@Column(name = "telephoneNumber", length = 17,nullable = false)
 	private String telephoneNumber;
 	
 	@OneToMany(mappedBy = "phVO",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.LAZY)

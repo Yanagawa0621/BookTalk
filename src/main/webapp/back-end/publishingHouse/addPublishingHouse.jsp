@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.bookclass.model.*"%>
+<%@ page import="com.publishinghouse.model.*"%>
 
 <% 
-	BookClassVO bcVO=(BookClassVO)request.getAttribute("bcVO");
+	PublishingHouseVO phVO=(PublishingHouseVO) request.getAttribute("phVO");
 %>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">修改類別</h1>
+							<h1 class="m-0">新增出版社</h1>
 						</div>	<!-- /.col -->						
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
@@ -45,33 +45,56 @@
 				
 				<div class="card">
 	              <div class="card-header">
-	                <h3 class="card-title">編號:${bcVO.classNumber}-${bcVO.className}</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
-		              <form method="post" name="updateOrderForm" action="${pageContext.request.contextPath}/bookClass.do" class="needs-validation" novalidate>
+		              <form method="post" name="updateOrderForm" action="${pageContext.request.contextPath}/publisingHouse.do" class="needs-validation" novalidate>
 		                <table id="updateOrder" class="table table-bordered table-hover">
 		                	<tbody>
 		                		<tr>
 		                			<th class="align-middle">名稱：</th>
 		                			<td>
-		                				<div class="input-group" style="width: 30%" >	
-			                				<input type="text" name="className" class="form-control" value="${bcVO.className}" required>
-			                				<div class="invalid-tooltip">
-	          									名稱請勿空白         							
-	        								</div>
-        								</div>
+			                			<input class="form-control" type="text" name="name" value="<%=(phVO==null)? "":phVO.getName()%>" required>
+			                			<div class="invalid-tooltip">
+		          							名稱請勿空白         							
+		        						</div>
+		                			</td>
+		                		</tr>
+		                		<tr>
+		                			<th class="align-middle">地址：</th>
+		                			<td>
+			                			<input class="form-control" type="text" name="address" placeholder="111台北市士林區中山北路七段14巷72-74號" value="<%=(phVO==null)? "":phVO.getAddress()%>" required>
+			                			<div class="invalid-tooltip">
+		          							地址請勿空白         							
+		        						</div>
+		                			</td>
+		                		</tr>
+		                		<tr>
+		                			<th class="align-middle">負責人：</th>
+		                			<td>
+			                			<input class="form-control" type="text" name="personInCharge" value="<%=(phVO==null)? "":phVO.getPersonInCharge() %>" required>
+			                			<div class="invalid-tooltip">
+		          							負責人請勿空白         							
+		        						</div>
+		                			</td>
+		                		</tr>
+		                		<tr>		                			
+		                			<th class="align-middle">電話：</th>		                			
+		                			<td>
+			                			<input class="form-control" type="text" placeholder="範例:02-12345678(若有分機請加-xxx),手機為:0912345678" name="telephoneNumber" value="<%=(phVO==null)? "":phVO.getTelephoneNumber() %>" required>
+			                			<div class="invalid-tooltip">
+		          							電話請勿空白         							
+		        						</div>
 		                			</td>
 		                		</tr>					               
 			              	</tbody>
 		                </table>
 		                <div class="row">
 		                	<div class="col-md-1 offset-md-10">
-			                	<button type="submit" class="btn btn-block bg-gradient-primary btn">送出修改</button>
-								<input type="hidden" name="classNumber"  value="${bcVO.classNumber}">
-								<input type="hidden" name="action"	value="update">	 
+			                	<button type="submit" class="btn btn-block bg-gradient-primary btn">送出新增</button>
+								<input type="hidden" name="action"	value="insert">	 
 		                	</div>
 		                	<div class="col-md-1">
-		                	 	<a href="${pageContext.request.contextPath}/back-end/bookClass/bookClass.jsp">
+		                	 	<a href="${pageContext.request.contextPath}/back-end/publishingHouse/publishingHouse.jsp">
 									<button type="button" class="btn btn-block bg-gradient-danger">取消</button>
 								</a>
 		                	</div>
@@ -123,8 +146,6 @@
 		    });
 		  }, false);
 		})();
-		
-		
 	});
 		
 	</script>

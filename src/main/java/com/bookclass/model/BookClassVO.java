@@ -30,11 +30,11 @@ public class BookClassVO implements java.io.Serializable {
 	@Column(name = "classNumber",updatable=false)
 	private Integer classNumber;
 
-	@Column(name = "className",nullable = false)
+	@Column(name = "className",nullable = false ,unique = true)
 	private String className;
 	
 //	@OneToMany(mappedBy = "bcVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@OneToMany(mappedBy = "bcVO",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bcVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@OrderBy("bookNumber asc")
 	private List<BookProductsVO> bpVO;	
 	

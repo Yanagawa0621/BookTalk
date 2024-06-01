@@ -35,7 +35,7 @@ CREATE TABLE publishing_house(
 	name varchar(255) COMMENT '名稱',
 	address varchar(255) COMMENT '地址',
 	personInCharge varchar(255) COMMENT '負責人',
-	telephoneNumber varchar(15) COMMENT '電話號碼'
+	telephoneNumber varchar(17) COMMENT '電話號碼'
 ) COMMENT '出版社 publishing_house';
 
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('電極文庫','404台中市北區民權路313號','陳蘭','0938492848');
@@ -43,9 +43,9 @@ INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUE
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('頂端','111台北市士林區中山北路七段14巷72-74號','古嘉莉','0937547327');
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('梁山','111台北市士林區中山北路五段460巷4號','蔡怡貞','0947382845');
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('鼎文','802高雄市苓雅區五福一路67號','吳志成','0956428719');
-INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('Ecco Press','Manhattan, New York','Daniel Halpern','2122077000');
-INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('台灣角川','104台北市中山區松江路223號3樓','楊淑媄','0225153000');
-INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('究竟','105台北市南京東路4段50號6樓之1','吳幸芳','0225798800*36');
+INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('幸福文化','新北市新店區民權路108之1號8樓','梁文龍','02-22181417');
+INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('台灣角川','104台北市中山區松江路223號3樓','楊淑媄','02-25153000');
+INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('究竟','105台北市南京東路4段50號6樓之1','吳幸芳','02-25798800-36');
 
 -- 作者 --
 CREATE TABLE author(

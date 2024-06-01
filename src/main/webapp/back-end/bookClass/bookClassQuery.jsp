@@ -49,9 +49,8 @@
 	                <table id="orderlist" class="table table-bordered table-hover">
 	                  <thead>
 		                  <tr>
-		                    <th>類別編號</th>
-		                    <th>類別名稱</th>
-		                    <th>書籍數量(包含所有狀態的書籍)</th>
+		                    <th style="width: 150px;">類別編號</th>
+		                    <th style="width: 300px;">類別名稱</th>
 		                    <th>修改</th>
 		                  </tr>
 	                  </thead>
@@ -60,7 +59,6 @@
 		                  <tr>
 			              	<td>${bcVO.classNumber}</td>
 			                <td>${bcVO.className}</td>
-			                <td>${fn:length(bcVO.bpVO)}本</td>
 			                <td>
 			                	<form method="post" action="${pageContext.request.contextPath}/bookClass.do">
 				                    <button type="submit" class="btn btn-block bg-gradient-primary btn-sm">修改</button>

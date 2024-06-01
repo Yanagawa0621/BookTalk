@@ -26,7 +26,7 @@ public class PublishingHouseService {
 		phVO.setTelephoneNumber(telephoneNumber);
 		dao.increase(phVO);
 
-		return 0;
+		return dao.increase(phVO);
 	}
 
 	public int updatePh(Integer publishingHouseNumber, String name, String address, String personInCharge,
@@ -39,7 +39,7 @@ public class PublishingHouseService {
 		phVO.setTelephoneNumber(telephoneNumber);
 		dao.update(phVO);
 
-		return 0;
+		return dao.update(phVO);
 	}
 
 	public List<PublishingHouseVO> getAllPh() {
@@ -55,6 +55,21 @@ public class PublishingHouseService {
 	public PublishingHouseVO singleQueryPh(Integer publishingHouseNumber) {
 		PublishingHouseVO phVO = dao.singleQuery(publishingHouseNumber);
 		return singleConversion(phVO);
+	}
+	
+	public List<PublishingHouseVO> getAllPhNp() {
+		List<PublishingHouseVO> list = dao.getAll();
+		return list;
+	}
+	
+	public List<PublishingHouseVO> KeywordQueryPhNp(String Keywords) {
+		List<PublishingHouseVO> list = dao.keywordQuery(Keywords);
+		return list;
+	}
+	
+	public PublishingHouseVO singleQueryPhNp(Integer publishingHouseNumber) {
+		PublishingHouseVO phVO = dao.singleQuery(publishingHouseNumber);
+		return phVO;
 	}
 
 	// =================================以下做圖片處理用========================================

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.bookclass.model.*"%>
+<%@ page import="com.author.model.*"%>
 
 <% 
-	BookClassVO bcVO=(BookClassVO)request.getAttribute("bcVO");
+	AuthorVO authorVO= (AuthorVO) request.getAttribute("authorVO");
 %>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">修改類別</h1>
+							<h1 class="m-0">修改作者</h1>
 						</div>	<!-- /.col -->						
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
@@ -45,33 +45,30 @@
 				
 				<div class="card">
 	              <div class="card-header">
-	                <h3 class="card-title">編號:${bcVO.classNumber}-${bcVO.className}</h3>
+	                <h3 class="card-title">作者編號:${authorVO.authorNumber}</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
-		              <form method="post" name="updateOrderForm" action="${pageContext.request.contextPath}/bookClass.do" class="needs-validation" novalidate>
+		              <form method="post" name="updateOrderForm" action="${pageContext.request.contextPath}/author.do" class="needs-validation" novalidate>
 		                <table id="updateOrder" class="table table-bordered table-hover">
 		                	<tbody>
 		                		<tr>
-		                			<th class="align-middle">名稱：</th>
-		                			<td>
-		                				<div class="input-group" style="width: 30%" >	
-			                				<input type="text" name="className" class="form-control" value="${bcVO.className}" required>
-			                				<div class="invalid-tooltip">
-	          									名稱請勿空白         							
-	        								</div>
-        								</div>
-		                			</td>
-		                		</tr>					               
+		                			<th class="align-middle">訂單編號：</th>
+		                			<td><input class="form-control" type="text" name="authorName" value="${authorVO.authorName}"></td>
+		                		</tr>
+		                		<tr>
+		                			<th class="align-middle">會員編號：</th>
+		                			<td><input class="form-control" type="text" name="englishName" value="${authorVO.englishName}"></td>
+		                		</tr>		               
 			              	</tbody>
 		                </table>
 		                <div class="row">
 		                	<div class="col-md-1 offset-md-10">
 			                	<button type="submit" class="btn btn-block bg-gradient-primary btn">送出修改</button>
-								<input type="hidden" name="classNumber"  value="${bcVO.classNumber}">
+								<input type="hidden" name="authorNumber"  value="${authorVO.authorNumber}">
 								<input type="hidden" name="action"	value="update">	 
 		                	</div>
 		                	<div class="col-md-1">
-		                	 	<a href="${pageContext.request.contextPath}/back-end/bookClass/bookClass.jsp">
+		                	 	<a href="${pageContext.request.contextPath}/back-end/author/author.jsp">
 									<button type="button" class="btn btn-block bg-gradient-danger">取消</button>
 								</a>
 		                	</div>
