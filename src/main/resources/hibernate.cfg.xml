@@ -5,36 +5,51 @@
 
 		<property name="hibernate.connection.driver_class">
 			com.mysql.cj.jdbc.Driver</property>
-		<property name="hibernate.connection.url">
-			jdbc:mysql://localhost:3306/g3?serverTimezone=Asia/Taipei</property>
+<property name="hibernate.connection.url">
+    jdbc:mysql://localhost:3306/g3?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Taipei
+</property>
+
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">123456</property>
 
-		<!--		<property
-		name="connection.datasource">java:comp/env/jdbc/g3</property>--> <!--
-		JNDI用-->
+		<!-- <property name="connection.datasource">java:comp/env/jdbc/g3</property> --> <!-- JNDI用 -->
 
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
-		<property name="hibernate.hbm2ddl.auto">validate</property>
+		<property name="hibernate.show_sql">true</property>
+
+		<property name="hibernate.hbm2ddl.auto">update</property>
 
 		<property name="hibernate.current_session_context_class">thread</property>
 
-		<!--<mapping class="idv.david.dept.entity.Dept"/>-->  <!--範例-->
+<!-- 		<property name="hibernate.connection.characterEncoding">utf8</property> -->
+		
+<!-- 		<property name="hibernate.connection.useUnicode">true</property> -->
+	
+<!-- 		<property name="hibernate.connection.charSet">UTF-8</property> -->
 
-		<mapping class="com.order.model.OrderVO" />
-		<mapping class="com.orderdetails.model.OrderDetailsVO" />
-		<mapping class="com.promotionproject.model.PromotionProjectVO" />
-		<mapping class="com.promotiondetails.model.PromotionDetailsVO" />
-		<mapping class="com.bookproducts.model.BookProductsVO" />
-		<mapping class="com.bookclass.model.BookClassVO" />
-		<mapping class="com.author.model.AuthorVO" />
-		<mapping class="com.booksandpicture.model.BooksAndPictureVO" />
-		<mapping class="com.publishinghouse.model.PublishingHouseVO" />
-<!--		<mapping class="com.forum.model.ForumVO" />-->
-<!--		<mapping class="com.article.model.ArticleVO" />-->
-<!--		<mapping class="com.comment.model.CommentVO" />-->
-<!--		<mapping class="com.likeRecord.model.LikeVO" />-->
+
+		<!--<mapping class="idv.david.dept.entity.Dept"/> -->  <!--範例 -->
+
+<!-- 		<mapping class="com.order.model.OrderVO" /> -->
+<!-- 		<mapping class="com.orderdetails.model.OrderDetailsVO" /> -->
+<!-- 		<mapping class="com.promotionproject.model.PromotionProjectVO" /> -->
+<!-- 		<mapping class="com.promotiondetails.model.PromotionDetailsVO" /> -->
+<!-- 		<mapping class="com.bookproducts.model.BookProductsVO" /> -->
+<!-- 		<mapping class="com.bookclass.model.BookClassVO" /> -->
+<!-- 		<mapping class="com.author.model.AuthorVO" /> -->
+<!-- 		<mapping class="com.booksandpicture.model.BooksAndPictureVO" /> -->
+<!-- 		<mapping class="com.publishinghouse.model.PublishingHouseVO" /> -->
+		<mapping class="com.user.model.UserVO" />
+		<mapping class="com.access.model.AccessVO" />
+		<!-- <mapping class="com.administarator.model.AdministaratorVO" /> -->
+		<!-- <mapping class="com.complaint.model.ComplaintVO" /> -->
+		<mapping class="com.loginRecord.model.LoginRecordVO" />
+		<!-- <mapping class="com.userStatus.model.UserStatusVO" /> -->
+		<!-- <mapping class="com.forum.model.ForumVO" /> -->
+		<!-- <mapping class="com.article.model.ArticleVO" /> -->
+		<!-- <mapping class="com.comment.model.CommentVO" /> -->
+		<!-- <mapping class="com.likeRecord.model.LikeVO" /> -->
 
 	</session-factory>
 </hibernate-configuration>
