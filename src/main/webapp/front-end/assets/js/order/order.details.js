@@ -128,9 +128,9 @@ $(function(){
 				dataType: "json",
 				success:function(data){
 					console.log(data);
-					if(data.message == "message"){
-						$("#evaluateArea").modal("hide");
-						$(".cart_submit button#goEvaluate").replaceWith('<div><h4>已完成</h4></div>');	
+					if(data.message == "evaluate success"){
+						$("#evaluateArea").modal("hide");				
+						$(".cart_submit button#goEvaluate").replaceWith('<div><h4>已完成</h4></div>');
 					}
 				}
 			});
