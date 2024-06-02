@@ -470,8 +470,8 @@ public class OrderServlet extends HttpServlet {
 			// excludeFieldsWithoutExposeAnnotation讓Gson轉成json過程中
 			// 排除掉沒有@Expose的屬性, 就能避開雙向無限循環參考
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
-					.setDateFormat("yyyy-MM-dd HH:mm:ss")
-					.create();
+										 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+										 .create();
 			
 			String jsonStr = gson.toJson(listUserNumberVO);
 
@@ -506,6 +506,27 @@ public class OrderServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
+		
+		/**************************** getUserOneOrderDetailsJson ****************************/
+		
+		if("getUserOneOrderDetailsJson".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+
+			
+			// excludeFieldsWithoutExposeAnnotation讓Gson轉成json過程中
+			// 排除掉沒有@Expose的屬性, 就能避開雙向無限循環參考
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+										 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+										 .create();
+						
+			String jsonStr = gson.toJson(orderVO);
+			System.out.println(jsonStr);
+
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write(jsonStr);
+		}
 		
 		
 		

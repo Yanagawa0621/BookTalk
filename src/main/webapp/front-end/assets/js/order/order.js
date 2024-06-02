@@ -1,6 +1,5 @@
 
 
-
 $(function(){
 	var userNumber = 4;
 	var contextPath = document.querySelector('meta[name="contextPath"]').getAttribute('content'); //${pageContext.request.contextPath}
