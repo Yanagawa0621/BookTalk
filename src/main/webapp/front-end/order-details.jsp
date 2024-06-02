@@ -83,7 +83,7 @@ div.stars > span.star.-on{
                             <div class="cart_submit">
                             	<c:choose>
                             		<c:when test="${orderVO.orderStatus == 0}">
-										<button type="button" class="btn_empty" id="orderCanceled" disabled>訂單已取消</button> 
+                            			<div><h4>訂單已取消</h4></div>
 								    </c:when>
 								    <c:when test="${orderVO.orderStatus == 3}">
 								        <button type="button" class="btn_empty" id="gofinishOrder">完成訂單</button>
@@ -218,7 +218,6 @@ div.stars > span.star.-on{
 			                           
 			            </div>
 		            </div>
-		            
 		        </div>
 		    </div>
 	      </div>
