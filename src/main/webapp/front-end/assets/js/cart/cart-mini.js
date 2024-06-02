@@ -44,7 +44,7 @@ $(function(){
 
 
 	//全部清空
-	$("button.btn_empty").on("click" , function(event){
+	$("#cleanAllCart").on("click" , function(event){
 		event.preventDefault();
 		if(confirm("確認清空？")){
 			$.ajax({
@@ -132,7 +132,7 @@ $(function(){
 					`;
 					let row = $(that).closest("tr");
 					let cells = row.find("td");
-					cells.eq(6).replaceWith(listHtml);
+					cells.eq(5).replaceWith(listHtml);
 					reloadMiniCart();
 				},
 				complete:function(xhr){
@@ -276,7 +276,6 @@ function showFullCart(cart){
 			            <td><a href="${contextPath}/bookproducts.do?bookNumber=${item.bookNumber}&action=single_product_page">${item.bookTitle}</a></td>
 			            <td>$${item.bookPrice}</td>
 			            <td class="product_quantity"><label>數量</label><input min="1" max="${item.bookStock}" value="${item.quantity}" type="number"></td>
-			            <td>${item.bookStock}</td>
 			            <td>$${item.subtotal}</td>
 		            </tr>
 				`;

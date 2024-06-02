@@ -4,7 +4,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
 import com.orderdetails.model.OrderDetailsVO;
 
 @Entity
@@ -14,46 +25,60 @@ public class OrderVO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderNumber", insertable = false, updatable = false)
+	@Expose
 	private Integer orderNumber;
 	
 	@Column(name = "userNumber", updatable = false)
+	@Expose
 	private Integer userNumber;
 	
 	@Column(name = "orderStatus", insertable = false)
+	@Expose
 	private Integer orderStatus;
 	
 	@Column(name = "establishmentTime", insertable = false, updatable = false)
+	@Expose
 	private Timestamp establishmentTime;
 	
 	@Column(name = "shippingTime")
+	@Expose
 	private Timestamp shippingTime;
 	
 	@Column(name = "completeTime")
+	@Expose
 	private Timestamp completeTime;
 	
 	@Column(name = "receiver")
+	@Expose
 	private String receiver;
 	
 	@Column(name = "telephoneNumber")
+	@Expose
 	private String telephoneNumber;
 	
 	@Column(name = "shippingAddress")
+	@Expose
 	private String shippingAddress;
 	
 	@Column(name = "deliveryFee")
+	@Expose
 	private BigDecimal deliveryFee;
 	
 	@Column(name = "total")
+	@Expose
 	private BigDecimal total;
 	
 	@Column(name = "paymentNumber")
+	@Expose
 	private String paymentNumber;
 	
 	@Column(name = "note", columnDefinition = "longtext")
+	@Expose
 	private String note;
 	
 	@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
 	@OrderBy("orderNumber asc")
+	@Expose
 	private Set<OrderDetailsVO> orderDetails;
 	
 	
