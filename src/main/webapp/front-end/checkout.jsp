@@ -84,7 +84,7 @@
                                 </div>
  
                                 <div class="col-lg-6 mb-20">
-                                    <label><h4>電話<span>*</span></h4>(範例：0912345678，10個數字)</label>
+                                    <label><h4>手機<span>*</span></h4>(範例：0912-345-678)</label>
                                     <input type="text" name="tel" id="checkTel" required> 
 
                                 </div> 
@@ -110,13 +110,15 @@
                                     <thead>
                                         <tr>
                                             <th>書籍名稱</th>
-                                            <th>價格</th>
+                                            <th>數量</th>
+                                            <th>單價</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<c:forEach var="cartItem" items="${cartList}">
 	                                        <tr>
 	                                            <td>${cartItem.bookTitle}</td>
+	                                            <td>${cartItem.quantity}</td>
 	                                            <td>$ ${cartItem.bookPrice}</td>
 	                                        </tr>
                                       	</c:forEach>
@@ -124,14 +126,17 @@
                                     <tfoot>
                                         <tr>
                                             <th>商品總金額</th>
+                                            <td></td>
                                             <td>$ ${subtotalSum}</td>
                                         </tr>
                                         <tr>
                                             <th>運費</th>
+                                            <td></td>
                                             <td><strong>$ ${deliveryFee}</strong></td>
                                         </tr>
                                         <tr class="order_total">
                                             <th>訂單總金額</th>
+                                            <td></td>
                                             <td><strong>$ ${total}</strong></td>
                                         </tr>
                                     </tfoot>

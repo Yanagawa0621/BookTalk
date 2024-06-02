@@ -65,6 +65,12 @@ public class OrderService implements OrderService_inteface{
 	public List<OrderVO> getOrderByOrderStatus(Integer orderStatus) {
 		return dao.findByOrderStatus(orderStatus);
 	}
+	
+	@Override
+	public Set<OrderDetailsVO> getOrderDetailsVOsByOrderNumber(Integer orderNumber) {
+		OrderVO orderVO = getOneOrder(orderNumber);
+		return orderVO != null ? orderVO.getOrderDetails() : null;
+	}
 
 	@Override
 	public String checkout(Integer userNumber, OrderVO ordreVO, String contextPath) {
