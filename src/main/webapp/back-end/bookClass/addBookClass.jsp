@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.order.model.*"%>
+<%@ page import="com.bookclass.model.*"%>
 
 <% 
-	OrderVO orderVO = (OrderVO) request.getAttribute("orderVO");
+	BookClassVO bcVO=(BookClassVO)request.getAttribute("bcVO");
 %>
 
 <!DOCTYPE html>
@@ -17,11 +17,11 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
-			<div class="content-header">
+			<div class="content-header" style="width: 100%;">
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">新增訂單</h1>
+							<h1 class="m-0">新增類別</h1>
 						</div>	<!-- /.col -->						
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
@@ -29,7 +29,7 @@
 			
 			
 			<!-- Main content -->
-			<div class="content">
+			<div class="content" style="width: 100%;">
 				<div class="row">
 					<div class= "col-md-3 offset-md-1">
 						<c:if test="${not empty errorMsgs}">
@@ -44,61 +44,19 @@
 				</div>
 				
 				<div class="card">
-	              <div class="card-header">
-	                <h3 class="card-title">輸入訂單資訊</h3>
-	              </div>	<!-- /.card-header -->
-	              <div class="card-body">
-		              <form method="post" name="newOrderForm" action="${pageContext.request.contextPath}/order/order.do" class="needs-validation" novalidate>
-		                <table id="newOrder" class="table table-bordered table-hover">
+	              	<div class="card-body">
+		              <form method="post" name="updateOrderForm" action="${pageContext.request.contextPath}/bookClass.do" class="needs-validation" novalidate>
+		                <table id="updateOrder" class="table table-bordered table-hover">
 		                	<tbody>
 		                		<tr>
-		                			<th class="align-middle">收件人：</th>
+		                			<th class="align-middle">名稱：</th>
 		                			<td>
-		                				<div class="input-group" style="width: 20%" >	
-			                				<input type="text" name="receiver" class="form-control" value="<%= (orderVO==null)? "" : orderVO.getReceiver()%>" required>
+		                				<div class="input-group" style="width: 30%" >	
+			                				<input type="text" name="className" class="form-control" value="<%=(bcVO==null)? "":bcVO.getClassName()%>" required>
 			                				<div class="invalid-tooltip">
-	          									收件人請勿空白         							
+	          									名稱請勿空白         							
 	        								</div>
         								</div>
-		                			</td>
-		                		</tr>
-		                		<tr>		                			
-		                			<th class="align-middle">收件地址：</th>		                			
-		                			<td>
-		                				<div class="input-group" style="width: 50%" >		                			
-		                					<input type="text" name="shippingAddress" class="form-control" value="<%= (orderVO==null)? "" : orderVO.getShippingAddress()%>" required>
-		                					<div class="invalid-tooltip">
-	          									收件地址請勿空白      							
-	        								</div>
-		                				</div>
-		                			</td>
-		                		</tr>
-		                		<tr>
-		                			<th class="align-middle">運費：</th>
-		                			<td>
-		                				<div class="input-group" style="width: 20%" >		                			
-		                					<input type="text" name="deliveryFee" class="form-control" required>
-		                					<div class="invalid-tooltip">
-	          									請輸入運費      							
-	        								</div>
-		                				</div>
-		                			</td>
-		                		</tr>
-		                		<tr>
-		                			<th class="align-middle">總金額：</th>
-		                			<td>
-		                				<div class="input-group" style="width: 20%" >		                			
-		                					<input type="text" name="total" class="form-control" required>
-		                					<div class="invalid-tooltip">
-	          									請輸入總金額     							
-	        								</div>
-		                				</div>
-		                			</td>
-		                		</tr>
-		                		<tr>
-		                			<th class="align-middle">備註：</th>
-		                			<td>
-		                				<textarea name="note" class="form-control" style="width: 50%;"><%= (orderVO==null)? "" : orderVO.getNote()%></textarea>
 		                			</td>
 		                		</tr>					               
 			              	</tbody>
@@ -109,12 +67,11 @@
 								<input type="hidden" name="action"	value="insert">	 
 		                	</div>
 		                	<div class="col-md-1">
-		                	 	<a href="${pageContext.request.contextPath}/back-end/order/order.jsp">
+		                	 	<a href="${pageContext.request.contextPath}/back-end/bookClass/bookClass.jsp">
 									<button type="button" class="btn btn-block bg-gradient-danger">取消</button>
 								</a>
 		                	</div>
 		                </div>
-  
 		               </form>
 	              </div>
 	              <!-- /.card-body -->
@@ -162,8 +119,6 @@
 		    });
 		  }, false);
 		})();
-		
-		
 	});
 		
 	</script>

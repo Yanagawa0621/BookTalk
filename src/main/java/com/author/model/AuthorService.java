@@ -47,6 +47,20 @@ public class AuthorService {
 		List<AuthorVO> list = dao.keywordQuery(zhAndenName);
 		return multipleConversions(list);
 	}
+	public AuthorVO singleQueryArthNp(Integer authorNumber) {
+		AuthorVO authVO = dao.singleQuery(authorNumber);
+		return authVO;
+	}
+	
+	public List<AuthorVO> getAllArthNp() {
+		List<AuthorVO> list = dao.getAll();
+		return list;
+	}
+	
+	public List<AuthorVO> keywordQueryNp(String zhAndenName) {
+		List<AuthorVO> list = dao.keywordQuery(zhAndenName);
+		return list;
+	}
 
 	// =================================以下做圖片處理用========================================
 

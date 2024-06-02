@@ -84,13 +84,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/back-end/publishingHouse/publishingHouse.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>出版社資料</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/back-end/author/author.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>作者資料</p>
                 </a>
