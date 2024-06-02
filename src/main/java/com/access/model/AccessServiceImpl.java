@@ -3,11 +3,10 @@ package com.access.model;
 import java.util.List;
 
 public class AccessServiceImpl implements AccessService {
-
     private AccessDAO_interface accessDAO;
 
-    public AccessServiceImpl(AccessDAO_interface accessDAO) {
-        this.accessDAO = accessDAO;
+    public AccessServiceImpl() {
+        this.accessDAO = new AccessDAO();
     }
 
     @Override
