@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.HibernateUtil;
 
 public class UserDAO implements UserDAO_interface {
     private SessionFactory sessionFactory;
@@ -13,87 +14,98 @@ public class UserDAO implements UserDAO_interface {
         this.sessionFactory = sessionFactory;
     }
 
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
     @Override
     public void save(UserVO user) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.save(user);
-        tx.commit();
-        session.close();
+        Transaction tx = null;
+        try {
+            Session session = getSession();
+            tx = session.beginTransaction();
+            session.save(user);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
     @Override
     public void update(UserVO user) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.update(user);
-        tx.commit();
-        session.close();
+        Transaction tx = null;
+        try {
+            Session session = getSession();
+            tx = session.beginTransaction();
+            session.update(user);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        }
     }
 
     @Override
     public void delete(Integer number) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        UserVO user = session.get(UserVO.class, number);
-        if (user != null) {
-            session.delete(user);
+        Transaction tx = null;
+        try {
+            Session session = getSession();
+            tx = session.beginTransaction();
+            UserVO user = session.get(UserVO.class, number);
+            if (user != null) {
+                session.delete(user);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
         }
-        tx.commit();
-        session.close();
     }
 
     @Override
     public UserVO findByNumber(Integer number) {
-        Session session = sessionFactory.openSession();
-        UserVO user = session.get(UserVO.class, number);
-        session.close();
-        return user;
+        return getSession().get(UserVO.class, number);
     }
 
     @Override
     public UserVO findByAccount(String account) {
-        Session session = sessionFactory.openSession();
-        Query<UserVO> query = session.createQuery("FROM UserVO WHERE account = :account", UserVO.class);
+        Query<UserVO> query = getSession().createQuery("FROM UserVO WHERE account = :account", UserVO.class);
         query.setParameter("account", account);
-        UserVO user = query.uniqueResult();
-        session.close();
-        return user;
+        return query.uniqueResult();
     }
 
     @Override
     public List<UserVO> getAll() {
-        Session session = sessionFactory.openSession();
-        Query<UserVO> query = session.createQuery("FROM UserVO", UserVO.class);
-        List<UserVO> userList = query.list();
-        session.close();
-        return userList;
+        Query<UserVO> query = getSession().createQuery("FROM UserVO", UserVO.class);
+        return query.list();
     }
 
     @Override
     public boolean isFieldDuplicate(String fieldName, String value, Integer userId) {
-        Session session = sessionFactory.openSession();
         String hql = "FROM UserVO WHERE " + fieldName + " = :value";
         if (userId != null) {
             hql += " AND number != :userId";
         }
-        Query<UserVO> query = session.createQuery(hql, UserVO.class);
+        Query<UserVO> query = getSession().createQuery(hql, UserVO.class);
         query.setParameter("value", value);
         if (userId != null) {
             query.setParameter("userId", userId);
         }
-        boolean isDuplicate = !query.list().isEmpty();
-        session.close();
-        return isDuplicate;
+        return !query.list().isEmpty();
     }
 
     @Override
     public boolean isAccessNumberValid(Integer accessNumber) {
-        Session session = sessionFactory.openSession();
-        Query<Long> query = session.createQuery("SELECT COUNT(*) FROM AccessVO WHERE accessNumber = :accessNumber", Long.class);
+        Query<Long> query = getSession().createQuery("SELECT COUNT(*) FROM AccessVO WHERE accessNumber = :accessNumber", Long.class);
         query.setParameter("accessNumber", accessNumber);
         long count = query.uniqueResult();
-        session.close();
         return count > 0;
     }
 }

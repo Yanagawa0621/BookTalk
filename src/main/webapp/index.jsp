@@ -6,11 +6,11 @@
 <%@ page import="java.time.YearMonth" %>
 
 
-<%  
-	BookProductsService bpsce=new BookProductsService();
-	List<BookProductsVO> list=bpsce.npiBp();
-	pageContext.setAttribute("list",list);
-%>
+<%
+ 	BookProductsService bpsce=new BookProductsService();
+ 	List<BookProductsVO> list=bpsce.npiBp();
+ 	pageContext.setAttribute("list",list);
+ %>
 
 <% 
 	LocalDate date=LocalDate.now();
