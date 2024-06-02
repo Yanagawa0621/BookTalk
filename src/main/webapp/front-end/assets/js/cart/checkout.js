@@ -51,7 +51,6 @@ function validateFields() {
     
     
      if (telField != "" && telField != null){
-    	 console.log("wov");
     	if (!checkTel(telField)) {
 	        modalBody.html("<h3>手機請輸入同範例格式，請按\"取消\"返回</h3>");
 	        confirmButton.prop("disabled", true);

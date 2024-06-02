@@ -8,6 +8,22 @@
 <!-- head -->
 <%@include file="/front-end/component/head.jsp" %>
 
+<!-- 星號更新用 -->
+<style>
+div.stars{
+	display : inline-block;
+}
+
+div.stars > span.star{
+	cursor:pointer;
+	display: inline-block;
+	margin-right: 3px;
+}
+
+div.stars > span.star.-on{
+	color: gold;
+}
+</style>
 
 <body>
 	<!--menu area start-->
@@ -51,7 +67,7 @@
 							              </thead>
 							              <tbody>
 								              <c:forEach var="orderDetailsVOs" items="${orderDetailsVOs}">
-									              	<tr>
+									              	<tr data-bookNumber="${orderDetailsVOs.bookNumber}" data-bookTitle="${orderDetailsVOs.bookProductsVO.bookTitle}">
 									              		<td>
 									              			<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${orderDetailsVOs.bookNumber}&action=single_product_page">
 															<img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${orderDetailsVOs.bookNumber}" width="70px" alt=""></a>
@@ -70,19 +86,19 @@
 										<button type="button" class="btn_empty" id="orderCanceled" disabled>訂單已取消</button> 
 								    </c:when>
 								    <c:when test="${orderVO.orderStatus == 3}">
-								        <button type="button" class="btn_empty" id="finishOrder">完成訂單</button>
+								        <button type="button" class="btn_empty" id="gofinishOrder">完成訂單</button>
 								    </c:when>
 								    <c:when test="${orderVO.orderStatus == 4}">
 								    	<button type="button" class="btn_empty" id="goEvaluate">評價</button>
 								    </c:when>
 								    <c:when test="${orderVO.orderStatus == 5}">
-								    	<button type="button" class="btn_empty" id="orderFinish"  disabled>訂單已完成</button>
+								    	<div><h4>已完成</h4></div>
 								    </c:when>
 								    <c:otherwise>
 								        <button type="button" class="btn_empty" id="finishOrder" disabled>完成訂單</button>
 										<button type="button" class="btn_empty" id="cancelOrder">取消訂單</button>   
 								    </c:otherwise>
-								</c:choose>                         
+								</c:choose>
 				          </div>  
                         </div>
                      </div>
@@ -95,7 +111,7 @@
 		                            <h3>收貨人明細</h3>
 		                            <div class="row">
 		                            	<div class="col-lg-5 col-md-5 offset-md-1 mb-20"><h4>訂單編號</h4></div>							
-			                            <div class="col-lg-6 col-md-6 mb-20"><h4>${orderVO.orderNumber}</h4></div>			
+			                            <div class="col-lg-6 col-md-6 mb-20"><h4 id="orderNumber">${orderVO.orderNumber}</h4></div>			
 			                        </div>
 			                        <div class="row">
 		                            	<div class="col-lg-5 col-md-5 offset-md-1 mb-20"><h4>訂單狀態</h4></div>							
@@ -182,12 +198,44 @@
     <!--footer area start-->
     <%@include file="/front-end/component/footer.jsp" %>
     <!--footer area end-->
+    
+    <!-- Modal -->
+	<div class="modal fade" id="evaluateArea" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+	    <div class="modal-content">  
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="false"><i class="fas fa-window-close"></i></span>
+	        </button>
+	      <div class="modal-body">
+	       	<div class="container my-4">
+		        <div class="card">
+		            <div class="card-header">
+		                <h3 class="title">評價書籍</h3>
+		            </div>
+		            <div id="books">
+			            <div class="card-body">
+			                <div class="alert alert-warning">請提供您的寶貴評論！</div>
+			                           
+			            </div>
+		            </div>
+		            
+		        </div>
+		    </div>
+	      </div>
+	      <div class="modal-footer">
+	     	<button type="button" class="btn btn-primary" id="confirmButton">確定</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
  
 <!-- JS
 ============================================ -->
 
 
 <%@include file="/front-end/component/script.jsp" %>
+<script src="${pageContext.request.contextPath}/front-end/assets/js/order/order.details.js"></script>
 
 
 </body>
