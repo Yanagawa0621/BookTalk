@@ -89,9 +89,15 @@
 											    <div class="modal-content">
 											      <div class="modal-header">
 											        <h5 class="modal-title" id="lightboxModalLabel"style="font-size: 30px;">${articleVO.title}</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											         <c:if test="${articleVO.userNumber == sessionScope.userNumber}">
+											        	<form action="<%= request.getContextPath()%>/front-end/article/ckEditor/sample/updateArticle.jsp">
+							                                <input type="hidden" name="articleNumber" value="${articleVO.articleNumber}" >
+							                                <button type="submit">編輯文章</button>
+							                            </form>
+											        </c:if>
+											        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											          <span aria-hidden="true">&times;</span>
-											        </button>
+											        </button>-->
 											      </div>
 											      <div class="modal-body" style="font-size: 18px; padding: 30px;">
 											        <!-- 燈箱内容區域 -->
@@ -132,9 +138,9 @@
 		                                        <p>作者: <a href="#">${articleVO.userNumber}</a> / 發文日期: ${articleVO.issueTime} / 看板: <a href="#">${articleVO.forumVO.name}</a></p>
 		                                    </div>
 		                                    <p class="post_desc">${articleVO.articleSummary}</p>
-		                                    <footer class="btn_more">
-		                                        <a href="blog-details.html"> Read more</a>
-		                                    </footer>
+		                                    <!-- <footer class="btn_more">
+		                                        <a href="#"> Read more</a>
+		                                    </footer> -->
 		                                </figcaption>
 		                            </figure>
 		                        </article>
