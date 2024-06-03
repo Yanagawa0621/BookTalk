@@ -4,7 +4,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.google.gson.annotations.Expose;
 import com.orderdetails.model.OrderDetailsVO;
 
 @Entity
@@ -14,40 +25,60 @@ public class OrderVO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderNumber", insertable = false, updatable = false)
+	@Expose
 	private Integer orderNumber;
 	
 	@Column(name = "userNumber", updatable = false)
+	@Expose
 	private Integer userNumber;
 	
 	@Column(name = "orderStatus", insertable = false)
+	@Expose
 	private Integer orderStatus;
 	
 	@Column(name = "establishmentTime", insertable = false, updatable = false)
+	@Expose
 	private Timestamp establishmentTime;
 	
 	@Column(name = "shippingTime")
+	@Expose
 	private Timestamp shippingTime;
 	
 	@Column(name = "completeTime")
+	@Expose
 	private Timestamp completeTime;
 	
 	@Column(name = "receiver")
+	@Expose
 	private String receiver;
 	
+	@Column(name = "telephoneNumber")
+	@Expose
+	private String telephoneNumber;
+	
 	@Column(name = "shippingAddress")
+	@Expose
 	private String shippingAddress;
 	
 	@Column(name = "deliveryFee")
+	@Expose
 	private BigDecimal deliveryFee;
 	
 	@Column(name = "total")
+	@Expose
 	private BigDecimal total;
 	
+	@Column(name = "paymentNumber")
+	@Expose
+	private String paymentNumber;
+	
 	@Column(name = "note", columnDefinition = "longtext")
+	@Expose
 	private String note;
 	
 	@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
 	@OrderBy("orderNumber asc")
+	@Expose
 	private Set<OrderDetailsVO> orderDetails;
 	
 	
@@ -111,6 +142,14 @@ public class OrderVO implements Serializable {
 		this.receiver = receiver;
 	}
 
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
 	public String getShippingAddress() {
 		return shippingAddress;
 	}
@@ -135,6 +174,14 @@ public class OrderVO implements Serializable {
 		this.total = total;
 	}
 	
+	public String getPaymentNumber() {
+		return paymentNumber;
+	}
+
+	public void setPaymentNumber(String paymentNumber) {
+		this.paymentNumber = paymentNumber;
+	}
+
 	public String getNote() {
 		return note;
 	}
@@ -155,9 +202,9 @@ public class OrderVO implements Serializable {
 	public String toString() {
 		return "OrderVO [orderNumber=" + orderNumber + ", userNumber=" + userNumber + ", orderStatus=" + orderStatus
 				+ ", establishmentTime=" + establishmentTime + ", shippingTime=" + shippingTime + ", completeTime="
-				+ completeTime + ", receiver=" + receiver + ", shippingAddress=" + shippingAddress + ", deliveryFee="
-				+ deliveryFee + ", total=" + total + ", note=" + note + "]";
+				+ completeTime + ", receiver=" + receiver + ", telephoneNumber=" + telephoneNumber
+				+ ", shippingAddress=" + shippingAddress + ", deliveryFee=" + deliveryFee + ", total=" + total
+				+ ", paymentNumber=" + paymentNumber + ", note=" + note + "]";
 	}
-
 
 }

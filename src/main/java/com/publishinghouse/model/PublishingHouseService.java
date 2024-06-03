@@ -26,7 +26,7 @@ public class PublishingHouseService {
 		phVO.setTelephoneNumber(telephoneNumber);
 		dao.increase(phVO);
 
-		return 0;
+		return dao.increase(phVO);
 	}
 
 	public int updatePh(Integer publishingHouseNumber, String name, String address, String personInCharge,
@@ -39,7 +39,7 @@ public class PublishingHouseService {
 		phVO.setTelephoneNumber(telephoneNumber);
 		dao.update(phVO);
 
-		return 0;
+		return dao.update(phVO);
 	}
 
 	public List<PublishingHouseVO> getAllPh() {
@@ -56,23 +56,41 @@ public class PublishingHouseService {
 		PublishingHouseVO phVO = dao.singleQuery(publishingHouseNumber);
 		return singleConversion(phVO);
 	}
+	
+	public List<PublishingHouseVO> getAllPhNp() {
+		List<PublishingHouseVO> list = dao.getAll();
+		return list;
+	}
+	
+	public List<PublishingHouseVO> KeywordQueryPhNp(String Keywords) {
+		List<PublishingHouseVO> list = dao.keywordQuery(Keywords);
+		return list;
+	}
+	
+	public PublishingHouseVO singleQueryPhNp(Integer publishingHouseNumber) {
+		PublishingHouseVO phVO = dao.singleQuery(publishingHouseNumber);
+		return phVO;
+	}
 
 	// =================================以下做圖片處理用========================================
 
 	// 單筆書籍資料的圖片轉換
 	private PublishingHouseVO singleConversion(PublishingHouseVO phVO) {
-
-		for (BookProductsVO bpVOs : phVO.getBpVO()) {
-			bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+		if (phVO != null) {
+			for (BookProductsVO bpVOs : phVO.getBpVO()) {
+				bpVOs.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVOs));
+			}
 		}
 		return phVO;
 	}
 
 	// 多筆書籍資料的圖片轉換
 	private List<PublishingHouseVO> multipleConversions(List<PublishingHouseVO> list) {
-		for (PublishingHouseVO phVOs : list) {
-			for (BookProductsVO myCollection : phVOs.getBpVO()) {
-				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+		if (list.size() != 0) {
+			for (PublishingHouseVO phVOs : list) {
+				for (BookProductsVO myCollection : phVOs.getBpVO()) {
+					myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+				}
 			}
 		}
 		return list;

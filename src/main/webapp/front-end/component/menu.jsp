@@ -66,8 +66,8 @@
 						<ul class="offcanvas_main_menu">
 							<li class="menu-item-has-children ${currentPage == 'home' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/index.jsp?selectPage=home">首頁</a></li>
 							<li class="menu-item-has-children ${currentPage == 'shop' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=shop">書籍商城</a></li>
-							<li class="menu-item-has-children ${currentPage == 'promotion' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li>
-							<li class="menu-item-has-children ${currentPage == 'article' ? 'active' : ''}"><a href="#">論壇</a></li>
+<%-- 							<li class="menu-item-has-children ${currentPage == 'promotion' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li> --%>
+							<li class="menu-item-has-children ${currentPage == 'article' ? 'active' : ''}"><a href="${pageContext.request.contextPath}/front-end/article/popularArticle.jsp?selectPage=article">論壇</a></li>
 							<li class="menu-item-has-children"><a href="#">聯絡我們</a></li>
 							<li class="menu-item-has-children"><a href="#">客服相關</a>
 								<ul class="sub-menu">
@@ -106,9 +106,8 @@
 								<ul>
 									<li><a class="${currentPage == 'home' ? 'active' : ''}" href="${pageContext.request.contextPath}/index.jsp?selectPage=home">首頁</a></li>
 									<li><a class="${currentPage == 'shop' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=shop">書籍商城</a></li>
-									<li><a class="${currentPage == 'promotion' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li>
-
-									<li><a href="#">論壇</a></li>
+<%-- 									<li><a class="${currentPage == 'promotion' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/shop.jsp?selectPage=promotion">特價商品</a></li> --%>
+									<li><a class="${currentPage == 'article' ? 'active' : ''}" href="${pageContext.request.contextPath}/front-end/article/popularArticle.jsp?selectPage=article">論壇</a></li>
 									<li><a href="#">聯絡我們</a></li>
 									<li><a href="#">客服相關<i class="fa fa-angle-down"></i></a>
 										<ul class="sub_menu pages">

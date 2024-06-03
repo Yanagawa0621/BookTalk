@@ -3,7 +3,7 @@ use G3;
 
 DROP TABLE IF EXISTS report; -- 檢舉 --
 DROP TABLE IF EXISTS my_like; -- 點讚 --
-DROP TABLE IF EXISTS message; -- 留言 --
+DROP TABLE IF EXISTS comments; -- 留言 --
 DROP TABLE IF EXISTS article; -- 文章 --
 DROP TABLE IF EXISTS forum; -- 版類 --
 DROP TABLE IF EXISTS order_details; --  訂單明細 --
@@ -35,7 +35,7 @@ CREATE TABLE publishing_house(
 	name varchar(255) COMMENT '名稱',
 	address varchar(255) COMMENT '地址',
 	personInCharge varchar(255) COMMENT '負責人',
-	telephoneNumber varchar(15) COMMENT '電話號碼'
+	telephoneNumber varchar(17) COMMENT '電話號碼'
 ) COMMENT '出版社 publishing_house';
 
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('電極文庫','404台中市北區民權路313號','陳蘭','0938492848');
@@ -43,9 +43,9 @@ INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUE
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('頂端','111台北市士林區中山北路七段14巷72-74號','古嘉莉','0937547327');
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('梁山','111台北市士林區中山北路五段460巷4號','蔡怡貞','0947382845');
 INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('鼎文','802高雄市苓雅區五福一路67號','吳志成','0956428719');
-INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('Ecco Press','Manhattan, New York','Daniel Halpern','2122077000');
-INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('台灣角川','104台北市中山區松江路223號3樓','楊淑媄','0225153000');
-INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('究竟','105台北市南京東路4段50號6樓之1','吳幸芳','0225798800*36');
+INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('幸福文化','新北市新店區民權路108之1號8樓','梁文龍','02-22181417');
+INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('台灣角川','104台北市中山區松江路223號3樓','楊淑媄','02-25153000');
+INSERT INTO publishing_house (name,address,personInCharge,telephoneNumber) VALUES ('究竟','105台北市南京東路4段50號6樓之1','吳幸芳','02-25798800-36');
 
 -- 作者 --
 CREATE TABLE author(
@@ -100,7 +100,7 @@ CREATE TABLE book_products(
     CONSTRAINT uk_book_products_isbn UNIQUE (isbn)
 ) COMMENT '書籍商品 book_products';
 
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (3,2,0,'潛藏的宇宙：量子世界與時空的湧現','9786269762156',550.00,'2023-12-04',10,'2024-01-20',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (3,2,1,'潛藏的宇宙：量子世界與時空的湧現','9786269762156',550.00,'2023-12-04',10,'2024-01-20',
 
 	'　　當代最活躍的理論物理學家之一尚・卡羅，在本書中集中火力，暢談被物理學界視為「不夠嚴肅」的量子力學基礎研究，以無礙的思路與生花妙筆，描繪出量子宇宙觀的完整圖像，並大聲而謹慎地宣告，多重宇宙論中的多世界詮釋，是已知對於現實最深刻、最全面的理解：
 
@@ -121,12 +121,12 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 　　第二部，瞄準多世界詮釋的宇宙，邀請你這個觀察者一起進入其中，成為和「宇宙波函數」水乳交融的一部分，這裡沒有古典力學，沒有哥本哈根式的崩陷（或譯為塌縮）這個牽強的解釋。對於量子力學最容易引起投射的一點：意識或自由意志，也細細剖析了一番。
 
 　　第三部，帶我們回到無垠的疆界中看時空的「湧現」，會用這個看起來很潮的名詞是有道理的，提醒我們必須抗拒「眼見為真」的想法，才能認識到重力的本質，以及一切的可能性都是持續存在，導致多世界是目前最簡潔的、可能最接近「真相」的物理描述。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (1,4,0,'哈利波特(1)：神秘的魔法石','9789573317241',250.00,'2000-06-01',17,'2002-06-10',	'　　　在世界的另一個角落裡，有一個神秘的國度，裡面住滿了巫師，貓頭鷹是他們的信差，飛天掃帚是交通工具，西洋棋子會思考，幽靈頑皮鬼滿天飛，畫像裡的人還會跑出來串門子。
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (1,4,1,'哈利波特(1)：神秘的魔法石','9789573317241',250.00,'2000-06-01',17,'2002-06-10',	'　　　在世界的另一個角落裡，有一個神秘的國度，裡面住滿了巫師，貓頭鷹是他們的信差，飛天掃帚是交通工具，西洋棋子會思考，幽靈頑皮鬼滿天飛，畫像裡的人還會跑出來串門子。
 
 　　　十一歲的哈利波特，從小被阿姨一家當成怪胎，經常得滿屋子躲避表哥達力的追打。他一直以為自己只是個平凡的小男孩，直到一封又一封神秘的信，將他帶入這個充滿神奇魔法的巫師世界，而他的身世之謎與魔法石的秘密也將同時解開。
 
 　　　「哈利波特」已成為一種蔓延全世界的閱讀現象。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (4,3,0,'拉普拉斯的魔女','9789863668916',360.00,'2016-01-29',8,'2016-03-11',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (4,3,1,'拉普拉斯的魔女','9789863668916',360.00,'2016-01-29',8,'2016-03-11',
 	'在這個世界上，
 	沒有一個個體能夠獨自存在，而不具備任何意義──
 
@@ -141,7 +141,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 
 　　【拉普拉斯之魔】D　mon de Laplace
 　　為法國數學家皮埃爾-西蒙‧拉普拉斯於1814年提出的理論。其理論假設若有一生物能掌握宇宙中每個原子確切的位置和動量，即能夠運用力學規律推算出宇宙所有事件的發生歷程、過去以及未來。後人將此假定生物定名為「拉普拉斯之魔」。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (2,5,0,'ZOO【經典回歸版】','9789865580704',340.00,'2021-07-01',5,'2022-01-10',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (2,5,1,'ZOO【經典回歸版】','9789865580704',340.00,'2021-07-01',5,'2022-01-10',
 	'受虐的少年少女、瀕死的父親、
 	純真的機器女孩、寂寞的男孩、
 	懷抱著祕密的男人女人、
@@ -149,7 +149,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 	
 	有人想活下來、想死得其所、想藏住真相、想得到幸福。
 	這些重量不一的執念，化做十一個深入人心的晶瑩物語。');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,1,0,'侏羅紀公園','9789862272237',380.00,'2017-06-15',9,'2020-4-15',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,1,1,'侏羅紀公園','9789862272237',380.00,'2017-06-15',9,'2020-4-15',
 	'進化史就是一部生命逃脫一切障礙的歷史。
 	這過程是痛苦的，甚至充滿危險，但生命卻找到了出路。
 
@@ -169,7 +169,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 　　──恐龍數量比預期的更多、島上的電腦系統癱瘓，還遇上中斷對外交通與通訊的暴風
 　　雨。儘管預先做好了種種準備，但是似乎並不夠，遠遠不夠……
 ');
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (6,6,0,'Remarkably Bright Creatures(明亮燦爛的你)','9780063254480',500.0,'2022-07-31',5,'2024-5-21',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (6,6,1,'Remarkably Bright Creatures(明亮燦爛的你)','9780063254480',500.0,'2022-07-31',5,'2024-5-21',
 	'跨越物種的深厚友誼，能夠擊碎寂寞的枷鎖
 　　一個失去摯愛的女人心中難解的謎底，竟握在一隻深海章魚的觸手裡…
  
@@ -177,7 +177,7 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
  
 　　你很難想像一隻章魚能知道多少事，但Marcellus真的懂很多很多，包括Tova兒子30年前失蹤的真相。為了回報這段友誼，Marcellus決定要運用全身所有觸手，努力表達事實真相給Tova，希望這一切還不會太晚…');
 
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,7,0,'美里活在貓的眼眸裡','9786263789388',270.0,'2024-05-15',10,'2024-05-21',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,7,1,'美里活在貓的眼眸裡','9786263789388',270.0,'2024-05-15',10,'2024-05-21',
 '我與妳分別，妳與我相遇，於是舞臺（故事）揭開序幕。
 
 　　大學生──紙透窈一擁有窺視眼睛就能讀取過去的能力。
@@ -193,9 +193,9 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 　　美里話中的真相──以及謊言。
 　　過去與未來及現在、真實和虛構在貓的眼裡交錯，
 　　少年少女的邂逅譜出前所未有的青春戀曲！'
-);　　
+);
 
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (3,8,0,'藝術超乎想像的力量','9789861374437',440.0,'2024-05-01',13,'2024-05-21',
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (3,8,1,'藝術超乎想像的力量','9789861374437',440.0,'2024-05-01',13,'2024-05-21',
 '藝術不僅為人帶來精神層面的影響，而是明確地在大腦內造成生理改變！
 　　帶你暢遊藝術如何真實改變我們身體與心靈，創造愉悅與奇蹟！
 
@@ -211,8 +211,8 @@ INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bo
 
 　　無論參與哪一種形式的藝術甚或是創作，都可以觸發神經化學物質、釋放荷爾蒙和腦內啡，從而解放情緒，一旦了解這個過程，就可以巨幅改善我們的心理健康、社群關係並提升自我。
 ');
-　　
-INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,7,0,'背離冬日','9786263789364',230.0,'2024-05-20',20,'2024-05-21',
+
+INSERT INTO book_products (bookClassNumber,publishiingHouseCode,productStatus,bookTitle,isbn,price,publicationDate,stock,releaseDate,introductionContent) VALUES (5,7,1,'背離冬日','9786263789364',230.0,'2024-05-20',20,'2024-05-21',
 '世界已經天翻地覆，夏天的氣溫上不去，九月下了雪，
 　　發現「冬天」將會持續到永久的人們日復一日愈來愈絕望。
 　　神奈川縣出海町的海水浴場整片是雪，衝浪客和釣客都失去了蹤影。
@@ -448,30 +448,32 @@ CREATE TABLE customer_order (
     shippingTime DATETIME COMMENT '出貨時間',
     completeTime DATETIME COMMENT '完成時間',
     receiver VARCHAR(255) COMMENT '收件人',
+	telephoneNumber VARCHAR(15) COMMENT '電話',
     shippingAddress VARCHAR(255) COMMENT '收件地址',
     deliveryFee DECIMAL(10, 2) COMMENT '運費',
     total DECIMAL(10, 2) COMMENT '總金額' ,
+	paymentNumber VARCHAR(10) COMMENT '付款編號',
     note LONGTEXT COMMENT '備註內容',
     CONSTRAINT fk_customer_order_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '訂單表格 customer_order';
 
-INSERT INTO customer_order (userNumber, orderStatus, shippingTime, completeTime, receiver, shippingAddress, deliveryFee, total, note)
+INSERT INTO customer_order (userNumber, orderStatus, establishmentTime, shippingTime, completeTime, receiver, telephoneNumber, shippingAddress, deliveryFee, total, paymentNumber, note)
 VALUES
-(1, default, null, null, 'Tina Wang', '110台北市信義區信義路五段7號', 50.00, 1100.00, '第1筆訂單'),
-(2, 2, null, null, '王小明', '244新北市林口區文化二路二段299號', 50.00, 2490.00, '第2筆訂單'),
-(3, 3, "2024-05-30 12:05:41", null, 'David Wu', '114台北市內湖區內湖路一段', 100.00, 940.00, '第3筆訂單'),
-(4, 4, null, null, '天天小飛', '114台北市內湖區洲子街12號', 50.00, 1550.00, '第4筆訂單'),
-(5, 2, null, null, '黃依依', '265宜蘭縣羅東鎮南昌街83號', 50.00, 1070.00, '第5筆訂單'),
-(6, default, null, null, '麥當勞', '920屏東縣潮州鎮中山八巷', 100.00, 600.00, '第6筆訂單'),
-(2, 0, null, null, '漢堡王', '970花蓮縣花蓮市國聯五路101號', 100.00, 350.00, '第7筆訂單'),
-(3, 3, "2024-05-30 03:05:41", null, '頂呱呱', '71005台南市永康區南台街1號', 50.00, 1380.00, '第8筆訂單'),
-(4, 4, null, null, '摩斯漢堡', '744台南市新市區南科三路10號', 100.00, 650.00, '第9筆訂單'),
-(5, 2, null, null, '還沒有名字', '63341雲林縣土庫鎮中正路109號', 100.00, 480.00, '第10筆訂單'),
-(7, default, null, null, 'kobe', '268宜蘭縣五結鄉五濱路二段201號', 50.00, 1450.00, '第11筆訂單'),
-(2, 0, null, null, '大谷翔平', '310新竹縣竹東鎮沿河街411號', 50.00, 1150.00, '第12筆訂單'),
-(8, 3, "2024-05-30 23:05:41", null, 'LeBron James', '97346花蓮縣吉安鄉民治路436號', 50.00, 1450.00, '第13筆訂單'),
-(9, 4, null, null, 'Anthony Davis', '920屏東縣潮州鎮五福路20號', 100.00, 600.00, '第14筆訂單'),
-(10, 2, null, null, 'Russell', '114台北市內湖區康寧路一段33巷21號', 100.00, 860.00, '第15筆訂單');
+(1, default, default, null, null, 'Tina Wang', '0912-548-678', '110台北市信義區信義路五段7號', 50.00, 1100.00, 'BT648864', '第1筆訂單'),
+(2, 5, "2024-05-30 12:05:41", "2024-06-01 15:25:41", "2024-06-05 18:12:11", '王小明', '0945-135-875', '244新北市林口區文化二路二段299號', 50.00, 2490.00, 'BT1f3564', '第2筆訂單'),
+(3, 5, "2024-05-30 12:05:41", "2024-06-04 11:06:20", "2024-06-08 17:43:20", 'David Wu', '0935-481-246', '114台北市內湖區內湖路一段', 100.00, 940.00, 'BT6487fa', '第3筆訂單'),
+(4, 5, "2024-04-20 11:04:30", "2024-04-23 09:20:50", "2024-04-28 18:10:50", '天天小飛', '0987-143-258', '114台北市內湖區洲子街12號', 50.00, 1550.00, 'BT5gsf54', '第4筆訂單'),
+(5, 2, "2024-04-18 18:10:21", null, null, '黃依依', '0935-849-786', '265宜蘭縣羅東鎮南昌街83號', 50.00, 1070.00, 'BTmge48', '第5筆訂單'),
+(6, 5, "2024-04-20 11:04:30", "2024-04-23 09:20:50", "2024-04-28 18:10:50", '麥當勞', '0988-147-864', '920屏東縣潮州鎮中山八巷', 100.00, 600.00, 'BTfa3464', '第6筆訂單'),
+(2, 0, "2024-04-12 07:20:50", null, "2024-04-13 08:20:50", '漢堡王', '0931-587-684', '970花蓮縣花蓮市國聯五路101號', 100.00, 350.00, 'BT534adf', '第7筆訂單'),
+(3, 5, "2024-05-21 03:05:41", "2024-05-23 10:28:13", "2024-05-28 10:28:13", '頂呱呱', '0931-587-648', '71005台南市永康區南台街1號', 50.00, 1380.00, 'BTkl4345', '第8筆訂單'),
+(4, 4, "2024-04-12 08:20:50", "2024-04-14 13:10:26", "2024-04-20 12:16:48", '摩斯漢堡', '0968-485-134', '744台南市新市區南科三路10號', 100.00, 650.00, 'BTlgit34', '第9筆訂單'),
+(5, 2, "2024-05-30 12:05:41", null, null, '還沒有名字', '0931-587-867', '63341雲林縣土庫鎮中正路109號', 100.00, 480.00, 'BTbdd433', '第10筆訂單'),
+(7, default, default, null, null, 'kobe', '0973-158-648', '268宜蘭縣五結鄉五濱路二段201號', 50.00, 1450.00, 'BTbk452d', '第11筆訂單'),
+(2, 0, "2024-04-23 14:22:50", null, "2024-04-23 15:20:50", '大谷翔平', '0911-254-868', '310新竹縣竹東鎮沿河街411號', 50.00, 1150.00, 'BT04jk4e', '第12筆訂單'),
+(8, 5, "2024-05-21 03:05:41", "2024-05-24 23:05:41", "2024-05-28 11:28:41", 'LeBron James', '0931-587-868', '97346花蓮縣吉安鄉民治路436號', 50.00, 1450.00, 'BTfnk334', '第13筆訂單'),
+(9, 5, "2024-04-12 08:20:50", "2024-04-14 13:10:26", "2024-04-20 12:16:48", 'Anthony Davis', '0955-847-684', '920屏東縣潮州鎮五福路20號', 100.00, 600.00, 'BT6345gf', '第14筆訂單'),
+(10, 2, "2024-06-11 18:10:21", null, null, 'Russell', '0935-847-886', '114台北市內湖區康寧路一段33巷21號', 100.00, 860.00, 'BT1777a8', '第15筆訂單');
 
 
 --  訂單明細 --
@@ -494,22 +496,22 @@ CREATE TABLE order_details (
 INSERT INTO order_details (orderNumber, bookNumber, quantity, unitPrice, subtotal, ratingScore ,evaluateContent)
 VALUES
 (1, 2, 2, 250.00, 500.00, default, default),
-(1, 1, 1, 550.00, 550.00, 4, '這是我看過最好懂的一本書'),
+(1, 1, 1, 550.00, 550.00, default, default),
 (2, 3, 3, 360.00, 1080.00, 5, '沒有話說，就是讚~!!!'),
 (2, 4, 4, 340.00, 1360.00, 3, '評價評價評價評價評價'),
 (3, 4, 1, 340.00, 340.00, 1, '不如預期'),
 (3, 2, 2, 250.00, 500.00, 1, '不好看'),
 (4, 2, 6, 250.00, 1500.00, 5, '沒話說'),
-(5, 4, 3, 340.00, 1020.00, 4, '原本應該還可以，但翻譯的很爛'),
+(5, 4, 3, 340.00, 1020.00, default, default),
 (6, 2, 2, 250.00, 500.00, 5, '作者就是這領域的霸主，當然要來支持'),
-(7, 2, 1, 250.00, 250.00, 5, '期待第二集的出現'),
+(7, 2, 1, 250.00, 250.00, default, default),
 (8, 3, 3, 360.00, 1080.00, 5, '支持作者，加油'),
 (8, 2, 1, 250.00, 250.00, 2, '可以拿來當枕頭了'),
-(9, 1, 1, 550.00, 550.00, 4, '原來，比想像中還好'),
+(9, 1, 1, 550.00, 550.00, default, default),
 (10, 5, 1, 380.00, 380.00, default, default),
 (11, 4, 2, 340.00, 680.00, default, default),
-(11, 3, 2, 360.00, 720.00, 1, '為什麼要評論？？？'),
-(12, 1, 2, 550.00, 1100.00, 5, '我愛作者~'),
+(11, 3, 2, 360.00, 720.00, default, default),
+(12, 1, 2, 550.00, 1100.00, default, default),
 (13, 4, 2, 340.00, 680.00, 3, '...........'),
 (13, 3, 2, 360.00, 720.00, 1, '吃飯睡覺必備'),
 (14, 2, 2, 250.00, 500.00, 2, '可以拿來壓泡麵了'),
@@ -535,62 +537,64 @@ VALUES
 		forumNumber	INT NOT NULL COMMENT '版類編號',
 		content	LONGTEXT COMMENT '內容',
 		issueTime DATETIME COMMENT '發文時間',
-		titleContent VARCHAR(255) COMMENT '標題內容',
+		title VARCHAR(255) COMMENT '標題內容',
 		articleState INT COMMENT '文章狀態',
 		likeSum	INT COMMENT '總讚數',
-		pageView INT COMMENT '瀏覽次數',
+		articleImage LONGTEXT COMMENT '文章首頁圖',
+		articleSummary VARCHAR(255) COMMENT'文章大意',
+		pageView INT COMMENT'瀏覽次數',
 	  	CONSTRAINT fk_article_userNumber FOREIGN KEY (userNumber) REFERENCES User(number),
 	  	CONSTRAINT fk_article_forumNumber FOREIGN KEY (forumNumber) REFERENCES forum(forumNumber)
 	) COMMENT '文章 article';
 			
-	INSERT INTO article (userNumber, forumNumber, content, issueTime , titleContent , articleState , likeSum , pageView) VALUES (1, 1, '文章內容1','2024-04-10 09:00:00','標題1', 1,10,100);
-	INSERT INTO article (userNumber, forumNumber, content, issueTime , titleContent , articleState , likeSum , pageView) VALUES (2, 2, '文章內容2','2024-04-10 09:00:00','標題2', 0,5,10);
-	INSERT INTO article (userNumber, forumNumber, content, issueTime , titleContent , articleState , likeSum , pageView) VALUES (3, 3, '文章內容3','2024-04-10 09:00:00','標題3', 1,80,500);
-	INSERT INTO article (userNumber, forumNumber, content, issueTime , titleContent , articleState , likeSum , pageView) VALUES (4, 4, '文章內容4','2024-04-10 09:00:00','標題4', 1,6,70);
-	INSERT INTO article (userNumber, forumNumber, content, issueTime , titleContent , articleState , likeSum , pageView) VALUES (5, 5, '文章內容5','2024-04-10 09:00:00','標題5', 0,100,1000);
+	INSERT INTO article (userNumber, forumNumber, content, issueTime , title , articleState , likeSum , pageView) VALUES (1, 1, '文章內容1','2024-04-10 09:00:00','標題1', 1,10,100);
+	INSERT INTO article (userNumber, forumNumber, content, issueTime , title , articleState , likeSum , pageView) VALUES (2, 2, '文章內容2','2024-04-10 09:00:00','標題2', 0,5,10);
+	INSERT INTO article (userNumber, forumNumber, content, issueTime , title , articleState , likeSum , pageView) VALUES (3, 3, '文章內容3','2024-04-10 09:00:00','標題3', 1,80,500);
+	INSERT INTO article (userNumber, forumNumber, content, issueTime , title , articleState , likeSum , pageView) VALUES (4, 4, '文章內容4','2024-04-10 09:00:00','標題4', 1,6,70);
+	INSERT INTO article (userNumber, forumNumber, content, issueTime , title , articleState , likeSum , pageView) VALUES (5, 5, '文章內容5','2024-04-10 09:00:00','標題5', 0,100,1000);
 
 -- 留言 --
-	CREATE TABLE message (
-		messageNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '留言編號',
+	CREATE TABLE comments (
+		commentNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '留言編號',
 		userNumber INT NOT NULL COMMENT '會員編號',
 		articleNumber	INT NOT NULL COMMENT '文章編號',
 		content	TEXT COMMENT '內容',
-		messageTime	DATETIME COMMENT '留言時間',
-		messageState INT COMMENT '留言狀態',
+		commentTime	DATETIME COMMENT '留言時間',
+		commentState INT COMMENT '留言狀態',
 		likeSum	INT COMMENT '總讚數',
-		CONSTRAINT fk_message_userNumber FOREIGN KEY (userNumber) REFERENCES User(number),
-		CONSTRAINT fk_message_articleNumber FOREIGN KEY (articleNumber) REFERENCES article(articleNumber)
+		CONSTRAINT fk_comments_userNumber FOREIGN KEY (userNumber) REFERENCES User(number),
+		CONSTRAINT fk_comments_articleNumber FOREIGN KEY (articleNumber) REFERENCES article(articleNumber)
 	) COMMENT '留言 message';
 		
 
-	INSERT INTO message (userNumber, articleNumber, content, messageTime , messageState , likeSum) VALUES (1, 1, '文章內容1','2024-04-10 09:00:00',1,10);
-	INSERT INTO message (userNumber, articleNumber, content, messageTime , messageState , likeSum) VALUES (2, 3, '文章內容3','2024-04-10 10:00:00',1,10);
-	INSERT INTO message (userNumber, articleNumber, content, messageTime , messageState , likeSum) VALUES (3, 5, '文章內容5','2024-04-10 11:00:00',1,10);
-	INSERT INTO message (userNumber, articleNumber, content, messageTime , messageState , likeSum) VALUES (4, 4, '文章內容7','2024-04-10 12:00:00',1,10);
-	INSERT INTO message (userNumber, articleNumber, content, messageTime , messageState , likeSum) VALUES (5, 2, '文章內容9','2024-04-10 13:00:00',1,10);
+	INSERT INTO comments (userNumber, articleNumber, content, commentTime , commentState , likeSum) VALUES (1, 1, '文章內容1','2024-04-10 09:00:00',1,10);
+	INSERT INTO comments (userNumber, articleNumber, content, commentTime , commentState , likeSum) VALUES (2, 3, '文章內容3','2024-04-10 10:00:00',1,10);
+	INSERT INTO comments (userNumber, articleNumber, content, commentTime , commentState , likeSum) VALUES (3, 5, '文章內容5','2024-04-10 11:00:00',1,10);
+	INSERT INTO comments (userNumber, articleNumber, content, commentTime , commentState , likeSum) VALUES (4, 4, '文章內容7','2024-04-10 12:00:00',1,10);
+	INSERT INTO comments (userNumber, articleNumber, content, commentTime , commentState , likeSum) VALUES (5, 2, '文章內容9','2024-04-10 13:00:00',1,10);
 
 -- 點讚 --
 	CREATE TABLE my_like (
 		number	INT PRIMARY KEY AUTO_INCREMENT COMMENT '編號',
 		articleNumber INT  COMMENT '文章編號',
-		messageNumber INT  COMMENT '留言編號',
+		commentNumber INT  COMMENT '留言編號',
 		userNumber	INT NOT NULL COMMENT '會員編號',
 		CONSTRAINT fk_my_like_articleNumber FOREIGN KEY (articleNumber) REFERENCES article(articleNumber),
-		CONSTRAINT fk_my_like_messageNumber FOREIGN KEY (messageNumber) REFERENCES message(messageNumber),
+		CONSTRAINT fk_my_like_commentNumber FOREIGN KEY (commentNumber) REFERENCES comments(commentNumber),
 		CONSTRAINT fk_my_like_userNumber FOREIGN KEY (userNumber) REFERENCES User(number)
 	) COMMENT '點讚 my_like';
 
-	INSERT INTO my_like (articleNumber, messageNumber, userNumber) VALUES (1,1,1);
-	INSERT INTO my_like (articleNumber, messageNumber, userNumber) VALUES (1,2,2);
-	INSERT INTO my_like (articleNumber, messageNumber, userNumber) VALUES (2,1,2);
-	INSERT INTO my_like (articleNumber, messageNumber, userNumber) VALUES (2,3,1);
-	INSERT INTO my_like (articleNumber, messageNumber, userNumber) VALUES (3,4,1);
+	INSERT INTO my_like (articleNumber, commentNumber, userNumber) VALUES (1,1,1);
+	INSERT INTO my_like (articleNumber, commentNumber, userNumber) VALUES (1,2,2);
+	INSERT INTO my_like (articleNumber, commentNumber, userNumber) VALUES (2,1,2);
+	INSERT INTO my_like (articleNumber, commentNumber, userNumber) VALUES (2,3,1);
+	INSERT INTO my_like (articleNumber, commentNumber, userNumber) VALUES (3,4,1);
 
 -- 檢舉 --
 	CREATE TABLE report (
 		reportNumber INT PRIMARY KEY AUTO_INCREMENT COMMENT '檢舉編號',
 		reportedArticleNumber INT COMMENT '被檢舉文章編號',
-		reportedMessageNumber INT COMMENT '被檢舉留言編號',
+		reportedCommentNumber INT COMMENT '被檢舉留言編號',
 		reporter INT COMMENT '檢舉人',
 		userStatus INT COMMENT '會員狀態',
 		processingStatusCode INT COMMENT '處理狀態編號',
@@ -600,15 +604,14 @@ VALUES
 		penaltyEndDate DATE COMMENT '處罰結束日期',
 		auditResultComment VARCHAR(255) COMMENT '審核的結果評論',
 		CONSTRAINT fk_report_reportedArticleNumber FOREIGN KEY (reportedArticleNumber) REFERENCES article(articleNumber),
-		CONSTRAINT fk_report_reportedMessageNumber FOREIGN KEY (reportedMessageNumber) REFERENCES message(messageNumber),
+		CONSTRAINT fk_report_reportedcommentNumber FOREIGN KEY (reportedcommentNumber) REFERENCES comments(commentNumber),
 		CONSTRAINT fk_report_reporter FOREIGN KEY (reporter) REFERENCES User(number),
 		CONSTRAINT fk_report_userStatus FOREIGN KEY (userStatus) REFERENCES user_status(userStatus)
 	) COMMENT '檢舉 report';
 
-	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (1, NULL, 1, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (2, NULL, 2, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (3, NULL, 3, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (4, NULL, 4, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-	INSERT INTO report (reportedArticleNumber, reportedMessageNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (5, NULL, 5, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-	
+	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (1, NULL, 1, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
+	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (2, NULL, 2, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
+	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (3, NULL, 3, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
+	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (4, NULL, 4, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
+	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (5, NULL, 5, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 -- 這裡是底部 --

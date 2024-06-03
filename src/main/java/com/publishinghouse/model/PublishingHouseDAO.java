@@ -33,7 +33,7 @@ public class PublishingHouseDAO implements PublishingHouseDAO_Impl {
 	public int update(PublishingHouseVO phVO) {
 		try {
 			getSession().update(phVO);
-			return 0;
+			return 1;
 		} catch (Exception e) {
 			return -1;
 		}

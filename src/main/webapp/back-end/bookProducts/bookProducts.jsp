@@ -28,6 +28,17 @@
 	.input-group {
         margin-bottom: 20px; /* 調整 input-group 的下邊距 */
     }
+    
+    table {
+	    table-layout: fixed;
+	    width: 100%;
+	}
+    
+    th, td {
+        white-space: nowrap; /* 禁止換行 */
+        overflow: hidden; /* 超出部分隱藏 */
+        text-overflow: ellipsis; /* 超出部分用...表示 */
+    }
 </style>
 
 <%@include file="/back-end/component/header.jsp" %>
@@ -132,12 +143,12 @@
 				            <form method="post" action="${pageContext.request.contextPath}/bookproducts.do" class="fixed-size-form">
 				                <label for="orderStatusChoice">請選擇書籍狀態</label>
 				                <div class="input-group">
-				                    <select id="orderStatusChoice" name="orderStatus" class="form-control">
+				                    <select name="Keywords" class="form-control">
 				                        <option value="1">上架</option>
 				                        <option value="2">下架</option>
 				                        <option value="0">未上架</option>
 				                    </select>
-				                    <input type="hidden" name="searchMain" value="bookClassNumber">
+				                    <input type="hidden" name="searchMain" value="productStatus">
 				                    <input type="hidden" name="action" value="book_search">
 				                    <div class="input-group-append">
 				                        <button type="submit" class="btn btn-default">
@@ -147,10 +158,17 @@
 				                </div>
 				            </form>
 				        </div>
-				
+						
+						<!-- 全部書籍按鈕 -->
+				        <div class="col-md-4 d-flex justify-content-center align-self-end">
+				            <a href="${pageContext.request.contextPath}/back-end/bookProducts/bookProducts.jsp">
+				                <button type="button" class="btn btn-block bg-gradient-success">全部書籍</button>
+				            </a>
+				        </div>
+						
 				        <!-- 新增書籍按鈕 -->
 				        <div class="col-md-4 d-flex justify-content-center align-self-end">
-				            <a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp">
+				            <a href="${pageContext.request.contextPath}/back-end/bookProducts/addBookProducts.jsp">
 				                <button type="button" class="btn btn-block bg-gradient-success">新增書籍</button>
 				            </a>
 				        </div>
@@ -166,13 +184,13 @@
 	                <table id="orderlist" class="table table-bordered table-hover">
 	                  <thead>
 		                  <tr>
-		                    <th>書籍編號</th>
-		                    <th>書籍名稱</th>
-		                    <th>ISBN</th>
-		                    <th>書籍類別</th>
-		                    <th>書籍狀態</th>
-		                    <th>發布時間</th>		                    
-		                    <th>出版社</th>
+		                    <th style="width: 70px;">書籍編號</th>
+		                    <th style="width: 200px;">書籍名稱</th>
+		                    <th style="width: 110px;">ISBN</th>
+		                    <th style="width: 110px;">書籍類別</th>
+		                    <th style="width: 80px;">書籍狀態</th>
+		                    <th style="width: 90px;">發布時間</th>		                    
+		                    <th style="width: 90px;">出版社</th>
 		                    <th>出版時間</th>
 		                    <th>數量</th>
 		                    <th>價格</th>
@@ -183,7 +201,7 @@
 		                  <c:forEach var="bpVO" items="${list}">
 			                  <tr>
 			                    <td>${bpVO.bookNumber}</td>
-			                    <td>${bpVO.bookTitle}</td>
+			                    <td style="width: 150px;" title="${bpVO.bookTitle}">${bpVO.bookTitle}</td>
 			                    <td>${bpVO.isbn}</td>	                    
 			                    <td>${bpVO.bcVO.className}</td>
 			                    <td>
@@ -198,7 +216,7 @@
 			                    	</c:if>
 			                    </td>
 			                    <td>${bpVO.releaseDate}</td>
-			                    <td>${bpVO.phVO.name}</td>
+			                    <td title="${bpVO.phVO.name}">${bpVO.phVO.name}</td>
 			                    <td>${bpVO.publicationDate}</td>
 			                    <td>${bpVO.stock}</td>
 			                    <td>${bpVO.price}</td>

@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.bookproducts.model.BookProductsVO;
-import com.order.model.OrderVO;
 import util.HibernateUtil;
 
 public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
@@ -36,6 +35,14 @@ public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
 	}
 	
 	@Override
+	public OrderDetailsVO findByOrderDetailsNumberBookNumber(Integer orderDetailsNumber, Integer bookNumber) {
+		return getSession().createQuery("from OrderDetailsVO where orderDetailsNumber = ?0 AND bookNumber = ?1", OrderDetailsVO.class)
+				.setParameter(0, orderDetailsNumber)
+				.setParameter(1, bookNumber)
+				.getSingleResult();
+	}
+	
+	@Override
 	public List<OrderDetailsVO> getAll() {
 		return getSession().createQuery("from OrderDetailsVO", OrderDetailsVO.class)
 				.getResultList();
@@ -47,4 +54,6 @@ public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
 				.setParameter("bookProductsVO", bpVO)
 				.uniqueResult();
 	}
+
+	
 }

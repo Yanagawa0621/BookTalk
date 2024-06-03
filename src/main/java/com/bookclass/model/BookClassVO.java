@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 
 import com.bookproducts.model.BookProductsVO;
@@ -29,12 +30,13 @@ public class BookClassVO implements java.io.Serializable {
 	@Column(name = "classNumber",updatable=false)
 	private Integer classNumber;
 
-	@Column(name = "className",nullable = false)
+	@Column(name = "className",nullable = false ,unique = true)
 	private String className;
 	
-	@OneToMany(mappedBy = "bcVO",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.EAGER)
+//	@OneToMany(mappedBy = "bcVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bcVO",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@OrderBy("bookNumber asc")
-	private List<BookProductsVO> bpVO;
+	private List<BookProductsVO> bpVO;	
 	
 	public Integer getClassNumber() {
 		return classNumber;

@@ -25,6 +25,7 @@ public class ArticleService {
 		articleVO.setArticleState(1);
 		articleVO.setContent(content);
 		articleVO.setIssueTime(LocalDateTime.now());
+		articleVO.setPageView(0);
 		articleVO.setLikeSum(0);
 		articleVO.setTitle(title);
 		articleVO.setUserNumber(1);

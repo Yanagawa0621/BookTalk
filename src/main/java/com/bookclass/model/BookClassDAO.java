@@ -4,10 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import com.bookproducts.model.BookProductsVO;
-import com.booksandpicture.model.BooksAndPictureVO;
+import org.hibernate.exception.ConstraintViolationException;
 
 import util.HibernateUtil;
 
@@ -29,7 +26,9 @@ public class BookClassDAO implements BookClassDAO_Impl {
 		try {
 			getSession().save(bcVO);
 			return 1;
-		} catch (Exception e) {
+		}catch (ConstraintViolationException e) {
+			return -2;
+		}catch (Exception e) {
 			return -1;
 		}
 	}
@@ -40,7 +39,9 @@ public class BookClassDAO implements BookClassDAO_Impl {
 		try {
 			getSession().update(bcVO);
 			return 1;
-		} catch (Exception e) {
+		}catch (ConstraintViolationException e) {
+			return -2;
+		}catch (Exception e) {
 			return -1;
 		}
 	}
@@ -48,8 +49,7 @@ public class BookClassDAO implements BookClassDAO_Impl {
 	//收尋全部
 	@Override
 	public List<BookClassVO> getAll() {
-		List<BookClassVO> list = getSession().createQuery("from BookClassVO", BookClassVO.class).list();
-		return list;
+		return getSession().createQuery("from BookClassVO", BookClassVO.class).list();
 	}
 	
 	//單筆搜尋

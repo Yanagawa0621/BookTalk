@@ -20,7 +20,8 @@ import util.HibernateUtil;
 
 public class BookProductsService {
 	BookProductsDAO bpDAO = new BookProductsDAO();
-	OrderDetailsDAOHibernate odDAO=new OrderDetailsDAOHibernate();
+	OrderDetailsDAOHibernate odDAO = new OrderDetailsDAOHibernate();
+
 	public int addBp(Integer classNumber, Integer publishingHouseNumber, Integer productStatus, String bookTitle,
 			String isbn, Double price, java.sql.Date publicationDate, Integer stock, String introductionContent,
 			Date releaseDate) {
@@ -94,34 +95,49 @@ public class BookProductsService {
 		return singleConversion(bpDAO.singleQuery(bookNumber));
 	}
 
-	// =================================以下做圖片處理用========================================
+	public List<BookProductsVO> keywordSearchBpNp(String searchMain, String keywords) {
+		return bpDAO.keywordQuery(searchMain, keywords);
+	}
+
+	public BookProductsVO singleQueryBpNp(Integer bookNumber) {
+		return bpDAO.singleQuery(bookNumber);
+	}
+
+	public List<BookProductsVO> statusQueryBpNp(Integer productStatus) {
+		return bpDAO.statusQuery(productStatus);
+	}
+	// =================================以下做圖片及添加資料處理用========================================
 
 	// 單筆書籍資料的圖片轉換
 	private BookProductsVO singleConversion(BookProductsVO bpVO) {
-		List<BooksAndPictureVO> imgs = bpVO.getBapVO();
-		bpVO.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVO));
-		if (imgs != null) {
-			List<String> base64 = new ArrayList<>();
-			for (BooksAndPictureVO img : imgs) {
-				byte[] pictureFile = img.getPictureFile();
-				if (pictureFile != null) {
-					String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
-					base64.add(base64Encoded);
+		if (bpVO != null) {
+			List<BooksAndPictureVO> imgs = bpVO.getBapVO();
+			bpVO.setRatingScoreAvg(odDAO.ratingScoreAvg(bpVO));
+			if (imgs != null) {
+				List<String> base64 = new ArrayList<>();
+				for (BooksAndPictureVO img : imgs) {
+					byte[] pictureFile = img.getPictureFile();
+					if (pictureFile != null) {
+						String base64Encoded = Base64.getEncoder().encodeToString(pictureFile);
+						base64.add(base64Encoded);
+					}
 				}
+				bpVO.setImg(base64);
 			}
-			bpVO.setImg(base64);
 		}
 		return bpVO;
 	}
 
 	// 多筆書籍資料的圖片轉換
 	private List<BookProductsVO> multipleConversions(List<BookProductsVO> list) {
-		for (BookProductsVO myCollection : list) {
-			myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+		if (list.size() != 0) {
+			for (BookProductsVO myCollection : list) {
+				myCollection.setRatingScoreAvg(odDAO.ratingScoreAvg(myCollection));
+			}
 		}
 		return list;
 	}
-	
+
 	// =================================以下是測試用的main方法========================================
 //	public static void main(String[] args) throws ParseException {
 //		SessionFactory factory = HibernateUtil.getSessionFactory();

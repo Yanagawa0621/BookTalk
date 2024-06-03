@@ -35,6 +35,7 @@ public class ArticleVO implements java.io.Serializable {
 	private String title;
 	private Integer articleState;
 	private Integer likeSum;
+	private Integer pageView;
 	@Column(name = "articleImage", columnDefinition = "LONGTEXT")
 	private String articleImage;
 	private String articleSummary;
@@ -47,8 +48,6 @@ public class ArticleVO implements java.io.Serializable {
 	private Set<CommentVO> commentVO;
 	@OneToMany(mappedBy = "articleVO", cascade = CascadeType.ALL)
 	private Set<LikeVO> likeVO;
-	
-	 
 
 	public ArticleVO() {
 		super();
@@ -56,8 +55,8 @@ public class ArticleVO implements java.io.Serializable {
 	}
 
 	public ArticleVO(Integer articleNumber, Integer userNumber, String content, LocalDateTime issueTime, String title,
-			Integer articleState, Integer likeSum, Integer pageView, ForumVO forumVO, Set<CommentVO> commentVO,
-			Set<LikeVO> likeVO) {
+			Integer articleState, Integer likeSum, Integer pageView, String articleImage, String articleSummary,
+			ForumVO forumVO, Set<CommentVO> commentVO, Set<LikeVO> likeVO) {
 		super();
 		this.articleNumber = articleNumber;
 		this.userNumber = userNumber;
@@ -66,11 +65,12 @@ public class ArticleVO implements java.io.Serializable {
 		this.title = title;
 		this.articleState = articleState;
 		this.likeSum = likeSum;
+		this.pageView = pageView;
+		this.articleImage = articleImage;
+		this.articleSummary = articleSummary;
 		this.forumVO = forumVO;
 		this.commentVO = commentVO;
 		this.likeVO = likeVO;
-		this.articleImage = articleImage;
-		this.articleSummary = articleSummary;
 	}
 
 	public ForumVO getForumVO() {
@@ -176,6 +176,13 @@ public class ArticleVO implements java.io.Serializable {
 	public void setArticleSummary(String articleSummary) {
 		this.articleSummary = articleSummary;
 	}
-	
+
+	public Integer getPageView() {
+		return pageView;
+	}
+
+	public void setPageView(Integer pageView) {
+		this.pageView = pageView;
+	}
 
 }
