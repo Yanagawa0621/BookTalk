@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 
 import util.HibernateUtil;
 
-public class QaDAO implements QaDAOImpl {
+public class QaDAO implements QaDAO_interface {
 
 	private SessionFactory factory;
 

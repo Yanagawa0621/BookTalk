@@ -10129,8 +10129,8 @@ ul.qalist > li:last-child{
 ul.qalist > li > a.link_title{
   display: block;
   width: 100%;
-  color: white;
-  background-color: #c0c0c0;
+  color: #dcdcdc	;
+  background-color: #2f4f4f;
   box-shadow: 2px 2px 8px 0 rgba(56, 55, 53, 0.33);
   border-radius: 26px;
   padding: 8px 40px;
@@ -10173,3 +10173,137 @@ ul.qalist > li.-on > a.link_title button.switch_btn span.-minus{
   display: inline-block;
 }
 /*qa css end*/
+
+/*callcenter css start*/
+@media (min-width: 576px) {
+    .tb-div {
+		padding-left:10rem;
+		padding-right:10rem;
+        margin-right: 0;
+        margin-left: 0;
+        border-width: 1px;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+    }
+    .textarea{
+		
+    	padding-left:0rem;
+		padding-right:10rem;
+        margin-right: 0;
+        margin-left: 0;
+        border-width: 1px;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+    }
+    
+}
+.tb-div {
+    position: relative;
+	padding-left:3rem;
+	padding-right:3rem;
+    margin: 1rem -.75rem 0;
+    border-width: 1px 0 0;
+}
+.em {
+	color:red;
+}
+
+.btn{
+	margin-top: 5px;
+}
+
+.form-label{
+	margin-top: 20px;
+}
+
+/** file **/
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+  border: none;
+}
+
+label.input-file input {
+  position:absolute;
+  width:0;
+  overflow:hidden;
+  opacity:0;
+}
+label.input-file {
+  width:100%;   
+  height:35px;
+  line-height:35px!important;
+  cursor:pointer;
+  position:relative;
+  display:inline-block;
+  white-space:nowrap;
+  font-family:sans-serif;
+  text-align:right; 
+  overflow:hidden;
+}
+label.input-file:before {
+  content:"";
+  display:block;
+  position:absolute;
+  box-sizing:border-box;
+  width:100%;
+  height:inherit;
+  padding:0 50px 0 10px;
+  border: 1px solid #afadae;
+  border-radius:0;
+  background-color:#fafafa;
+  color:#000;
+  font-weight:normal;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-align:left;
+  vertical-align:middle;    
+}
+label.input-file[title]:not([title=""]):before{
+  content:attr(title);
+  color:#000;
+}
+label.input-file:after {
+  content:"";
+  display:inline-block;
+  position:relative;
+  box-sizing:border-box;
+  width:50px;
+  height:30px;
+  padding:0 4px;  
+  border-right: 1px solid #afadae;    
+  vertical-align:middle;
+  background: url(../img/file/file-folder-1.svg) no-repeat right 10px center;
+  background-size: 17px;
+}
+label.input-file.del:after {
+  content:"";
+  display:inline-block;
+  position:relative;
+  box-sizing:border-box;
+  width:50px;
+  height:30px;
+  padding:0 4px;  
+  border-right: 1px solid #afadae;    
+  vertical-align:middle;
+  background:url(../img/file/icon-cancel-1.svg) no-repeat right 10px center;
+  background-size: 14px;
+}
+#cancel_upload_btn {
+  font-size: 15px;
+  font-family: Arial;
+  font-weight: normal;  
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  border: 1px solid #999999;
+  padding: 5px 10px;
+  text-decoration: none;
+  background: -moz-linear-gradient( center top, #ffffff 25%, #d9d9d9 80%);
+  background: -ms-linear-gradient( top, #ffffff 25%, #d9d9d9 80%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#d9d9d9');
+  background: -webkit-gradient( linear, left top, left bottom, color-stop(25%, #ffffff), color-stop(80%, #d9d9d9));
+  background-color: #ffffff;
+  color: #000;
+  display: inline-block;  
+  margin-left: 5px;
+}
+/*callcenter css end*/

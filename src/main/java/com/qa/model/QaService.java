@@ -7,7 +7,6 @@ public class QaService {
 	
 	public List<QaVO> getAll() {
 		List<QaVO> vo = qaDAO.getAll() ;
-System.out.println("vo="+vo);
 		return vo;
  	}
 }

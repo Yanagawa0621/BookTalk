@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.util.*"%>
-<%@ page import="java.time.LocalDate"%>
-<%@ page import="java.time.YearMonth"%>
 
 <%
 QaService qasce = new QaService();
