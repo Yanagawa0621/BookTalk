@@ -22,6 +22,8 @@ import com.user.model.UserServiceImpl;
 import com.user.model.UserVO;
 import util.HibernateUtil;
 
+import org.hibernate.Session;
+
 @MultipartConfig(maxFileSize = 2 * 1024 * 1024) // 設定最大文件大小為 2MB
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
@@ -59,25 +61,29 @@ public class UserServlet extends HttpServlet {
             action = "list";
         }
 
-        switch (action) {
-            case "list":
-                listUsers(request, response);
-                break;
-            case "edit":
-                showEditForm(request, response);
-                break;
-            case "delete":
-                deleteUser(request, response);
-                break;
-            case "add":
-                addUser(request, response);
-                break;
-            case "update":
-                updateUser(request, response);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
-                break;
+        try {
+            switch (action) {
+                case "list":
+                    listUsers(request, response);
+                    break;
+                case "edit":
+                    showEditForm(request, response);
+                    break;
+                case "delete":
+                    deleteUser(request, response);
+                    break;
+                case "add":
+                    addUser(request, response);
+                    break;
+                case "update":
+                    updateUser(request, response);
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
+                    break;
+            }
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
     }
 

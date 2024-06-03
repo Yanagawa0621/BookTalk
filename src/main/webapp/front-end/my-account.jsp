@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.user.model.UserVO" %>
 
+<%
+    HttpSession currentSession = request.getSession(false);
+    UserVO user = currentSession != null ? (UserVO) currentSession.getAttribute("user") : null;
+    if (user == null) {
+        response.sendRedirect(request.getContextPath() + "/front-end/user/login.jsp");
+        return;
+    }
+%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -9,9 +18,8 @@
 <%@include file="/front-end/component/head.jsp" %>
 
 <body>
-	<!--menu area start-->
+    <!--menu area start-->
     <%@include file="/front-end/component/menu.jsp" %>
-    
     <!--menu area end-->
     
     <!--breadcrumbs area start-->
@@ -41,11 +49,10 @@
                         <!-- Nav tabs -->
                         <div class="dashboard_tab_button">
                             <ul role="tablist" class="nav flex-column dashboard-list">
-                                <li><a href="#dashboard" data-toggle="tab" class="nav-link active">Dashboard</a></li>
+                                <li><a href="#dashboard" data-toggle="tab" class="nav-link active">帳號資訊</a></li>
                                 <li><a href="#orders" data-toggle="tab" class="nav-link">訂單資訊</a></li>
                                 <li><a href="#address" data-toggle="tab" class="nav-link">地址資訊</a></li>
-                                <li><a href="#account-details" data-toggle="tab" class="nav-link">帳號資訊</a></li>
-                                <li><a href="#" class="nav-link">登出</a></li>
+                                <li><a href="${pageContext.request.contextPath}/logout" class="nav-link">登出</a></li>
                             </ul>
                         </div>    
                     </div>
@@ -53,8 +60,11 @@
                         <!-- Tab panes -->
                         <div class="tab-content dashboard_content">
                             <div class="tab-pane fade show active" id="dashboard">
-                                <h3>Dashboard </h3>
-                                <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">Edit your password and account details.</a></p>
+                                <h3>帳號資訊</h3>
+                                <p>帳號：${user.account}</p>
+                                <p>名稱：${user.name}</p>
+                                <p>Email：${user.eMail}</p>
+                                <p>地址：${user.address}</p>
                             </div>
                             <div class="tab-pane fade" id="orders">
                                 <h3>訂單資訊</h3>
@@ -66,7 +76,7 @@
                                                 <th>Date</th>
                                                 <th>Status</th>
                                                 <th>Total</th>
-                                                <th>Actions</th>	 	 	 	
+                                                <th>Actions</th>                                  
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -138,31 +148,24 @@
                                                     <label>Sign up for our newsletter<br><em>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</em></label>
                                                 </span>
                                                 <div class="save_button primary_btn default_button">
-                                                   <button type="submit">Save</button>
+                                                    <button type="submit">Save</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
-                                </div>
+                                </div>    
                             </div>
                         </div>
-                    </div>
+                    </div>        
                 </div>
             </div>  
-        </div>        	
-    </section>			
-    <!-- my account end   --> 
+        </div>          
+    </section>
+    <!-- my account end   -->
 
-   <!--footer area start-->
+    <!--footer area start-->
     <%@include file="/front-end/component/footer.jsp" %>
     <!--footer area end-->
-    
-<!-- JS
-============================================ -->
-
-<%@include file="/front-end/component/script.jsp" %>
-
-
 </body>
 
 </html>

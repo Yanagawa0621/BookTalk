@@ -1,34 +1,38 @@
 package util;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtil {
-    private static final SessionFactory sessionFactory = buildSessionFactory();
-    private static final ThreadLocal<Session> sessionThreadLocal = new ThreadLocal<>();
+	private static StandardServiceRegistry registry;
+	private static final SessionFactory sessionFactory = createSessionFactory();
 
-    private static SessionFactory buildSessionFactory() {
-        try {
-            return new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
+	public static SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+	private static SessionFactory createSessionFactory() {
+		try {
 
-    public static Session getSession() {
-        return sessionThreadLocal.get();
-    }
+			registry = new StandardServiceRegistryBuilder().configure().build();
 
-    public static void setSession(Session session) {
-        sessionThreadLocal.set(session);
-    }
+			SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 
-    public static void removeSession() {
-        sessionThreadLocal.remove();
-    }
+			return sessionFactory;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ExceptionInInitializerError(e);
+		}
+
+	}
+
+	public static void shutdown() {
+		if (registry != null)
+			StandardServiceRegistryBuilder.destroy(registry);
+//			System.out.println("有來到嗎");
+	}
+
 }

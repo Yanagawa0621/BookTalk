@@ -1,7 +1,6 @@
 package com.user.model;
 
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -61,8 +60,6 @@ public class UserDAO implements UserDAO_interface {
     @Override
     public boolean isFieldDuplicate(String fieldName, String value, Integer userId) {
         Session session = getSession();
-        // Implement field duplicate check logic
-        // This is a placeholder, update it with your logic
         String queryString = "SELECT COUNT(*) FROM UserVO WHERE " + fieldName + " = :value";
         if (userId != null) {
             queryString += " AND number != :userId";
@@ -79,8 +76,6 @@ public class UserDAO implements UserDAO_interface {
     @Override
     public boolean isAccessNumberValid(Integer accessNumber) {
         Session session = getSession();
-        // Implement access number validity check logic
-        // This is a placeholder, update it with your logic
         Long count = session.createQuery("SELECT COUNT(*) FROM AccessVO WHERE accessNumber = :accessNumber", Long.class)
                             .setParameter("accessNumber", accessNumber)
                             .uniqueResult();
