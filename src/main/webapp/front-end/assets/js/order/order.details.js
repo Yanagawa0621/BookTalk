@@ -7,7 +7,7 @@ $(function(){
 	var path = contextPath + "/order/order.do";	//url使用
 	var pathOrderDetail = contextPath + "/orderDetails/orderDetails.do";	//url使用
 	
-	$("#goEvaluate").on("click", function(event){	//按下評價按鈕
+	$(document).on("click", "#goEvaluate",function(event){	//按下評價按鈕
 		event.preventDefault();
 		event.stopPropagation();
 		$("#evaluateArea").modal("show");
@@ -96,7 +96,10 @@ $(function(){
 		});	
 	});
 	
-	$(document).on("click", "#confirmButton", function(){
+	
+	//送出評價
+	$(document).on("click", "#confirmButton", function(event){
+		event.preventDefault();
 		let orderNumber = $("#orderNumber").text();
 		if(confirm("確認送出評價？")){
 			var allEvaluate = [];
@@ -113,9 +116,7 @@ $(function(){
 					ratingScore : ratingScore,
 					evaluateContent : evaluateContent
 				})
-			});
-			console.log(allEvaluate);
-			
+			});			
 			
 			$.ajax({
 				url: pathOrderDetail,
@@ -129,13 +130,62 @@ $(function(){
 				success:function(data){
 					console.log(data);
 					if(data.message == "evaluate success"){
-						$("#evaluateArea").modal("hide");				
-						$(".cart_submit button#goEvaluate").replaceWith('<div><h4>已完成</h4></div>');
+						$("#evaluateArea").modal("hide");			
+						$(".cart_submit button#goEvaluate").replaceWith("<div><h4>已完成</h4></div>");	
 					}
 				}
 			});
 		}		
 	});
+	
+	
+	//取消訂單
+	$(document).on("click", "#cancelOrder", function(event){
+		event.preventDefault();
+		let orderNumber = $("#orderNumber").text();
+		if(confirm("確定要取消訂單嗎？")){
+			$.ajax({
+				url: path,
+				type: "POST",
+				data: {
+					"action" : "cancelOrder",
+					"orderNumber" : orderNumber,
+				},
+				dataType: "json",
+				success:function(data){
+					console.log(data);
+					if(data.message == "cancel success"){
+						$(".cart_submit").empty();
+						$(".cart_submit").html("<div><h4>訂單已取消</h4></div>");
+					}
+				}
+			});
+		}
+	})
+	
+	//完成訂單
+	$(document).on("click", "#gofinishOrder", function(event){
+		event.preventDefault();
+		let orderNumber = $("#orderNumber").text();
+		if(confirm("確認完成訂單？")){
+			$.ajax({
+				url: path,
+				type: "POST",
+				data: {
+					"action" : "finishOrder",
+					"orderNumber" : orderNumber,
+				},
+				dataType: "json",
+				success:function(data){
+					console.log(data);
+					if(data.message == "finish success"){
+						$(".cart_submit button#gofinishOrder").replaceWith('<button type="button" class="btn_empty" id="goEvaluate">評價</button>');	
+					}
+				}
+			});
+		}
+	})
+	
 });
 
 

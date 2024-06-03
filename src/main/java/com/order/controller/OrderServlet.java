@@ -529,6 +529,38 @@ public class OrderServlet extends HttpServlet {
 		}
 		
 		
+		/**************************** cancelOrder ****************************/
+		
+		if("cancelOrder".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+			
+			orderVO.setOrderStatus(0);
+			orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
+			
+			orderService.updateOrder(orderVO);
+			
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"message\": \"cancel success\"}");
+		}
+		
+		/**************************** finishOrder ****************************/
+		
+		if("finishOrder".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+			
+			orderVO.setOrderStatus(4);
+			orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
+			
+			orderService.updateOrder(orderVO);
+			
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"message\": \"finish success\"}");
+		}
+		
 		
 		
 		
