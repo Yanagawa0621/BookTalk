@@ -25,6 +25,9 @@ DROP TABLE IF EXISTS book_products; -- 書籍商品 --
 DROP TABLE IF EXISTS book_class; -- 書籍類別 --
 DROP TABLE IF EXISTS author; -- 作者 --
 DROP TABLE IF EXISTS publishing_house; -- 出版社 --
+DROP TABLE IF EXISTS qa; -- 前端常見問題QA --
+DROP TABLE IF EXISTS callcenter; -- 前端客服中心 --
+
 
 
 
@@ -424,20 +427,6 @@ INSERT INTO administrator(account,passcode,name) VALUES
 ('cat2222','c1234567','dog'),
 ('abcd1234','a1234567','alpha');
 
--- QA --
-CREATE TABLE qa(
-	number INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT'編號',
-    className VARCHAR(20) COMMENT'類別名稱',
-    content   VARCHAR(255) COMMENT'內容'
-) COMMENT'qa';
-
-INSERT INTO qa(className,content) VALUES
-('購物流程說明','book talk提供簡單又安全的交易環境，在進行交易前，需請先加入會員,加入會員是完全免費的，於加入完成後，即可開始購物！'),
-('查詢商品出貨進度','目前會員已可自行於會員專區中查詢商品出貨情形，請您可登錄「會員專區」→「交易記錄」→「訂單查詢」，查詢您訂購商品的出貨狀況。'),
-('為什麼我的訂單取消失敗','由於目前訂單作業皆由系統24小時執行處理，若您的訂單商品都有庫存商品，因出貨速度快速恐會有預約取消失敗或已無法取消的狀況。'),
-('如何取消訂單','目前book talk已有提供「線上取消訂單」及「預約取消訂單」的功能，會員皆可至「會員專區」中進行異動。'),
-('我拿到的是否會是最新版的書籍','博客來網站上的資料都是由出版社提供，一般僅會列出初版日期，若書籍有再刷，將不會將再版的資料更新於網站上。');
-
 
 -- 訂單 --
 CREATE TABLE customer_order (
@@ -614,4 +603,58 @@ VALUES
 	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (3, NULL, 3, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (4, NULL, 4, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (5, NULL, 5, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
+    
+    
+CREATE TABLE qa(
+	seqNo INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '流水編號',
+	questionNo int COMMENT '問題編號',
+	question VARCHAR(500)  COMMENT '問題',
+	answer VARCHAR(500) COMMENT '答案',
+	way VARCHAR(1) COMMENT '狀態',
+    createDate DATETIME COMMENT '建立日期',
+    updateDate DATETIME COMMENT '異動日期'
+	
+) COMMENT '常見問題QA';
+
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(1,'購物流程說明','book talk提供簡單又安全的交易環境，在進行交易前，需請先加入會員,加入會員是完全免費的，於加入完成後，即可開始購物！','Y',SYSDATE(),NULL)
+;
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(2,'查詢商品出貨進度','目前會員已可自行於會員專區中查詢商品出貨情形，請您可登錄「會員專區」→「交易記錄」→「訂單查詢」，查詢您訂購商品的出貨狀況。','Y',SYSDATE(),NULL)
+;
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(3,'為什麼我的訂單取消失敗','由於目前訂單作業皆由系統24小時執行處理，若您的訂單商品都有庫存商品，因出貨速度快速恐會有預約取消失敗或已無法取消的狀況。','Y',SYSDATE(),NULL)
+;
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(4,'如何取消訂單','目前book talk已有提供「線上取消訂單」及「預約取消訂單」的功能，會員皆可至「會員專區」中進行異動。','Y',SYSDATE(),NULL)
+;
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(5,'我拿到的是否會是最新版的書籍','博客來網站上的資料都是由出版社提供，一般僅會列出初版日期，若書籍有再刷，將不會將再版的資料更新於網站上。','Y',SYSDATE(),NULL)
+;
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(6,'訂單需要多久才能送達？','訂單處理時間通常為1-2個工作日，配送時間取決於您的地址和選擇的配送方式。通常情況下，標準配送需3-7個工作日。','Y',SYSDATE(),NULL)
+;
+INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
+(7,'如果遇到問題如何聯繫客服？','您可以通過客服相關裡的客服中心方式聯繫我們的客服團隊,具體聯繫信息請參見我們的“客服中心”頁面','Y',SYSDATE(),NULL)
+;
+
+
+-- 前端客服中心 --
+CREATE TABLE callcenter (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '編號',
+    problemType VARCHAR(20) NOT NULL COMMENT '發問類型',
+    problemDescription TEXT NOT NULL COMMENT '問題描述',
+    email VARCHAR(255) NOT NULL COMMENT '發問者信箱',
+    orderNumber Int COMMENT '發問訂單編號(如果有)',
+    attachedFile MEDIUMBLOB COMMENT '附加圖檔',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '發問日期',
+    processStatus VARCHAR(1) DEFAULT '0' COMMENT '處理狀態(0-待處理、1-處理中、2-已完成)',
+    responseAt DATETIME COMMENT '回應日期',
+    responseDescription TEXT COMMENT '回應內容'
+) COMMENT '客服中心 ';
+
+INSERT INTO callcenter(problemType,problemDescription,email,orderNumber,attachedFile,createdAt,responseAt,responseDescription) VALUES
+('產品詢問','商品規格詢問','123@yahoo.com',NULL,NULL,SYSDATE(),NULL,123321)
+;
+
 -- 這裡是底部 --
