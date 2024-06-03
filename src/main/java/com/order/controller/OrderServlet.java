@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cart.model.CartVO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
+import com.orderdetails.model.OrderDetailsVO;
 
 @WebServlet("/order/order.do")
 public class OrderServlet extends HttpServlet {
@@ -457,6 +460,124 @@ public class OrderServlet extends HttpServlet {
             }
 
 		}
-	}
+		
+		/**************************** getUserAllOrder ****************************/
+		
+		if("getUserAllOrder".equals(action)) {
+			Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+			List<OrderVO> listUserNumberVO = orderService.getOrderByUserNumber(userNumber);
+			
+			// excludeFieldsWithoutExposeAnnotation讓Gson轉成json過程中
+			// 排除掉沒有@Expose的屬性, 就能避開雙向無限循環參考
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+										 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+										 .create();
+			
+			String jsonStr = gson.toJson(listUserNumberVO);
 
+	        res.setContentType("application/json");
+	        res.setCharacterEncoding("UTF-8");
+	        res.getWriter().write(jsonStr);
+		}
+		
+		
+		/**************************** getUserOneOrderDetails ****************************/
+		
+		if("getUserOneOrderDetails".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+			Set<OrderDetailsVO> orderDetailsVOs = orderService.getOrderDetailsVOsByOrderNumber(orderNumber);
+			Integer subtotalSum = 0;
+			
+			for(OrderDetailsVO orderDetailsVO : orderDetailsVOs) {
+				subtotalSum += orderDetailsVO.getSubtotal().intValue();
+			}
+			
+			
+//			System.out.println(orderVO);
+//			System.out.println(orderDetailsVOs);
+			
+			//查詢完成，準備轉交
+			req.setAttribute("orderVO", orderVO);
+			req.setAttribute("orderDetailsVOs", orderDetailsVOs);
+			req.setAttribute("subtotalSum", subtotalSum);
+			String url = "/front-end/order-details.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 order-details.jsp
+			successView.forward(req, res);
+		}
+		
+		
+		/**************************** getUserOneOrderDetailsJson ****************************/
+		
+		if("getUserOneOrderDetailsJson".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+
+			
+			// excludeFieldsWithoutExposeAnnotation讓Gson轉成json過程中
+			// 排除掉沒有@Expose的屬性, 就能避開雙向無限循環參考
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+										 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+										 .create();
+						
+			String jsonStr = gson.toJson(orderVO);
+			System.out.println(jsonStr);
+
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write(jsonStr);
+		}
+		
+		
+		/**************************** cancelOrder ****************************/
+		
+		if("cancelOrder".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+			
+			orderVO.setOrderStatus(0);
+			orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
+			
+			orderService.updateOrder(orderVO);
+			
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"message\": \"cancel success\"}");
+		}
+		
+		/**************************** finishOrder ****************************/
+		
+		if("finishOrder".equals(action)) {
+			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+			
+			orderVO.setOrderStatus(4);
+			orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
+			
+			orderService.updateOrder(orderVO);
+			
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"message\": \"finish success\"}");
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 }

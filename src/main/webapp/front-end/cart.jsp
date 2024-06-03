@@ -40,7 +40,7 @@
                     <div class="col-12">
                         <div class="table_desc">
                             <div class="cart_page table-responsive">
-                                <table id= "full_cart">
+                                <table id="full_cart">
 		                            <thead>
 		                                <tr>
 		                                    <th>刪除</th>
@@ -48,7 +48,6 @@
 		                                    <th>書籍名稱</th>
 		                                    <th>價格</th>
 		                                    <th>數量</th>
-		                                    <th>剩餘數量</th>
 		                                    <th>金額</th>
 		                                </tr>
 		                            </thead>
@@ -58,7 +57,7 @@
                         		</table>
                             </div>  
                             <div class="cart_submit">
-                                <button type="button" class="btn_empty">全部清空</button>                              
+                                <button type="button" class="btn_empty" id="cleanAllCart">全部清空</button>                              
                             </div>      
                         </div>
                      </div>

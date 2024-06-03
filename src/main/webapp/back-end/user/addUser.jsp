@@ -100,7 +100,7 @@
 
             const passcodePattern = /^[A-Z][a-z]\d{6}$/;
             if (!passcodePattern.test(passcode)) {
-                document.getElementById('passcodeError').textContent = "密碼必須以一個大寫字母開頭，接著一個小寫字母和6個數字。";
+                document.getElementById('passcodeError').textContent = "密碼必須以一個大寫字母開頭，接著一個小寫字母和6位數字。";
                 return false;
             } else {
                 document.getElementById('passcodeError').textContent = "";
@@ -108,7 +108,7 @@
 
             const nationalIdPattern = /^[A-Z]\d{9}$/;
             if (!nationalIdPattern.test(nationalIdNumber)) {
-                document.getElementById('nationalIdError').textContent = "身份證號格式不正確。";
+                document.getElementById('nationalIdError').textContent = "身份證號格式不正確, 必須以一個大寫字母開頭，和9位數字。";
                 return false;
             } else {
                 document.getElementById('nationalIdError').textContent = "";
@@ -116,7 +116,7 @@
 
             const telephonePattern = /^\d{10}$/;
             if (!telephonePattern.test(telephoneNumber)) {
-                document.getElementById('telephoneError').textContent = "電話號碼格式不正確。";
+                document.getElementById('telephoneError').textContent = "電話號碼格式不正確, 必須以09為開頭，後面8個位數字。";
                 return false;
             } else {
                 document.getElementById('telephoneError').textContent = "";

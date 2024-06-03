@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,15 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 import com.user.model.DuplicateFieldException;
-import com.user.model.UserDAO;
 import com.user.model.UserService;
 import com.user.model.UserServiceImpl;
 import com.user.model.UserVO;
-import util.HibernateUtil;
-
-import org.hibernate.Session;
 
 @MultipartConfig(maxFileSize = 2 * 1024 * 1024) // 設定最大文件大小為 2MB
 @WebServlet("/user")
@@ -31,28 +28,17 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        // 初始化 Hibernate SessionFactory
-        userService = new UserServiceImpl(new UserDAO(HibernateUtil.getSessionFactory()));
+        userService = new UserServiceImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            handleRequest(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServletException(e);
-        }
+        handleRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            handleRequest(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServletException(e);
-        }
+        handleRequest(request, response);
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,29 +47,34 @@ public class UserServlet extends HttpServlet {
             action = "list";
         }
 
-        try {
-            switch (action) {
-                case "list":
-                    listUsers(request, response);
-                    break;
-                case "edit":
-                    showEditForm(request, response);
-                    break;
-                case "delete":
-                    deleteUser(request, response);
-                    break;
-                case "add":
-                    addUser(request, response);
-                    break;
-                case "update":
-                    updateUser(request, response);
-                    break;
-                default:
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
-                    break;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                switch (action) {
+                    case "list":
+                        listUsers(request, response);
+                        break;
+                    case "edit":
+                        showEditForm(request, response);
+                        break;
+                    case "delete":
+                        deleteUser(request, response);
+                        break;
+                    case "add":
+                        addUser(request, response);
+                        break;
+                    case "update":
+                        updateUser(request, response);
+                        break;
+                    default:
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
+                        break;
+                }
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                throw new ServletException(e);
             }
-        } catch (Exception e) {
-            throw new ServletException(e);
         }
     }
 
@@ -146,8 +137,8 @@ public class UserServlet extends HttpServlet {
         String district = request.getParameter("district");
         String address = request.getParameter("address");
         String statusStartDateStr = request.getParameter("statusStartDate");
-        String registerDateStr = request.getParameter("registerDate"); // 新增解析 registerDate
-        String accountStatusNumberStr = request.getParameter("accountStatusNumber"); // 確保獲取 accountStatusNumber 欄位
+        String registerDateStr = request.getParameter("registerDate");
+        String accountStatusNumberStr = request.getParameter("accountStatusNumber");
         Integer accountStatusNumber = accountStatusNumberStr != null && !accountStatusNumberStr.isEmpty() ? Integer.parseInt(accountStatusNumberStr) : null;
 
         Integer accessNumber = null;
@@ -165,7 +156,7 @@ public class UserServlet extends HttpServlet {
 
         Date birthday = null;
         Date statusStartDate = null;
-        Date registerDate = null; // 新增 registerDate 變數
+        Date registerDate = null;
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             if (birthdayStr != null && !birthdayStr.isEmpty()) {
@@ -174,7 +165,7 @@ public class UserServlet extends HttpServlet {
             if (statusStartDateStr != null && !statusStartDateStr.isEmpty()) {
                 statusStartDate = dateFormat.parse(statusStartDateStr);
             }
-            if (registerDateStr != null && !registerDateStr.isEmpty()) { // 解析 registerDate
+            if (registerDateStr != null && !registerDateStr.isEmpty()) {
                 registerDate = dateFormat.parse(registerDateStr);
             }
         } catch (ParseException e) {
@@ -199,21 +190,17 @@ public class UserServlet extends HttpServlet {
         user.setDistrict(district);
         user.setAddress(address);
         user.setStatusStartDate(statusStartDate);
-        user.setRegisterDate(registerDate); // 設置 registerDate
+        user.setRegisterDate(registerDate);
         user.setAccountStatusNumber(accountStatusNumber);
         user.setAccessNumber(accessNumber);
         return user;
     }
 
     private void handleException(HttpServletRequest request, HttpServletResponse response, DuplicateFieldException e, String formPage, HttpServletRequest originalRequest) throws ServletException, IOException {
-        // 將錯誤訊息設置到 request 中
         request.setAttribute("errorMessage", Map.of(e.getField(), e.getMessage()));
-
-        // 將原始請求參數設置回 request 以便在表單中顯示
         for (Map.Entry<String, String[]> entry : originalRequest.getParameterMap().entrySet()) {
             request.setAttribute(entry.getKey(), entry.getValue()[0]);
         }
-
         request.getRequestDispatcher(formPage).forward(request, response);
     }
 }

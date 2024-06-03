@@ -18,53 +18,46 @@ public class UserDAO implements UserDAO_interface {
 
     @Override
     public void save(UserVO user) {
-        Session session = getSession();
-        session.save(user);
+        getSession().save(user);
     }
 
     @Override
     public void update(UserVO user) {
-        Session session = getSession();
-        session.update(user);
+        getSession().merge(user);
     }
 
     @Override
     public void delete(Integer number) {
-        Session session = getSession();
-        UserVO user = session.byId(UserVO.class).load(number);
+        UserVO user = getSession().byId(UserVO.class).load(number);
         if (user != null) {
-            session.delete(user);
+            getSession().delete(user);
         }
     }
 
     @Override
     public UserVO findByNumber(Integer number) {
-        Session session = getSession();
-        return session.get(UserVO.class, number);
+        return getSession().get(UserVO.class, number);
     }
 
     @Override
     public UserVO findByAccount(String account) {
-        Session session = getSession();
-        return session.createQuery("FROM UserVO WHERE account = :account", UserVO.class)
-                      .setParameter("account", account)
-                      .uniqueResult();
+        return getSession().createQuery("FROM UserVO WHERE account = :account", UserVO.class)
+                           .setParameter("account", account)
+                           .uniqueResult();
     }
 
     @Override
     public List<UserVO> getAll() {
-        Session session = getSession();
-        return session.createQuery("FROM UserVO", UserVO.class).list();
+        return getSession().createQuery("FROM UserVO", UserVO.class).list();
     }
 
     @Override
     public boolean isFieldDuplicate(String fieldName, String value, Integer userId) {
-        Session session = getSession();
         String queryString = "SELECT COUNT(*) FROM UserVO WHERE " + fieldName + " = :value";
         if (userId != null) {
             queryString += " AND number != :userId";
         }
-        var query = session.createQuery(queryString);
+        var query = getSession().createQuery(queryString);
         query.setParameter("value", value);
         if (userId != null) {
             query.setParameter("userId", userId);
@@ -75,10 +68,9 @@ public class UserDAO implements UserDAO_interface {
 
     @Override
     public boolean isAccessNumberValid(Integer accessNumber) {
-        Session session = getSession();
-        Long count = session.createQuery("SELECT COUNT(*) FROM AccessVO WHERE accessNumber = :accessNumber", Long.class)
-                            .setParameter("accessNumber", accessNumber)
-                            .uniqueResult();
+        Long count = getSession().createQuery("SELECT COUNT(*) FROM AccessVO WHERE accessNumber = :accessNumber", Long.class)
+                                 .setParameter("accessNumber", accessNumber)
+                                 .uniqueResult();
         return count > 0;
     }
 }

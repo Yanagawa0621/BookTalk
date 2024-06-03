@@ -1,9 +1,14 @@
 package com.user.model;
 
 import java.util.List;
+import util.HibernateUtil;
 
 public class UserServiceImpl implements UserService {
     private final UserDAO_interface userDAO;
+
+    public UserServiceImpl() {
+        this.userDAO = new UserDAO(HibernateUtil.getSessionFactory());
+    }
 
     public UserServiceImpl(UserDAO_interface userDAO) {
         this.userDAO = userDAO;

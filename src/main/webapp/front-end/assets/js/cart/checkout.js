@@ -34,9 +34,9 @@ function checkEmail(email){
     return emailPattern.test(email);
 }
 
-//檢查電話(手機)格式
+//檢查手機格式
 function checkTel(phone){
-	const phonePattern = /^[0-9]{10}$/;  // 10個數字
+	const phonePattern = /^[09]{2}[0-9]{2}-[0-9]{3}-[0-9]{3}$/;
     return phonePattern.test(phone);
 }
 
@@ -51,9 +51,8 @@ function validateFields() {
     
     
      if (telField != "" && telField != null){
-    	 console.log("wov");
     	if (!checkTel(telField)) {
-	        modalBody.html("<h3>電話請輸入10個數字，請按\"取消\"返回</h3>");
+	        modalBody.html("<h3>手機請輸入同範例格式，請按\"取消\"返回</h3>");
 	        confirmButton.prop("disabled", true);
 	        return;
     	}
