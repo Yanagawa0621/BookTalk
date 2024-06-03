@@ -144,9 +144,9 @@ public class BookProductsService {
 //		Session session = factory.getCurrentSession();
 //		Transaction transaction = session.beginTransaction();
 //		BookProductsService bp = new BookProductsService();
-////		System.out.println(bp.singleQueryBp(1).getReleaseDate().getTime());
+//		System.out.println(bp);
 //
 //		transaction.commit();
-//
+
 //	}
 }

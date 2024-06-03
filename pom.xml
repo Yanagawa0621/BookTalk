@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>idv.coy</groupId>
-	<artifactId>TIA101G3_Test_Maven_Version</artifactId>
+	<artifactId>BookTalk</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 

@@ -1,25 +1,33 @@
 package com.bookproducts.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.author.model.AuthorVO;
 import com.bookproducts.model.BookProductsService;
 import com.bookproducts.model.BookProductsVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+@MultipartConfig
 @WebServlet("/bookproducts.do")
 public class BookProductsServlet extends HttpServlet {
 	/**
@@ -148,6 +156,7 @@ public class BookProductsServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+		// ===搜尋欄===
 		if ("book_search".equals(action)) {
 			// ===接受參數===
 			String searchMain = req.getParameter("searchMain");
@@ -190,7 +199,7 @@ public class BookProductsServlet extends HttpServlet {
 
 			// 書籍名稱的查詢
 			if ("bookTitle".equals(searchMain)) {
-				System.out.println("111");
+//				System.out.println("111");
 				// ===查詢資料===
 				List<BookProductsVO> list = bpSce.keywordSearchBp(searchMain, Keywords);
 				
@@ -254,5 +263,106 @@ public class BookProductsServlet extends HttpServlet {
 				}
 			}
 		}
+		
+		// ===新增書籍===
+//		System.out.println(action);
+		if("insert".equals(action)) {
+//			System.out.println("新增書籍");
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			// ---接受參數和格式驗證相關---
+			Integer bookClassNumber=Integer.valueOf(req.getParameter("bookClassNumber"));
+			Integer publishiingHouseCode=Integer.valueOf(req.getParameter("publishiingHouseCode"));
+			
+			// ---書名---
+			String bookTitle=req.getParameter("bookTitle");
+			String reg1 = "^[(\u4e00-\u9fff),(a-zA-Z0-9),[^\n]]{1,30}$";
+			if (bookTitle.trim().length() == 0 || bookTitle == null) {
+				errorMsgs.add("請輸入書名");
+			} else if (!bookTitle.trim().matches(reg1)) {
+				errorMsgs.add("請輸入正確格式");
+			}
+			
+			// ---sibn---
+			String isbn = req.getParameter("isbn");
+			String reg2 = "^[0-9]{10,13}$";
+			if (isbn.trim().length() == 0 || isbn == null) {
+				errorMsgs.add("國際書碼不可空白");
+			} else if (!isbn.trim().matches(reg2)) {
+				errorMsgs.add("國際書碼格式錯誤");
+			}
+			
+			// ---出版日期---
+			java.sql.Date publicationDate = null;
+			try {
+				publicationDate = java.sql.Date.valueOf(req.getParameter("publicationDate").trim());
+			} catch (IllegalArgumentException e) {
+				errorMsgs.add("輸入的日期格式錯誤");
+			}
+			
+
+			// ---數量---
+			Integer stock = null;
+			try {
+				stock = Integer.valueOf(req.getParameter("stock"));
+			} catch (NumberFormatException e) {
+				errorMsgs.add("請輸入正確的數量格式");
+			}
+			
+			// ---價格---
+			Double price = null;
+			try {
+				price = Double.valueOf(req.getParameter("price"));
+			} catch (NumberFormatException e) {
+				errorMsgs.add("請輸入正確的價格格式");
+			}
+			
+			// ---書籍介紹---
+			String introductionContent = req.getParameter("introductionContent");
+			if (introductionContent.trim().length() == 0 || introductionContent == null) {
+				errorMsgs.add("請輸入內容");
+			}
+			
+			// ---作者---
+			List<String> authorList;
+			Gson gson = new Gson();
+			String authorsJson = req.getParameter("authors");
+			authorList = gson.fromJson(authorsJson, new TypeToken<List<String>>(){}.getType());
+
+			// ---圖片---
+			List<byte[]> imgs=new ArrayList<>();
+			byte[] fileBytes=null;
+			Collection<Part> fileParts = req.getParts().stream()
+	                .filter(part -> part.getName().startsWith("images"))
+	                .collect(Collectors.toList());
+			for (Part filePart : fileParts) {
+				fileBytes = toByteArray(filePart.getInputStream());
+				imgs.add(fileBytes);
+			}
+//			System.out.println(imgs.size());
+			
+			if(!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView=req.getRequestDispatcher("/back-end/bookProducts/addBookProducts.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			// ---提交新增---
+			int result=bpSce.addBp(bookClassNumber, bookClassNumber, publishiingHouseCode, bookTitle, isbn, price, publicationDate, stock, introductionContent, publicationDate);
+			
+		}
+		
 	}
+	
+	// ===前端圖片傳送處理===
+	private byte[] toByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int bytesRead;
+        byte[] data = new byte[1024];
+        while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, bytesRead);
+        }
+        buffer.flush();
+        return buffer.toByteArray();
+    }
 }
