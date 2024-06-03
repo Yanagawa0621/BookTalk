@@ -32,11 +32,11 @@ public class CommentDAO implements CommentDAO_interface {
 	}
 
 	@Override
-	public boolean updateCommentStatus(Integer commentNumber, Integer commentState) {
+	public boolean updateCommentStatus(Integer commentNumber) {
 
 		CommentVO commentVO = getSession().get(CommentVO.class, commentNumber);
 		if (commentVO != null) {
-			commentVO.setCommentState(commentState);
+			commentVO.setCommentState(0);
 			getSession().update(commentVO);
 			return true;
 		}

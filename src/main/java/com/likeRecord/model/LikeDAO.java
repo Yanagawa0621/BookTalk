@@ -41,5 +41,15 @@ private SessionFactory factory;
         query.setParameter("articleNumber", articleNumber);
         return query.uniqueResult();
 	}
+
+	@Override
+	public LikeVO getUsersLikeCom(Integer userNumber, Integer commentNumber) {
+		// TODO Auto-generated method stub
+		String hql = "FROM LikeVO WHERE userNumber = :userNumber and commentNumber = :commentNumber" ;
+        Query<LikeVO> query = getSession().createQuery(hql, LikeVO.class);
+        query.setParameter("userNumber", userNumber);
+        query.setParameter("commentNumber", commentNumber);
+        return query.uniqueResult();
+	}
 	
 }

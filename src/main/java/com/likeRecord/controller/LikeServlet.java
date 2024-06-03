@@ -41,7 +41,7 @@ public class LikeServlet extends HttpServlet {
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().write("{\"status\":\"success\"}");
 		}
-		if ("delet".equals(action)) {
+		if ("delete".equals(action)) {
 			String userNumberStr = req.getParameter("userNumber");
 			String articleNumberStr = req.getParameter("articleNumber");
 			Integer userNumber = null;
@@ -59,6 +59,49 @@ public class LikeServlet extends HttpServlet {
 			System.out.println(userNumber + articleNumber);
 			LikeService likeSvc = new LikeService();
 			likeSvc.deleteLike(userNumber, articleNumber);
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"status\":\"success\"}");
+		}
+		if ("insertCom".equals(action)) {
+			String userNumberStr = req.getParameter("userNumber");
+			String commentNumberStr = req.getParameter("commentNumber");
+			Integer userNumber = null;
+			Integer commentNumber = null;
+			try {
+				if (userNumberStr != null && !userNumberStr.isEmpty()) {
+					userNumber = Integer.parseInt(userNumberStr);
+				}
+				if (commentNumberStr != null && !commentNumberStr.isEmpty()) {
+					commentNumber = Integer.parseInt(commentNumberStr);
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			LikeService likeSvc = new LikeService();
+			likeSvc.addLikeCom(userNumber, commentNumber);
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"status\":\"success\"}");
+		}
+		if ("deleteCom".equals(action)) {
+			String userNumberStr = req.getParameter("userNumber");
+			String commentNumberStr = req.getParameter("commentNumber");
+			Integer userNumber = null;
+			Integer commentNumber = null;
+			try {
+				if (userNumberStr != null && !userNumberStr.isEmpty()) {
+					userNumber = Integer.parseInt(userNumberStr);
+				}
+				if (commentNumberStr != null && !commentNumberStr.isEmpty()) {
+					commentNumber = Integer.parseInt(commentNumberStr);
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			System.out.println(userNumber + commentNumber);
+			LikeService likeSvc = new LikeService();
+			likeSvc.deleteLikeCom(userNumber, commentNumber);
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().write("{\"status\":\"success\"}");

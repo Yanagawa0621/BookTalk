@@ -23,7 +23,7 @@
 <!doctype html>
 <html class="no-js" lang="en">
 
-<head>
+
 <%@include file="/front-end/component/head.jsp" %>
     <style>
       	.modal-body p {
@@ -53,7 +53,7 @@
 			border-bottom: 1px solid #4d4d4d;
 		}						
  	 </style>
-</head>
+
 
 <body>
    
@@ -98,19 +98,25 @@
 									    <div class="modal-content">
 									      <div class="modal-header">
 									        <h5 class="modal-title" id="lightboxModalLabel"style="font-size: 30px;">${articleVO.title}</h5>
-									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									        <c:if test="${articleVO.userNumber == sessionScope.userNumber}">
+									        	<form action="<%= request.getContextPath()%>/front-end/article/ckEditor/sample/updateArticle.jsp">
+					                                <input type="hidden" name="articleNumber" value="${articleVO.articleNumber}" >
+					                                <button type="submit">編輯文章</button>
+					                            </form>
+									        </c:if>
+									        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									          <span aria-hidden="true">&times;</span>
-									        </button>
-									      </div>
+									        </button>-->
+									      </div> 
 									      <div class="modal-body" style="font-size: 18px; padding: 30px;">
-									        <!-- 燈箱内容區域 -->
-										    ${articleVO.content}
-										    <hr>
-										    <jsp:useBean id="likeSvc" scope="page" class="com.likeRecord.model.LikeService"/>
-											<c:set var="userNumber" value="${sessionScope.userNumber}" />
-											<c:set var="articleNumber" value="${articleVO.articleNumber}" />
-											<c:set var="likeStatus" value="${likeSvc.getArticleLike(userNumber, articleNumber)}" />
-											<c:choose>
+										        <!-- 燈箱内容區域 -->
+											    ${articleVO.content}
+											    <hr>
+											    <jsp:useBean id="likeSvc" scope="page" class="com.likeRecord.model.LikeService"/>
+												<c:set var="userNumber" value="${sessionScope.userNumber}" />
+												<c:set var="articleNumber" value="${articleVO.articleNumber}" />
+												<c:set var="likeStatus" value="${likeSvc.getArticleLike(userNumber, articleNumber)}" />
+												<c:choose>
 											    <c:when test="${likeStatus == 1}">
 											        <button id="like-button-${articleVO.articleNumber}" class="like-button" style="background:white; display: none;" onclick="like(${articleVO.articleNumber});">讚</button>
 											        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="background:red;" onclick="unlike(${articleVO.articleNumber});">讚</button>
@@ -120,6 +126,7 @@
 											        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="background:red; display: none;" onclick="unlike(${articleVO.articleNumber});">讚</button>
 											    </c:otherwise>
 											</c:choose>
+											<hr>
 										    <c:forEach var="commentVO" items="${articleVO.commentVO}">
 											    <div class="comment-area"> 
 											    	<p>${commentVO.userNumber}</p> 
@@ -130,7 +137,7 @@
 									      <div class="modal-footer">
 									        <form class="modal-form" onsubmit="event.preventDefault(); submitComment(${articleVO.articleNumber});">
 												<textarea id="comment${articleVO.articleNumber}" class="comment-input" placeholder="输入留言..." required></textarea>
-												<input class ="form-input" type="submit" value="新增">
+												<input class ="form-input" type="submit" value="新增" >
 											</form>
 									      </div>
 									    </div>
@@ -141,9 +148,9 @@
                                         <p>作者: <a href="#">${articleVO.userNumber}</a> / 發文日期: ${articleVO.issueTime} / 看板: <a href="#">${articleVO.forumVO.name}</a></p>
                                     </div>
                                     <p class="post_desc">${articleVO.articleSummary}</p>
-                                    <footer class="btn_more">
-                                        <a href="blog-details.html"> Read more</a>
-                                    </footer>
+                                    <!-- <footer class="btn_more">
+                                        <a href="#"> Read more</a>
+                                    </footer> -->
                                 </figcaption>
                             </figure>
                         </article>
@@ -177,17 +184,17 @@
                         <%
 						    ForumService forumSvc = new ForumService();
 						    List<ForumVO> list1 = forumSvc.getAll();
-						    pageContext.setAttribute("list",list1);
+						    pageContext.setAttribute("list1",list1);
 						%>
                         <div class="widget_list comments">
                            <div class="widget_title">
                                 <h3>所有看板</h3>
                             </div>
                           
-                            <c:forEach var="forumVO" items="${list}">
+                            <c:forEach var="forumVO" items="${list1}">
                             <div class="post_wrapper">
                                 <div class="post_info">                                    
-                                    <c:url var="forumUrl" value="/front-end/article/forumsArticle.jsp">
+                                     <c:url var="forumUrl" value="/front-end/article/forumsArticle.jsp">
 				                        <c:param name="forumNumber" value="${forumVO.forumNumber}" />
 				                    </c:url>
 				                    <a href="${forumUrl}">${forumVO.name}</a>
@@ -229,7 +236,7 @@
                             </div>
                              <div class="post_wrapper">
                                 <div class="post_thumb">
-                                    <a href="blog-details.html"><img src="assets/img/blog/blog4.jpg" alt=""></a>
+                       	             <a href="blog-details.html"><img src="assets/img/blog/blog4.jpg" alt=""></a>
                                 </div>
                                 <div class="post_info">
                                     <h4><a href="blog-details.html">Post with Video</a></h4>
@@ -288,155 +295,16 @@
         </div>
     </div>
     <!--blog pagination area end-->
-   
-    <!--footer area start-->
-    <footer class="footer_widgets foote_other">
-       <div class="container">
-            <div class="footer_top">
-                <div class="row">
-                    <div class="col-lg-3 col-md-8 col-sm-8">
-                        <div class="widgets_container footer_contact">
-                            <h3>About us</h3>
-                            <p>We are a team of designers and developers that 
-                                create high quality HTML Template, Woocommerce, Shopify Theme.</p>
-                            <p><i class="icon icon-Pointer"></i> The Barn, Ullenhall, Henley in Arden 
-                            B578 5CC, England</p>
-                            <p><i class="icon icon-Phone"></i> <a href="tel:+123.456.789">+123.456.789</a> - <a href="tel:+123.456.678">+123.456.678</a></p>
-                            <p><i class="icon icon-Mail"></i> <a href="#">#</a></p>
-                        </div>          
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-4">
-                        <div class="widgets_container widget_menu">
-                            <h3>Information</h3>
-                            <div class="footer_menu">
-                                <ul>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="#">Delivery Information</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="widgets_container footer-linkup">
-                            <h3>Our Twitter Feed</h3>
-                            <p>Check out "Alice - Multipurpose Responsive #Magento #Theme" on <br> #Envato by <a href="#">@Plazathemes</a> <br> #Themeforest <a href="#">https://t.co/DNdhAwzm88</a></p>
-                            <p>Check Out "Emos - Multi Store Responsive #Magento #Theme" on #Envato by <br>  <a href="#">@Plazathemes</a> #Themeforest <a href="#">https://t.co/08oCVAr5dy</a></p>
-                            
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-10">
-                        <div class="widgets_container footer_instragam">
-                            <h3>instagram</h3>
-                            <div class="instagram_container">
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam1.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam2.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam3.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam4.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam5.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                                <div class="instagram_thumb">
-                                    <a href="#"><img src="assets/img/about/instragam2.jpg" alt=""></a>
-                                    <div class="instagram_boxcmt">
-                                        <span class="likecount">5</span>
-                                        <span class="commentcount">1</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer_bottom">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="copyright_area">
-                            <p>Copyright &copy; 2022.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>
-                        </div>
-                    </div>    
-                    <div class="col-lg-6 col-md-6">    
-                        <div class="footer_social">
-                            <ul>
-                                <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-                                <li><a href="#"><i class="ion-social-youtube-outline"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>   
-    </footer>
+<!--footer area start-->
+    <%@include file="/front-end/component/footer.jsp" %>
     <!--footer area end-->
     
 <!-- JS
 ============================================ -->
-<!--jquery min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/vendor/jquery-3.4.1.min.js"></script>
-<!--popper min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/popper.js"></script>
-<!--bootstrap min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/bootstrap.min.js"></script>
-<!--owl carousel min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/owl.carousel.min.js"></script>
-<!--slick min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/slick.min.js"></script>
-<!--magnific popup min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/jquery.magnific-popup.min.js"></script>
-<!--counterup min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/jquery.counterup.min.js"></script>
-<!--jquery countdown min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/jquery.countdown.js"></script>
-<!--jquery ui min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/jquery.ui.js"></script>
-<!--jquery elevatezoom min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/jquery.elevatezoom.js"></script>
-<!--isotope packaged min js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/isotope.pkgd.min.js"></script>
-<!--slinky menu js-->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/slinky.menu.js"></script>
-<!-- Plugins JS -->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/plugins.js"></script>
-
-<!-- Main JS -->
-<script src="<%= request.getContextPath() %>/front-end/article/assets/js/main.js"></script>
+<%@include file="/front-end/component/script.jsp" %>
 <script type="text/javascript">
 //新增留言 之後須加上userNumber
+
 var contextPath = "<%= request.getContextPath() %>";
 var userID=${sessionScope.userNumber};
 function submitComment(articleNumber) {
@@ -504,7 +372,6 @@ function unlike(articleNumber){
 	        }
 	    });
 }
-
 </script>
 
 

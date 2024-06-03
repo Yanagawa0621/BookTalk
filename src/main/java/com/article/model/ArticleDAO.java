@@ -7,6 +7,9 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+
+import com.forum.model.ForumVO;
+
 import util.HibernateUtil;
 
 public class ArticleDAO implements ArticleDAO_interface {
@@ -79,10 +82,10 @@ public class ArticleDAO implements ArticleDAO_interface {
     }
 
     @Override
-    public boolean updateArticleStatus(Integer articleNumber, Integer articleState) {
+    public boolean updateArticleStatus(Integer articleNumber) {
         ArticleVO articleVO = getSession().get(ArticleVO.class, articleNumber);
         if (articleVO != null) {
-            articleVO.setArticleState(articleState);
+            articleVO.setArticleState(0);
             getSession().update(articleVO);
             return true;
         }
@@ -102,4 +105,13 @@ public class ArticleDAO implements ArticleDAO_interface {
         query.setParameter("endDate", firstDayOfNextMonth);
         return query.list();
     }
+
+	@Override
+	public ArticleVO findByArticleNumber(Integer articleNumber) {
+		// TODO Auto-generated method stub
+		String hql = "FROM ArticleVO WHERE articleNumber = :articleNumber";
+        Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
+        query.setParameter("articleNumber", articleNumber);
+        return query.uniqueResult();
+	}
 }

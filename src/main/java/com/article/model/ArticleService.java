@@ -20,7 +20,7 @@ public class ArticleService {
 		return dao.findAllByOrderByLikeSumThisMonth();
 	}
 
-	public ArticleVO addArticle(String content, String title, Integer forumNumber) {
+	public ArticleVO addArticle(String content, String title, Integer forumNumber,Integer userNumber) {
 		ArticleVO articleVO = new ArticleVO();
 		articleVO.setArticleState(1);
 		articleVO.setContent(content);
@@ -28,7 +28,7 @@ public class ArticleService {
 		articleVO.setPageView(0);
 		articleVO.setLikeSum(0);
 		articleVO.setTitle(title);
-		articleVO.setUserNumber(1);
+		articleVO.setUserNumber(userNumber);
 		ForumVO forumVO = new ForumVO();
 		forumVO.setForumNumber(forumNumber);
 		articleVO.setForumVO(forumVO);
@@ -62,5 +62,14 @@ public class ArticleService {
 
 	public List<ArticleVO> findArticleByKeyWord(String title) {
 		return dao.findByKeyWord(title);
+	}
+	public void updateArticle(ArticleVO articleVO) {
+		dao.update(articleVO);
+	}
+	public ArticleVO getOneFromArticleNumber(Integer articleNumber) {
+		return dao.findByArticleNumber(articleNumber);
+	}
+	public void delete (Integer articleNumber) {
+		dao.updateArticleStatus(articleNumber);
 	}
 }
