@@ -25,4 +25,12 @@ public class CommentService {
 		dao = new CommentDAO();
 		dao.updateCommentStatus(commentNumber);
 	}
+	public void updateComment(CommentVO commentVO) {
+		dao = new CommentDAO();
+		dao.update(commentVO);
+	}
+	public CommentVO findComment(Integer commentNumber) {
+		dao = new CommentDAO();
+		return dao.findByCommentNumber(commentNumber);
+	}
 }
