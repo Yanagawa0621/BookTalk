@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import com.article.model.ArticleVO;
+
 import util.HibernateUtil;
 
 public class CommentDAO implements CommentDAO_interface {
@@ -50,5 +52,14 @@ public class CommentDAO implements CommentDAO_interface {
 		Query<CommentVO> query = getSession().createQuery(hql, CommentVO.class);
 		query.setParameter("articleNumber", articleNumber);
 		return query.list();
+	}
+
+	@Override
+	public CommentVO findByCommentNumber(Integer commentNumber) {
+		// TODO Auto-generated method stub
+		String hql = "FROM CommentVO WHERE commentNumber = :commentNumber";
+        Query<CommentVO> query = getSession().createQuery(hql, CommentVO.class);
+        query.setParameter("commentNumber", commentNumber);
+        return query.uniqueResult();
 	}
 }
