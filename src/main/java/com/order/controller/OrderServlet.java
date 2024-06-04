@@ -173,7 +173,6 @@ public class OrderServlet extends HttpServlet {
 				note = note.trim();
 			}
 			
-		
 			
 			OrderVO orderVO = orderService.getOneOrder(orderNumber);
 			orderVO.setOrderStatus(orderStatus);
@@ -181,6 +180,11 @@ public class OrderServlet extends HttpServlet {
 			orderVO.setReceiver(receiver);
 			orderVO.setShippingAddress(shippingAddress);
 			orderVO.setNote(note);
+			
+			
+			if(orderStatus == 0) {	//當取消訂單，將完成時間設成取消當下的時間
+				orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
+			}
 			
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("orderVO", orderVO); // 含有輸入格式錯誤的orderVO物件，也存入req

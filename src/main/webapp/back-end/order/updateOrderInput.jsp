@@ -266,6 +266,12 @@
 		  }, false);
 		})();
 		
+	 
+	 $("select.form-control").on("change", function(){
+		 if(this.value == 0){
+			 $("#reservationdatetime").children("input").replaceWith('<input type="text" name="shippingTime" class="form-control datetimepicker-input" data-target="#reservationdatetime" value="${orderVO.shippingTime}" disabled="disabled">');	
+		 }
+	 });
 		
 	});
 		
