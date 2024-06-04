@@ -95,7 +95,7 @@ div.stars > span.star.-on{
 								    	<div><h4>已完成</h4></div>
 								    </c:when>
 								    <c:otherwise>
-								        <button type="button" class="btn_empty" id="finishOrder" disabled>完成訂單</button>
+								        <button type="button" class="btn_empty btn btn-secondary disabled" id="finishOrder" disabled>完成訂單</button>
 										<button type="button" class="btn_empty" id="cancelOrder">取消訂單</button>   
 								    </c:otherwise>
 								</c:choose>
@@ -120,7 +120,7 @@ div.stars > span.star.-on{
 												<h4>取消</h4>
 											</c:if>
 											<c:if test = "${orderVO.orderStatus == 1}">
-												<h4>已確認</h4>
+												<h4>待確認</h4>
 											</c:if>
 											<c:if test = "${orderVO.orderStatus == 2}">
 												<h4>待出貨</h4>
@@ -146,7 +146,7 @@ div.stars > span.star.-on{
 			                        </div>
 			                        <div class="row">
 		                            	<div class="col-lg-5 col-md-5 offset-md-1 mb-20"><h4>完成時間</h4></div>							
-			                            <div class="col-lg-6 col-md-6 mb-20"><h4>${orderVO.completeTime}</h4></div>			
+			                            <div class="col-lg-6 col-md-6 mb-20"><h4 id="completeTimeChange">${orderVO.completeTime}</h4></div>			
 			                        </div>
 			                        <div class="row">
 		                            	<div class="col-lg-5 col-md-5 offset-md-1 mb-20"><h4>收件人</h4></div>							
