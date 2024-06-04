@@ -21,11 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.author.model.AuthorVO;
+import com.bookclass.model.BookClassVO;
 import com.bookproducts.model.BookProductsService;
 import com.bookproducts.model.BookProductsVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.publishinghouse.model.PublishingHouseVO;
 
 @MultipartConfig
 @WebServlet("/bookproducts.do")
@@ -342,6 +344,23 @@ public class BookProductsServlet extends HttpServlet {
 //			System.out.println(imgs.size());
 			
 			if(!errorMsgs.isEmpty()) {
+				BookProductsVO bpVO=new BookProductsVO();
+				bpVO.setBookTitle(bookTitle);
+				bpVO.setIsbn(isbn);
+				bpVO.setPublicationDate(publicationDate);
+				bpVO.setStock(stock);
+				bpVO.setPrice(price);
+				bpVO.setIntroductionContent(introductionContent);
+				BookClassVO bcVO=new BookClassVO();
+				bcVO.setClassNumber(bookClassNumber);
+				bpVO.setBcVO(bcVO);
+				PublishingHouseVO phVO=new PublishingHouseVO();
+				phVO.setPublishingHouseNumber(publishiingHouseCode);
+				bpVO.setPhVO(phVO);
+				
+				
+				req.setAttribute("authorList", authorList);
+				req.setAttribute("bpVO", bpVO);
 				RequestDispatcher failureView=req.getRequestDispatcher("/back-end/bookProducts/addBookProducts.jsp");
 				failureView.forward(req, res);
 				return;
