@@ -107,7 +107,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/back-end/order/order.jsp" class="nav-link">
+                <a href="${pageContext.request.contextPath}/order/order.do?action=getAll" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>訂單列表</p>
                 </a>
