@@ -169,7 +169,7 @@
 		                            			<button type="submit" class="btn btn-block bg-gradient-primary btn-sm">查看</button>
 										    </c:when>
 										    <c:when test="${orderVO.orderStatus == 2}">
-										        <button type="submit" class="btn btn-block btn-warning btn-sm">查看</button>
+										        <button type="submit" class="btn btn-block btn-warning btn-sm">出貨</button>
 										    </c:when>
 										    <c:when test="${orderVO.orderStatus == 3}">
 										        <button type="submit" class="btn btn-block btn-success btn-sm">查看</button>

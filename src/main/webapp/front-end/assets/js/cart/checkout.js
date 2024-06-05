@@ -11,6 +11,29 @@ $(function(){
 		$("#form2").submit();
 	});
 	
+	$('#checkTel').on('input', function() {	//手機號碼可直接輸入數字，幫使用者自動加上-
+        let input = $(this).val().replace(/\D/g, ''); // 移除所有非數字字符
+        console.log('Input after removing non-digits:', input);
+        let formattedInput = '';
+
+        if (input.length > 0) {
+            formattedInput += input.substring(0, 4);
+            console.log('Formatted input after first segment:', formattedInput);
+        }
+        if (input.length > 4) {
+            formattedInput += '-' + input.substring(4, 7);
+            console.log('Formatted input after second segment:', formattedInput);
+        }
+        if (input.length > 7) {
+            formattedInput += '-' + input.substring(7, 10);
+            console.log('Formatted input after third segment:', formattedInput);
+        }
+
+        $(this).val(formattedInput);
+        console.log('Final formatted input:', formattedInput);
+    });
+	
+	
 	$("checkReceiver").on("input", validateFields);
 	$("checkOtherAddress").on("input", validateFields);
 	$("checkTel").on("input", validateFields);
@@ -68,7 +91,7 @@ function validateFields() {
 
     if (checkFilled(requiredFields)) {
     	confirmButton.prop("disabled", false);
-    	modalBody.html("<h3>目前只提供信用卡付款，請確認是否繼續？</h3>");
+    	modalBody.html("<h3>確定進行付款？</h3>");
     }else {
         confirmButton.prop("disabled", true);
         modalBody.html("<h3>請先填寫完整的收貨人明細資料，請按\"取消\"返回</h3>");
