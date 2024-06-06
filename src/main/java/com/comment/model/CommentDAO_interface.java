@@ -9,4 +9,5 @@ public interface CommentDAO_interface {
 	public void update(CommentVO commentVO);
 	public boolean updateCommentStatus(Integer commentNumber);
 	public List<CommentVO> findByArticleNumber(Integer articleNumber);
+	public CommentVO findByCommentNumber(Integer commentNumber);
 }
