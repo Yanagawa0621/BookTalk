@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import com.comment.model.CommentService;
+import com.comment.model.CommentVO;
 
 @WebServlet("/comment/comment.do")
 public class CommentServlet extends HttpServlet {
@@ -36,10 +39,23 @@ public class CommentServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			CommentService commentSvc = new CommentService();
-			commentSvc.addComment(content, articleNumber, userNumber);
+			CommentVO commentVO = commentSvc.addComment(content, articleNumber, userNumber);
+			Integer commentNumber = commentVO.getCommentNumber();
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
-			res.getWriter().write("{\"status\":\"success\"}");
+			JSONObject json = new JSONObject();
+			 try {
+	                if (commentNumber != null) {
+	                    json.put("status", "success");
+	                    json.put("commentNumber", commentNumber);
+	                } else {
+	                    json.put("status", "error");
+	                }
+	                res.getWriter().write(json.toString());
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                res.getWriter().write("{\"status\":\"error\"}");
+	            }
 
 		}
 		if ("delete".equals(action)) {
@@ -58,5 +74,25 @@ public class CommentServlet extends HttpServlet {
 			res.getWriter().write("{\"status\":\"success\"}");
 
 		}
+		if ("update".equals(action)) {
+			/*********************** 1.接收請求參數 *************************/
+			String commentNumberStr = req.getParameter("commentNumber");
+			String content = req.getParameter("content");
+			Integer commentNumber = null;
+			try {
+				commentNumber = Integer.parseInt(commentNumberStr);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			CommentService commentSvc = new CommentService();
+			CommentVO commentVO = commentSvc.findComment(commentNumber);
+			commentVO.setContent(content);
+			commentSvc.updateComment(commentVO);
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().write("{\"status\":\"success\"}");
+
+		}
 	}
+	
 }

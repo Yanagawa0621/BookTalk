@@ -166,6 +166,7 @@
 																        <button id="likeCom-button-${commentVO.commentNumber}" class="likeCom-button"onclick="likeCom(${commentVO.commentNumber});"><i class="far fa-thumbs-up"></i></button>
 																        <button id="unlikeCom-button-${commentVO.commentNumber}" class="unlikeCom-button" style="background:white; display: none;" onclick="unlikeCom(${commentVO.commentNumber});"><i class="fas fa-thumbs-up"></i></button>
 																   		<c:if test="${commentVO.userNumber == sessionScope.userNumber}">
+																	        <button class="updateCom-button"onclick="openUpdateText(${commentVO.commentNumber},'${commentVO.content}');">更新</button>
 																	        <form class="delete-form" onsubmit="event.preventDefault(); deleteComment(${commentVO.commentNumber});">
 																	    		<input type="submit" value="刪除" style="background:red;">
 																	    	</form>
@@ -347,7 +348,25 @@ function submitComment(articleNumber) {
             alert("新增留言成功");
             // 更新留言区域
             $(".comment-input").val("");
-            $(".modal-body").append("<div class='comment-area'><p>您</p>"+"<p>"+comment+"</p></div>");
+            let commentNumber = response.commentNumber;
+            $(".modal-body").append(
+                    '<div class="comment-area-'+commentNumber+'">' +
+                    '<p>您</p>' +
+                    '<p>' + comment + '</p>' + 
+                    '<p>現在</p>'+
+                    '<div class="likeCom-area">' +
+                    '<button id="likeCom-button-' + commentNumber + '" class="likeCom-button" onclick="likeCom(' + commentNumber + ');">' +
+                    '<i class="far fa-thumbs-up"></i>' +
+                    '</button>' +
+                    '<button id="unlikeCom-button-' + commentNumber + '" class="unlikeCom-button" style="background:white; display: none;" onclick="unlikeCom(' + commentNumber + ');">' +
+                    '<i class="fas fa-thumbs-up"></i>' +
+                    '</button>' +
+                    '<form class="delete-form" onsubmit="event.preventDefault(); deleteComment(' + commentNumber + ');">' +
+                    '<input type="submit" value="刪除" style="background:red;">' +
+                    '</form>' +
+                    '</div>' +
+                    '</div>'
+                );
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -456,6 +475,38 @@ function deleteComment(commentNumber) {
         error: function(xhr, status, error) {
             console.error(error);
             alert("刪除留言失败");
+        }
+    });
+}
+function openUpdateText(commentNumber, content) {
+    $(".comment-area-" + commentNumber).append(
+    	'<div class="update-area">'+
+        '<textarea id="textarea-' + commentNumber + '"style="width: 100%;">' + content + '</textarea>' +
+        '<form class="update-form" onsubmit="event.preventDefault(); updateComment(' + commentNumber + ', document.getElementById(\'textarea-' + commentNumber + '\').value);">' +
+        '<input type="submit" value="送出">' +
+        '</form>'+
+        '</div>'
+    );
+}
+function updateComment(commentNumber,content){
+	
+	$.ajax({
+        type: "POST",
+        url: contextPath + "/comment/comment.do",
+        data: {
+            action: "update",
+            commentNumber: commentNumber,
+            content: content
+        },
+        success: function(response) {
+            alert("更新留言成功");
+            // 更新留言区域
+            $(".comment-area-"+ commentNumber + " p:nth-child(2)").text(content);
+        	$(".update-area").hide();
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert("更新留言失败");
         }
     });
 }

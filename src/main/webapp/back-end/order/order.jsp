@@ -3,15 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
+<%@page import="com.orderdetails.model.*"%>
 
-<%
-	OrderService orderSvc = new OrderService();
-	List<OrderVO> list = orderSvc.getAll();
-	List<Integer> listUserNumber = orderSvc.getUserNumber();
-	pageContext.setAttribute("list", list);
-	pageContext.setAttribute("listUserNumber", listUserNumber);
-%>
-    
+
 <!DOCTYPE html>
 <html>
 <!-- head -->
@@ -32,7 +26,7 @@
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
 			</div>	<!-- /.content-header -->
-			
+
 			
 			<!-- Main content -->
 			<div class="content">
@@ -72,9 +66,10 @@
 							<div class="input-group-append">
 								<select id="orderStatusChoice" name="orderStatus" class="form-control" >	
 									<option value="1">待處理</option>
-									<option value="2">已確認</option>	
-									<option value="3">已出貨/運送中</option>	
-									<option value="4">已送達/已完成</option>	
+									<option value="2">待出貨</option>	
+									<option value="3">已出貨</option>	
+									<option value="4">已完成 (尚未評價)</option>
+									<option value="5">已完成</option>
 									<option value="0">取消</option>						
 								</select>
 								<input type="hidden" name="action" value="getOneOrderStatus_For_Display">
@@ -84,29 +79,28 @@
 							</div>							
 						</form>	
 					</div>	<!-- /.col -->
-					
+
 					<div class= "col-md-3">
 						<form method="post" action="${pageContext.request.contextPath}/order/order.do">
-						<label for="memberChoice">請選擇會員編號</label>
-							<div class="input-group-append">
-								<select id="memberChoice" name="userNumber" class="form-control">							
-									<c:forEach var="orderVO" items="${listUserNumber}">
-										<option value="${orderVO}">${orderVO}</option>
-									</c:forEach>								
-								</select>
+						<label for="memberOrderSearch">請輸入會員編號</label>
+							<div class="input-group">		
+								<input type="search" id="memberOrderSearch" name="userNumber" class="form-control" placeholder="輸入會員編號" required>
 								<input type="hidden" name="action" value="getOneUserNumber_For_Display">
-								<button type="submit" class="btn btn-default">
+								<div class="invalid-tooltip">
+          							請輸入會員編號         							
+        						</div>
+        						<button type="submit" class="btn btn-default">
 								<i class="fa fa-search"></i>
 								</button>
 							</div>							
 						</form>	
 					</div>	<!-- /.col -->
 					
-					<div class= "col-auto align-self-end">
-						<a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp">
-							<button type="submit" class="btn btn-block bg-gradient-success">新增訂單</button>
-						</a>						
-					</div>	
+<!-- 					<div class= "col-auto align-self-end"> -->
+<%-- 						<a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp"> --%>
+<!-- 							<button type="submit" class="btn btn-block bg-gradient-success">新增訂單</button> -->
+<!-- 						</a>						 -->
+<!-- 					</div>	 -->
 					
 				</div> <!-- /.row -->
 				
@@ -116,7 +110,7 @@
 	                <h3 class="card-title">所有訂單</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
-	                <table id="orderlist" class="table table-bordered table-hover">
+	                <table id="orderlist" class="table table-bordered table-hover dt-responsive nowrap">
 	                  <thead>
 		                  <tr>
 		                    <th>訂單編號</th>
@@ -126,10 +120,12 @@
 		                    <th>出貨時間</th>
 		                    <th>收件人</th>
 		                    <th>收件地址</th>
+		                    <th>手機</th>
 		                    <th>運費</th>
 		                    <th>總金額</th>
+		                    <th>付款編號</th>
 		                    <th>備註</th>
-		                    <th>修改</th>
+		                    <th>Action</th>
 		                  </tr>
 	                  </thead>
 	                  <tbody>
@@ -145,27 +141,45 @@
 			                    		待處理
 			                    	</c:if>
 			                    	<c:if test = "${orderVO.orderStatus == 2}">
-			                    		已確認
+			                    		待出貨
 			                    	</c:if>
 			                    	<c:if test = "${orderVO.orderStatus == 3}">
-			                    		已出貨/運送中
+			                    		已出貨
 			                    	</c:if>
 			                    	<c:if test = "${orderVO.orderStatus == 4}">
-			                    		已送達/已完成
+			                    		已完成 (尚未評價)
+			                    	</c:if>
+			                    	<c:if test = "${orderVO.orderStatus == 5}">
+			                    		已完成
 			                    	</c:if>
 			                    </td>
 			                    <td>${orderVO.establishmentTime}</td>	                    
 			                    <td>${orderVO.shippingTime}</td>
 			                    <td>${orderVO.receiver}</td>
 			                    <td>${orderVO.shippingAddress}</td>
+			                    <td>${orderVO.telephoneNumber}</td>
 			                    <td>${orderVO.deliveryFee}</td>
 			                    <td>${orderVO.total}</td>
+			                    <td>${orderVO.paymentNumber}</td>
 			                    <td>${orderVO.note}</td>
 			                    <td>
 			                    	<form method="post" action="${pageContext.request.contextPath}/order/order.do">
-			                    		<button type="submit" class="btn btn-block bg-gradient-primary btn-sm">修改</button>
-									    <input type="hidden" name="orderNumber"  value="${orderVO.orderNumber}">
-									    <input type="hidden" name="action"	value="getOne_For_Update">
+			                    		<c:choose>
+		                            		<c:when test="${orderVO.orderStatus == 1}">
+		                            			<button type="submit" class="btn btn-block bg-gradient-primary btn-sm">查看</button>
+										    </c:when>
+										    <c:when test="${orderVO.orderStatus == 2}">
+										        <button type="submit" class="btn btn-block btn-warning btn-sm">出貨</button>
+										    </c:when>
+										    <c:when test="${orderVO.orderStatus == 3}">
+										        <button type="submit" class="btn btn-block btn-success btn-sm">查看</button>
+										    </c:when>
+										    <c:otherwise>
+										        <button type="submit" class="btn btn-block btn-info btn-sm">查看</button>										    
+										    </c:otherwise>
+										</c:choose>
+				                    		<input type="hidden" name="orderNumber"  value="${orderVO.orderNumber}"> 
+				                    		<input type="hidden" name="action"	value="getOne_For_Update">
 			                    	</form>
 			                    </td>
 			                  </tr>
@@ -196,12 +210,32 @@
 		      "paging": true,
 		      "lengthChange": true,
 		      "searching": false,
-		      "ordering": false,
+		      "ordering": true,
+		      "stateSave": false, // 預設為false 在頁面刷新時，是否要保存當前表格資料與狀態
+		      "destroy": false, // 預設為false 是否銷毀當前暫存資料
 		      "info": true,
 		      "autoWidth": false,
 		      "responsive": true,
+		      "columnDefs":[
+		          {
+		            targets: [12],
+		            responsivePriority: 1, 
+		          },
+		          {
+			        targets: [5],
+			        responsivePriority: 2, 
+			      },
+			      {
+			        targets: [6],
+			        responsivePriority: 4, 
+			      },
+			      {
+				    targets: [7],
+				    responsivePriority: 3, 
+				  }
+		      	],
 		      language: {	//設定語言為繁中
-		          url: "${pageContext.request.contextPath}/plugins/i18n/zh-HANT.json"
+		          url: "${pageContext.request.contextPath}/back-end/plugins/i18n/zh-HANT.json"
 		      },
 		      lengthMenu: [
 		    	    [5, 10, 15, 20, 25, 50, -1],
@@ -229,6 +263,6 @@
 		    });
 		  }, false);
 		})();
-</script>
+	</script>
 </body>
 </html>

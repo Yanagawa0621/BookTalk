@@ -3,6 +3,8 @@ package com.order.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +44,25 @@ public class OrderServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 //		System.out.println(action);
-		
+		/**************************** getAll ****************************/
+		if("getAll".equals(action)){
+			List<OrderVO> list = orderService.getAll();
+			List<OrderDetailsVO> listDetails = new ArrayList<>();
+			
+			for (OrderVO orderVO : list) {
+		        for (OrderDetailsVO orderDetails : orderVO.getOrderDetails()) {
+		        	listDetails.add(orderDetails);
+		        }
+			}
+
+			req.setAttribute("list", list);
+			req.setAttribute("listDetails", listDetails);
+			String url = "/back-end/order/order.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後，轉交order.jsp
+			successView.forward(req, res);
+			
+		}
+
 		/**************************** getOne_For_Display ****************************/
 		
 		if("getOne_For_Display".equals(action)){
@@ -58,7 +78,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -72,7 +92,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -86,7 +106,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -108,8 +128,15 @@ public class OrderServlet extends HttpServlet {
 			
 //			OrderService orderSvc = new OrderService();
 			OrderVO orderVO = orderService.getOneOrder(orderNumber);
+			
+			Set<OrderDetailsVO> orderDetails = new LinkedHashSet<>();
+			for(OrderDetailsVO detailsVO : orderVO.getOrderDetails()) {
+				orderDetails.add(detailsVO);
+			}
+			
 							
 			req.setAttribute("orderVO", orderVO);         // 資料庫取出的orderVO物件，存入req
+			req.setAttribute("orderDetails", orderDetails);
 			String url = "/back-end/order/updateOrderInput.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updateOrderInput.jsp
 			successView.forward(req, res);
@@ -122,55 +149,42 @@ public class OrderServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			Integer orderNumber = Integer.valueOf(req.getParameter("orderNumber"));
-			Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
 			Integer orderStatus = Integer.valueOf(req.getParameter("orderStatus"));
-			Timestamp establishmentTime = Timestamp.valueOf(req.getParameter("establishmentTime"));
 			
-			String hasShippingTime = req.getParameter("shippingTime").trim();
+			String hasShippingTime = req.getParameter("shippingTime");
 			Timestamp shippingTime = null;
-			if(!hasShippingTime.isEmpty()) {
+			if(hasShippingTime != null) {
+				hasShippingTime = hasShippingTime.trim();
 				shippingTime = Timestamp.valueOf(req.getParameter("shippingTime")+":00");	//抓完的資料只到分鐘，加上:00以符合存入timestamp的格式
 			}
 			
-			String receiver = req.getParameter("receiver").trim();
+			String receiver = req.getParameter("receiver");
 			if (receiver == null || receiver.trim().length() == 0) {
 				errorMsgs.add("收件人請勿空白");
 			}
 			
-			String shippingAddress = req.getParameter("shippingAddress").trim();
+			String shippingAddress = req.getParameter("shippingAddress");
 			if (shippingAddress == null || shippingAddress.trim().length() == 0) {
 				errorMsgs.add("收件地址請勿空白 ");
 			}
-			
-			BigDecimal deliveryFee;
-			try {
-				deliveryFee = new BigDecimal(req.getParameter("deliveryFee"));
-			}catch(NumberFormatException e) {
-				deliveryFee = new BigDecimal(0.0);
-				errorMsgs.add("運費請填數字.");
+
+			String note = req.getParameter("note");
+			if (note != null || note != "") {
+				note = note.trim();
 			}
 			
-			BigDecimal total;
-			try {
-				total = new BigDecimal(req.getParameter("total"));
-			}catch(NumberFormatException e) {
-				total = new BigDecimal(0.0);
-				errorMsgs.add("總金額請填數字.");
-			}
 			
-			String note = req.getParameter("note").trim();
-			
-			OrderVO orderVO = new OrderVO();
-			orderVO.setOrderNumber(orderNumber);
-			orderVO.setUserNumber(userNumber);
+			OrderVO orderVO = orderService.getOneOrder(orderNumber);
 			orderVO.setOrderStatus(orderStatus);
-			orderVO.setEstablishmentTime(establishmentTime);
 			orderVO.setShippingTime(shippingTime);
 			orderVO.setReceiver(receiver);
 			orderVO.setShippingAddress(shippingAddress);
-			orderVO.setDeliveryFee(deliveryFee);
-			orderVO.setTotal(total);
 			orderVO.setNote(note);
+			
+			
+			if(orderStatus == 0) {	//當取消訂單，將完成時間設成取消當下的時間
+				orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
+			}
 			
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("orderVO", orderVO); // 含有輸入格式錯誤的orderVO物件，也存入req
@@ -245,7 +259,7 @@ public class OrderServlet extends HttpServlet {
 //			OrderService orderSvc = new OrderService();
 			orderVO = orderService.addOrder(orderVO);
 			
-			String url = "/back-end/order/order.jsp";
+			String url = "/order/order.do?action=getAll";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交order.jsp
 			successView.forward(req, res);	
 			
@@ -264,7 +278,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -278,7 +292,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -298,7 +312,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -322,7 +336,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -336,7 +350,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -350,7 +364,7 @@ public class OrderServlet extends HttpServlet {
 			
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/order/order.jsp");
+						.getRequestDispatcher("/order/order.do?action=getAll");
 				failureView.forward(req, res);
 				return;
 			}
@@ -538,11 +552,18 @@ public class OrderServlet extends HttpServlet {
 			orderVO.setOrderStatus(0);
 			orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
 			
-			orderService.updateOrder(orderVO);
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+					 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+					 .create();
+	
+			orderVO = orderService.updateOrder(orderVO);
 			
+			String jsonStr = gson.toJson(orderVO);
+			System.out.println(jsonStr);
+
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
-			res.getWriter().write("{\"message\": \"cancel success\"}");
+			res.getWriter().write(jsonStr);
 		}
 		
 		/**************************** finishOrder ****************************/
@@ -554,30 +575,18 @@ public class OrderServlet extends HttpServlet {
 			orderVO.setOrderStatus(4);
 			orderVO.setCompleteTime(new java.sql.Timestamp(System.currentTimeMillis()));
 			
-			orderService.updateOrder(orderVO);
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+					 .setDateFormat("yyyy-MM-dd HH:mm:ss")
+					 .create();
+	
+			orderVO = orderService.updateOrder(orderVO);
+			
+			String jsonStr = gson.toJson(orderVO);
+			System.out.println(jsonStr);
 			
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
-			res.getWriter().write("{\"message\": \"finish success\"}");
+			res.getWriter().write(jsonStr);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }
