@@ -220,9 +220,9 @@
 			                    <td>${bpVO.stock}</td>
 			                    <td>${bpVO.price}</td>
 			                    <td>
-			                    	<form method="post" action="${pageContext.request.contextPath}/order/order.do">
+			                    	<form method="post" action="${pageContext.request.contextPath}/bookproducts.do">
 			                    		<button type="submit" class="btn btn-block bg-gradient-primary btn-sm">詳細內容和修改</button>
-									    <input type="hidden" name="orderNumber"  value="${bpVO.bookNumber}">
+									    <input type="hidden" name="bookNumber"  value="${bpVO.bookNumber}">
 									    <input type="hidden" name="action"	value="getOne_For_Update">
 			                    	</form>
 			                    </td>

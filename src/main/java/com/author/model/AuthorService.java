@@ -61,6 +61,10 @@ public class AuthorService {
 		List<AuthorVO> list = dao.keywordQuery(zhAndenName);
 		return list;
 	}
+	
+	public AuthorVO findByName(String name) {
+		return dao.nameQuery(name);
+	}
 
 	// =================================以下做圖片處理用========================================
 

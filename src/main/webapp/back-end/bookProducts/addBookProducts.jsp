@@ -15,20 +15,18 @@ BookProductsVO bpVO = (BookProductsVO) request.getAttribute("bpVO");
 
 <%
 BookClassService bcSce = new BookClassService();
-List<BookClassVO> bcList = bcSce.getAllBc();
-pageContext.setAttribute("bcList", bcList);
+List<BookClassVO> bcList = bcSce.getAllBcNp();
+session.setAttribute("bcList", bcList);
 %>
 
 <%
 PublishingHouseService phSce = new PublishingHouseService();
 List<PublishingHouseVO> phList = phSce.getAllPh();
-pageContext.setAttribute("phList", phList);
+session.setAttribute("phList", phList);
 %>
 
-<%
-AuthorService authorSce = new AuthorService();
-List<AuthorVO> authorList = authorSce.getAllArth();
-pageContext.setAttribute("authorList", authorList);
+<% 
+List<String> authorList= (List<String>)request.getAttribute("authorList");
 %>
 
 <!DOCTYPE html>
@@ -78,7 +76,6 @@ pageContext.setAttribute("authorList", authorList);
 					<!-- /.card-header -->
 					<div class="card-body">
 						<form id="bookForm" method="post" 
-							enctype="multipart/form-data"
 							action="${pageContext.request.contextPath}/bookproducts.do"
 							class="needs-validation" novalidate>
 							<table id="newOrder" class="table table-bordered table-hover">
@@ -110,8 +107,7 @@ pageContext.setAttribute("authorList", authorList);
 											<div class="input-group" style="width: 20%">
 												<select class="form-control" name="bookClassNumber">
 													<c:forEach var="bcVO" items="${bcList}">
-														<option value="${bcVO.classNumber}"
-															<c:if test="${bpVO != null && bcVO.classNumber == bpVO.bcVO.bookClassNumber}">selected</c:if>>${bcVO.className}</option>
+														<option value="${bcVO.classNumber}" ${(bcVO.classNumber == bpVO.bcVO.classNumber)?'selected':''}>${bcVO.className}</option>
 													</c:forEach>
 												</select>
 											</div>
@@ -154,20 +150,46 @@ pageContext.setAttribute("authorList", authorList);
 										</td>
 									</tr>
 								<tbody id="authorTableBody">
-									<tr>
-										<th class="align-middle">作者：</th>
-										<td>
-											<div class="input-group author-input" style="width: 80%">
-												<input type="text" name="author" class="form-control"
-													required>
-												<div class="invalid-tooltip">請輸入作者名稱</div>
-												<div class="input-group-append">
-													<button type="button"
-														class="btn btn-success add-author-btn">+</button>
+									<c:if test="${empty authorList}">
+										<tr>
+											<th class="align-middle">作者：</th>
+											<td>
+												<div class="input-group author-input" style="width: 80%">
+													<input type="text" name="author" class="form-control"
+														required>
+													<div class="invalid-tooltip">請輸入作者名稱</div>
+													<div class="input-group-append">
+														<button type="button"
+															class="btn btn-success add-author-btn">+</button>
+													</div>
 												</div>
-											</div>
-										</td>
-									</tr>
+											</td>
+										</tr>
+									</c:if>
+									
+									<c:if test="${not empty authorList}">
+										<c:forEach var="author" items="${authorList}" varStatus="status">
+										    <tr>
+										        <th class="align-middle">作者：</th>
+										        <td>
+										            <div class="input-group author-input" style="width: 80%">
+										                <input type="text" name="author" class="form-control" value="${author}" required>
+										                <div class="invalid-tooltip">請輸入作者名稱</div>
+										                <div class="input-group-append">
+										                    <c:choose>
+										                        <c:when test="${status.first}">
+										                            <button type="button" class="btn btn-success add-author-btn">+</button>
+										                        </c:when>
+										                        <c:otherwise>
+										                            <button type="button" class="btn btn-danger remove-author-btn">-</button>
+										                        </c:otherwise>
+										                    </c:choose>
+										                </div>
+										            </div>
+										        </td>
+										    </tr>
+										</c:forEach>
+									</c:if>
 								</tbody>
 								<tr>
 									<th class="align-middle">庫存量：</th>
@@ -186,24 +208,6 @@ pageContext.setAttribute("authorList", authorList);
 											<input type="text" name="price" class="form-control" required
 												value="<%=(bpVO == null) ? "" : bpVO.getPrice()%>">
 											<div class="invalid-tooltip">請輸入總金額</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<th class="align-middle">圖片：</th>
-									<td>
-										<div id="imageUploadContainer">
-											<!-- 初始的圖片上傳區域 -->
-											<div class="image-upload-section">
-												<input type="file" name="images" class="image-upload-input"
-													accept="image/*" onchange="previewImage(event)"> <img
-													class="preview-image"
-													style="max-width: 100px; margin-top: 10px;" src="#"
-													alt="Preview Image">
-											</div>
-										</div>
-										<div>
-											<button type="button" onclick="addImageUploadSection()">新增圖片</button>
 										</div>
 									</td>
 								</tr>
@@ -328,37 +332,6 @@ pageContext.setAttribute("authorList", authorList);
                 }).appendTo('#bookForm');
             });
         });
-    </script>
-
-	<script>
-	    function addImageUploadSection() {
-	        const container = document.getElementById('imageUploadContainer');
-	        const section = document.createElement('div');
-	        section.classList.add('image-upload-section');
-	        section.innerHTML = `
-	            <input type="file" name="images" class="image-upload-input" accept="image/*" onchange="previewImage(event)">
-	            <img class="preview-image" style="max-width: 100px; margin-top: 10px;" src="#" alt="Preview Image">
-	            <button type="button" class="btn btn-danger delete-image-btn" onclick="deleteImageUploadSection(this)">刪除</button>
-	        `;
-	        container.appendChild(section);
-	    }
-
-        function previewImage(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            const previewImage = event.target.nextElementSibling;
-
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-            }
-
-            reader.readAsDataURL(file);
-        }
-        
-        function deleteImageUploadSection(button) {
-            const section = button.parentNode;
-            section.parentNode.removeChild(section);
-        }
     </script>
 
 </body>

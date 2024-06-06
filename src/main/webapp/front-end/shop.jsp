@@ -116,24 +116,16 @@ pageContext.setAttribute("bcList", bcList);
 								data-toggle="tooltip" title="4"></button>
 						</div>
 						<div class=" niceselect_option">
-							<form class="select_option" action="#">
-								<select name="orderby" id="short">
-									<option selected value="1">Sort by average rating</option>
-									<option value="2">Sort by popularity</option>
-									<option value="3">Sort by newness</option>
-									<option value="4">Sort by price: low to high</option>
-									<option value="5">Sort by price: high to low</option>
-									<option value="6">Product Name: Z</option>
-								</select>
-							</form>
+							
 						</div>
 						<div class="page_amount">
-							<p>Showing 1–9 of 21 results</p>
+							<%@include file="/front-end/component/page1.file" %>
 						</div>
 					</div>
 					<!--shop toolbar end-->
+					
 					<div class="row shop_wrapper">
-						<c:forEach var="bpVO" items="${list}">
+						<c:forEach var="bpVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<c:if test="${bpVO.productStatus==1}">
 							<div class="col-lg-4 col-md-4 col-sm-6 col-12 ">
 								<article class="single_product">
@@ -198,18 +190,10 @@ pageContext.setAttribute("bcList", bcList);
 						</c:forEach>
 						
 					</div>
-
 					<div class="shop_toolbar t_bottom">
-						<div class="pagination">
-							<ul>
-								<li class="current">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li class="next"><a href="#">next</a></li>
-								<li><a href="#">>></a></li>
-							</ul>
-						</div>
+						<%@include file="/front-end/component/page2.file" %>
 					</div>
+					
 					<!--shop toolbar end-->
 					<!--shop wrapper end-->
 				</div>

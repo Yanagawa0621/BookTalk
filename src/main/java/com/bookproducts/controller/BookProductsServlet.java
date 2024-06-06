@@ -1,10 +1,9 @@
 package com.bookproducts.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,13 +12,16 @@ import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.author.model.AuthorService;
 import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.bookproducts.model.BookProductsService;
@@ -29,7 +31,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.publishinghouse.model.PublishingHouseVO;
 
-@MultipartConfig
+import util.HibernateUtil;
+
 @WebServlet("/bookproducts.do")
 public class BookProductsServlet extends HttpServlet {
 	/**
@@ -157,7 +160,9 @@ public class BookProductsServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
+
+		HttpSession session = req.getSession();
+
 		// ===搜尋欄===
 		if ("book_search".equals(action)) {
 			// ===接受參數===
@@ -204,7 +209,7 @@ public class BookProductsServlet extends HttpServlet {
 //				System.out.println("111");
 				// ===查詢資料===
 				List<BookProductsVO> list = bpSce.keywordSearchBp(searchMain, Keywords);
-				
+
 				if (list.isEmpty()) {
 					errorMsgs.add("找不到相關書籍(書籍名稱:" + Keywords + ")");
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
@@ -230,61 +235,63 @@ public class BookProductsServlet extends HttpServlet {
 					return;
 				}
 				// ===查詢資料(狀態查詢)===
-				if("productStatus".equals(searchMain)) {
-				List<BookProductsVO> list = bpSce.statusQueryBpNp(number);
+				if ("productStatus".equals(searchMain)) {
+					List<BookProductsVO> list = bpSce.statusQueryBpNp(number);
 
-				if (list.isEmpty()) {
-					errorMsgs.add("找不到相關書籍");
+					if (list.isEmpty()) {
+						errorMsgs.add("找不到相關書籍");
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+					// ===轉交資料===
+					req.setAttribute("list", list);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				// ===轉交資料===
-				req.setAttribute("list", list);
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
-				failureView.forward(req, res);
-				return;
-				}
-				
+
 				// ===查詢資料(書籍編號查詢)===
-				if("bookNumber".equals(searchMain)) {
+				if ("bookNumber".equals(searchMain)) {
 					List<BookProductsVO> list = new ArrayList<BookProductsVO>();
 					list.add(bpSce.singleQueryBpNp(number));
 
-				if (list.isEmpty()) {
-					errorMsgs.add("找不到相關書籍(書籍編號:" + Keywords + ")");
+					if (list.isEmpty()) {
+						errorMsgs.add("找不到相關書籍(書籍編號:" + Keywords + ")");
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+					// ===轉交資料===
+					req.setAttribute("list", list);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				// ===轉交資料===
-				req.setAttribute("list", list);
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookQuery.jsp");
-				failureView.forward(req, res);
-				return;
-				}
 			}
 		}
-		
+
 		// ===新增書籍===
 //		System.out.println(action);
-		if("insert".equals(action)) {
+		if ("insert".equals(action)) {
 //			System.out.println("新增書籍");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			// ---接受參數和格式驗證相關---
-			Integer bookClassNumber=Integer.valueOf(req.getParameter("bookClassNumber"));
-			Integer publishiingHouseCode=Integer.valueOf(req.getParameter("publishiingHouseCode"));
-			
+			Integer bookClassNumber = Integer.valueOf(req.getParameter("bookClassNumber"));
+			Integer publishiingHouseCode = Integer.valueOf(req.getParameter("publishiingHouseCode"));
+
 			// ---書名---
-			String bookTitle=req.getParameter("bookTitle");
+			String bookTitle = req.getParameter("bookTitle");
 			String reg1 = "^[(\u4e00-\u9fff),(a-zA-Z0-9),[^\n]]{1,30}$";
 			if (bookTitle.trim().length() == 0 || bookTitle == null) {
 				errorMsgs.add("請輸入書名");
 			} else if (!bookTitle.trim().matches(reg1)) {
 				errorMsgs.add("請輸入正確格式");
 			}
-			
+
 			// ---sibn---
 			String isbn = req.getParameter("isbn");
 			String reg2 = "^[0-9]{10,13}$";
@@ -293,7 +300,7 @@ public class BookProductsServlet extends HttpServlet {
 			} else if (!isbn.trim().matches(reg2)) {
 				errorMsgs.add("國際書碼格式錯誤");
 			}
-			
+
 			// ---出版日期---
 			java.sql.Date publicationDate = null;
 			try {
@@ -301,7 +308,6 @@ public class BookProductsServlet extends HttpServlet {
 			} catch (IllegalArgumentException e) {
 				errorMsgs.add("輸入的日期格式錯誤");
 			}
-			
 
 			// ---數量---
 			Integer stock = null;
@@ -310,7 +316,7 @@ public class BookProductsServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				errorMsgs.add("請輸入正確的數量格式");
 			}
-			
+
 			// ---價格---
 			Double price = null;
 			try {
@@ -318,70 +324,411 @@ public class BookProductsServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				errorMsgs.add("請輸入正確的價格格式");
 			}
-			
+
 			// ---書籍介紹---
 			String introductionContent = req.getParameter("introductionContent");
 			if (introductionContent.trim().length() == 0 || introductionContent == null) {
 				errorMsgs.add("請輸入內容");
 			}
-			
+
 			// ---作者---
 			List<String> authorList;
 			Gson gson = new Gson();
 			String authorsJson = req.getParameter("authors");
-			authorList = gson.fromJson(authorsJson, new TypeToken<List<String>>(){}.getType());
-
-			// ---圖片---
-			List<byte[]> imgs=new ArrayList<>();
-			byte[] fileBytes=null;
-			Collection<Part> fileParts = req.getParts().stream()
-	                .filter(part -> part.getName().startsWith("images"))
-	                .collect(Collectors.toList());
-			for (Part filePart : fileParts) {
-				fileBytes = toByteArray(filePart.getInputStream());
-				imgs.add(fileBytes);
+			authorList = gson.fromJson(authorsJson, new TypeToken<List<String>>() {
+			}.getType());
+			for (String string : authorList) {
+//				System.out.println(string);
 			}
-//			System.out.println(imgs.size());
-			
-			if(!errorMsgs.isEmpty()) {
-				BookProductsVO bpVO=new BookProductsVO();
+
+			if (!errorMsgs.isEmpty()) {
+				BookProductsVO bpVO = new BookProductsVO();
 				bpVO.setBookTitle(bookTitle);
 				bpVO.setIsbn(isbn);
 				bpVO.setPublicationDate(publicationDate);
 				bpVO.setStock(stock);
 				bpVO.setPrice(price);
 				bpVO.setIntroductionContent(introductionContent);
-				BookClassVO bcVO=new BookClassVO();
+				BookClassVO bcVO = new BookClassVO();
 				bcVO.setClassNumber(bookClassNumber);
 				bpVO.setBcVO(bcVO);
-				PublishingHouseVO phVO=new PublishingHouseVO();
+				PublishingHouseVO phVO = new PublishingHouseVO();
 				phVO.setPublishingHouseNumber(publishiingHouseCode);
 				bpVO.setPhVO(phVO);
-				
-				
+
 				req.setAttribute("authorList", authorList);
 				req.setAttribute("bpVO", bpVO);
-				RequestDispatcher failureView=req.getRequestDispatcher("/back-end/bookProducts/addBookProducts.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/addBookProducts.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+
+			// ---先處理作者的部分---
+			List<AuthorVO> authors = new ArrayList<>();
+			for (String name : authorList) {
+				AuthorService authorSce = new AuthorService();
+				AuthorVO arthor = authorSce.findByName(name.trim());
+				if (arthor == null) {
+					String reg3 = "^[a-zA-Z\\\\s'-]+$";
+					AuthorVO arthor2;
+					if (name.trim().matches(reg3)) {
+						authorSce.addAuth(null, name.trim());
+					} else {
+						authorSce.addAuth(name.trim(), null);
+					}
+					arthor2 = authorSce.findByName(name);
+					authors.add(arthor2);
+				} else {
+					authors.add(arthor);
+				}
+			}
+			// ---提交新增---
+			int result = bpSce.addBp(bookClassNumber, publishiingHouseCode, 0, bookTitle, isbn, price, publicationDate,
+					stock, introductionContent, authors);
+
+			if (result == -2) {
+				BookProductsVO bpVO = new BookProductsVO();
+				bpVO.setBookTitle(bookTitle);
+				bpVO.setIsbn(isbn);
+				bpVO.setPublicationDate(publicationDate);
+				bpVO.setStock(stock);
+				bpVO.setPrice(price);
+				bpVO.setIntroductionContent(introductionContent);
+				BookClassVO bcVO = new BookClassVO();
+				bcVO.setClassNumber(bookClassNumber);
+				bpVO.setBcVO(bcVO);
+				PublishingHouseVO phVO = new PublishingHouseVO();
+				phVO.setPublishingHouseNumber(publishiingHouseCode);
+				bpVO.setPhVO(phVO);
+
+				errorMsgs.add("ISBN已重複");
+				req.setAttribute("authorList", authorList);
+				req.setAttribute("bpVO", bpVO);
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/addBookProducts.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			// ---轉交結果---
+
+			if (result != -1&&result != -2) {
+				req.setAttribute("bookNumber", result);
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/addImge.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+
+		}
+
+		// ===書籍上架===
+		if ("book_shelving".equals(action)) {
+			// ---接受參數---
+			Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+			// ---提交上架---
+			BookProductsVO bpVO = bpSce.singleQueryBpNp(bookNumber);
+
+			LocalDate currentDate = LocalDate.now();
+			Date sqlDate = Date.valueOf(currentDate);
+			Integer productStatus = Integer.valueOf(1);
+			bpVO.setProductStatus(productStatus);
+			bpVO.setReleaseDate(sqlDate);
+
+			bpSce.book_shelving(bpVO);
+			// ---轉交結果---
+			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookProducts.jsp");
+			failureView.forward(req, res);
+			return;
+
+		}
+
+		// ===查詢單筆===
+		if ("getOne_For_Update".equals(action)) {
+			// ---接受參數---
+			Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+			// ---提交查詢---
+			BookProductsVO bpVO = bpSce.singleQueryBpNp(bookNumber);
+			// ---轉交資料---
+			req.setAttribute("bpVO", bpVO);
+			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/updateBookProducts.jsp");
+			failureView.forward(req, res);
+			return;
+		}
+
+		// ===修改資料===
+		if ("update".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			// ---接受參數和格式驗證相關---
+			Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+			Integer bookClassNumber = Integer.valueOf(req.getParameter("bookClassNumber"));
+			Integer publishiingHouseCode = Integer.valueOf(req.getParameter("publishiingHouseCode"));
+
+			// ---書名---
+			String bookTitle = req.getParameter("bookTitle");
+			String reg1 = "^[(\u4e00-\u9fff),(a-zA-Z0-9),[^\n]]{1,30}$";
+			if (bookTitle.trim().length() == 0 || bookTitle == null) {
+				errorMsgs.add("請輸入書名");
+			} else if (!bookTitle.trim().matches(reg1)) {
+				errorMsgs.add("請輸入正確格式");
+			}
+
+			// ---sibn---
+			String isbn = req.getParameter("isbn");
+			String reg2 = "^[0-9]{10,13}$";
+			if (isbn.trim().length() == 0 || isbn == null) {
+				errorMsgs.add("國際書碼不可空白");
+			} else if (!isbn.trim().matches(reg2)) {
+				errorMsgs.add("國際書碼格式錯誤");
+			}
+
+			// ---書籍狀態---
+			Integer productStatus = Integer.valueOf(req.getParameter("productStatus"));
+
+			// ---出版日期---
+			java.sql.Date publicationDate = null;
+			try {
+				publicationDate = java.sql.Date.valueOf(req.getParameter("publicationDate").trim());
+			} catch (IllegalArgumentException e) {
+				errorMsgs.add("輸入的日期格式錯誤");
+			}
+
+			// ---數量---
+			Integer stock = null;
+			try {
+				stock = Integer.valueOf(req.getParameter("stock"));
+			} catch (NumberFormatException e) {
+				errorMsgs.add("請輸入正確的數量格式");
+			}
+
+			// ---價格---
+			Double price = null;
+			try {
+				price = Double.valueOf(req.getParameter("price"));
+			} catch (NumberFormatException e) {
+				errorMsgs.add("請輸入正確的價格格式");
+			}
+
+			// ---書籍介紹---
+			String introductionContent = req.getParameter("introductionContent");
+			if (introductionContent.trim().length() == 0 || introductionContent == null) {
+				errorMsgs.add("請輸入內容");
+			}
+
+			// ---原本已有作者---
+			List<AuthorVO> author = (List<AuthorVO>) session.getAttribute("authorVOLsit");
+//			System.out.println(author.size());
+			// ---被刪除關聯的作者---
+			String[] stringValues = (String[]) req.getParameterValues("RemoveAuthor");
+//			for (String strValue : stringValues) {
+//                System.out.println(strValue);
+//            }
+			List<Integer> RemoveAuthor = new ArrayList<>();
+			if (stringValues != null) {
+	            for (String strValue : stringValues) {
+	                // 分割包含逗號的字符串
+	                String[] splitValues = strValue.split(",");
+	                for (String value : splitValues) {
+	                    try {
+	                        RemoveAuthor.add(Integer.parseInt(value.trim()));  // 移除多餘空格並轉換為整數
+	                    } catch (NumberFormatException e) {
+	                        // 處理轉換異常，例如記錄日志
+	                        System.err.println("Invalid number format: " + value);
+	                    }
+	                }
+	            }
+			}
+			//測試
+//			for (Integer authorNumber : RemoveAuthor) {
+//	            System.out.println(authorNumber);
+//	        }
+
+			// ---新增的作者---
+			List<String> authorList;
+			Gson gson = new Gson();
+			String authorsJson = req.getParameter("authors");
+			authorList = gson.fromJson(authorsJson, new TypeToken<List<String>>() {
+			}.getType());
+//			for (String string : authorList) {
+//				System.out.println(string);
+//			}
+
+			if (!errorMsgs.isEmpty()) {
+				errorMsgs.add("修改失敗");
+				BookProductsVO bpVOEm = new BookProductsVO();
+				bpVOEm.setBookNumber(bookNumber);
+				bpVOEm.setBookTitle(bookTitle);
+				bpVOEm.setIsbn(isbn);
+				bpVOEm.setProductStatus(productStatus);
+				bpVOEm.setPublicationDate(publicationDate);
+				bpVOEm.setStock(stock);
+				bpVOEm.setPrice(price);
+				bpVOEm.setAuthorVO(author);
+				bpVOEm.setIntroductionContent(introductionContent);
+				BookClassVO bcVOEm = new BookClassVO();
+				bcVOEm.setClassNumber(bookClassNumber);
+				bpVOEm.setBcVO(bcVOEm);
+				PublishingHouseVO phVOEm = new PublishingHouseVO();
+				phVOEm.setPublishingHouseNumber(publishiingHouseCode);
+				bpVOEm.setPhVO(phVOEm);
+//				System.out.println(bpVO.getAuthorVO().size());
+				req.setAttribute("RemoveAuthor", stringValues);
+				req.setAttribute("authorList", authorList);
+				req.setAttribute("bpVO", bpVOEm);
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/bookProducts/updateBookProducts.jsp");
 				failureView.forward(req, res);
 				return;
 			}
 			
-			// ---提交新增---
-			int result=bpSce.addBp(bookClassNumber, bookClassNumber, publishiingHouseCode, bookTitle, isbn, price, publicationDate, stock, introductionContent, publicationDate);
+			// ---書籍狀態的改變---
+			String mark=null;
+			BookProductsVO bpVOOriginal=bpSce.singleQueryBpNp(bookNumber);
+			if(bpVOOriginal.getProductStatus()!=productStatus) {
+				if(productStatus==1) {
+					mark="書籍被改為上架";
+				}
+			}
 			
+			// ---先處理作者的部分---
+			List<AuthorVO> authors = new ArrayList<>();
+			for (String name : authorList) {
+				AuthorService authorSce = new AuthorService();
+				AuthorVO arthor = authorSce.findByName(name.trim());
+				if (arthor == null) {
+					String reg3 = "^[a-zA-Z\\\\s'-]+$";
+					AuthorVO arthor2;
+					if (name.trim().matches(reg3)) {
+						authorSce.addAuth(null, name.trim());
+					} else {
+						authorSce.addAuth(name.trim(), null);
+					}
+					arthor2 = authorSce.findByName(name);
+					authors.add(arthor2);
+				} else {
+					authors.add(arthor);
+				}
+			}
+
+			// ---處理要被刪除關聯的作者---
+			List<AuthorVO> filteredAuthors = author.stream()
+					.filter(authorVO -> RemoveAuthor.contains(authorVO.getAuthorNumber()))
+					.collect(Collectors.toList());
+//			for(AuthorVO i:filteredAuthors) {
+//				System.out.println(i.getAuthorName());
+//			}
+			
+			// ---提交修改---
+			BookProductsVO bpVO = new BookProductsVO();
+			bpVO.setBookNumber(bookNumber);
+			bpVO.setBookTitle(bookTitle);
+			bpVO.setIsbn(isbn);
+			bpVO.setProductStatus(productStatus);
+			bpVO.setPublicationDate(publicationDate);
+			bpVO.setStock(stock);
+			bpVO.setPrice(price);
+			bpVO.setIntroductionContent(introductionContent);
+			BookClassVO bcVO = new BookClassVO();
+			bcVO.setClassNumber(bookClassNumber);
+			bpVO.setBcVO(bcVO);
+			PublishingHouseVO phVO = new PublishingHouseVO();
+			phVO.setPublishingHouseNumber(publishiingHouseCode);
+			bpVO.setPhVO(phVO);
+			if("書籍被改為上架".equals(mark)) {
+				LocalDate currentDate = LocalDate.now();
+				Date sqlDate = Date.valueOf(currentDate);
+				bpVO.setReleaseDate(sqlDate);
+			}
+			if (authors != null || authors.size() != 0) {
+				bpVO.setAuthorVO(authors);
+			}
+
+			// ---提交更改---
+			int result = bpSce.updateBp(bpVO);
+			if (result == -1) {
+				errorMsgs.add("修改失敗");
+				BookProductsVO bpVOEm = new BookProductsVO();
+				bpVOEm.setBookNumber(bookNumber);
+				bpVOEm.setBookTitle(bookTitle);
+				bpVOEm.setIsbn(isbn);
+				bpVOEm.setProductStatus(productStatus);
+				bpVOEm.setPublicationDate(publicationDate);
+				bpVOEm.setStock(stock);
+				bpVOEm.setPrice(price);
+				bpVOEm.setAuthorVO(author);
+				bpVOEm.setIntroductionContent(introductionContent);
+				BookClassVO bcVOEm = new BookClassVO();
+				bcVOEm.setClassNumber(bookClassNumber);
+				bpVOEm.setBcVO(bcVOEm);
+				PublishingHouseVO phVOEm = new PublishingHouseVO();
+				phVOEm.setPublishingHouseNumber(publishiingHouseCode);
+				bpVOEm.setPhVO(phVOEm);
+//				System.out.println(bpVO.getAuthorVO().size());
+				req.setAttribute("RemoveAuthor", stringValues);
+				req.setAttribute("authorList", authorList);
+				req.setAttribute("bpVO", bpVOEm);
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/bookProducts/updateBookProducts.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+			
+			if (result == -2) {
+				errorMsgs.add("國際書已重複");
+				BookProductsVO bpVOEm = new BookProductsVO();
+				bpVOEm.setBookNumber(bookNumber);
+				bpVOEm.setBookTitle(bookTitle);
+				bpVOEm.setIsbn(isbn);
+				bpVOEm.setProductStatus(productStatus);
+				bpVOEm.setPublicationDate(publicationDate);
+				bpVOEm.setStock(stock);
+				bpVOEm.setPrice(price);
+				bpVOEm.setAuthorVO(author);
+				bpVOEm.setIntroductionContent(introductionContent);
+				BookClassVO bcVOEm = new BookClassVO();
+				bcVOEm.setClassNumber(bookClassNumber);
+				bpVOEm.setBcVO(bcVOEm);
+				PublishingHouseVO phVOEm = new PublishingHouseVO();
+				phVOEm.setPublishingHouseNumber(publishiingHouseCode);
+				bpVOEm.setPhVO(phVOEm);
+//				System.out.println(bpVO.getAuthorVO().size());
+				req.setAttribute("RemoveAuthor", stringValues);
+				req.setAttribute("authorList", authorList);
+				req.setAttribute("bpVO", bpVOEm);
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/bookProducts/updateBookProducts.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			if (filteredAuthors.size() != 0 || filteredAuthors != null) {
+				SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+				Session sessionHibernate = sessionFactory.getCurrentSession();
+				for(AuthorVO authorVO:filteredAuthors) {
+					sessionHibernate.createNativeQuery("delete from book_author where bookNumber = :bookNumber and authorNumber = :authorNumber")
+					.setParameter("bookNumber", bookNumber)
+					.setParameter("authorNumber", authorVO.getAuthorNumber())
+					.executeUpdate();
+				}
+			}
+			
+			// ---轉交結果---
+			if (result == 1) {
+				session.removeAttribute("authorVOLsit");
+				RequestDispatcher failureView = req.getRequestDispatcher("");
+				failureView.forward(req, res);
+				return;
+			}
 		}
-		
 	}
-	
+
 	// ===前端圖片傳送處理===
-	private byte[] toByteArray(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int bytesRead;
-        byte[] data = new byte[1024];
-        while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, bytesRead);
-        }
-        buffer.flush();
-        return buffer.toByteArray();
-    }
+//	private byte[] toByteArray(InputStream inputStream) throws IOException {
+//        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+//        int bytesRead;
+//        byte[] data = new byte[1024];
+//        while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
+//            buffer.write(data, 0, bytesRead);
+//        }
+//        buffer.flush();
+//        return buffer.toByteArray();
+//    }
 }
