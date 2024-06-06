@@ -34,29 +34,31 @@
     <!--slider area start-->
     <section class="slider_section slider_s_two color_two mb-30">
         <div class="slider_area owl-carousel">
-            <div class="single_slider d-flex align-items-center" data-bgimg="${pageContext.request.contextPath}/front-end/assets/img/slider/slider3.jpg">
+            <div class="single_slider d-flex align-items-center" data-bgimg="${pageContext.request.contextPath}/front-end/assets/img/slider/slider9.jpg">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
                             <div class="slider_content slider_c_two">
-                                <h3>Top Selling!</h3>
-                                <h1>Men <span>Bag</span><br> & Backpack</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p> 
-                                <a class="button" href="shop.html">Read more</a>
+                                <h3>新書即將上市 ! </h3>
+                                <h1>行如海潮：<br><span>海洋與我們的故事</span></h1>
+                                <p>Move Like Water: A Story of the Sea and Its Creatures.</p>
+                                <p>作者：Hannah Stowe (漢娜‧史托)</p>
+                                <a class="button" href="#">出版日期：2024/06/18</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="single_slider d-flex align-items-center" data-bgimg="${pageContext.request.contextPath}/front-end/assets/img/slider/slider4.jpg">
+            <div class="single_slider d-flex align-items-center" data-bgimg="${pageContext.request.contextPath}/front-end/assets/img/slider/slider10.jpg">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
                             <div class="slider_content slider_c_two">
-                                <h3>Best Selling!</h3>
-                                <h1>The <span>New</span><br> Backpack</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p> 
-                                <a class="button" href="shop.html">Read more</a>
+                                <h3>新書即將上市 !</h3>
+                                <h1>生成式AI：<br><span>以ChatGPT</span> 與<br><span>OpenAI模型</span><br>實現高效創新</h1>
+                                <p>作者：Valentina Alto</p>
+                                <p>譯者：陳仁和</p> 
+                                <a class="button" href="#">出版日期：2024/06/19</a>
                             </div>
                         </div>
                     </div>
