@@ -4,16 +4,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.loginRecord.model.LoginRecordVO;
 
@@ -241,18 +232,25 @@ public class UserVO implements java.io.Serializable {
 
     public String getAccountStatus() {
         switch (this.accountStatusNumber) {
-            case 1: return "正常";
-            case 2: return "永久停權";
-            case 3: return "暫時停權7天";
-            default: return "未知狀態";
+            case 1:
+                return "正常";
+            case 2:
+                return "永久停權";
+            case 3:
+                return "暫時停權7天";
+            default:
+                return "未知狀態";
         }
     }
 
     public String getUserRole() {
         switch (this.accessNumber) {
-            case 1: return "後台管理員";
-            case 2: return "一般會員";
-            default: return "未知權限";
+            case 1:
+                return "一般會員";
+            case 2:
+                return "後台管理員";
+            default:
+                return "未知權限";
         }
     }
 

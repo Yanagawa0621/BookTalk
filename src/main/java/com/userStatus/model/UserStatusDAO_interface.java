@@ -5,8 +5,7 @@ import java.util.List;
 public interface UserStatusDAO_interface {
     void save(UserStatusVO userStatus);
     void update(UserStatusVO userStatus);
-    void delete(Integer userStatus);
-    UserStatusVO findByPrimaryKey(Integer userStatus);
+    void delete(Integer number);
+    UserStatusVO findByPrimaryKey(Integer number);
     List<UserStatusVO> getAll();
 }
-

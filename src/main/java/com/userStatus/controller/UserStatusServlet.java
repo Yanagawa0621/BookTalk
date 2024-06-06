@@ -2,13 +2,12 @@ package com.userStatus.controller;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import com.userStatus.model.UserStatusDAO;
 import com.userStatus.model.UserStatusService;
 import com.userStatus.model.UserStatusServiceImpl;
 import com.userStatus.model.UserStatusVO;
@@ -20,8 +19,7 @@ public class UserStatusServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        // Initialize the implementation of UserStatusService
-        userStatusService = new UserStatusServiceImpl(); // You should inject an instance of UserStatusService based on your actual setup
+        userStatusService = new UserStatusServiceImpl(new UserStatusDAO());
     }
 
     @Override

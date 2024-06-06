@@ -1,42 +1,45 @@
 package com.loginRecord.model;
 
 import java.util.List;
+import org.hibernate.SessionFactory;
+import util.HibernateUtil;
 
 public class LoginRecordServiceImpl implements LoginRecordService {
 
-    private LoginRecordDAO_interface loginRecordDAO;
+    private LoginRecordDAO_interface dao;
 
-    public LoginRecordServiceImpl(LoginRecordDAO_interface loginRecordDAO) {
-        this.loginRecordDAO = loginRecordDAO;
+    public LoginRecordServiceImpl() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        dao = new LoginRecordDAO(sessionFactory);
     }
 
     @Override
     public void addLoginRecord(LoginRecordVO loginRecord) {
-        loginRecordDAO.save(loginRecord);
+        dao.save(loginRecord);
     }
 
     @Override
     public void updateLoginRecord(LoginRecordVO loginRecord) {
-        loginRecordDAO.update(loginRecord);
+        dao.update(loginRecord);
     }
 
     @Override
     public void deleteLoginRecord(Integer number) {
-        loginRecordDAO.delete(number);
+        dao.delete(number);
     }
 
     @Override
-    public LoginRecordVO getLoginRecordByNumber(Integer number) {
-        return loginRecordDAO.findByPrimaryKey(number);
+    public LoginRecordVO getLoginRecord(Integer number) {
+        return dao.findByPrimaryKey(number);
     }
 
     @Override
     public List<LoginRecordVO> getAllLoginRecords() {
-        return loginRecordDAO.getAll();
+        return dao.getAll();
     }
 
     @Override
     public List<LoginRecordVO> getLoginRecordsByUserNumber(Integer userNumber) {
-        return loginRecordDAO.findByUserNumber(userNumber);
+        return dao.findByUserNumber(userNumber);
     }
 }

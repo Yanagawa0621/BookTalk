@@ -45,4 +45,4 @@
 <script src="${pageContext.request.contextPath}/back-end/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="${pageContext.request.contextPath}/back-end/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Tempusdominus Bootstrap 4 - datetimepicker locales -->
-<script src="${pageContext.request.contextPath}/plugins/moment/locales.min.js"></script>
+<script src="${pageContext.request.contextPath}/back-end/plugins/moment/locales.min.js"></script>

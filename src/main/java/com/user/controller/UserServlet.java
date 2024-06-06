@@ -20,15 +20,23 @@ import com.user.model.DuplicateFieldException;
 import com.user.model.UserService;
 import com.user.model.UserServiceImpl;
 import com.user.model.UserVO;
+import com.user.model.UserDAO;
+import com.administrator.model.AdministratorService;
+import com.administrator.model.AdministratorServiceImpl;
+import com.administrator.model.AdministratorVO;
 
-@MultipartConfig(maxFileSize = 2 * 1024 * 1024) // 設定最大文件大小為 2MB
+@MultipartConfig(maxFileSize = 2 * 1024 * 1024) // 設置最大文件大小為 2MB
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private UserService userService;
+    private AdministratorService administratorService;
 
     @Override
     public void init() throws ServletException {
-        userService = new UserServiceImpl();
+        super.init();
+        this.userService = new UserServiceImpl(new UserDAO());
+        this.administratorService = new AdministratorServiceImpl();
     }
 
     @Override
@@ -47,12 +55,20 @@ public class UserServlet extends HttpServlet {
             action = "list";
         }
 
+        System.out.println("Content Type: " + request.getContentType()); // 添加日誌輸出
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             try {
                 switch (action) {
                     case "list":
                         listUsers(request, response);
+                        break;
+                    case "listMembers":
+                        listMembers(request, response);
+                        break;
+                    case "listAdmins":
+                        listAdmins(request, response);
                         break;
                     case "edit":
                         showEditForm(request, response);
@@ -61,10 +77,20 @@ public class UserServlet extends HttpServlet {
                         deleteUser(request, response);
                         break;
                     case "add":
-                        addUser(request, response);
+                        if (isMultipartContent(request)) {
+                            addUser(request, response);
+                        } else {
+                            System.out.println("表單內容類型錯誤: " + request.getContentType());
+                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
+                        }
                         break;
                     case "update":
-                        updateUser(request, response);
+                        if (isMultipartContent(request)) {
+                            updateUser(request, response);
+                        } else {
+                            System.out.println("表單內容類型錯誤: " + request.getContentType());
+                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
+                        }
                         break;
                     default:
                         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
@@ -78,10 +104,27 @@ public class UserServlet extends HttpServlet {
         }
     }
 
+    private boolean isMultipartContent(HttpServletRequest request) {
+        String contentType = request.getContentType();
+        return contentType != null && contentType.startsWith("multipart/form-data");
+    }
+
     private void listUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<UserVO> userList = userService.getAllUsers();
         request.setAttribute("userList", userList);
         request.getRequestDispatcher("/back-end/user/users.jsp").forward(request, response);
+    }
+
+    private void listMembers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<UserVO> memberList = userService.getUsersByRole(1); // 1 代表一般會員
+        request.setAttribute("userList", memberList);
+        request.getRequestDispatcher("/back-end/user/members.jsp").forward(request, response);
+    }
+
+    private void listAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<UserVO> adminList = userService.getUsersByRole(2); // 2 代表後台管理員
+        request.setAttribute("userList", adminList);
+        request.getRequestDispatcher("/back-end/user/admins.jsp").forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -109,12 +152,36 @@ public class UserServlet extends HttpServlet {
         try {
             UserVO user = parseUserFromRequest(request);
             user.setNumber(Integer.parseInt(request.getParameter("number")));
+            
+            // 获取原始使用者信息
+            UserVO originalUser = userService.getUserByNumber(user.getNumber());
+            Integer originalAccessNumber = originalUser.getAccessNumber();
+            
             userService.updateUser(user);
+
+            if (originalAccessNumber == 2 && user.getAccessNumber() != 2) { // 如果從 "後台管理員" 變更為其他角色
+                administratorService.deleteAdministrator(user.getAccount());
+            } else if (user.getAccessNumber() == 2) { // 如果新權限是 "後台管理員"
+                AdministratorVO admin = administratorService.getAdministratorByAccount(user.getAccount());
+                if (admin == null) {
+                    admin = new AdministratorVO();
+                    admin.setAccount(user.getAccount());
+                    admin.setPasscode(user.getPasscode());
+                    admin.setName(user.getName());
+                    administratorService.addAdministrator(admin);
+                } else {
+                    admin.setPasscode(user.getPasscode());
+                    admin.setName(user.getName());
+                    administratorService.updateAdministrator(admin);
+                }
+            }
+
             response.sendRedirect(request.getContextPath() + "/user?action=list");
         } catch (DuplicateFieldException e) {
             handleException(request, response, e, "/back-end/user/editUser.jsp", request);
         }
     }
+
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer number = Integer.parseInt(request.getParameter("number"));
@@ -123,6 +190,10 @@ public class UserServlet extends HttpServlet {
     }
 
     private UserVO parseUserFromRequest(HttpServletRequest request) throws IOException, ServletException, DuplicateFieldException {
+        if (!isMultipartContent(request)) {
+            throw new ServletException("表單必須設置為 multipart/form-data");
+        }
+
         String account = request.getParameter("account");
         String passcode = request.getParameter("passcode");
         String name = request.getParameter("name");
@@ -189,18 +260,18 @@ public class UserServlet extends HttpServlet {
         user.setCity(city);
         user.setDistrict(district);
         user.setAddress(address);
-        user.setStatusStartDate(statusStartDate);
-        user.setRegisterDate(registerDate);
         user.setAccountStatusNumber(accountStatusNumber);
         user.setAccessNumber(accessNumber);
+        user.setStatusStartDate(statusStartDate);
+        user.setRegisterDate(registerDate);
+
         return user;
     }
 
-    private void handleException(HttpServletRequest request, HttpServletResponse response, DuplicateFieldException e, String formPage, HttpServletRequest originalRequest) throws ServletException, IOException {
-        request.setAttribute("errorMessage", Map.of(e.getField(), e.getMessage()));
-        for (Map.Entry<String, String[]> entry : originalRequest.getParameterMap().entrySet()) {
-            request.setAttribute(entry.getKey(), entry.getValue()[0]);
-        }
-        request.getRequestDispatcher(formPage).forward(request, response);
+    private void handleException(HttpServletRequest request, HttpServletResponse response, DuplicateFieldException e, String jspPath, Object obj) throws ServletException, IOException {
+        Map<String, String> errorMessage = e.getErrorMessage();
+        request.setAttribute("errorMessage", errorMessage);
+        request.setAttribute("user", obj);
+        request.getRequestDispatcher(jspPath).forward(request, response);
     }
 }

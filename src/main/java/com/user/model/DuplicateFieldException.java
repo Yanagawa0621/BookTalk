@@ -1,14 +1,17 @@
 package com.user.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DuplicateFieldException extends Exception {
-    private String field;
+    private final Map<String, String> errorMessage;
 
     public DuplicateFieldException(String field, String message) {
-        super(message);
-        this.field = field;
+        errorMessage = new HashMap<>();
+        errorMessage.put(field, message);
     }
 
-    public String getField() {
-        return field;
+    public Map<String, String> getErrorMessage() {
+        return errorMessage;
     }
 }

@@ -333,10 +333,11 @@ CREATE TABLE user_status (
     statusName VARCHAR(20) COMMENT '狀態名稱',
     statusDescribe VARCHAR(50) COMMENT '狀態說明',
     statusDays INTEGER COMMENT '狀態天數'
-) COMMENT '會員狀態 user_status';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '會員狀態 user_status';
 
-INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('1','1',7);
-INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('2','2',0);
+INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('正常','正常狀態',0);
+INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('暫時停權7天','暫時停權7天',7);
+INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('永久停權','永久停權',0);
 
 -- 權限 --
 CREATE TABLE access (
@@ -345,7 +346,8 @@ CREATE TABLE access (
     accessDescribe VARCHAR(50) COMMENT '權限說明'
 ) COMMENT '權限 access';
 
-INSERT INTO access (name, accessDescribe) VALUES ('1', '描述1');
+INSERT INTO access (accessNumber, name, accessDescribe) VALUES (1, '一般會員', '一般會員的描述');
+INSERT INTO access (accessNumber, name, accessDescribe) VALUES (2, '後台管理員', '後台管理員的描述');
 
 -- 會員 --
 CREATE TABLE user (
@@ -387,13 +389,15 @@ VALUES
 CREATE TABLE login_record (
     number INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '編號',
     userNumber INTEGER NOT NULL COMMENT '會員編號',
+    account VARCHAR(20) NULL COMMENT '帳號',
     loginTime DATETIME COMMENT '登入時間',
     ip VARCHAR(45) COMMENT 'IP位址',
     area VARCHAR(20) COMMENT '地區',
+    userType VARCHAR(20) COMMENT '區分使用者類型',
     CONSTRAINT fk_login_record_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '登入紀錄 login_record';
 
-INSERT INTO login_record (userNumber, loginTime, ip, area) VALUES (1, '1981-11-17 11:12:13', '1', 'taiwan');
+INSERT INTO login_record (userNumber, loginTime, ip, area, userType) VALUES (1, '1981-11-17 11:12:13', '1', 'taiwan', 'user');
 
 -- 申訴 --
 CREATE TABLE complaint (

@@ -48,7 +48,7 @@
 	                <h3 class="card-title">${orderVO.orderNumber}號訂單</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
-		              <form method="post" name="updateOrderForm" action="${pageContext.request.contextPath}/order/order.do" class="needs-validation" novalidate>
+		              <form method="post" id="updateOrderForm" action="${pageContext.request.contextPath}/order/order.do" class="needs-validation" novalidate>
 		                <table id="updateOrder" class="table table-bordered table-hover">
 		                	<tbody>
 		                		<tr>
@@ -62,13 +62,37 @@
 		                		<tr>
 		                			<th class="align-middle">訂單狀態：</th>
 		                			<td>
-		                				<select name="orderStatus" class="form-control" style="width: 30%">	                										
-											<option value="1" ${(orderVO.orderStatus == 1)?'selected':''} >待處理</option>
-											<option value="2" ${(orderVO.orderStatus == 2)?'selected':''}>已確認</option>	
-											<option value="3" ${(orderVO.orderStatus == 3)?'selected':''}>已出貨/運送中</option>
-											<option value="4" ${(orderVO.orderStatus == 4)?'selected':''}>已送達/已完成</option>
-											<option value="0" ${(orderVO.orderStatus == 0)?'selected':''} >取消</option>	
+		                				<select name="orderStatus" class="form-control" style="width: 30%">
+		                					<c:if test = "${orderVO.orderStatus == 0 ||  orderVO.orderStatus == 1 || orderVO.orderStatus == 2}">		                					
+		                						<option value="1" ${(orderVO.orderStatus == 1)?'selected':''}>待處理</option>
+												<option value="2" ${(orderVO.orderStatus == 2)?'selected':''}>待出貨</option>	
+		                						<option value="3" ${(orderVO.orderStatus == 3)?'selected':''}>已出貨</option>
+			                    				<option value="0" ${(orderVO.orderStatus == 0)?'selected':''}>取消</option>
+			                    			</c:if>
+			                    			<c:if test = "${orderVO.orderStatus == 3}">
+												<option value="3" selected>已出貨</option>
+			                    			</c:if>
+			                    			<c:if test = "${orderVO.orderStatus == 4}">
+			                    				<option value="4" selected>已完成 (尚未評價)</option>
+			                    			</c:if>
+			                    			<c:if test = "${orderVO.orderStatus == 5}">
+			                    				<option value="5" selected>已完成</option>
+			                    			</c:if>
 										</select>		                			
+		                			</td>
+		                		</tr>
+		                		<tr>
+		                			<th class="align-middle">訂單明細：</th>
+		                			<td>
+		                				<ul>
+			                				<c:forEach var="orderDetailsVOs" items="${orderDetails}">
+			                					 <li>
+			                					 	<img src="${pageContext.request.contextPath}/bap/Img?bookNumber=${orderDetailsVOs.bookNumber}" width="70px" alt="">
+			                					 	${orderDetailsVOs.bookProductsVO.bookTitle} - 單價：$ ${orderDetailsVOs.unitPrice}  - 數量：${orderDetailsVOs.quantity}
+			                					 </li>
+			                					 <br>
+			                				</c:forEach>
+		                				</ul>              			
 		                			</td>
 		                		</tr>
 		                		<tr>
@@ -79,18 +103,45 @@
 		                			<th class="align-middle">出貨時間：</th>
 		                			<td>
 		                				<div class="input-group date"  id="reservationdatetime" data-target-input="nearest" style="width: 30%">
-					                        <input type="text" name="shippingTime" class="form-control datetimepicker-input" data-target="#reservationdatetime" value="${orderVO.shippingTime}" />
-					                        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
-					                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-					                        </div>
+<%-- 		                					<c:choose> --%>
+<%-- 			                            		<c:when test="${orderVO.orderStatus == 2}"> --%>
+<%-- 			                            			<input type="text" name="shippingTime" class="form-control datetimepicker-input" data-target="#reservationdatetime" value="${orderVO.shippingTime}" required/> --%>
+<!-- 							                        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker"> -->
+<!-- 							                            <div class="input-group-text"><i class="fa fa-calendar"></i></div> -->
+<!-- 							                        </div> -->
+<%-- 											    </c:when> --%>
+<%-- 											    <c:otherwise> --%>
+											        <input type="text" name="shippingTime" class="form-control datetimepicker-input" data-target="#reservationdatetime" value="${orderVO.shippingTime}" disabled="disabled"/>									    
+											    	<div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+							                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+							                        </div>
+<%-- 											    </c:otherwise> --%>
+<%-- 											</c:choose> --%>
+											<div class="invalid-tooltip">
+	          									請選出貨時間         							
+	        								</div>
 					                    </div>
 							        </td>
 		                		</tr>
 		                		<tr>
+		                			<th class="align-middle">完成時間：</th>
+		                			<td>${orderVO.completeTime}</td>
+		                		</tr>
+		                		<tr>
 		                			<th class="align-middle">收件人：</th>
 		                			<td>
-		                				<div class="input-group" style="width: 30%" >	
-			                				<input type="text" name="receiver" class="form-control" value="${orderVO.receiver}" required>
+		                				<div class="input-group" style="width: 30%" >
+		                					<c:choose>
+			                            		<c:when test="${orderVO.orderStatus == 1}">
+			                            			<input type="text" name="receiver" class="form-control" value="${orderVO.receiver}" required>
+											    </c:when>
+											    <c:when test="${orderVO.orderStatus == 2}">
+			                            			<input type="text" name="receiver" class="form-control" value="${orderVO.receiver}" required>
+											    </c:when>
+											    <c:otherwise>
+											       	<input type="text" name="receiver" class="form-control" value="${orderVO.receiver}" disabled="disabled" required>									    
+											    </c:otherwise>
+											</c:choose>
 			                				<div class="invalid-tooltip">
 	          									收件人請勿空白         							
 	        								</div>
@@ -100,8 +151,18 @@
 		                		<tr>		                			
 		                			<th class="align-middle">收件地址：</th>		                			
 		                			<td>
-		                				<div class="input-group" style="width: 50%" >		                			
-		                					<input type="text" name="shippingAddress" class="form-control" value="${orderVO.shippingAddress}" required>
+		                				<div class="input-group" style="width: 50%" >
+		                					<c:choose>
+			                            		<c:when test="${orderVO.orderStatus == 1}">
+			                            			<input type="text" name="shippingAddress" class="form-control" value="${orderVO.shippingAddress}" required>
+											    </c:when>
+											    <c:when test="${orderVO.orderStatus == 2}">
+			                            			<input type="text" name="shippingAddress" class="form-control" value="${orderVO.shippingAddress}" required>
+											    </c:when>
+											    <c:otherwise>
+											       	<input type="text" name="shippingAddress" class="form-control" value="${orderVO.shippingAddress}" disabled="disabled" required>									    
+											    </c:otherwise>
+											</c:choose>
 		                					<div class="invalid-tooltip">
 	          									收件地址請勿空白      							
 	        								</div>
@@ -109,46 +170,68 @@
 		                			</td>
 		                		</tr>
 		                		<tr>
-		                			<th class="align-middle">運費：</th>
+		                			<th class="align-middle">手機：</th>
 		                			<td>
-		                				<div class="input-group" style="width: 30%" >		                			
-		                					<input type="text" name="deliveryFee" class="form-control" value="${orderVO.deliveryFee}" required>
-		                					<div class="invalid-tooltip">
-	          									請輸入運費      							
+		                				<div class="input-group" style="width: 30%" >
+		                					<c:choose>
+			                            		<c:when test="${orderVO.orderStatus == 1}">
+			                            			<input type="text" name="telephone" id="checkTel" class="form-control" value="${orderVO.telephoneNumber}" required>
+											    </c:when>
+											    <c:when test="${orderVO.orderStatus == 2}">
+			                            			<input type="text" name="telephone" id="checkTel" class="form-control" value="${orderVO.telephoneNumber}" required>
+											    </c:when>
+											    <c:otherwise>
+											       	<input type="text" name="telephone" id="checkTel" class="form-control" value="${orderVO.telephoneNumber}" disabled="disabled" required>									    
+											    </c:otherwise>
+											</c:choose>
+			                				<div class="invalid-tooltip">
+	          									手機號碼請勿空白         							
 	        								</div>
-		                				</div>
+        								</div>
 		                			</td>
 		                		</tr>
 		                		<tr>
+		                			<th class="align-middle">運費：</th>
+		                			<td>${orderVO.deliveryFee}</td>
+		                		</tr>
+		                		<tr>
 		                			<th class="align-middle">總金額：</th>
-		                			<td>
-		                				<div class="input-group" style="width: 30%" >		                			
-		                					<input type="text" name="total" class="form-control" value="${orderVO.total}" required>
-		                					<div class="invalid-tooltip">
-	          									請輸入總金額     							
-	        								</div>
-		                				</div>
-		                			</td>
+		                			<td>${orderVO.total}</td>
 		                		</tr>
 		                		<tr>
 		                			<th class="align-middle">備註：</th>
 		                			<td>
-		                				<textarea name="note" class="form-control" style="width: 50%;">${orderVO.note}</textarea>
+		                				<c:choose>
+			                            	<c:when test="${orderVO.orderStatus == 1}">
+			                            		<textarea name="note" class="form-control" style="width: 50%;">${orderVO.note}</textarea>
+											</c:when>
+											<c:when test="${orderVO.orderStatus == 2}">
+			                            		<textarea name="note" class="form-control" style="width: 50%;">${orderVO.note}</textarea>
+											</c:when>
+											<c:otherwise>
+											    <textarea name="note" class="form-control" style="width: 50%;" disabled="disabled">${orderVO.note}</textarea>								    
+											</c:otherwise>
+										</c:choose>
 		                			</td>
 		                		</tr>					               
 			              	</tbody>
 		                </table>
 		                <div class="row">
-		                	<div class="col-md-1 offset-md-10">
-			                	<button type="submit" class="btn btn-block bg-gradient-primary btn">送出修改</button>
+		                	<div class="col-md-1 offset-md-10" id="confirmArea">
+		                		<c:choose>
+			                        <c:when test="${orderVO.orderStatus == 1}">
+			                            <button type="submit" class="btn btn-block bg-gradient-primary btn">確定</button>
+									</c:when>
+									<c:when test="${orderVO.orderStatus == 2}">
+			                            <button type="submit" class="btn btn-block bg-gradient-primary btn">確定</button>
+									</c:when>
+								</c:choose>
 								<input type="hidden" name="orderNumber"  value="${orderVO.orderNumber}">
-								<input type="hidden" name="userNumber"  value="${orderVO.userNumber}">
-								<input type="hidden" name="establishmentTime"  value="${orderVO.establishmentTime}">
 								<input type="hidden" name="action"	value="update">	 
 		                	</div>
 		                	<div class="col-md-1">
-		                	 	<a href="${pageContext.request.contextPath}/back-end/order/order.jsp">
-									<button type="button" class="btn btn-block bg-gradient-danger">取消</button>
+		                	 	<a href="${pageContext.request.contextPath}/order/order.do?action=getAll">
+									<button type="button" class="btn btn-block bg-gradient-danger">返回</button>
 								</a>
 		                	</div>
 		                </div>
@@ -172,8 +255,8 @@
 	<!-- js -->
 	<%@include file="/back-end/component/script.jsp" %>
 	<!-- Page specific script -->
-	<script>
-	$(function(){
+<script>
+	$(function(){	
 		//Date and time picker
 	    $('#reservationdatetime').datetimepicker({
 	    	locale: 'zh-tw',
@@ -199,11 +282,69 @@
 		    });
 		  }, false);
 		})();
+	 
+	
 		
-		
+	 $(document).on("change", "select.form-control", function(){
+		 if(this.value == 0){			
+				$("#reservationdatetime").children("input").prop("disabled", true);	
+				$("#confirmArea").children("button").replaceWith('<button type="button" class="btn btn-block bg-gradient-primary btn" id="cancelButton">取消訂單</button>');
+		}
+				 
+		if(this.value == 1 || this.value == 2){
+				$("#reservationdatetime").children("input").prop("disabled", true);	
+				$("#confirmArea").children("button").replaceWith('<button type="submit" class="btn btn-block bg-gradient-primary btn">確定</button>');
+		}
+				 
+		if(this.value == 3){
+			let html =`
+			<input type="text" name="shippingTime" class="form-control datetimepicker-input" data-target="#reservationdatetime" value="${orderVO.shippingTime}" required/>
+		        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+		            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+		        </div>
+			`;
+				$("#reservationdatetime").children("input").prop("disabled", false).prop('required', true);
+				$("#confirmArea").children("button").replaceWith('<button type="submit" class="btn btn-block btn-warning btn">出貨</button>');
+		}
+
+	 });
+	 
+	 
+	 $(document).on("click", "#cancelButton", function(event){
+		 event.preventDefault();
+		 event.stopPropagation();
+		 if(confirm("是否取消訂單？")){
+			 $("#updateOrderForm").submit();
+		 }
+	 });
+	
+ 
+	 $('#checkTel').on('input', function() {	//手機號碼可直接輸入數字，幫使用者自動加上-
+	        let input = $(this).val().replace(/\D/g, ''); // 移除所有非數字字符
+	        console.log('Input after removing non-digits:', input);
+	        let formattedInput = '';
+
+	        if (input.length > 0) {
+	            formattedInput += input.substring(0, 4);
+	            console.log('Formatted input after first segment:', formattedInput);
+	        }
+	        if (input.length > 4) {
+	            formattedInput += '-' + input.substring(4, 7);
+	            console.log('Formatted input after second segment:', formattedInput);
+	        }
+	        if (input.length > 7) {
+	            formattedInput += '-' + input.substring(7, 10);
+	            console.log('Formatted input after third segment:', formattedInput);
+	        }
+
+	        $(this).val(formattedInput);
+	        console.log('Final formatted input:', formattedInput);
 	});
+	 
+	 
+});
 		
-	</script>
+</script>
 	
 
 </body>
