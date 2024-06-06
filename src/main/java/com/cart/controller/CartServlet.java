@@ -1,6 +1,7 @@
 package com.cart.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cart.model.CartService;
 import com.cart.model.CartVO;
@@ -35,6 +37,7 @@ public class CartServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		String forwardPath = "";
@@ -68,7 +71,16 @@ public class CartServlet extends HttpServlet {
 	}
 	
 	private void addItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		String tempUserNumber = req.getParameter("userNumber");
+		Integer userNumber = 0;
+		
+		if(tempUserNumber != null) {
+			userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		}else {
+			HttpSession session = req.getSession();
+			userNumber = (Integer) session.getAttribute("userNumber");	
+		}
+		
 		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
 		String bookTitle = req.getParameter("bookTitle");
 		Double bookPrice = Double.valueOf(req.getParameter("bookPrice"));
@@ -95,7 +107,16 @@ public class CartServlet extends HttpServlet {
 	}
 	
 	private void updateItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		String tempUserNumber = req.getParameter("userNumber");
+		Integer userNumber = 0;
+		
+		if(tempUserNumber != null) {
+			userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		}else {
+			HttpSession session = req.getSession();
+			userNumber = (Integer) session.getAttribute("userNumber");	
+		}
+		
 		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
 		Double bookPrice = Double.valueOf(req.getParameter("bookPrice"));
 		Integer quantity = Integer.valueOf(req.getParameter("quantity"));
@@ -119,7 +140,14 @@ public class CartServlet extends HttpServlet {
 
 	private void getAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String userNumber = req.getParameter("userNumber");
-		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
+		List<CartVO> cartList = new ArrayList<>();
+		if(userNumber != null) {	//如果js檔有userNumber的話
+			cartList = cartService.getCartItems(Integer.valueOf(userNumber));
+		}else {		//沒有userNumber，直接抓session裡的
+			HttpSession session = req.getSession();
+			cartList = cartService.getCartItems((Integer) session.getAttribute("userNumber"));
+		}	
+		
 		String jsonStr = new Gson().toJson(cartList);
 		
 		System.out.println(jsonStr);
@@ -130,7 +158,16 @@ public class CartServlet extends HttpServlet {
 	}
 	
 	private void removeOne(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		String tempUserNumber = req.getParameter("userNumber");
+		Integer userNumber = 0;
+		
+		if(tempUserNumber != null) {
+			userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		}else {
+			HttpSession session = req.getSession();
+			userNumber = (Integer) session.getAttribute("userNumber");	
+		}
+		
 		Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
 		String status = "";
 		if(cartService.removeItemFromCart(userNumber, bookNumber) == 1) {
@@ -143,7 +180,15 @@ public class CartServlet extends HttpServlet {
 	}
 	
 	private void cleanAll(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		String tempUserNumber = req.getParameter("userNumber");
+		Integer userNumber = 0;
+		
+		if(tempUserNumber != null) {
+			userNumber = Integer.valueOf(req.getParameter("userNumber"));
+		}else {
+			HttpSession session = req.getSession();
+			userNumber = (Integer) session.getAttribute("userNumber");	
+		}
 
 		String status = "";
 		if(cartService.clearCart(userNumber) == 1) {
@@ -157,8 +202,13 @@ public class CartServlet extends HttpServlet {
 	
 	private String getCheckItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String userNumber = req.getParameter("userNumber");
-		List<CartVO> cartList = cartService.getCartItems(Integer.valueOf(userNumber));
-		
+		List<CartVO> cartList = new ArrayList<>();
+		if(userNumber != null) {	//如果js檔有userNumber的話
+			cartList = cartService.getCartItems(Integer.valueOf(userNumber));
+		}else {		//沒有userNumber，直接抓session裡的
+			HttpSession session = req.getSession();
+			cartList = cartService.getCartItems((Integer) session.getAttribute("userNumber"));
+		}		
 
 		String subtotalSum = req.getParameter("subtotalSum");
         String deliveryFee = req.getParameter("deliveryFee");

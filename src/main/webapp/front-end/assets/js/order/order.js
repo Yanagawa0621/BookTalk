@@ -1,7 +1,7 @@
 
 
 $(function(){
-	var userNumber = 4;
+	var userNumber = null;
 	var contextPath = document.querySelector('meta[name="contextPath"]').getAttribute('content'); //${pageContext.request.contextPath}
 	var path = contextPath + "/order/order.do";	//url使用
 	
@@ -31,7 +31,7 @@ $(function(){
 					   	listHtml += `<td>取消</td>`;
 				   	}
 				   	if(order.orderStatus == 1){
-					   	listHtml += `<td>已確認</td>`;
+					   	listHtml += `<td>待確認</td>`;
 				   	}
 				   	if(order.orderStatus == 2){
 					   	listHtml += `<td>待出貨</td>`;

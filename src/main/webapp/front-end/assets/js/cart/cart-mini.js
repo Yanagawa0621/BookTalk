@@ -1,8 +1,9 @@
 
-var userNumber = 4;
+//var userNumber = 4;
+var userNumber = $("#getUserNumber").val();
 var contextPath = document.querySelector('meta[name="contextPath"]').getAttribute('content'); //${pageContext.request.contextPath}
 var path = contextPath + "/cart/cart.do";	//url使用
-
+console.log("JS檔的：" + userNumber);
 
 $(function(){
 	initMiniCart();	//呼叫頁面載入時取得資料

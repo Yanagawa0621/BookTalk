@@ -144,7 +144,7 @@
                             </div>
                              <div class="order_button" align="right">
                                 <button type="button" id="checkGoCheckout" class="btn btn-primary">去付款</button>
-                                <input type="hidden" name="userNumber" value="4">	<!-- 先將會員編號設死，實際要動態取得 -->
+                                <input type="hidden" name="userNumber" value="${cartList[0].userNumber}">	<!-- 會員編號 -->
                                 <input type="hidden" name="action" value="checkout">	
                             </div>              
                     	</div>
