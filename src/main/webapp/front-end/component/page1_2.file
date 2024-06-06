@@ -1,0 +1,46 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%  
+    // 確保初始值不覆蓋現有的 URL 參數
+    int rowsPerPage = 9;  // 每頁的筆數    
+    int rowNumber = 0;    // 總筆數
+    int pageNumber = 0;   // 總頁數      
+    int whichPage = 1;    // 第幾頁
+    int[] pageIndexArray = null;
+    int pageIndex = 0; 
+    
+    // 取得現有的 URL 參數
+    String queryString = request.getQueryString();
+    
+    // 計算資料總筆數和分頁相關資訊
+    rowNumber = oneBcVO.getBpVO().size();
+    if (rowNumber % rowsPerPage != 0)
+        pageNumber = rowNumber / rowsPerPage + 1;
+    else
+        pageNumber = rowNumber / rowsPerPage;    
+
+    pageIndexArray = new int[pageNumber]; 
+    for (int i = 1; i <= pageIndexArray.length; i++)
+        pageIndexArray[i - 1] = i * rowsPerPage - rowsPerPage;
+
+    // 處理可能的 URL 參數異常情況
+    try {
+        String whichPageParam = request.getParameter("whichPage");
+        if (whichPageParam != null) {
+            whichPage = Integer.parseInt(whichPageParam);
+        }
+        if (whichPage < 1 || whichPage > pageNumber) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        pageIndex = pageIndexArray[whichPage - 1];
+    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        // 錯誤處理：第一次執行或頁數超出範圍時的預設處理
+        whichPage = 1;
+        pageIndex = 0;
+    } 
+%>
+
+<% if (pageNumber > 0) { %>
+    <b><font color="red">第<%= whichPage %>/<%= pageNumber %>頁</font></b>
+<% } %>
+
+<b>●符 合 查 詢 條 件 如 下 所 示: 共<font color="red"><%= rowNumber %></font>筆</b>

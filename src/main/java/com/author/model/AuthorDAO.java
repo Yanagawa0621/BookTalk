@@ -58,6 +58,14 @@ public class AuthorDAO implements AuthorDAO_Impl {
 				.setParameter("zhAndenName2", "%"+zhAndenName+"%")
 				.list();
 	}
+
+	@Override
+	public AuthorVO nameQuery(String name) {
+		return getSession().createQuery("from AuthorVO where authorName = :name1 or englishName = :name2",AuthorVO.class)
+				.setParameter("name1", name)
+				.setParameter("name2", name)
+				.uniqueResult();
+	}
 	
 	// =================================以下是測試用的main方法========================================
 //		public static void main(String[] args) {

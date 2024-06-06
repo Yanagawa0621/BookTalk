@@ -29,6 +29,26 @@ public class BooksAndPictureService {
 	return dao.update(bapVO);
 	}
 	
+	public int addBapNp(Integer bookNumber,byte[] pictureFile) {
+		BooksAndPictureVO bapVO=new BooksAndPictureVO();
+		BookProductsVO bpVO=new BookProductsVO();
+		
+		bpVO.setBookNumber(bookNumber);
+		bapVO.setBpVO(bpVO);
+		bapVO.setPictureFile(pictureFile);
+		
+		return dao.increase(bapVO);
+	}
+	
+	public int updateBapNp(Integer pictureNumber,byte[] pictureFile) {
+		BooksAndPictureVO bapVO=new BooksAndPictureVO();
+		
+		bapVO.setPictureNumber(pictureNumber);
+		bapVO.setPictureFile(pictureFile);
+		
+		return dao.update(bapVO);
+	}
+	
 	public List<BooksAndPictureVO> getimg(Integer bookNumber){
 		BookProductsVO bpVO=new BookProductsVO();
 		bpVO.setBookNumber(bookNumber);

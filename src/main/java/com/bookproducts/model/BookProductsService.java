@@ -1,30 +1,24 @@
 package com.bookproducts.model;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
+import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
 import com.orderdetails.model.OrderDetailsDAOHibernate;
 import com.publishinghouse.model.PublishingHouseVO;
-
-import util.HibernateUtil;
 
 public class BookProductsService {
 	BookProductsDAO bpDAO = new BookProductsDAO();
 	OrderDetailsDAOHibernate odDAO = new OrderDetailsDAOHibernate();
 
 	public int addBp(Integer classNumber, Integer publishingHouseNumber, Integer productStatus, String bookTitle,
-			String isbn, Double price, java.sql.Date publicationDate, Integer stock, String introductionContent,
-			Date releaseDate) {
+			String isbn, Double price, java.sql.Date publicationDate, Integer stock, String introductionContent ,List<AuthorVO> authorVO) {
 		BookClassVO bcVO = new BookClassVO();
 		bcVO.setClassNumber(classNumber);
 
@@ -41,7 +35,7 @@ public class BookProductsService {
 		bpVO.setPublicationDate(publicationDate);
 		bpVO.setStock(stock);
 		bpVO.setIntroductionContent(introductionContent);
-		bpVO.setReleaseDate(releaseDate);
+		bpVO.setAuthorVO(authorVO);
 
 		return bpDAO.increase(bpVO);
 	}
@@ -70,7 +64,18 @@ public class BookProductsService {
 
 		return bpDAO.update(bpVO);
 	}
-
+	
+	public int disassociateBP(BookProductsVO bpVO) {
+		return bpDAO.disassociate(bpVO);
+	}
+	
+	public int updateBp(BookProductsVO bpVO) {
+		return bpDAO.update(bpVO);
+	}
+	public int book_shelving(BookProductsVO bpVO) {
+		return bpDAO.update(bpVO);
+	}
+	
 	public List<BookProductsVO> getAllBp() {
 
 		return multipleConversions(bpDAO.getAll());

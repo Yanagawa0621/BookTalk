@@ -11,4 +11,5 @@ public interface BookProductsDAO_Impl{
 	List<BookProductsVO> keywordQuery(String searchMain,String keywords);
 	List<BookProductsVO> statusQuery(Integer productStatus);
 	BookProductsVO singleQuery(Integer bookNumber);
+	int disassociate(BookProductsVO bpVO);
 }
