@@ -69,33 +69,7 @@
     <!--slider area end-->
     
     <!--banner area start-->
-    <div class="banner_area home-banner2 mb-95">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <figure class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/bg/banner4.jpg" alt=""></a> 
-                        </div>
-                    </figure>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <figure class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/bg/banner5.jpg" alt=""></a> 
-                        </div>
-                    </figure>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <figure class="single_banner">
-                        <div class="banner_thumb">
-                            <a href="shop.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/bg/banner6.jpg" alt=""></a> 
-                        </div>
-                    </figure>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!--banner area end-->
        
     <!--product area start-->
