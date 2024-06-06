@@ -5,9 +5,9 @@
 
 		<property name="hibernate.connection.driver_class">
 			com.mysql.cj.jdbc.Driver</property>
-<property name="hibernate.connection.url">
-    jdbc:mysql://localhost:3306/g3?serverTimezone=Asia/Taipei
-</property>
+		<property name="hibernate.connection.url">
+			jdbc:mysql://localhost:3306/g3?serverTimezone=Asia/Taipei
+		</property>
 
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">123456</property>
@@ -22,15 +22,17 @@
 
 		<property name="hibernate.current_session_context_class">thread</property>
 
-<!-- 		<property name="hibernate.connection.characterEncoding">utf8</property> -->
-		
-<!-- 		<property name="hibernate.connection.useUnicode">true</property> -->
-	
-<!-- 		<property name="hibernate.connection.charSet">UTF-8</property> -->
+		<!-- <property name="hibernate.connection.characterEncoding">utf8</property> -->
+
+		<!-- <property name="hibernate.connection.useUnicode">true</property> -->
+
+		<!-- <property name="hibernate.connection.charSet">UTF-8</property> -->
 
 		<mapping class="com.user.model.UserVO" />
+		<mapping class="com.userStatus.model.UserStatusVO" />
 		<mapping class="com.access.model.AccessVO" />
 		<mapping class="com.loginRecord.model.LoginRecordVO" />
+		<mapping class="com.administrator.model.AdministratorVO" />
 		<mapping class="com.order.model.OrderVO" />
 		<mapping class="com.orderdetails.model.OrderDetailsVO" />
 		<mapping class="com.promotionproject.model.PromotionProjectVO" />

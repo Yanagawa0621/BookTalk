@@ -8,5 +8,5 @@ public interface LoginRecordDAO_interface {
     void delete(Integer number);
     LoginRecordVO findByPrimaryKey(Integer number);
     List<LoginRecordVO> getAll();
-    List<LoginRecordVO> findByUserNumber(Integer userNumber); // 添加此方法
+    List<LoginRecordVO> findByUserNumber(Integer userNumber);
 }

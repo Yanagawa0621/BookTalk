@@ -1,7 +1,6 @@
 package com.userStatus.model;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,6 @@ public class UserStatusVO implements Serializable {
     @Column(name = "statusDays")
     private Integer statusDays;
 
-    // Getters and Setters
     public Integer getUserStatus() {
         return userStatus;
     }

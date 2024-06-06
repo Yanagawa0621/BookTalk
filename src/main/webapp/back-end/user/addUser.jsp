@@ -1,5 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.access.model.AccessService" %>
+<%@ page import="com.access.model.AccessServiceImpl" %>
+<%@ page import="com.access.model.AccessVO" %>
+<%@ include file="/back-end/checkAdminSession.jsp" %>
+
+
+<%
+    AccessService accessService = new AccessServiceImpl();
+    List<AccessVO> accessList = accessService.getAllAccesses();
+    request.setAttribute("accessList", accessList);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -219,13 +232,20 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="accountStatusNumber">帳號狀態編號</label>
-            <input type="text" class="form-control" id="accountStatusNumber" name="accountStatusNumber" value="${param.accountStatusNumber}" required>
-            <div class="text-danger"><c:out value="${errorMessage['accountStatusNumber']}"/></div>
+            <label for="accountStatus">帳號狀態</label>
+            <select class="form-control" id="accountStatusNumber" name="accountStatusNumber">
+                <option value="1" ${param.accountStatusNumber == 1 ? 'selected' : ''}>正常</option>
+                <option value="2" ${param.accountStatusNumber == 2 ? 'selected' : ''}>暫時停權7天</option>
+                <option value="3" ${param.accountStatusNumber == 3 ? 'selected' : ''}>永久停權</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="accessNumber">權限編號</label>
-            <input type="text" class="form-control" id="accessNumber" name="accessNumber" value="${param.accessNumber}" required>
+            <select class="form-control" id="accessNumber" name="accessNumber" required>
+                <c:forEach var="access" items="${accessList}">
+                    <option value="${access.accessNumber}" ${param.accessNumber == access.accessNumber ? 'selected' : ''}>${access.name}</option>
+                </c:forEach>
+            </select>
             <div class="text-danger"><c:out value="${errorMessage['accessNumber']}"/></div>
         </div>
         <div class="form-group">

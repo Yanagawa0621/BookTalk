@@ -10,13 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.loginRecord.model.LoginRecordDAO;
 import com.loginRecord.model.LoginRecordService;
 import com.loginRecord.model.LoginRecordServiceImpl;
 import com.loginRecord.model.LoginRecordVO;
 import com.user.model.UserVO;
-
-import util.HibernateUtil;
 
 @WebServlet("/loginRecord")
 public class LoginRecordServlet extends HttpServlet {
@@ -24,7 +21,7 @@ public class LoginRecordServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        loginRecordService = new LoginRecordServiceImpl(new LoginRecordDAO(HibernateUtil.getSessionFactory()));
+        loginRecordService = new LoginRecordServiceImpl();
     }
 
     @Override

@@ -41,11 +41,11 @@
                         <!-- Nav tabs -->
                         <div class="dashboard_tab_button">
                             <ul role="tablist" class="nav flex-column dashboard-list">
-                                <li><a href="#dashboard" data-toggle="tab" class="nav-link active">Dashboard</a></li>
+                                <li><a href="#login" data-toggle="tab" class="nav-link active">登入</a></li>
                                 <li><a href="#orders" data-toggle="tab" class="nav-link">訂單資訊</a></li>
                                 <li><a href="#address" data-toggle="tab" class="nav-link">地址資訊</a></li>
                                 <li><a href="#account-details" data-toggle="tab" class="nav-link">帳號資訊</a></li>
-                                <li><a href="#" class="nav-link">登出</a></li>
+                                <li><a href="#logout" class="nav-link">登出</a></li>
                             </ul>
                         </div>    
                     </div>

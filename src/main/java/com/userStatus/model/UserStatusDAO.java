@@ -1,66 +1,85 @@
 package com.userStatus.model;
 
-
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import util.HibernateUtil;
 
 public class UserStatusDAO implements UserStatusDAO_interface {
-
     private SessionFactory sessionFactory;
 
-    public UserStatusDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserStatusDAO() {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     @Override
     public void save(UserStatusVO userStatus) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.save(userStatus);
-        tx.commit();
-        session.close();
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.save(userStatus);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(UserStatusVO userStatus) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.update(userStatus);
-        tx.commit();
-        session.close();
-    }
-
-    @Override
-    public void delete(Integer userStatus) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        UserStatusVO userStatusVO = session.get(UserStatusVO.class, userStatus);
-        if (userStatusVO != null) {
-            session.delete(userStatusVO);
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.update(userStatus);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
         }
-        tx.commit();
-        session.close();
     }
 
     @Override
-    public UserStatusVO findByPrimaryKey(Integer userStatus) {
-        Session session = sessionFactory.openSession();
-        UserStatusVO userStatusVO = session.get(UserStatusVO.class, userStatus);
-        session.close();
-        return userStatusVO;
+    public void delete(Integer number) {
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            UserStatusVO userStatus = session.get(UserStatusVO.class, number);
+            if (userStatus != null) {
+                session.delete(userStatus);
+                transaction.commit();
+            }
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public UserStatusVO findByPrimaryKey(Integer number) {
+        UserStatusVO userStatus = null;
+        try (Session session = sessionFactory.openSession()) {
+            userStatus = session.get(UserStatusVO.class, number);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userStatus;
     }
 
     @Override
     public List<UserStatusVO> getAll() {
-        Session session = sessionFactory.openSession();
-        Query<UserStatusVO> query = session.createQuery("FROM UserStatusVO", UserStatusVO.class);
-        List<UserStatusVO> list = query.list();
-        session.close();
-        return list;
+        List<UserStatusVO> userStatusList = null;
+        try (Session session = sessionFactory.openSession()) {
+            Query<UserStatusVO> query = session.createQuery("FROM UserStatusVO", UserStatusVO.class);
+            userStatusList = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userStatusList;
     }
 }
-

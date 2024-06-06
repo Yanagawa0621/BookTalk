@@ -1,63 +1,77 @@
 package com.administrator.model;
 
 import java.util.List;
-
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import util.HibernateUtil;
 
 public class AdministratorDAO implements AdministratorDAO_interface {
 
-    private SessionFactory sessionFactory;
+	public AdministratorDAO() {
+		// 無參數構造函數
+	}
 
-    public AdministratorDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	@Override
+	public void save(AdministratorVO admin) {
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			session.save(admin);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void save(AdministratorVO admin) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.save(admin);
-        tx.commit();
-        session.close();
-    }
+	@Override
+	public void update(AdministratorVO admin) {
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			session.update(admin);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void update(AdministratorVO admin) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.update(admin);
-        tx.commit();
-        session.close();
-    }
+	@Override
+	public void delete(String account) {
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			transaction = session.beginTransaction();
+			AdministratorVO admin = session.get(AdministratorVO.class, account);
+			if (admin != null) {
+				session.delete(admin);
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void delete(AdministratorVO admin) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        session.delete(admin);
-        tx.commit();
-        session.close();
-    }
+	@Override
+	public AdministratorVO getByAccount(String account) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			return session.get(AdministratorVO.class, account);
+		}
+	}
 
-    @Override
-    public AdministratorVO findByAccount(String account) {
-        Session session = sessionFactory.openSession();
-        Query<AdministratorVO> query = session.createQuery("FROM AdministratorVO WHERE account = :account", AdministratorVO.class);
-        query.setParameter("account", account);
-        AdministratorVO admin = query.uniqueResult();
-        session.close();
-        return admin;
-    }
-
-    @Override
-    public List<AdministratorVO> findAll() {
-        Session session = sessionFactory.openSession();
-        Query<AdministratorVO> query = session.createQuery("FROM AdministratorVO", AdministratorVO.class);
-        List<AdministratorVO> adminList = query.list();
-        session.close();
-        return adminList;
-    }
+	@Override
+    public List<AdministratorVO> getAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<AdministratorVO> adminList = session.createQuery("FROM AdministratorVO", AdministratorVO.class).list();
+            System.out.println("DAO - Fetched Admin List Size: " + adminList.size()); // Add this line
+            return adminList;
+        }
+	}
 }

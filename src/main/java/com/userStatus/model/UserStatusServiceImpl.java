@@ -5,15 +5,8 @@ import java.util.List;
 public class UserStatusServiceImpl implements UserStatusService {
 
     private UserStatusDAO_interface userStatusDAO;
-    
-    
-    
-    public UserStatusServiceImpl() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
-	public UserStatusServiceImpl(UserStatusDAO_interface userStatusDAO) {
+    public UserStatusServiceImpl(UserStatusDAO_interface userStatusDAO) {
         this.userStatusDAO = userStatusDAO;
     }
 
@@ -42,4 +35,3 @@ public class UserStatusServiceImpl implements UserStatusService {
         return userStatusDAO.getAll();
     }
 }
-
