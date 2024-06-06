@@ -15,7 +15,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.cart.model.CartVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.order.model.OrderService;
@@ -478,8 +480,18 @@ public class OrderServlet extends HttpServlet {
 		/**************************** getUserAllOrder ****************************/
 		
 		if("getUserAllOrder".equals(action)) {
-			Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
-			List<OrderVO> listUserNumberVO = orderService.getOrderByUserNumber(userNumber);
+			String userNumber = req.getParameter("userNumber");
+			List<OrderVO> listUserNumberVO = new ArrayList<>();
+			if(userNumber != null) {	//如果js檔有userNumber的話
+				listUserNumberVO = orderService.getOrderByUserNumber(Integer.valueOf(userNumber));
+			}else {		//沒有userNumber，直接抓session裡的
+				HttpSession session = req.getSession();
+				listUserNumberVO = orderService.getOrderByUserNumber((Integer) session.getAttribute("userNumber"));
+			}	
+			
+			
+//			Integer userNumber = Integer.valueOf(req.getParameter("userNumber"));
+//			List<OrderVO> listUserNumberVO = orderService.getOrderByUserNumber(userNumber);
 			
 			// excludeFieldsWithoutExposeAnnotation讓Gson轉成json過程中
 			// 排除掉沒有@Expose的屬性, 就能避開雙向無限循環參考

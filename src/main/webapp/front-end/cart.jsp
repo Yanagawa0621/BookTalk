@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%
+	String contextPath = request.getContextPath();
+	String url = "/front-end/user/login.jsp";
+	Integer userNumber = (Integer) session.getAttribute("userNumber");
+	if (userNumber == null) {
+	    response.sendRedirect(contextPath + url);
+	    return;
+	}
+%>
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -11,6 +20,10 @@
 <body>
 	<!--menu area start-->
     <%@include file="/front-end/component/menu.jsp" %>
+    
+    <c:if test="${not empty userNumber}">
+    	<input type="hidden" name="userNumber" id="getUserNumber" value="${userNumber}">
+	</c:if>
     
     <!--menu area end-->
 	<!--breadcrumbs area start-->
