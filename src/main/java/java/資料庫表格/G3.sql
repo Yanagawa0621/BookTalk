@@ -327,7 +327,6 @@ INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, p
 INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, promotionPrice) VALUES (4, 4, 420.00);
 INSERT INTO promotion_details (promotionProjectNumber, promotionProductNumber, promotionPrice) VALUES (5, 5, 300.00);
 
-
 -- 會員狀態 --
 CREATE TABLE user_status (
     userStatus INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '狀態編號',
@@ -349,7 +348,6 @@ CREATE TABLE access (
 
 INSERT INTO access (accessNumber, name, accessDescribe) VALUES (1, '一般會員', '一般會員的描述');
 INSERT INTO access (accessNumber, name, accessDescribe) VALUES (2, '後台管理員', '後台管理員的描述');
-
 
 -- 會員 --
 CREATE TABLE user (
@@ -399,8 +397,8 @@ CREATE TABLE login_record (
     CONSTRAINT fk_login_record_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '登入紀錄 login_record';
 
--- 插入測試數據
 INSERT INTO login_record (userNumber, loginTime, ip, area, userType) VALUES (1, '1981-11-17 11:12:13', '1', 'taiwan', 'user');
+
 -- 申訴 --
 CREATE TABLE complaint (
     complaintNumber INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '申訴編號',
@@ -463,23 +461,23 @@ CREATE TABLE customer_order (
     CONSTRAINT fk_customer_order_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '訂單表格 customer_order';
 
-INSERT INTO customer_order (userNumber, orderStatus, shippingTime, completeTime, receiver, telephoneNumber, shippingAddress, deliveryFee, total, paymentNumber, note)
+INSERT INTO customer_order (userNumber, orderStatus, establishmentTime, shippingTime, completeTime, receiver, telephoneNumber, shippingAddress, deliveryFee, total, paymentNumber, note)
 VALUES
-(1, default, null, null, 'Tina Wang', '0912548678', '110台北市信義區信義路五段7號', 50.00, 1100.00, 'BT648864', '第1筆訂單'),
-(2, 2, null, null, '王小明', '0945135875', '244新北市林口區文化二路二段299號', 50.00, 2490.00, 'BT1f3564', '第2筆訂單'),
-(3, 3, "2024-05-30 12:05:41", null, 'David Wu', '0935481246', '114台北市內湖區內湖路一段', 100.00, 940.00, 'BT6487fa', '第3筆訂單'),
-(4, 4, null, null, '天天小飛', '0987143258', '114台北市內湖區洲子街12號', 50.00, 1550.00, 'BT5gsf54', '第4筆訂單'),
-(5, 2, null, null, '黃依依', '0935849786', '265宜蘭縣羅東鎮南昌街83號', 50.00, 1070.00, 'BTmge48', '第5筆訂單'),
-(6, default, null, null, '麥當勞', '0988147864', '920屏東縣潮州鎮中山八巷', 100.00, 600.00, 'BTfa3464', '第6筆訂單'),
-(2, 0, null, null, '漢堡王', '0931587684', '970花蓮縣花蓮市國聯五路101號', 100.00, 350.00, 'BT534adf', '第7筆訂單'),
-(3, 3, "2024-05-30 03:05:41", null, '頂呱呱', '0931587648', '71005台南市永康區南台街1號', 50.00, 1380.00, 'BTkl4345', '第8筆訂單'),
-(4, 4, null, null, '摩斯漢堡', '0968485134', '744台南市新市區南科三路10號', 100.00, 650.00, 'BTlgit34', '第9筆訂單'),
-(5, 2, null, null, '還沒有名字', '0931587867', '63341雲林縣土庫鎮中正路109號', 100.00, 480.00, 'BTbdd433', '第10筆訂單'),
-(7, default, null, null, 'kobe', '0973158648', '268宜蘭縣五結鄉五濱路二段201號', 50.00, 1450.00, 'BTbk452d', '第11筆訂單'),
-(2, 0, null, null, '大谷翔平', '0911254868', '310新竹縣竹東鎮沿河街411號', 50.00, 1150.00, 'BT04jk4e', '第12筆訂單'),
-(8, 3, "2024-05-30 23:05:41", null, 'LeBron James', '0931587868', '97346花蓮縣吉安鄉民治路436號', 50.00, 1450.00, 'BTfnk334', '第13筆訂單'),
-(9, 4, null, null, 'Anthony Davis', '0955847684', '920屏東縣潮州鎮五福路20號', 100.00, 600.00, 'BT6345gf', '第14筆訂單'),
-(10, 2, null, null, 'Russell', '0935847886', '114台北市內湖區康寧路一段33巷21號', 100.00, 860.00, 'BT1777a8', '第15筆訂單');
+(1, default, default, null, null, 'Tina Wang', '0912-548-678', '110台北市信義區信義路五段7號', 50.00, 1100.00, 'BT648864', '第1筆訂單'),
+(2, 5, "2024-05-30 12:05:41", "2024-06-01 15:25:41", "2024-06-05 18:12:11", '王小明', '0945-135-875', '244新北市林口區文化二路二段299號', 50.00, 2490.00, 'BT1f3564', '第2筆訂單'),
+(3, 5, "2024-05-30 12:05:41", "2024-06-04 11:06:20", "2024-06-08 17:43:20", 'David Wu', '0935-481-246', '114台北市內湖區內湖路一段', 100.00, 940.00, 'BT6487fa', '第3筆訂單'),
+(4, 5, "2024-04-20 11:04:30", "2024-04-23 09:20:50", "2024-04-28 18:10:50", '天天小飛', '0987-143-258', '114台北市內湖區洲子街12號', 50.00, 1550.00, 'BT5gsf54', '第4筆訂單'),
+(5, 2, "2024-04-18 18:10:21", null, null, '黃依依', '0935-849-786', '265宜蘭縣羅東鎮南昌街83號', 50.00, 1070.00, 'BTmge48', '第5筆訂單'),
+(6, 5, "2024-04-20 11:04:30", "2024-04-23 09:20:50", "2024-04-28 18:10:50", '麥當勞', '0988-147-864', '920屏東縣潮州鎮中山八巷', 100.00, 600.00, 'BTfa3464', '第6筆訂單'),
+(2, 0, "2024-04-12 07:20:50", null, "2024-04-13 08:20:50", '漢堡王', '0931-587-684', '970花蓮縣花蓮市國聯五路101號', 100.00, 350.00, 'BT534adf', '第7筆訂單'),
+(3, 5, "2024-05-21 03:05:41", "2024-05-23 10:28:13", "2024-05-28 10:28:13", '頂呱呱', '0931-587-648', '71005台南市永康區南台街1號', 50.00, 1380.00, 'BTkl4345', '第8筆訂單'),
+(4, 4, "2024-04-12 08:20:50", "2024-04-14 13:10:26", "2024-04-20 12:16:48", '摩斯漢堡', '0968-485-134', '744台南市新市區南科三路10號', 100.00, 650.00, 'BTlgit34', '第9筆訂單'),
+(5, 2, "2024-05-30 12:05:41", null, null, '還沒有名字', '0931-587-867', '63341雲林縣土庫鎮中正路109號', 100.00, 480.00, 'BTbdd433', '第10筆訂單'),
+(7, default, default, null, null, 'kobe', '0973-158-648', '268宜蘭縣五結鄉五濱路二段201號', 50.00, 1450.00, 'BTbk452d', '第11筆訂單'),
+(2, 0, "2024-04-23 14:22:50", null, "2024-04-23 15:20:50", '大谷翔平', '0911-254-868', '310新竹縣竹東鎮沿河街411號', 50.00, 1150.00, 'BT04jk4e', '第12筆訂單'),
+(8, 5, "2024-05-21 03:05:41", "2024-05-24 23:05:41", "2024-05-28 11:28:41", 'LeBron James', '0931-587-868', '97346花蓮縣吉安鄉民治路436號', 50.00, 1450.00, 'BTfnk334', '第13筆訂單'),
+(9, 5, "2024-04-12 08:20:50", "2024-04-14 13:10:26", "2024-04-20 12:16:48", 'Anthony Davis', '0955-847-684', '920屏東縣潮州鎮五福路20號', 100.00, 600.00, 'BT6345gf', '第14筆訂單'),
+(10, 2, "2024-06-08 18:10:21", null, null, 'Russell', '0935-847-886', '114台北市內湖區康寧路一段33巷21號', 100.00, 860.00, 'BT1777a8', '第15筆訂單');
 
 
 --  訂單明細 --
@@ -502,22 +500,22 @@ CREATE TABLE order_details (
 INSERT INTO order_details (orderNumber, bookNumber, quantity, unitPrice, subtotal, ratingScore ,evaluateContent)
 VALUES
 (1, 2, 2, 250.00, 500.00, default, default),
-(1, 1, 1, 550.00, 550.00, 4, '這是我看過最好懂的一本書'),
+(1, 1, 1, 550.00, 550.00, default, default),
 (2, 3, 3, 360.00, 1080.00, 5, '沒有話說，就是讚~!!!'),
 (2, 4, 4, 340.00, 1360.00, 3, '評價評價評價評價評價'),
 (3, 4, 1, 340.00, 340.00, 1, '不如預期'),
 (3, 2, 2, 250.00, 500.00, 1, '不好看'),
 (4, 2, 6, 250.00, 1500.00, 5, '沒話說'),
-(5, 4, 3, 340.00, 1020.00, 4, '原本應該還可以，但翻譯的很爛'),
+(5, 4, 3, 340.00, 1020.00, default, default),
 (6, 2, 2, 250.00, 500.00, 5, '作者就是這領域的霸主，當然要來支持'),
-(7, 2, 1, 250.00, 250.00, 5, '期待第二集的出現'),
+(7, 2, 1, 250.00, 250.00, default, default),
 (8, 3, 3, 360.00, 1080.00, 5, '支持作者，加油'),
 (8, 2, 1, 250.00, 250.00, 2, '可以拿來當枕頭了'),
-(9, 1, 1, 550.00, 550.00, 4, '原來，比想像中還好'),
+(9, 1, 1, 550.00, 550.00, default, default),
 (10, 5, 1, 380.00, 380.00, default, default),
 (11, 4, 2, 340.00, 680.00, default, default),
-(11, 3, 2, 360.00, 720.00, 1, '為什麼要評論？？？'),
-(12, 1, 2, 550.00, 1100.00, 5, '我愛作者~'),
+(11, 3, 2, 360.00, 720.00, default, default),
+(12, 1, 2, 550.00, 1100.00, default, default),
 (13, 4, 2, 340.00, 680.00, 3, '...........'),
 (13, 3, 2, 360.00, 720.00, 1, '吃飯睡覺必備'),
 (14, 2, 2, 250.00, 500.00, 2, '可以拿來壓泡麵了'),
