@@ -36,7 +36,7 @@ public class ArticleDAO implements ArticleDAO_interface {
 
     @Override
     public List<ArticleVO> findByForumNumber(Integer forumNumber) {
-        String hql = "FROM ArticleVO WHERE forumVO.forumNumber = :forumNumber";
+        String hql = "FROM ArticleVO WHERE forumVO.forumNumber = :forumNumber AND articleState = 1";
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         query.setParameter("forumNumber", forumNumber);
         return query.list();
@@ -44,7 +44,7 @@ public class ArticleDAO implements ArticleDAO_interface {
 
     @Override
     public List<ArticleVO> findByKeyWord(String keyword) {
-        String hql = "FROM ArticleVO WHERE title like :keyword";
+        String hql = "FROM ArticleVO a WHERE a.title like :keyword AND a.articleState = 1";
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         query.setParameter("keyword", "%" + keyword + "%");
         return query.list();
@@ -98,7 +98,7 @@ public class ArticleDAO implements ArticleDAO_interface {
         LocalDateTime firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
         LocalDateTime firstDayOfNextMonth = firstDayOfMonth.plusMonths(1);
 
-        String hql = "FROM ArticleVO a WHERE a.issueTime >= :startDate AND a.issueTime < :endDate ORDER BY a.likeSum DESC";
+        String hql = "FROM ArticleVO a WHERE a.issueTime >= :startDate AND a.issueTime < :endDate AND a.articleState = 1 ORDER BY a.likeSum DESC";
 
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         query.setParameter("startDate", firstDayOfMonth);
@@ -109,7 +109,7 @@ public class ArticleDAO implements ArticleDAO_interface {
 	@Override
 	public ArticleVO findByArticleNumber(Integer articleNumber) {
 		// TODO Auto-generated method stub
-		String hql = "FROM ArticleVO WHERE articleNumber = :articleNumber";
+		String hql = "FROM ArticleVO a WHERE a.articleNumber = :articleNumber AND a.articleState = 1";
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         query.setParameter("articleNumber", articleNumber);
         return query.uniqueResult();

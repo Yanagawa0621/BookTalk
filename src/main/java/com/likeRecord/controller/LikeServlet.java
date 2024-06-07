@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.article.model.ArticleService;
+import com.article.model.ArticleVO;
+import com.comment.model.CommentService;
+import com.comment.model.CommentVO;
 import com.likeRecord.model.LikeService;
 
 @WebServlet("/like/like.do")
@@ -37,6 +41,11 @@ public class LikeServlet extends HttpServlet {
 			}
 			LikeService likeSvc = new LikeService();
 			likeSvc.addLike(userNumber, articleNumber);
+			ArticleService articleService = new ArticleService();
+			ArticleVO articleVO = articleService.getOneFromArticleNumber(articleNumber);
+			int like = articleVO.getLikeSum();
+			articleVO.setLikeSum(like + 1);
+			articleService.updateArticle(articleVO);
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().write("{\"status\":\"success\"}");
@@ -59,6 +68,11 @@ public class LikeServlet extends HttpServlet {
 			System.out.println(userNumber + articleNumber);
 			LikeService likeSvc = new LikeService();
 			likeSvc.deleteLike(userNumber, articleNumber);
+			ArticleService articleService = new ArticleService();
+			ArticleVO articleVO = articleService.getOneFromArticleNumber(articleNumber);
+			int like = articleVO.getLikeSum();
+			articleVO.setLikeSum(like - 1);
+			articleService.updateArticle(articleVO);
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().write("{\"status\":\"success\"}");
@@ -80,6 +94,11 @@ public class LikeServlet extends HttpServlet {
 			}
 			LikeService likeSvc = new LikeService();
 			likeSvc.addLikeCom(userNumber, commentNumber);
+			CommentService commentService = new CommentService();
+			CommentVO commentVO = commentService.findComment(commentNumber);
+			int like = commentVO.getLikeSum();
+			commentVO.setLikeSum(like + 1);
+			commentService.updateComment(commentVO);
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().write("{\"status\":\"success\"}");
@@ -102,6 +121,11 @@ public class LikeServlet extends HttpServlet {
 			System.out.println(userNumber + commentNumber);
 			LikeService likeSvc = new LikeService();
 			likeSvc.deleteLikeCom(userNumber, commentNumber);
+			CommentService commentService = new CommentService();
+			CommentVO commentVO = commentService.findComment(commentNumber);
+			int like = commentVO.getLikeSum();
+			commentVO.setLikeSum(like - 1);
+			commentService.updateComment(commentVO);
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().write("{\"status\":\"success\"}");

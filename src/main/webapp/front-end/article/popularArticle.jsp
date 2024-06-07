@@ -3,6 +3,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.article.model.*"%>
 <%@ page import="com.forum.model.*"%>
+<%@ page import="com.user.model.*"%>
+
 <%
 	ArticleService articleSvc = new ArticleService();
 	List<ArticleVO> list = articleSvc.getPopularArticle();
@@ -40,8 +42,20 @@
 		.comment-area{
 			border-bottom: 1px solid #4d4d4d;
 		}
-		.like-area{
-			display: flex;
+		.like-area {
+		    display: flex;
+		    align-items: center;
+		}
+		
+		.like-area .like-button, .like-area .unlike-button {
+		    margin-right: 10px;
+		}
+		
+		.like-area .like-count {
+		    font-size: 16px;
+		    color: #333;
+		    margin: 0;
+		    padding-left: 10px;
 		}
 		.delete-form{
 			margin-right: auto;
@@ -49,10 +63,23 @@
 		.article-button-area{
 			display: flex;
 		}
-		.likeCom-area {
-		    display:inline-flex;
-		}
 
+		.likeCom-area {
+		    display: flex;
+		    align-items: center; /* 垂直居中对齐 */
+		}
+		
+		.likeCom-area .likeCom-button, .likeCom-area .unlikeCom-button {
+		    margin-right: 0px;
+		}
+		
+		.likeCom-area .likeCom-count {
+		    font-size: 16px;
+		    color: #333;
+		    margin: 0;
+		    padding: 10px;
+		    margin-top: 0;
+		}
  	 </style>
 
 
@@ -85,7 +112,8 @@
             <div class="row">
                 <div class="col-lg-9 col-md-12">
                     <div class="blog_wrapper">
-                    <c:forEach var="articleVO" items="${list}" varStatus="loop">
+                    <%@include file="/front-end/article/page1.file" %>
+                    <c:forEach var="articleVO" items="${list}" varStatus="loop" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
                         <c:if test="${articleVO.articleState == 1}">
 	                        <article class="single_blog">
 	                            <figure>
@@ -129,20 +157,25 @@
 												    	<div class="like-area">
 													        <button id="like-button-${articleVO.articleNumber}" class="like-button" style="display: none;" onclick="like(${articleVO.articleNumber});"><i class="far fa-thumbs-up"></i></button>
 													        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="background:white;"onclick="unlike(${articleVO.articleNumber});"><i class="fas fa-thumbs-up"></i></button>
+												    		<p class="like-count">${articleVO.likeSum}</p>
 												    	</div>
 												    </c:when>
 												    <c:otherwise>
 												    	<div class="like-area">
 													        <button id="like-button-${articleVO.articleNumber}" class="like-button"  onclick="like(${articleVO.articleNumber});"><i class="far fa-thumbs-up"></i></button>
 													        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="display: none;" onclick="unlike(${articleVO.articleNumber});"><i class="fas fa-thumbs-up"></i></button>
+													    	<p id="likeSum-count-${articleVO.articleNumber}" class="like-count">${articleVO.likeSum}</p>
 													    </div>
 												    </c:otherwise>
 												</c:choose>
 												<hr>
+													    <jsp:useBean id="userVO" scope="page" class="com.user.model.UserServiceImpl"/>
 											    <c:forEach var="commentVO" items="${articleVO.commentVO}">
 											    	<c:if test="${commentVO.commentState == 1}">
 													    <div class="comment-area-${commentVO.commentNumber}"> 
-													    	<p>${commentVO.userNumber}</p> 
+													    <c:set var="number" value="${commentVO.userNumber}"/>
+													    <c:set var="user" value="${userVO.getUserByNumber(number)}"/>
+													    	<p>${user.name}</p> 
 													    	<p>${commentVO.content}</p> 
 													    	<p>${commentVO.commentTime}</p>
 													    	<jsp:useBean id="likeSvcCom" scope="page" class="com.likeRecord.model.LikeService"/>
@@ -154,7 +187,9 @@
 															    	<div class="likeCom-area">
 																        <button id="likeCom-button-${commentVO.commentNumber}" class="likeCom-button" style="display: none;" onclick="likeCom(${commentVO.commentNumber});"><i class="far fa-thumbs-up"></i></button>
 																        <button id="unlikeCom-button-${commentVO.commentNumber}" class="unlikeCom-button" style="background:white;" onclick="unlikeCom(${commentVO.commentNumber});"><i class="fas fa-thumbs-up"></i></button>
+																        <p id="likeSumCom-count-${commentVO.commentNumber}" class="likeCom-count">${commentVO.likeSum}</p>
 																        <c:if test="${commentVO.userNumber == sessionScope.userNumber}">
+																	        <button class="updateCom-button"onclick="openUpdateText(${commentVO.commentNumber},'${commentVO.content}');">更新</button>
 																	        <form class="delete-form" onsubmit="event.preventDefault(); deleteComment(${commentVO.commentNumber});">
 																	    		<input type="submit" value="刪除" style="background:red;">
 																	    	</form>
@@ -165,6 +200,7 @@
 															    	<div class="likeCom-area">
 																        <button id="likeCom-button-${commentVO.commentNumber}" class="likeCom-button"onclick="likeCom(${commentVO.commentNumber});"><i class="far fa-thumbs-up"></i></button>
 																        <button id="unlikeCom-button-${commentVO.commentNumber}" class="unlikeCom-button" style="background:white; display: none;" onclick="unlikeCom(${commentVO.commentNumber});"><i class="fas fa-thumbs-up"></i></button>
+																   		<p id="likeSumCom-count-${commentVO.commentNumber}" class="likeCom-count">${commentVO.likeSum}</p>
 																   		<c:if test="${commentVO.userNumber == sessionScope.userNumber}">
 																	        <button class="updateCom-button"onclick="openUpdateText(${commentVO.commentNumber},'${commentVO.content}');">更新</button>
 																	        <form class="delete-form" onsubmit="event.preventDefault(); deleteComment(${commentVO.commentNumber});">
@@ -190,7 +226,9 @@
 										</div>
 										
 	                                    <div class="blog_meta">
-	                                        <p>作者: <a href="#">${articleVO.userNumber}</a> / 發文日期: ${articleVO.issueTime} / 看板: <a href="#">${articleVO.forumVO.name}</a></p>
+	                                    <c:set var="ArticleUserNumber" value="${articleVO.userNumber}"/>
+	                                    <c:set var="userName" value="${userVO.getUserByNumber(ArticleUserNumber)}"/>
+	                                        <p>作者:${userName.name} / 發文日期: ${articleVO.issueTime} / 看板: ${articleVO.forumVO.name}</p>
 	                                    </div>
 	                                    <p class="post_desc">${articleVO.articleSummary}</p>
 	                                    <!-- <footer class="btn_more">
@@ -268,11 +306,12 @@
                 <div class="col-12">
                     <div class="pagination">
                         <ul>
-                            <li class="current">1</li>
+                        	<%@include file="/front-end/article/page2.file" %>
+                            <!--  <li class="current">1</li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li class="next"><a href="#">next</a></li>
-                            <li><a href="#">>></a></li>
+                            <li><a href="#">>></a></li>-->
                         </ul>
                     </div>
                 </div>
@@ -389,6 +428,13 @@ function like(articleNumber) {
             alert("按讚成功");
             document.getElementById("like-button-" + articleNumber).style.display = "none";
             document.getElementById("unlike-button-" + articleNumber).style.display = "inline-block";
+            const likeCountElement = document.getElementById("likeSum-count-" + articleNumber);
+            // 获取当前值并转换为数字
+            let currentValue = parseInt(likeCountElement.textContent, 10);
+            // 增加 1
+            currentValue += 1;
+            // 将新的值更新回 p 标签
+            likeCountElement.textContent = currentValue;
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -410,6 +456,13 @@ function unlike(articleNumber) {
             alert("取消按讚成功");
             document.getElementById("like-button-" + articleNumber).style.display = "inline-block";
             document.getElementById("unlike-button-" + articleNumber).style.display = "none";
+            const likeCountElement = document.getElementById("likeSum-count-" + articleNumber);
+            // 获取当前值并转换为数字
+            let currentValue = parseInt(likeCountElement.textContent, 10);
+            // 增加 1
+            currentValue -= 1;
+            // 将新的值更新回 p 标签
+            likeCountElement.textContent = currentValue;
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -431,6 +484,13 @@ function likeCom(commentNumber) {
             alert("按讚成功");
             document.getElementById("likeCom-button-" + commentNumber).style.display = "none";
             document.getElementById("unlikeCom-button-" + commentNumber).style.display = "inline-block";
+            const likeCountElement = document.getElementById("likeSumCom-count-" + commentNumber);
+            // 获取当前值并转换为数字
+            let currentValue = parseInt(likeCountElement.textContent, 10);
+            // 增加 1
+            currentValue += 1;
+            // 将新的值更新回 p 标签
+            likeCountElement.textContent = currentValue;
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -452,6 +512,13 @@ function unlikeCom(commentNumber) {
             alert("取消按讚成功");
             document.getElementById("likeCom-button-" + commentNumber).style.display = "inline-block";
             document.getElementById("unlikeCom-button-" + commentNumber).style.display = "none";
+            const likeCountElement = document.getElementById("likeSumCom-count-" + commentNumber);
+            // 获取当前值并转换为数字
+            let currentValue = parseInt(likeCountElement.textContent, 10);
+            // 增加 1
+            currentValue -= 1;
+            // 将新的值更新回 p 标签
+            likeCountElement.textContent = currentValue;
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -481,7 +548,7 @@ function deleteComment(commentNumber) {
 function openUpdateText(commentNumber, content) {
     $(".comment-area-" + commentNumber).append(
     	'<div class="update-area">'+
-        '<textarea id="textarea-' + commentNumber + '"style="width: 100%;">' + content + '</textarea>' +
+        '<textarea id="textarea-' + commentNumber + '"style="width: 100%;" reqired>' + content + '</textarea>' +
         '<form class="update-form" onsubmit="event.preventDefault(); updateComment(' + commentNumber + ', document.getElementById(\'textarea-' + commentNumber + '\').value);">' +
         '<input type="submit" value="送出">' +
         '</form>'+
