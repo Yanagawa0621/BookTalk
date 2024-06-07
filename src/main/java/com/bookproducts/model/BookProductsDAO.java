@@ -80,11 +80,12 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 	@Override
 	public int update(BookProductsVO bpVO) {
 		try {
-			getSession().update(bpVO);
+			getSession().merge(bpVO);
 			return 1;
 		} catch (ConstraintViolationException e) {
 			return -2;
 		} catch (Exception e) {
+			System.out.println(e.toString());
 			return bpVO.getBookNumber();
 		}
 	}

@@ -20,6 +20,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.author.model.AuthorVO;
 import com.bookclass.model.BookClassVO;
 import com.booksandpicture.model.BooksAndPictureVO;
@@ -29,6 +31,7 @@ import com.publishinghouse.model.PublishingHouseVO;
 
 @Entity
 @Table(name = "book_products")
+@DynamicUpdate
 public class BookProductsVO implements java.io.Serializable {
 
 	/**
