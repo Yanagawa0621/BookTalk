@@ -55,9 +55,9 @@ public class ForumDAO implements ForumDAO_interface {
 	@Override
 	public List<ForumVO> findByForumName(String name) {
 		// TODO Auto-generated method stub
-		 String hql = "FROM ForumVO WHERE name = :name";
+		 String hql = "FROM ForumVO WHERE name like :name";
 	        Query<ForumVO> query = getSession().createQuery(hql, ForumVO.class);
-	        query.setParameter("name", name);
+	        query.setParameter("name", "%" + name + "%");
 	        return query.list();
 	}
 

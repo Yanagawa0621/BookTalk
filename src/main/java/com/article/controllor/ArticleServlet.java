@@ -45,7 +45,7 @@ public class ArticleServlet extends HttpServlet {
 			ArticleService articleSvc = new ArticleService();
 			articleSvc.addArticle(content, title, forumNumber,userNumber);
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/front-end/article/popularArticle.jsp";
+			String url = "/front-end/article/forumsArticle.jsp?forumNumber="+forumNumber;
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}

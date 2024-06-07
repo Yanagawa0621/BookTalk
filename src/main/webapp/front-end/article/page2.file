@@ -1,0 +1,15 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<% if (rowsPerPage < rowNumber) { %>
+    <% if (whichPage > 1) { %>
+        <A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;
+        <li><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage - 1 %>"><%=whichPage - 1 %></A></li>&nbsp;
+    <% } %>
+
+    <li class="current"><b><%= whichPage %></b></li>&nbsp;
+
+    <% if (whichPage < pageNumber) { %>
+        <li><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage + 1 %>"><%=whichPage + 1 %></A></li>&nbsp;
+        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber %>">至最後一頁</A>&nbsp;
+    <% } %>
+<% } %>

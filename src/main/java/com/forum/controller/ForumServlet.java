@@ -90,7 +90,7 @@ public class ForumServlet extends HttpServlet {
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forum/selectForum.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forum/forumPage.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
@@ -98,20 +98,22 @@ public class ForumServlet extends HttpServlet {
 			/*************************** 2.開始查詢資料 *****************************************/
 			ForumService forumSvc = new ForumService();
 			String name = str;
+			System.out.println(name);
 			List<ForumVO> list = forumSvc.getName(name);
+			System.out.println(list);
 			if (list.isEmpty()) {
 				errorMsgs.add("查無資料");
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forum/selectForum.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/forum/forumPage.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("list", list); // 資料庫取出的empVO物件,存入req
-			String url = "/back-end/forum/listOneNameForum.jsp";
+			String url = "/back-end/forum/listOneForum.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
@@ -173,7 +175,7 @@ public class ForumServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("forumVO", forumVO); // 資料庫update成功後,正確的的empVO物件,存入req
-			String url = "/back-end/forum/listOneForum.jsp";
+			String url = "/back-end/forum/oneForum.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
 		}
