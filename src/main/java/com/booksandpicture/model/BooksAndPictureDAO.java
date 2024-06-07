@@ -39,12 +39,14 @@ public class BooksAndPictureDAO implements BooksAndPictureDAO_Impl {
 			return -1;
 		}
 	}
-	
 
+	public List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO) {
+		return getSession().createQuery("from BooksAndPictureVO where bpVO =:bpVO", BooksAndPictureVO.class)
+				.setParameter("bpVO", bpVO).list();
+	}
 
-		public List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO){
-			return getSession().createQuery("from BooksAndPictureVO where bpVO =:bpVO",BooksAndPictureVO.class)
-					.setParameter("bpVO", bpVO)
-					.list();
-		}
+	@Override
+	public BooksAndPictureVO singleQuery(Integer pictureNumber) {
+		return getSession().get(BooksAndPictureVO.class, pictureNumber);
+	}
 }

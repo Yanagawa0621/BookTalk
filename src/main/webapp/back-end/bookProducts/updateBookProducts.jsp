@@ -146,6 +146,14 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 										</td>
 									</tr>
 									<tr>
+										<th class="align-middle">上架日期：</th>
+										<td>
+											<div class="input-group" style="width: 20%">
+												<input type="text" value="${bpVO.releaseDate}" class="form-control" readonly>
+											</div>
+										</td>
+									</tr>
+									<tr>
 										<th class="align-middle">出版社：</th>
 										<td>
 											<div class="input-group" style="width: 20%">
@@ -182,6 +190,22 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 										</td>
 									</tr>
 								<tbody id="authorTableBody">
+									<c:if test="${empty bpVO.authorVO}">
+										<tr>
+											<th class="align-middle">作者：</th>
+											<td>
+												<div class="input-group author-input" style="width: 80%">
+													<input type="text" name="author" class="form-control"
+														required>
+													<div class="invalid-tooltip">請輸入作者名稱</div>
+													<div class="input-group-append">
+														<button type="button"
+															class="btn btn-success add-author-btn">+</button>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</c:if>
 									<c:forEach var="authorVO" items="${bpVO.authorVO}"
 										varStatus="status">
 										<tr>
@@ -190,8 +214,8 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 												<div class="input-group author-input" style="width: 80%">
 													<input type="text" name="authorName" class="form-control"
 														value="${authorVO.authorName != null ? authorVO.authorName : authorVO.englishName}"
-														required
-														<c:if test="${fn:contains(removeAuthorString, authorVO.authorNumber)}">disabled</c:if>>
+														required disabled>
+														
 													<div class="invalid-tooltip">請輸入作者名稱</div>
 													<div class="input-group-append">
 														<c:choose>
@@ -412,14 +436,14 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
         if (authorStates[authorId]) {
             // 如果已經被標記為刪除，取消標記
             authorStates[authorId] = false;
-            authorInput.disabled = false;
+//             authorInput.disabled = false;
             button.textContent = '刪除';
             button.classList.remove('btn-success');
             button.classList.add('btn-danger');
         } else {
             // 如果未被標記為刪除，添加標記
             authorStates[authorId] = true;
-            authorInput.disabled = true;
+//             authorInput.disabled = true;
             button.textContent = '恢復';
             button.classList.remove('btn-danger');
             button.classList.add('btn-success');

@@ -7,5 +7,6 @@ import com.bookproducts.model.BookProductsVO;
 public interface BooksAndPictureDAO_Impl {
 	int increase (BooksAndPictureVO bapVO);
 	int update (BooksAndPictureVO bapVO);
-	public List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO);
+	List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO);
+	BooksAndPictureVO singleQuery(Integer pictureNumber);
 }

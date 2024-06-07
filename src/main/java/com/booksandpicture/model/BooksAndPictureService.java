@@ -55,6 +55,10 @@ public class BooksAndPictureService {
 		return dao.relatedPictures(bpVO);
 	}
 	
+	public BooksAndPictureVO singleQueryBap(Integer pictureNumber) {
+		return dao.singleQuery(pictureNumber);
+	}
+	
 	//=================================以下做圖片處理用========================================
 	
 	private byte[] decodeBase64String(String base64){
