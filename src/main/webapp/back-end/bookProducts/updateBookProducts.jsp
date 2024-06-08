@@ -149,7 +149,7 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 										<th class="align-middle">上架日期：</th>
 										<td>
 											<div class="input-group" style="width: 20%">
-												<input type="text" value="${bpVO.releaseDate}" class="form-control" readonly>
+												<input type="text" name="releaseDate" value="${bpVO.releaseDate}" class="form-control" readonly>
 											</div>
 										</td>
 									</tr>

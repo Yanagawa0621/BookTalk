@@ -9,4 +9,6 @@ public interface BooksAndPictureDAO_Impl {
 	int update (BooksAndPictureVO bapVO);
 	List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO);
 	BooksAndPictureVO singleQuery(Integer pictureNumber);
+	int delete(Integer pictureNumber);
+	public int update(Integer pictureNumber, byte[] pictureFile);
 }
