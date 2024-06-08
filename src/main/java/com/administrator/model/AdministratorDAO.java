@@ -67,11 +67,11 @@ public class AdministratorDAO implements AdministratorDAO_interface {
 	}
 
 	@Override
-    public List<AdministratorVO> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<AdministratorVO> adminList = session.createQuery("FROM AdministratorVO", AdministratorVO.class).list();
-            System.out.println("DAO - Fetched Admin List Size: " + adminList.size()); // Add this line
-            return adminList;
-        }
+	public List<AdministratorVO> getAll() {
+	    try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+	        List<AdministratorVO> adminList = session.createQuery("FROM AdministratorVO", AdministratorVO.class).list();
+	        System.out.println("DAO - Fetched Admin List Size: " + adminList.size()); // Add this line for debugging
+	        return adminList;
+	    }
 	}
 }

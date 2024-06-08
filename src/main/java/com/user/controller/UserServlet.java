@@ -123,9 +123,10 @@ public class UserServlet extends HttpServlet {
 
     private void listAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<UserVO> adminList = userService.getUsersByRole(2); // 2 代表後台管理員
-        request.setAttribute("userList", adminList);
-        request.getRequestDispatcher("/back-end/user/admins.jsp").forward(request, response);
+        request.setAttribute("adminList", adminList);
+        request.getRequestDispatcher("/back-end/user/adminList.jsp").forward(request, response);
     }
+
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer number = Integer.parseInt(request.getParameter("number"));

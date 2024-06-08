@@ -55,9 +55,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="${pageContext.request.contextPath}/back-end/admin/adminList.jsp" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>會員權限類別</p>
+                                <p>後台管理員列表</p>
                             </a>
                         </li>
                     </ul>

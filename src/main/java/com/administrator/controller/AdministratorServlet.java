@@ -73,8 +73,9 @@ public class AdministratorServlet extends HttpServlet {
 
     private void listAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<AdministratorVO> adminList = adminService.getAllAdministrators();
+        System.out.println("Servlet - Fetched Admin List Size: " + adminList.size());
         request.setAttribute("adminList", adminList);
-        request.getRequestDispatcher("/back-end/admin/adminList.jsp").forward(request, response);
+        request.getRequestDispatcher("/back-end/admin/adminList.jsp").forward(request, response); // 使用轉發
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,11 +148,11 @@ public class AdministratorServlet extends HttpServlet {
     private boolean recordLogin(HttpServletRequest request, AdministratorVO admin) {
         try {
             LoginRecordVO loginRecord = new LoginRecordVO();
-            loginRecord.setUserNumber(null); // 對應管理員的帳號，因為這裡是管理員登錄
+            loginRecord.setAdminNumber(admin.getNumber());
             loginRecord.setLoginTime(new Date());
             loginRecord.setIp(request.getRemoteAddr());
             loginRecord.setArea("Taiwan");
-            loginRecord.setUserType("admin"); // 設置用戶類型
+            loginRecord.setUserType("admin");
 
             loginRecordService.addLoginRecord(loginRecord);
             return true;
@@ -160,5 +161,4 @@ public class AdministratorServlet extends HttpServlet {
             return false;
         }
     }
-
 }
