@@ -40,13 +40,18 @@ public class BooksAndPictureService {
 		return dao.increase(bapVO);
 	}
 	
-	public int updateBapNp(Integer pictureNumber,byte[] pictureFile) {
+	public int updateBapNp(Integer pictureNumber,Integer bookNumber,byte[] pictureFile) {
 		BooksAndPictureVO bapVO=new BooksAndPictureVO();
-		
+		BookProductsVO bpVO=new BookProductsVO();
+		bpVO.setBookNumber(bookNumber);
+		bapVO.setBpVO(bpVO);
 		bapVO.setPictureNumber(pictureNumber);
 		bapVO.setPictureFile(pictureFile);
-		
 		return dao.update(bapVO);
+	}
+	
+	public int updateBapNp(Integer pictureNumber,byte[] pictureFile) {
+		return dao.update(pictureNumber, pictureFile);
 	}
 	
 	public List<BooksAndPictureVO> getimg(Integer bookNumber){
@@ -57,6 +62,10 @@ public class BooksAndPictureService {
 	
 	public BooksAndPictureVO singleQueryBap(Integer pictureNumber) {
 		return dao.singleQuery(pictureNumber);
+	}
+	
+	public int deleteImg(Integer pictureNumber){
+		return dao.delete(pictureNumber);
 	}
 	
 	//=================================以下做圖片處理用========================================

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -106,6 +107,91 @@ public class BooksAndPictureServlet extends HttpServlet {
 			// ---提交結果---
 			req.setAttribute("bookNumber", bookNumber);
 			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/newBookOnTheShelves.jsp");
+			failureView.forward(req, res);
+			return;
+		}
+
+		// ===修改圖片===
+		if ("update".equals(action)) {
+			// ---接收資料---
+			Collection<Part> parts = req.getParts();
+			List<byte[]> oldImge = new ArrayList<>();
+			List<byte[]> newImge = new ArrayList<>();
+			Integer bookNumber = Integer.valueOf(req.getParameter("bookNumber"));
+			String[] replaceString = req.getParameterValues("replace");
+			String[] removeImageString = req.getParameterValues("removeImage");
+			List<Integer> replace = new ArrayList<>(); // 裡面裝的是圖片編號(pictureNumber)
+			List<Integer> removeImage = new ArrayList<>(); // 裡面裝的是圖片編號(pictureNumber)
+
+			// ---圖片處理---
+			for (Part part : parts) {
+				if (part.getContentType() != null && part.getName().equals("oldImages[]") && part.getSize() > 0
+						&& part.getContentType().startsWith("image")) {
+					byte[] fileBytes = getBytesFromInputStream(part.getInputStream());
+					oldImge.add(fileBytes);
+				} else if (part.getContentType() != null && part.getName().equals("newImages[]") && part.getSize() > 0
+						&& part.getContentType().startsWith("image")) {
+					byte[] fileBytes = getBytesFromInputStream(part.getInputStream());
+					newImge.add(fileBytes);
+				}
+			}
+
+			// ---將字串[]轉成Integer集合---
+			if (replaceString != null && replaceString.length != 0) {
+				for (String strValue : replaceString) {
+					String[] splitValues = strValue.split(",");
+					for (String value : splitValues) {
+						String trimmedValue = value.trim();
+						if (!trimmedValue.isEmpty()) {
+							replace.add(Integer.parseInt(trimmedValue));
+						}
+					}
+				}
+				Collections.sort(replace);
+			}
+//			System.out.println(replace.toString());
+			if (removeImageString != null && removeImageString.length != 0) {
+				for (String strValue : removeImageString) {
+					String[] splitValues = strValue.split(",");
+					for (String value : splitValues) {
+						String trimmedValue = value.trim();
+						if (!trimmedValue.isEmpty()) {
+							removeImage.add(Integer.parseInt(trimmedValue));
+						}
+					}
+				}
+			}
+
+			// ---先修改圖片---
+			if (replace != null && replace.size() != 0) {
+				int i = 0;
+				for (Integer pictureNumber : replace) {
+//					System.out.println(oldImge.get(i).length);
+//					System.out.println(pictureNumber);
+					int g = bapSce.updateBapNp(pictureNumber, bookNumber, oldImge.get(i));
+//					System.out.println(g);
+					i++;
+				}
+			}
+
+			// ---新增圖片---
+			if (newImge != null && newImge.size() != 0) {
+				for (byte[] img : newImge) {
+					bapSce.addBapNp(bookNumber, img);
+				}
+			}
+
+			// ---刪除圖片---
+			if (removeImage != null && removeImage.size() != 0) {
+				for (Integer pictureNumber : removeImage) {
+//					System.out.println(pictureNumber);
+					int o = bapSce.deleteImg(pictureNumber);
+//					System.out.println(o);
+				}
+			}
+			// ---轉交結果---
+//			System.out.println("有來到");
+			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookProducts/bookProducts.jsp");
 			failureView.forward(req, res);
 			return;
 		}

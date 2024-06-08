@@ -40,6 +40,18 @@ public class BooksAndPictureDAO implements BooksAndPictureDAO_Impl {
 		}
 	}
 
+	public int update(Integer pictureNumber, byte[] pictureFile) {
+		try {
+			getSession().createQuery(
+					"update BooksAndPictureVO set pictureFile :=pictureFile where pictureNumber =:pictureNumber")
+					.setParameter("pictureFile", pictureFile).setParameter("pictureNumber", pictureNumber)
+					.executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
 	public List<BooksAndPictureVO> relatedPictures(BookProductsVO bpVO) {
 		return getSession().createQuery("from BooksAndPictureVO where bpVO =:bpVO", BooksAndPictureVO.class)
 				.setParameter("bpVO", bpVO).list();
@@ -49,4 +61,16 @@ public class BooksAndPictureDAO implements BooksAndPictureDAO_Impl {
 	public BooksAndPictureVO singleQuery(Integer pictureNumber) {
 		return getSession().get(BooksAndPictureVO.class, pictureNumber);
 	}
+
+	@Override
+	public int delete(Integer pictureNumber) {
+		try {
+			getSession().createQuery("delete from BooksAndPictureVO where pictureNumber = :pictureNumber")
+					.setParameter("pictureNumber", pictureNumber).executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
 }
