@@ -42,7 +42,7 @@ pageContext.setAttribute("bcList", bcList);
 	<!--offcanvas menu area end-->
 	<%@include file="/front-end/component/menu.jsp" %>
 	<!--header area end-->
-
+	<input type="hidden" name="userNumber" id="getUserNumber" value="${sessionScope.userNumber}">
 
 	<!--breadcrumbs area start-->
 	<div class="breadcrumbs_area">

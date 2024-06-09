@@ -1,8 +1,6 @@
 
-
-
 $(function(){
-	var userNumber = 4;
+//	var userNumber = 4;
 	var contextPath = document.querySelector('meta[name="contextPath"]').getAttribute('content'); //${pageContext.request.contextPath}
 	var path = contextPath + "/order/order.do";	//url使用
 	var pathOrderDetail = contextPath + "/orderDetails/orderDetails.do";	//url使用
@@ -154,10 +152,9 @@ $(function(){
 				dataType: "json",
 				success:function(data){
 					console.log(data);
-					if(data.message == "cancel success"){
-						$(".cart_submit").empty();
-						$(".cart_submit").html("<div><h4>訂單已取消</h4></div>");
-					}
+					$(".cart_submit").empty();
+					$(".cart_submit").html("<div><h4>訂單已取消</h4></div>");
+					$("#completeTimeChange").text(data.completeTime);		
 				}
 			});
 		}
@@ -177,10 +174,9 @@ $(function(){
 				},
 				dataType: "json",
 				success:function(data){
-					console.log(data);
-					if(data.message == "finish success"){
-						$(".cart_submit button#gofinishOrder").replaceWith('<button type="button" class="btn_empty" id="goEvaluate">評價</button>');	
-					}
+					console.log(data);					
+					$(".cart_submit button#gofinishOrder").replaceWith('<button type="button" class="btn_empty" id="goEvaluate">評價</button>');	
+					$("#completeTimeChange").text(data.completeTime);
 				}
 			});
 		}
