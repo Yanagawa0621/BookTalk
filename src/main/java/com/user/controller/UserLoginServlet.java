@@ -33,7 +33,7 @@ public class UserLoginServlet extends HttpServlet {
         if (session != null) {
             session.invalidate(); // 使當前 session 無效
         }
-        response.sendRedirect(request.getContextPath() + "/front-end/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/front-end/login/login.jsp");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,17 +46,18 @@ public class UserLoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("loggedInUser", user);
             session.setAttribute("userName", user.getName());
+            session.setAttribute("welcomeMessage", "Welcome " + user.getName() + " To BookTalk");
 
             // 記錄登入信息
             if (recordLogin(request, user)) {
-                response.sendRedirect(request.getContextPath() + "/front-end/index.jsp");
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
             } else {
                 request.setAttribute("errorMessage", "無法記錄登錄信息，請聯繫管理員");
-                request.getRequestDispatcher("/front-end/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/front-end/login/login.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("errorMessage", "帳號或密碼錯誤");
-            request.getRequestDispatcher("/front-end/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/front-end/login/login.jsp").forward(request, response);
         }
     }
 

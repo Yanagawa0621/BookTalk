@@ -5,17 +5,16 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.YearMonth" %>
 
-
 <%  
-	BookProductsService bpsce=new BookProductsService();
-	List<BookProductsVO> list=bpsce.npiBp();
-	pageContext.setAttribute("list",list);
+    BookProductsService bpsce = new BookProductsService();
+    List<BookProductsVO> list = bpsce.npiBp();
+    pageContext.setAttribute("list", list);
 %>
 
 <% 
-	LocalDate date=LocalDate.now();
-	int year=date.getYear();
-	int month=date.getMonthValue();
+    LocalDate date = LocalDate.now();
+    int year = date.getYear();
+    int month = date.getMonthValue();
 %>
 
 <!DOCTYPE html>
@@ -28,7 +27,6 @@
    
     <!--menu area start-->
     <%@include file="/front-end/component/menu.jsp" %>
-    
     <!--menu area end-->
     
     <!--slider area start-->
@@ -69,7 +67,6 @@
     <!--slider area end-->
     
     <!--banner area start-->
-
     <!--banner area end-->
        
     <!--product area start-->
@@ -306,12 +303,11 @@
                         </article>
                     </div>  
                 </div> 
-            </div>
+            </div> 
         </div> 
     </div>
     <!--product area end-->   
        
-    
     <!--product area start-->
     <div class="product_area color_two">
         <div class="container">
@@ -322,28 +318,7 @@
                            <h2><span>本月新品</span></h2>
                         </div>
                         <div class="product_tab_btn">
-<!--                             <ul class="nav" role="tablist"> -->
-<!--                                 <li> -->
-<!--                                     <a class="active" data-toggle="tab" href="#classic" role="tab" aria-controls="classic" aria-selected="true">  -->
-<!--                                        classic -->
-<!--                                     </a> -->
-<!--                                 </li> -->
-<!--                                 <li> -->
-<!--                                     <a data-toggle="tab" href="#display" role="tab" aria-controls="display" aria-selected="false"> -->
-<!--                                         Display  -->
-<!--                                     </a> -->
-<!--                                 </li> -->
-<!--                                 <li> -->
-<!--                                     <a data-toggle="tab" href="#processor" role="tab" aria-controls="processor" aria-selected="false"> -->
-<!--                                         Processor  -->
-<!--                                     </a> -->
-<!--                                 </li> -->
-<!--                                 <li> -->
-<!--                                     <a data-toggle="tab" href="#accessories" role="tab" aria-controls="accessories" aria-selected="false"> -->
-<!--                                         Accessories  -->
-<!--                                     </a> -->
-<!--                                 </li> -->
-<!--                             </ul> -->
+                            <!-- Empty div for spacing, no content inside -->
                         </div>
                     </div>
                 </div>
@@ -352,62 +327,55 @@
                 <div class="tab-pane fade show active" id="classic" role="tabpanel">
                     <div class="row">
                         <div class="product_carousel product_column4 owl-carousel">
-
-                        <c:forEach var="bpVO" items="${list}">
-                        <c:if test="${bpVO.productStatus==1}">
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                           <div class="label_product">
-                                                <span class="label_new">new</span>
-                                            </div>
-                                            <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" target="_blank">
-									            <img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗">
-									        </a>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="quick_button">詳細資訊<a href="#"
-														data-toggle="modal" data-target="#modal_box"
-														title="quick view"> <input type="hidden" name="bookNumber" value="${bpVO.bookNumber}"><i class="icon icon-Eye"></i></a>
-													</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <figcaption class="product_content">
-                                            <div class="product_rating">
-                                               <ul>
-<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
-<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
-<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
-<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
-<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
-                                               </ul>
-                                            </div>
-                                            <FORM METHOD="GET"  ACTION="${pageContext.request.contextPath}/bookproducts.do" id="bookForm_${bpVO.bookNumber}">
-											<h4 class="product_name">
-												<input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
-												<input type="hidden" name="action" value="single_product_page">
-												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
-											</h4>
-											</FORM>
-                                            <div class="price_box"> 
-                                                <span class="current_price">NT$ ${bpVO.price}</span>
-<!--                                                 <span class="old_price">$173.00</span> -->
-                                            </div>
-                                            <div class="add_to_cart">
-                                                <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
-                                            </div>
-                                        </figcaption>
-                                    </figure>
-                                </article>
-                            </div>
-                            </c:if>
+                            <c:forEach var="bpVO" items="${list}">
+                                <c:if test="${bpVO.productStatus == 1}">
+                                    <div class="col-lg-3">
+                                        <article class="single_product">
+                                            <figure>
+                                                <div class="product_thumb">
+                                                    <div class="label_product">
+                                                        <span class="label_new">new</span>
+                                                    </div>
+                                                    <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" target="_blank">
+                                                        <img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗">
+                                                    </a>
+                                                    <div class="action_links">
+                                                        <ul>
+                                                            <li class="quick_button">詳細資訊<a href="#" data-toggle="modal" data-target="#modal_box" title="quick view">
+                                                                <input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
+                                                                <i class="icon icon-Eye"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <figcaption class="product_content">
+                                                    <div class="product_rating">
+                                                        <ul>
+                                                            <!-- Rating stars will be rendered here -->
+                                                        </ul>
+                                                    </div>
+                                                    <form method="GET" action="${pageContext.request.contextPath}/bookproducts.do" id="bookForm_${bpVO.bookNumber}">
+                                                        <h4 class="product_name">
+                                                            <input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
+                                                            <input type="hidden" name="action" value="single_product_page">
+                                                            <a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
+                                                        </h4>
+                                                    </form>
+                                                    <div class="price_box"> 
+                                                        <span class="current_price">NT$ ${bpVO.price}</span>
+                                                    </div>
+                                                    <div class="add_to_cart">
+                                                        <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
+                                                    </div>
+                                                </figcaption>
+                                            </figure>
+                                        </article>
+                                    </div>
+                                </c:if>
                             </c:forEach>
                         </div> 
                     </div>   
                 </div>
-
             </div>
         </div> 
     </div>
@@ -432,8 +400,8 @@
                                     <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
-                                   <div class="articles_date">
+                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
+                                    <div class="articles_date">
                                         <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
                                         <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
@@ -450,8 +418,8 @@
                                     <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"> est ad quia aperiam unde quam hic, quae optio quis, is.</a></h4>
-                                   <div class="articles_date">
+                                    <h4 class="post_title"><a href="blog-details.html"> est ad quia aperiam unde quam hic, quae optio quis, is.</a></h4>
+                                    <div class="articles_date">
                                         <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
                                         <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
@@ -468,8 +436,8 @@
                                     <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog8.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"> Aut doloremque, optio optio delectus est quae molestiae. </a></h4>
-                                   <div class="articles_date">
+                                    <h4 class="post_title"><a href="blog-details.html"> Aut doloremque, optio optio delectus est quae molestiae. </a></h4>
+                                    <div class="articles_date">
                                         <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
                                         <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
@@ -486,8 +454,8 @@
                                     <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html">est ad quia aperiam unde quam hic, quae optio quis, is. </a></h4>
-                                   <div class="articles_date">
+                                    <h4 class="post_title"><a href="blog-details.html">est ad quia aperiam unde quam hic, quae optio quis, is. </a></h4>
+                                    <div class="articles_date">
                                         <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
                                         <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
@@ -504,8 +472,8 @@
                                     <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
                                 </div>
                                 <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
-                                   <div class="articles_date">
+                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
+                                    <div class="articles_date">
                                         <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
                                         <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
                                     </div>
@@ -522,7 +490,6 @@
     <!--blog area end-->
     
     <!--newsletter area start-->
-
     <!--newsletter area end-->
 
     <!--footer area start-->
@@ -543,130 +510,136 @@
     </div>
     <!-- modal area end-->
     
-<!-- JS
-============================================ -->
+<!-- JS ============================================ -->
 
 <%@include file="/front-end/component/script.jsp" %>
 
 <script>
-		$(document).ready(function() {
-		    $('.quick_button').find('a').on('click', function(e) {
-		    	
-		        e.preventDefault();
-		        let bookNumber = $(this).find('input[name="bookNumber"]').val();
-		        $.ajax({
-		            url: '${pageContext.request.contextPath}/bookproducts.do?action=product_page_ajax',
-		            type: 'GET',
-		            data: { bookNumber: bookNumber },
-		            success: function(response) {
-					let bookNumber=response.bookNumber;
-					let bookClassName=response.bookClassName;
-					let publishingHouseName=response.publishingHouseName;
-					let productStatus=response.productStatus;
-					let bookTitle=response.bookTitle;
-					let isbn=response.isbn;
-					let price=response.price;
-					let publicationDate=response.publicationDate;
-					let stock=response.stock;
-					let introductionContent=response.introductionContent;
-					let releaseDate=response.releaseDate;
-					let img=response.img[0];
-					let ratingScoreAvg=response.ratingScoreAvg;
-// 					console.log(ratingScoreAvg)
-					let AuthorVO=response.AuthorVO;
-					
-					let contextPath = '<%=request.getContextPath()%>';
-			        let imgUrl = contextPath + '/bap/Img?bookNumber=' + bookNumber;
-					
-					let htmlContent = ``
-						htmlContent +=`<div class="container">`
-						    htmlContent +=`<div class="row">`
+    $(document).ready(function() {
+        $('.quick_button').find('a').on('click', function(e) {
+            e.preventDefault();
+            let bookNumber = $(this).find('input[name="bookNumber"]').val();
+            $.ajax({
+                url: '${pageContext.request.contextPath}/bookproducts.do?action=product_page_ajax',
+                type: 'GET',
+                data: { bookNumber: bookNumber },
+                success: function(response) {
+                    let bookNumber = response.bookNumber;
+                    let bookClassName = response.bookClassName;
+                    let publishingHouseName = response.publishingHouseName;
+                    let productStatus = response.productStatus;
+                    let bookTitle = response.bookTitle;
+                    let isbn = response.isbn;
+                    let price = response.price;
+                    let publicationDate = response.publicationDate;
+                    let stock = response.stock;
+                    let introductionContent = response.introductionContent;
+                    let releaseDate = response.releaseDate;
+                    let img = response.img[0];
+                    let ratingScoreAvg = response.ratingScoreAvg;
+                    let AuthorVO = response.AuthorVO;
+                    
+                    let contextPath = '<%=request.getContextPath()%>';
+                    let imgUrl = contextPath + '/bap/Img?bookNumber=' + bookNumber;
+                    
+                    let htmlContent = ``
+                        htmlContent +=`<div class="container">`
+                            htmlContent +=`<div class="row">`
                                 htmlContent +=`<div class="col-lg-5 col-md-5 col-sm-12">`
-						            htmlContent +=`<div class="modal_tab">`
-						                htmlContent +=`<div class="tab-content product-details-large">`
-						                    htmlContent +=`<div class="tab-pane fade show active" id="tab1" role="tabpanel" >`
+                                    htmlContent +=`<div class="modal_tab">`
+                                        htmlContent +=`<div class="tab-content product-details-large">`
+                                            htmlContent +=`<div class="tab-pane fade show active" id="tab1" role="tabpanel" >`
                                                 htmlContent +=`<div class="modal_tab_img">`
                                                     htmlContent +=`<img src="`+imgUrl+`" alt=""></a>`
                                                 htmlContent +=`</div>`
                                             htmlContent +=`</div>`
-						                htmlContent +=`</div>`
-						            htmlContent +=`</div>`
-						        htmlContent +=`</div>`
-						        htmlContent +=`<div class="col-lg-7 col-md-7 col-sm-12">`
-						            htmlContent +=`	<div class="modal_right">`
-						                htmlContent +=`<div class="modal_title mb-10">`
-						                    htmlContent +=`<h2>`+bookTitle+`</h2>`
-						                htmlContent +=`</div>`
-						                htmlContent +=`<div class="modal_price mb-10">`
-						                    htmlContent +=`<span class="new_price">NT$ `+price+`</span>`
-						                htmlContent +=`</div>`
-						                htmlContent +=`<div class="modal_description mb-15">`
-						                    htmlContent +=`<p>`+introductionContent+`</p>`
-						                htmlContent +=`</div>`
-						                	htmlContent +=`<div class="product_rating">`
-						                		htmlContent +=`<h2 style="font-size: 20px; font-weight:bold;">評分</h2><ul>`
-						                		if(ratingScoreAvg!=null){
-													if(ratingScoreAvg>=0){
-														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
-			            							}
-													if(ratingScoreAvg>=1.5){
-														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
-													}
-													if(ratingScoreAvg>=2.5){
-														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
-													}
-													if(ratingScoreAvg>=3.5){
-														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
-													}
-													if(ratingScoreAvg>=4.5){
-														htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
-													}
-						                		}else {htmlContent +=`<p style="font-size: 16px; color: grey;">尚無評分<p>`}
-												htmlContent +=`</ul>`
-											htmlContent +=`</div>`
-						                htmlContent +=`<div class="variants_selects">`
-						                    htmlContent +=`<div class="variants_size">`
-						                        htmlContent +=`<h2>出版社:`+publishingHouseName+`</h2>`
-						                        htmlContent +=`<h2>出版日期:`+publicationDate+`</h2>`
-						                        htmlContent +=`<h2>書籍分類:`+bookClassName+`</h2>`
-						                        AuthorVO.forEach(function(imgUrl, index){
-						                        	htmlContent +=`<h2>作者:`+imgUrl+`</h2>`
-						                        });
-						                    htmlContent +=`</div>`
-						                    htmlContent +=`<div class="variants_color">`
-						                    htmlContent +=`</div>`
-						                    htmlContent +=`<div class="modal_add_to_cart">`
-						                        htmlContent +=`<form action="#">`
+                                        htmlContent +=`</div>`
+                                    htmlContent +=`</div>`
+                                htmlContent +=`</div>`
+                                htmlContent +=`<div class="col-lg-7 col-md-7 col-sm-12">`
+                                    htmlContent +=`    <div class="modal_right">`
+                                        htmlContent +=`<div class="modal_title mb-10">`
+                                            htmlContent +=`<h2>`+bookTitle+`</h2>`
+                                        htmlContent +=`</div>`
+                                        htmlContent +=`<div class="modal_price mb-10">`
+                                            htmlContent +=`<span class="new_price">NT$ `+price+`</span>`
+                                        htmlContent +=`</div>`
+                                        htmlContent +=`<div class="modal_description mb-15">`
+                                            htmlContent +=`<p>`+introductionContent+`</p>`
+                                        htmlContent +=`</div>`
+                                            htmlContent +=`<div class="product_rating">`
+                                                htmlContent +=`<h2 style="font-size: 20px; font-weight:bold;">評分</h2><ul>`
+                                                if(ratingScoreAvg != null) {
+                                                    if(ratingScoreAvg >= 0) {
+                                                        htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+                                                    }
+                                                    if(ratingScoreAvg >= 1.5) {
+                                                        htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+                                                    }
+                                                    if(ratingScoreAvg >= 2.5) {
+                                                        htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+                                                    }
+                                                    if(ratingScoreAvg >= 3.5) {
+                                                        htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+                                                    }
+                                                    if(ratingScoreAvg >= 4.5) {
+                                                        htmlContent +=`<li><a href="#"><i class="icon icon-Star"></i></a></li>`
+                                                    }
+                                                } else {
+                                                    htmlContent +=`<p style="font-size: 16px; color: grey;">尚無評分<p>`
+                                                }
+                                                htmlContent +=`</ul>`
+                                            htmlContent +=`</div>`
+                                        htmlContent +=`<div class="variants_selects">`
+                                            htmlContent +=`<div class="variants_size">`
+                                                htmlContent +=`<h2>出版社:`+publishingHouseName+`</h2>`
+                                                htmlContent +=`<h2>出版日期:`+publicationDate+`</h2>`
+                                                htmlContent +=`<h2>書籍分類:`+bookClassName+`</h2>`
+                                                AuthorVO.forEach(function(imgUrl, index) {
+                                                    htmlContent +=`<h2>作者:`+imgUrl+`</h2>`
+                                                });
+                                            htmlContent +=`</div>`
+                                            htmlContent +=`<div class="variants_color">`
+                                            htmlContent +=`</div>`
+                                            htmlContent +=`<div class="modal_add_to_cart">`
+                                                htmlContent +=`<form action="#">`
                                                     htmlContent +=`<input min="1" max="`+stock+`" step="1" value="1" type="number">`
                                                     htmlContent +=`<button type="button" class="shop_add_cart">加入購物車</button>`
-						                        htmlContent +=`</form>`
-						                    htmlContent +=`</div>`
-						                htmlContent +=`</div>`
-						            
-						        htmlContent +=`</div>`
-						    htmlContent +=`</div>`
-						htmlContent +=`</div>`
+                                                htmlContent +=`</form>`
+                                            htmlContent +=`</div>`
+                                        htmlContent +=`</div>`
+                                    
+                                htmlContent +=`</div>`
+                            htmlContent +=`</div>`
+                        htmlContent +=`</div>`
                     htmlContent +=`</div>`
-				    $('#modal_box .modal_body').html(htmlContent);
-		            $('#modal_box').modal('show');
-		            },
-		            error: function(xhr, status, error) {
-		                console.error('Ajax请求失败:', error);
-		            }
-		        });
-		    })
-		});
-	</script>
-	
-	<script type="text/javascript">
-        window.onload = function() {
-            // Check if the URL already has the selectPage parameter
-            if (!window.location.search.includes('selectPage=home')) {
-                // Redirect to the same URL with the selectPage parameter
-                window.location.href = window.location.pathname + "?selectPage=home";
-            }
-        };
-    </script>
+                    $('#modal_box .modal_body').html(htmlContent);
+                    $('#modal_box').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ajax请求失败:', error);
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    window.onload = function() {
+        // Check if the URL already has the selectPage parameter
+        if (!window.location.search.includes('selectPage=home')) {
+            // Redirect to the same URL with the selectPage parameter
+            window.location.href = window.location.pathname + "?selectPage=home";
+        }
+
+        // Display welcome alert if userName is present in session and alert hasn't been displayed yet
+        const userName = '<%= session.getAttribute("userName") %>';
+        if (userName && userName !== 'null' && !sessionStorage.getItem('welcomeAlertDisplayed')) {
+            alert("Welcome " + userName + " to BookTalk");
+            sessionStorage.setItem('welcomeAlertDisplayed', 'true');
+        }
+    };
+</script>
 </body>
 
 </html>

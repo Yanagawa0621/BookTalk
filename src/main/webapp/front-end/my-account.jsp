@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -9,12 +8,12 @@
 <%@include file="/front-end/component/head.jsp" %>
 
 <body>
-	<!--menu area start-->
+    <!-- menu area start -->
     <%@include file="/front-end/component/menu.jsp" %>
     
-    <!--menu area end-->
+    <!-- menu area end -->
     
-    <!--breadcrumbs area start-->
+    <!-- breadcrumbs area start -->
     <div class="breadcrumbs_area">
         <div class="container">   
             <div class="row">
@@ -30,7 +29,7 @@
             </div>
         </div>         
     </div>
-    <!--breadcrumbs area end-->
+    <!-- breadcrumbs area end -->
     
     <!-- my account start  -->
     <section class="main_content_area">
@@ -41,11 +40,23 @@
                         <!-- Nav tabs -->
                         <div class="dashboard_tab_button">
                             <ul role="tablist" class="nav flex-column dashboard-list">
-                                <li><a href="#login" data-toggle="tab" class="nav-link active">登入</a></li>
+                                <li>
+                                    <c:choose>
+                                        <c:when test="${not empty currentUser}">
+                                            歡迎, ${currentUser.username}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form action="${pageContext.request.contextPath}/userLogin" method="post">
+                                                <input type="hidden" name="redirect" value="${pageContext.request.contextPath}/front-end/my-account.jsp" />
+                                                <button type="submit" class="btn nav-link active">登入</button>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
                                 <li><a href="#orders" data-toggle="tab" class="nav-link">訂單資訊</a></li>
                                 <li><a href="#address" data-toggle="tab" class="nav-link">地址資訊</a></li>
                                 <li><a href="#account-details" data-toggle="tab" class="nav-link">帳號資訊</a></li>
-                                <li><a href="#logout" class="nav-link">登出</a></li>
+                                <li><a href="${pageContext.request.contextPath}/front-end/login/logout.jsp" class="nav-link">登出</a></li>
                             </ul>
                         </div>    
                     </div>
@@ -53,8 +64,8 @@
                         <!-- Tab panes -->
                         <div class="tab-content dashboard_content">
                             <div class="tab-pane fade show active" id="dashboard">
-                                <h3>Dashboard </h3>
-                                <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">Edit your password and account details.</a></p>
+                                <h3>Dashboard</h3>
+                                <p>From your account dashboard, you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a>, and <a href="#">edit your password and account details.</a></p>
                             </div>
                             <div class="tab-pane fade" id="orders">
                                 <h3>訂單資訊</h3>
@@ -70,87 +81,46 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <!-- 訂單資訊表格內容 -->
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="tab-pane" id="address">
-                               <p>The following addresses will be used on the checkout page by default.</p>
+                                <p>The following addresses will be used on the checkout page by default.</p>
                                 <h4 class="billing-address">Billing address</h4>
                                 <a href="#" class="view">Edit</a>
                                 <p><strong>Bobby Jackson</strong></p>
                                 <address>
                                     House #15<br>
                                     Road #1<br>
-                                    Block #C <br>
-                                    Banasree <br>
-                                    Dhaka <br>
+                                    Block #C<br>
+                                    Banasree<br>
+                                    Dhaka<br>
                                     1212
                                 </address>
-                                <p>Bangladesh</p>   
+                                <p>Bangladesh</p>
                             </div>
                             <div class="tab-pane fade" id="account-details">
                                 <h3>帳號詳細資訊</h3>
-                                <div class="login">
-                                    <div class="login_form_container">
-                                        <div class="account_login_form">
-                                            <form action="#">
-                                                <p>Already have an account? <a href="#">Log in instead!</a></p>
-                                                <div class="input-radio">
-                                                    <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mr.</span>
-                                                    <span class="custom-radio"><input type="radio" value="1" name="id_gender"> Mrs.</span>
-                                                </div> <br>
-                                                <label>First Name</label>
-                                                <input type="text" name="first-name">
-                                                <label>Last Name</label>
-                                                <input type="text" name="last-name">
-                                                <label>Email</label>
-                                                <input type="text" name="email-name">
-                                                <label>Password</label>
-                                                <input type="password" name="user-password">
-                                                <label>Birthdate</label>
-                                                <input type="text" placeholder="MM/DD/YYYY" value="" name="birthday">
-                                                <span class="example">
-                                                  (E.g.: 05/31/1970)
-                                                </span>
-                                                <br>
-                                                <span class="custom_checkbox">
-                                                    <input type="checkbox" value="1" name="optin">
-                                                    <label>Receive offers from our partners</label>
-                                                </span>
-                                                <br>
-                                                <span class="custom_checkbox">
-                                                    <input type="checkbox" value="1" name="newsletter">
-                                                    <label>Sign up for our newsletter<br><em>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</em></label>
-                                                </span>
-                                                <div class="save_button primary_btn default_button">
-                                                   <button type="submit">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Include account_details.jsp here -->
+                                <jsp:include page="/front-end/account_details.jsp" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>  
-        </div>        	
+        </div>
     </section>			
     <!-- my account end   --> 
 
-   <!--footer area start-->
+   <!-- footer area start -->
     <%@include file="/front-end/component/footer.jsp" %>
-    <!--footer area end-->
+    <!-- footer area end -->
     
-<!-- JS
-============================================ -->
-
+<!-- JS -->
 <%@include file="/front-end/component/script.jsp" %>
 <script src="${pageContext.request.contextPath}/front-end/assets/js/order/order.js"></script>
 
-
 </body>
-
 </html>
