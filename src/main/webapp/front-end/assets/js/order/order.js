@@ -1,7 +1,7 @@
 
 
 $(function(){
-	var userNumber = null;
+	var userNumber = $("#getUserNumber").val();
 	var contextPath = document.querySelector('meta[name="contextPath"]').getAttribute('content'); //${pageContext.request.contextPath}
 	var path = contextPath + "/order/order.do";	//url使用
 	

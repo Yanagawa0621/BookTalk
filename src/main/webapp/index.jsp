@@ -45,6 +45,8 @@
     <%@include file="/front-end/component/menu.jsp" %>
     <!--menu area end-->
     
+    <input type="hidden" name="userNumber" id="getUserNumber" value="${sessionScope.userNumber}">
+    
     <!--slider area start-->
     <section class="slider_section slider_s_two color_two mb-30">
         <div class="slider_area owl-carousel">
