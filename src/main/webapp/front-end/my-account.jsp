@@ -10,7 +10,6 @@
 <body>
     <!-- menu area start -->
     <%@include file="/front-end/component/menu.jsp" %>
-    
     <!-- menu area end -->
     
     <!-- breadcrumbs area start -->
@@ -42,8 +41,8 @@
                             <ul role="tablist" class="nav flex-column dashboard-list">
                                 <li>
                                     <c:choose>
-                                        <c:when test="${not empty currentUser}">
-                                            歡迎, ${currentUser.username}
+                                        <c:when test="${not empty sessionScope.loggedInUser}">
+                                            歡迎, ${sessionScope.userName} (userNumber: ${sessionScope.userNumber})
                                         </c:when>
                                         <c:otherwise>
                                             <form action="${pageContext.request.contextPath}/userLogin" method="post">
@@ -65,7 +64,7 @@
                         <div class="tab-content dashboard_content">
                             <div class="tab-pane fade show active" id="dashboard">
                                 <h3>Dashboard</h3>
-                                <p>From your account dashboard, you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a>, and <a href="#">edit your password and account details.</a></p>
+                                <p>From your account dashboard, you can easily check & view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
                             </div>
                             <div class="tab-pane fade" id="orders">
                                 <h3>訂單資訊</h3>
@@ -120,7 +119,6 @@
     
 <!-- JS -->
 <%@include file="/front-end/component/script.jsp" %>
-<script src="${pageContext.request.contextPath}/front-end/assets/js/order/order.js"></script>
 
 </body>
 </html>

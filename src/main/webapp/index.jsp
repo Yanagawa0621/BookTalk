@@ -26,6 +26,13 @@
 	List<Object[]> objList=odSce.getSalesSorting();
 	pageContext.setAttribute("objList",objList);
 %>
+
+    <!-- 检查是否存在歡迎視窗 -->
+    <c:if test="${not empty sessionScope.welcomeMessage}">
+        <div class="alert alert-success" role="alert">
+            ${sessionScope.welcomeMessage}
+        </div>
+    </c:if>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 

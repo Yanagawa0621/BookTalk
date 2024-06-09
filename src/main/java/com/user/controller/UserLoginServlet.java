@@ -46,18 +46,19 @@ public class UserLoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("loggedInUser", user);
             session.setAttribute("userName", user.getName());
-            session.setAttribute("welcomeMessage", "Welcome " + user.getName() + " To BookTalk");
+            session.setAttribute("userNumber", user.getNumber()); // 添加 userNumber 到 session
+            session.setAttribute("welcomeMessage", "🎉 Welcome " + user.getName() + " to BookTalk! 📚"); // 登入成功後顯示歡迎該使用者+emoji
 
             // 記錄登入信息
             if (recordLogin(request, user)) {
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             } else {
                 request.setAttribute("errorMessage", "無法記錄登錄信息，請聯繫管理員");
-                request.getRequestDispatcher("/front-end/login/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/front-end/my_account.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("errorMessage", "帳號或密碼錯誤");
-            request.getRequestDispatcher("/front-end/login/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/front-end/my_account.jsp").forward(request, response);
         }
     }
 
