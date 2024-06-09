@@ -19,24 +19,27 @@
     <title>添加使用者</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script>
-        async function loadDistricts() {
-            const response = await fetch('<%=request.getContextPath()%>/front-end/article/ckEditor/taiwan-districts.json');
-            const districts = await response.json();
-
-            function getDistricts(city) {
-                return districts[city] || [];
+    async function loadDistricts() {
+        const response = await fetch('<%=request.getContextPath()%>/front-end/article/ckEditor/taiwan-districts.json', {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
             }
+        });
+        const districts = await response.json();
 
-            function getCities() {
-                return Object.keys(districts);
-            }
-
-            return {
-                getDistricts,
-                getCities
-            };
+        function getDistricts(city) {
+            return districts[city] || [];
         }
 
+        function getCities() {
+            return Object.keys(districts);
+        }
+
+        return {
+            getDistricts,
+            getCities
+        };
+    }
         async function populateCities() {
             const TaiwanDistricts = await loadDistricts();
             const citySelect = document.querySelector('select[name=city]');
@@ -127,7 +130,7 @@
                 document.getElementById('nationalIdError').textContent = "";
             }
 
-            const telephonePattern = /^\d{10}$/;
+            const telephonePattern = /^09\d{8}$/;
             if (!telephonePattern.test(telephoneNumber)) {
                 document.getElementById('telephoneError').textContent = "電話號碼格式不正確, 必須以09為開頭，後面8個位數字。";
                 return false;
@@ -161,7 +164,7 @@
 <body>
 <div class="container">
     <h2 class="my-4">新增使用者</h2>
-    <form action="<%=request.getContextPath()%>/user" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form action="<%=request.getContextPath()%>/user" method="post" enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="return validateForm()">
         <input type="hidden" name="action" value="add">
         <!-- 錯誤訊息顯示區 -->
         <div class="text-danger">${errorMessage}</div>

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 import com.user.model.DuplicateFieldException;
 import com.user.model.UserService;
 import com.user.model.UserServiceImpl;
@@ -53,25 +56,34 @@ public class UserProfileServlet extends HttpServlet {
                 return;
             }
 
-            switch (action) {
-                case "viewProfile":
-                    viewUserProfile(request, response);
-                    break;
-                case "updateProfile":
-                    updateUserProfile(request, response);
-                    break;
-                default:
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
-                    break;
+            try (Session hibernateSession = HibernateUtil.getSessionFactory().openSession()) {
+                Transaction transaction = hibernateSession.beginTransaction();
+                try {
+                    switch (action) {
+                        case "viewProfile":
+                            viewUserProfile(request, response, hibernateSession);
+                            break;
+                        case "updateProfile":
+                            updateUserProfile(request, response, hibernateSession);
+                            break;
+                        default:
+                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
+                            break;
+                    }
+                    transaction.commit();
+                } catch (Exception e) {
+                    if (transaction != null) transaction.rollback();
+                    throw new ServletException(e);
+                }
             }
         } catch (Exception e) {
             throw new ServletException(e);
         }
     }
 
-    private void viewUserProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        UserVO user = (UserVO) session.getAttribute("loggedInUser");
+    private void viewUserProfile(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession(false);
+        UserVO user = (UserVO) httpSession.getAttribute("loggedInUser");
         List<AccessVO> accessList = accessService.getAllAccesses();
 
         request.setAttribute("user", user);
@@ -79,7 +91,7 @@ public class UserProfileServlet extends HttpServlet {
         request.getRequestDispatcher("/front-end/my-account.jsp").forward(request, response);
     }
 
-    private void updateUserProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateUserProfile(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         UserVO user = (UserVO) request.getSession().getAttribute("loggedInUser");
 
         String account = request.getParameter("account");
@@ -121,10 +133,10 @@ public class UserProfileServlet extends HttpServlet {
             userService.updateUser(user);
             request.getSession().setAttribute("loggedInUser", user);
 
-            viewUserProfile(request, response);
+            viewUserProfile(request, response, session);
         } catch (DuplicateFieldException e) {
             request.setAttribute("errorMessage", e.getMessage());
-            viewUserProfile(request, response);
+            viewUserProfile(request, response, session);
         }
     }
 }

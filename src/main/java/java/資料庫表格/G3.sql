@@ -372,19 +372,24 @@ CREATE TABLE user (
     CONSTRAINT fk_user_accessNumber FOREIGN KEY (accessNumber) REFERENCES access(accessNumber)
 ) COMMENT '會員 user';
 
-INSERT INTO user (accountStatusNumber, accessNumber, account, passcode, name, registerDate, sex, eMail, introduceOneself, birthday, photo, nationalIdNumber, telephoneNumber, address, statusStartDate) 
-VALUES 
-    (1, 1, '134', '123', 'Tina Wang', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
-    (1, 1, '1765', '456', '王小明', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
-    (1, 1, '1876', '3423', 'David Wu', '1983-01-30', '2', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
-    (1, 1, '112', '789', '天天小飛', '1984-02-20', '2', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
-	(1, 1, 'xx35f23', '6757', '黃依依', '1984-02-11', '2', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, '1', '1', '1', '1985-03-01'),
-    (1, 1, 'flji424', '4fa4adfa', '麥當勞', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
-    (1, 1, '1lafiv', '455afaf', 'kobe', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
-    (1, 1, '345daf', 'adfggwert', 'LeBron James', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
-    (1, 1, 'mary', '565608', 'Anthony Davis', '1984-02-20', '2', 'mary3423@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
-    (1, 1, 'john1445', '123456fs', 'Russell', '1984-02-20', '1', 'johnere@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21');
+-- 添加 city 和 district 欄位
+ALTER TABLE user
+ADD COLUMN city VARCHAR(50) COMMENT '城市',
+ADD COLUMN district VARCHAR(50) COMMENT '區';
 
+INSERT INTO user (accountStatusNumber, accessNumber, account, passcode, name, registerDate, sex, eMail, introduceOneself, birthday, photo, nationalIdNumber, telephoneNumber, address, city, district, statusStartDate) 
+VALUES 
+    (1, 1, '134', '123', 'Tina Wang', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, 'A123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1982-12-18'),
+    (1, 1, '1765', '456', '王小明', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, 'B123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1983-02-20'),
+    (1, 1, '1876', '3423', 'David Wu', '1983-01-30', '2', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, 'C123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1979-07-12'),
+    (1, 1, '112', '789', '天天小飛', '1984-02-20', '2', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, 'D123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-21'),
+    (1, 1, 'xx35f23', '6757', '黃依依', '1984-02-11', '2', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, 'E123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-01'),
+    (1, 1, 'flji424', '4fa4adfa', '麥當勞', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, 'F123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1982-12-18'),
+    (1, 1, '1lafiv', '455afaf', 'kobe', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, 'G123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1983-02-20'),
+    (1, 1, '345daf', 'adfggwert', 'LeBron James', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, 'H123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1979-07-12'),
+    (1, 1, 'mary', '565608', 'Anthony Davis', '1984-02-20', '2', 'mary3423@gmail.com', 'eum#', '1981-11-17', NULL, 'I123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-21'),
+    (1, 1, 'john1445', '123456fs', 'Russell', '1984-02-20', '1', 'johnere@gmail.com', 'eum#', '1981-11-17', NULL, 'J123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-21');
+    
 -- 登入記錄 --
 CREATE TABLE login_record (
     number INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '編號',
@@ -414,19 +419,20 @@ CREATE TABLE complaint (
 
 INSERT INTO complaint (userNumber, processingStatus, complaintTypeNumber, content, complaintTime, completedDate, response) VALUES (1, 1, 1, '123', '1981-11-17 00:00:00', '1981-11-17 00:00:00', '1');
 
--- 管理員 --
+-- 管理員
 CREATE TABLE administrator(
-	account VARCHAR(20) PRIMARY KEY COMMENT'帳號',
-    passcode VARCHAR(20) COMMENT'密碼',
-    name VARCHAR(255) COMMENT'名稱'
-)COMMENT'管理員 administrator';
+    account VARCHAR(20) PRIMARY KEY COMMENT '帳號',
+    passcode VARCHAR(20) COMMENT '密碼',
+    name VARCHAR(255) COMMENT '名稱',
+    number INT UNIQUE COMMENT '編號' -- 添加唯一约束
+) COMMENT '管理員 administrator';
 
-INSERT INTO administrator(account,passcode,name) VALUES
-('AS127894','A79461354','FAKER'),
-('QW121345','F83748512','peter'),
-('dog123','d98765432','cat'),
-('cat2222','c1234567','dog'),
-('abcd1234','a1234567','alpha');
+INSERT INTO administrator (account, passcode, name, number)
+VALUES ('AS127894', 'A79461354', 'FAKER', 1),
+       ('QW121345', 'F83748512', 'peter', 2),
+       ('dog123', 'd98765432', 'cat', 3),
+       ('cat2222', 'c1234567', 'dog', 4),
+       ('abcd1234', 'a1234567', 'alpha', 5);
 
 -- QA --
 CREATE TABLE qa(

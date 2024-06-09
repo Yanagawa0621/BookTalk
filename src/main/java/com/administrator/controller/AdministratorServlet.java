@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 import com.administrator.model.AdministratorService;
 import com.administrator.model.AdministratorServiceImpl;
 import com.administrator.model.AdministratorVO;
@@ -43,42 +46,50 @@ public class AdministratorServlet extends HttpServlet {
             action = "list";
         }
 
-        switch (action) {
-            case "list":
-                listAdmins(request, response);
-                break;
-            case "edit":
-                showEditForm(request, response);
-                break;
-            case "delete":
-                deleteAdmin(request, response);
-                break;
-            case "add":
-                showAddForm(request, response);
-                break;
-            case "create":
-                createAdmin(request, response);
-                break;
-            case "update":
-                updateAdmin(request, response);
-                break;
-            case "login":
-                loginAdmin(request, response);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
-                break;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                switch (action) {
+                    case "list":
+                        listAdmins(request, response, session);
+                        break;
+                    case "edit":
+                        showEditForm(request, response, session);
+                        break;
+                    case "delete":
+                        deleteAdmin(request, response, session);
+                        break;
+                    case "add":
+                        showAddForm(request, response);
+                        break;
+                    case "create":
+                        createAdmin(request, response, session);
+                        break;
+                    case "update":
+                        updateAdmin(request, response, session);
+                        break;
+                    case "login":
+                        loginAdmin(request, response, session);
+                        break;
+                    default:
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
+                        break;
+                }
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                throw new ServletException(e);
+            }
         }
     }
 
-    private void listAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listAdmins(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         List<AdministratorVO> adminList = adminService.getAllAdministrators();
-        System.out.println("Servlet - Fetched Admin List Size: " + adminList.size());
         request.setAttribute("adminList", adminList);
         request.getRequestDispatcher("/back-end/admin/adminList.jsp").forward(request, response); // 使用轉發
     }
 
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         String account = request.getParameter("account");
         AdministratorVO admin = adminService.getAdministratorByAccount(account);
         request.setAttribute("admin", admin);
@@ -89,7 +100,7 @@ public class AdministratorServlet extends HttpServlet {
         request.getRequestDispatcher("/back-end/admin/addAdmin.jsp").forward(request, response);
     }
 
-    private void createAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void createAdmin(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         String account = request.getParameter("account");
         String name = request.getParameter("name");
         String passcode = request.getParameter("passcode");
@@ -103,7 +114,7 @@ public class AdministratorServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin?action=list");
     }
 
-    private void updateAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateAdmin(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         String account = request.getParameter("account");
         String name = request.getParameter("name");
         String passcode = request.getParameter("passcode");
@@ -117,21 +128,21 @@ public class AdministratorServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/admin?action=list");
     }
 
-    private void deleteAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void deleteAdmin(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         String account = request.getParameter("account");
         adminService.deleteAdministrator(account);
         response.sendRedirect(request.getContextPath() + "/admin?action=list");
     }
 
-    private void loginAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void loginAdmin(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         String account = request.getParameter("account");
         String passcode = request.getParameter("passcode");
 
         AdministratorVO admin = adminService.getAdministratorByAccount(account);
         if (admin != null && admin.getPasscode().equals(passcode)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loggedInAdmin", admin);
-            session.setAttribute("adminName", admin.getName());
+            HttpSession httpSession = request.getSession();
+            httpSession.setAttribute("loggedInAdmin", admin);
+            httpSession.setAttribute("adminName", admin.getName());
 
             if (recordLogin(request, admin)) {
                 response.sendRedirect(request.getContextPath() + "/back-end/bk_index.jsp");

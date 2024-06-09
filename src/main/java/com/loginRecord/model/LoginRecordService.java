@@ -9,4 +9,5 @@ public interface LoginRecordService {
     LoginRecordVO getLoginRecord(Integer number);
     List<LoginRecordVO> getAllLoginRecords();
     List<LoginRecordVO> getLoginRecordsByUserNumber(Integer userNumber);
+    List<LoginRecordVO> searchLoginRecords(String userName, String userType, String timeRange, String customDaysStr); // 添加这个方法
 }
