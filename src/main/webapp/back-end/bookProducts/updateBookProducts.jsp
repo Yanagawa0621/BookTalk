@@ -58,7 +58,7 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">新增書籍</h1>
+							<h1 class="m-0">修改書籍</h1>
 						</div>
 						<!-- /.col -->
 					</div>
@@ -86,7 +86,7 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 
 				<div class="card">
 					<div class="card-header">
-						<h3 class="card-title">輸入書籍資訊</h3>
+						<h3 class="card-title">修改書籍資訊</h3>
 											<p>removeAuthorString 的值是: ${removeAuthorString}</p>
 					</div>
 					<!-- /.card-header -->
@@ -149,7 +149,7 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 										<th class="align-middle">上架日期：</th>
 										<td>
 											<div class="input-group" style="width: 20%">
-												<input type="text" value="${bpVO.releaseDate}" class="form-control" readonly>
+												<input type="text" name="releaseDate" value="${bpVO.releaseDate}" class="form-control" readonly>
 											</div>
 										</td>
 									</tr>

@@ -1,9 +1,13 @@
+<%@page import="com.orderdetails.model.OrderDetailsService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.bookproducts.model.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.YearMonth" %>
+<%@ page import="com.article.model.*"%>
+<%@ page import="com.forum.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 <%  
     BookProductsService bpsce = new BookProductsService();
@@ -17,6 +21,11 @@
     int month = date.getMonthValue();
 %>
 
+<%
+	OrderDetailsService odSce=new OrderDetailsService();
+	List<Object[]> objList=odSce.getSalesSorting();
+	pageContext.setAttribute("objList",objList);
+%>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -81,227 +90,58 @@
             </div> 
             <div class="row">
                 <div class="product_carousel product_column6 owl-carousel">
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                   <div class="label_product">
-                                       <span class="label_new">new</span>
-                                        <span class="label_sale">12%</span>
-                                    </div>
-                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product11.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product12.jpg" alt=""></a>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                            <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                            <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <figcaption class="product_content">
-                                    <div class="product_rating">
-                                       <ul>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                       </ul>
-                                    </div>
-                                    <h4 class="product_name"><a href="product-details.html"> suscipit tempora  delectus  officia a, possimus at ipsam.</a></h4>
-                                    <div class="price_box"> 
-                                        <span class="current_price">$220.00</span>
-                                        <span class="old_price">$240.00</span>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                    </div>
-                                    <div class="swatches-colors">
-                                        <ul>
-                                            <li><a class="color1" href="javascript:void(0)"></a></li>
-                                            <li><a class="color2" href="javascript:void(0)"></a></li>
-                                            <li><a class="color3" href="javascript:void(0)"></a></li>
-                                            <li><a class="color4" href="javascript:void(0)"></a></li>
-                                        </ul>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div> 
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                   <div class="label_product">
-                                        <span class="label_new">new</span>
-                                    </div>
-                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product13.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product14.jpg" alt=""></a>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                            <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                            <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <figcaption class="product_content">
-                                    <div class="product_rating">
-                                       <ul>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                       </ul>
-                                    </div>
-                                    <h4 class="product_name"><a href="product-details.html"> modi nisi cum officia error possimus, unde ipsam is.!</a></h4>
-                                    <div class="price_box"> 
-                                        <span class="current_price">$225.00</span>
-                                        <span class="old_price">$235.00</span>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                    </div>
-                                    <div class="swatches-colors">
-                                        <ul>
-                                            <li><a class="color1" href="javascript:void(0)"></a></li>
-                                            <li><a class="color2" href="javascript:void(0)"></a></li>
-                                            <li><a class="color3" href="javascript:void(0)"></a></li>
-                                            <li><a class="color4" href="javascript:void(0)"></a></li>
-                                        </ul>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>  
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                   <div class="label_product">
-                                        <span class="label_new">new</span>
-                                    </div>
-                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product15.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product16.jpg" alt=""></a>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                            <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                            <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <figcaption class="product_content">
-                                    <div class="product_rating">
-                                       <ul>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                       </ul>
-                                    </div>
-                                    <h4 class="product_name"><a href="product-details.html">Lorem ipsum dolor sit amet, elit, the display aliquid!</a></h4>
-                                    <div class="price_box"> 
-                                        <span class="current_price">$142.00</span>
-                                        <span class="old_price">$173.00</span>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                   <div class="label_product">
-                                        <span class="label_new">new</span>
-                                        <span class="label_sale">10%</span>
-                                    </div>
-                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product17.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product18.jpg" alt=""></a>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                            <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                            <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <figcaption class="product_content">
-                                    <div class="product_rating">
-                                       <ul>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                       </ul>
-                                    </div>
-                                    <h4 class="product_name"><a href="product-details.html"> quidem totam, voluptatem quae quasi possimus iusto!</a></h4>
-                                    <div class="price_box"> 
-                                        <span class="current_price">$145.00</span>
-                                        <span class="old_price">$178.00</span>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                    </div>
-                                    <div class="swatches-colors">
-                                        <ul>
-                                            <li><a class="color1" href="javascript:void(0)"></a></li>
-                                            <li><a class="color2" href="javascript:void(0)"></a></li>
-                                            <li><a class="color3" href="javascript:void(0)"></a></li>
-                                            <li><a class="color4" href="javascript:void(0)"></a></li>
-                                        </ul>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div> 
-                    <div class="col-lg-3">
-                        <article class="single_product">
-                            <figure>
-                                <div class="product_thumb">
-                                   <div class="label_product">
-                                        <span class="label_new">new</span>
-                                    </div>
-                                    <a class="primary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product19.jpg" alt=""></a>
-                                    <a class="secondary_img" href="product-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/product/product20.jpg" alt=""></a>
-                                    <div class="action_links">
-                                        <ul>
-                                            <li class="quick_button"><a href="#" data-toggle="modal" data-target="#modal_box"  title="quick view"> <i class="icon icon-Eye"></i></a></li>
-                                            <li class="wishlist"><a href="wishlist.html" title="Add to Wishlist"><i class="icon icon-Heart"></i></a></li>  
-                                            <li class="compare"><a href="#" title="Add to Compare"><i class="icon icon-MusicMixer"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <figcaption class="product_content">
-                                    <div class="product_rating">
-                                       <ul>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                           <li><a href="#"><i class="icon icon-Star"></i></a></li>
-                                       </ul>
-                                    </div>
-                                    <h4 class="product_name"><a href="product-details.html">iusto dignissimos illum. Quis provident ratione maiores.</a></h4>
-                                    <div class="price_box"> 
-                                        <span class="current_price">$179.00</span>
-                                        <span class="old_price">$190.00</span>
-                                    </div>
-                                    <div class="add_to_cart">
-                                        <a href="cart.html" title="Add to cart">Add to Cart</a>
-                                    </div>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>  
+                    <c:forEach var="obj" items="${objList}">
+                    	<c:set var="bpVO" value="${obj[0]}" />
+                        <c:if test="${bpVO.productStatus==1}">
+                            <div class="col-lg-3">
+                                <article class="single_product">
+                                    <figure>
+                                        <div class="product_thumb">
+                                           <div class="label_product">
+                                                <span class="label_new">new</span>
+                                            </div>
+                                            <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" target="_blank">
+									            <img src="<%=request.getContextPath()%>/bap/Img?bookNumber=${bpVO.bookNumber}" alt="預覽失敗">
+									        </a>
+                                            <div class="action_links">
+                                                <ul>
+                                                    <li class="quick_button">詳細資訊<a href="#"
+														data-toggle="modal" data-target="#modal_box"
+														title="quick view"> <input type="hidden" name="bookNumber" value="${bpVO.bookNumber}"><i class="icon icon-Eye"></i></a>
+													</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <figcaption class="product_content">
+                                            <div class="product_rating">
+                                               <ul>
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+<!--                                                    <li><a href="#"><i class="icon icon-Star"></i></a></li> -->
+                                               </ul>
+                                            </div>
+                                            <FORM METHOD="GET"  ACTION="${pageContext.request.contextPath}/bookproducts.do" id="bookForm_${bpVO.bookNumber}">
+											<h4 class="product_name">
+												<input type="hidden" name="bookNumber" value="${bpVO.bookNumber}">
+												<input type="hidden" name="action" value="single_product_page">
+												<a href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}" style="border: none; background-color: #ffffff; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; text-decoration: none; color: inherit;">${bpVO.bookTitle}</a>
+											</h4>
+											</FORM>
+                                            <div class="price_box"> 
+                                                <span class="current_price">NT$ ${bpVO.price}</span>
+<!--                                                 <span class="old_price">$173.00</span> -->
+                                            </div>
+                                            <div class="add_to_cart">
+                                                <a class="primary_img" href="${pageContext.request.contextPath}/bookproducts.do?bookNumber=${bpVO.bookNumber}&action=single_product_page" id="submitLink_${bpVO.bookNumber}"><span style="font-weight: bold;">商品詳細資訊</span></a>
+                                            </div>
+                                        </figcaption>
+                                    </figure>
+                                </article>
+                         	</div>
+                      	</c:if>
+                  	</c:forEach>  
                 </div> 
             </div> 
         </div> 
@@ -381,7 +221,7 @@
     </div>
     <!--product area end-->
     
-    <!--blog area start-->
+    <!-- blog area start -->
     <section class="blog_section color_two">
         <div class="container">
             <div class="row">
@@ -393,96 +233,32 @@
             </div>
             <div class="row">
                 <div class="blog_carousel blog_column3 owl-carousel">
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
-                                    <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                    <jsp:useBean id="articleSvc" scope="page" class="com.article.model.ArticleService"/>
+                    <c:set var="list" value="${articleSvc.getPopularArticle()}" />
+                    <c:forEach var="articleVO" items="${list}" varStatus="loop" begin="0" end="2">
+                        <div class="col-lg-3">
+                            <article class="single_blog">
+                                <figure>
+                                    <div class="blog_thumb">
+                                        ${articleVO.articleImage}
                                     </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                    <h4 class="post_title"><a href="blog-details.html"> est ad quia aperiam unde quam hic, quae optio quis, is.</a></h4>
-                                    <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog8.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                    <h4 class="post_title"><a href="blog-details.html"> Aut doloremque, optio optio delectus est quae molestiae. </a></h4>
-                                    <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                    <h4 class="post_title"><a href="blog-details.html">est ad quia aperiam unde quam hic, quae optio quis, is. </a></h4>
-                                    <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                    <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
-                                    <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
+                                    <figcaption class="blog_content">
+                                        <h4 class="post_title"><a href="javascript:void(0);" onclick="confirmNavigation(event);" data-toggle="modal" data-target="#lightboxModal${loop.index}"><i class="fa fa-paper-plane"></i>${articleVO.title}</a></h4>
+                                        <jsp:useBean id="userVO" scope="page" class="com.user.model.UserServiceImpl"/>
+                                        <div class="blog_meta">
+                                            <c:set var="ArticleUserNumber" value="${articleVO.userNumber}"/>
+                                            <c:set var="userName" value="${userVO.getUserByNumber(ArticleUserNumber)}"/>
+                                            <p>作者:${userName.name} / 發文日期: ${articleVO.issueTime} / 看板: ${articleVO.forumVO.name}</p>
+                                        </div>
+                                        <p class="post_desc">${articleVO.articleSummary}</p>
+                                        <!-- <footer class="btn_more">
+                                            <a href="#"> Read more</a>
+                                        </footer> -->
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -613,33 +389,35 @@
                             htmlContent +=`</div>`
                         htmlContent +=`</div>`
                     htmlContent +=`</div>`
-                    $('#modal_box .modal_body').html(htmlContent);
-                    $('#modal_box').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Ajax请求失败:', error);
-                }
-            });
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    window.onload = function() {
-        // Check if the URL already has the selectPage parameter
-        if (!window.location.search.includes('selectPage=home')) {
-            // Redirect to the same URL with the selectPage parameter
-            window.location.href = window.location.pathname + "?selectPage=home";
+				    $('#modal_box .modal_body').html(htmlContent);
+		            $('#modal_box').modal('show');
+		            },
+		            error: function(xhr, status, error) {
+		                console.error('Ajax请求失败:', error);
+		            }
+		        });
+		    })
+		});
+	</script>
+	
+	<script type="text/javascript">
+        window.onload = function() {
+            // Check if the URL already has the selectPage parameter
+            if (!window.location.search.includes('selectPage=home')) {
+                // Redirect to the same URL with the selectPage parameter
+                window.location.href = window.location.pathname + "?selectPage=home";
+            }
+        };
+    </script>
+    
+    <script>
+        function confirmNavigation(event) {
+            event.preventDefault(); 
+            if (confirm("前往論壇看更多？")) {
+                window.location.href = "${pageContext.request.contextPath}/front-end/article/popularArticle.jsp"; // 替换成目标JSP页面的路径
+            }
         }
-
-        // Display welcome alert if userName is present in session and alert hasn't been displayed yet
-        const userName = '<%= session.getAttribute("userName") %>';
-        if (userName && userName !== 'null' && !sessionStorage.getItem('welcomeAlertDisplayed')) {
-            alert("Welcome " + userName + " to BookTalk");
-            sessionStorage.setItem('welcomeAlertDisplayed', 'true');
-        }
-    };
-</script>
+    </script>
 </body>
 
 </html>

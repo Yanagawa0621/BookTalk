@@ -7,7 +7,8 @@
 
 <%
 BooksAndPictureService bapSce= new BooksAndPictureService();
-List<BooksAndPictureVO> bapVOList=(List<BooksAndPictureVO>) bapSce.getimg((Integer)request.getAttribute("bookNumber"));
+Integer bookNumber=(Integer)request.getAttribute("bookNumber");
+List<BooksAndPictureVO> bapVOList=(List<BooksAndPictureVO>) bapSce.getimg(bookNumber);
 request.setAttribute("bapVOList", bapVOList);
 %>
 
@@ -25,7 +26,7 @@ request.setAttribute("bapVOList", bapVOList);
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">新增圖片</h1>
+							<h1 class="m-0">修改圖片</h1>
 						</div>
 						<!-- /.col -->
 					</div>
@@ -61,17 +62,26 @@ request.setAttribute("bapVOList", bapVOList);
 									<tr>
 										<th class="align-middle">圖片：</th>
 										<td>
+											<c:if test="${empty bapVOList}">
+												<div id="upload-areas">
+													<div class="upload-container">
+														<input type="file" name="images[]" class="form-control image-input" accept="image/*">
+														<img class="image-preview" src="" alt="Image Preview" style="width: 300px; height: auto;">
+													</div>
+												</div>
+											</c:if>
 											<c:forEach var="bapVO" items="${bapVOList}">
 											    <div id="upload-areas">
 											        <div class="upload-container">
-											            <!-- 文件輸入 -->
-											            <input type="file" name="oldImge" class="form-control image-input" accept="image/*" onchange="previewImage(event, ${bapVO.pictureNumber})" data-picture-number="${bapVO.pictureNumber}">
-											            <label for="replace">更換圖片</label>
-											            <!-- 圖片預覽 -->
-											            <img id="image-preview-${bapVO.pictureNumber}" class="image-preview" src="${pageContext.request.contextPath}/booksandpicture.do?pictureNumber=${bapVO.pictureNumber}" alt="Image Preview" style="width: 300px; height: auto;">
-											            <!-- 刪除按鈕 -->
-											            <button type="button" class="btn btn-danger" onclick="toggleDelete(${bapVO.pictureNumber})">標記刪除</button>
-											        </div>
+												        <!-- 隱藏的 input 來選擇檔案 -->
+												        <input type="file" name="oldImages[]" id="file-input-${bapVO.pictureNumber}" class="form-control image-input" accept="image/*" style="display: none;">
+												        <!-- 自訂的按鈕來觸發檔案選擇 -->
+												        <button type="button" class="btn btn-link replace-btn" value="${bapVO.pictureNumber}" onclick="document.getElementById('file-input-${bapVO.pictureNumber}').click()">更換圖片</button>
+												        <!-- 圖片預覽 -->
+												        <img id="image-preview-${bapVO.pictureNumber}" class="image-preview" src="${pageContext.request.contextPath}/booksandpicture.do?pictureNumber=${bapVO.pictureNumber}" alt="Image Preview" style="width: 300px; height: auto;">
+												        <!-- 刪除按鈕 -->
+												        <button type="button" class="btn btn-danger delete-button" value="${bapVO.pictureNumber}">標記刪除</button>
+												    </div>
 											    </div>
 											</c:forEach>
 											<button type="button" id="add-upload" class="btn btn-success add-author-btn">+</button>
@@ -81,16 +91,16 @@ request.setAttribute("bapVOList", bapVOList);
 							</table>
 							<div class="row">
 								<div class="col-md-1 offset-md-10">
-									<button type="submit" class="btn btn-block bg-gradient-primary btn">送出新增</button>
+									<button type="submit" class="btn btn-block bg-gradient-primary btn">送出修改</button>
 									<!-- 隱藏欄位，用於表單提交 -->
-									<input type="hidden"  name="bookNumber" value="${bpVO.bookNumber}">
+									<input type="hidden" name="bookNumber" value="${bookNumber}">
 									<input type="hidden" name="replace" value="">
 									<input type="hidden" name="removeImage" value="">
-									<input type="hidden"  name="action" value="insert">
+									<input type="hidden"  name="action" value="update">
 								</div>
 								<div class="col-md-1">
-									<a href="${pageContext.request.contextPath}/back-end/bookProducts/newBookOnTheShelves.jsp?bookNumber=${bookNumber}">
-										<button type="button" class="btn btn-block bg-gradient-danger">取消</button>
+									<a href="${pageContext.request.contextPath}/back-end/bookProducts/bookProducts.jsp">
+										<button type="button" class="btn btn-block bg-gradient-danger">不做變動</button>
 									</a>
 								</div>
 							</div>
@@ -161,10 +171,10 @@ request.setAttribute("bapVOList", bapVOList);
 	    $(document).ready(function() {
 	        $('#add-upload').click(function() {
 	            var uploadArea = '<div class="upload-container">';
-	            uploadArea += '<input type="file" name="images[]" class="form-control image-input" accept="image/*">';
+	            uploadArea += '<input type="file" name="newImages[]" class="form-control image-input" accept="image/*">';
 	            uploadArea += '<img class="image-preview" src="" alt="Image Preview" style="width: 300px; height: auto;">';
 	            uploadArea += '</div>';
-	            $('#upload-areas').append(uploadArea);
+	            $(uploadArea).insertBefore($('#add-upload'));
 	        });
 	
 	        // 當選擇圖片後，更新對應的圖片預覽
@@ -186,42 +196,83 @@ request.setAttribute("bapVOList", bapVOList);
 	    });
 	</script>
 	<script>
-		let replaceSet = new Set();
-		let removeImageSet = new Set();
-		
-		function previewImage(event, pictureNumber) {
-		    const input = event.target;
-		    const reader = new FileReader();
-		    reader.onload = function(){
-		        const img = document.getElementById(`image-preview-${pictureNumber}`);
-		        img.src = reader.result;
-		    }
-		    reader.readAsDataURL(input.files[0]);
-		    
-		    // 標記圖片已被更換
-		    replaceSet.add(pictureNumber);
-		    updateHiddenFields();
-		}
-		
-		function toggleDelete(pictureNumber) {
-		    const button = event.target;
-		    if (removeImageSet.has(pictureNumber)) {
-		        removeImageSet.delete(pictureNumber);
-		        button.textContent = '標記刪除';
-		    } else {
-		        removeImageSet.add(pictureNumber);
-		        button.textContent = '取消刪除';
-		    }
-		    updateHiddenFields();
-		}
-		
-		function updateHiddenFields() {
-		    const replaceInput = document.querySelector('input[name="replace"]');
-		    const removeImageInput = document.querySelector('input[name="removeImage"]');
-		    
-		    replaceInput.value = Array.from(replaceSet).join(',');
-		    removeImageInput.value = Array.from(removeImageSet).join(',');
-		}
+		$(document).ready(function() {
+		    // 當選擇圖片後，更新對應的圖片預覽
+		    $(document).on('change', '.image-input', function() {
+		        var input = this;
+		        var uploadContainer = $(input).closest('.upload-container');
+		        var img = uploadContainer.find('.image-preview');
+		        var pictureNumber = $(input).attr('id').split('-').pop();
+	
+		        if (input.files && input.files[0]) {
+		            var reader = new FileReader();
+		            reader.onload = function(e) {
+		                img.attr('src', e.target.result);
+	
+		                // 檢查目前的 replace 輸入框的值是否已經包含了當前的 pictureNumber
+		                var replaceInput = $('input[name="replace"]');
+		                var currentReplaceValue = replaceInput.val();
+		                var replaceValues = currentReplaceValue ? currentReplaceValue.split(',') : [];
+	
+		                if (!replaceValues.includes(pictureNumber)) {
+		                    // 如果目前的 replace 值中不包含當前的 pictureNumber，則新增到 replace 裡面
+		                    replaceValues.push(pictureNumber);
+		                    replaceInput.val(replaceValues.join(','));
+		                }
+	
+		                console.log('Current replace content:', replaceInput.val());
+		            };
+		            reader.readAsDataURL(input.files[0]);
+		        }
+		    });
+		});
+	</script>
+	<script>
+	$(document).ready(function() {
+	    // 使用事件委託來處理刪除按鈕的點擊事件
+	    $(document).on('click', '.delete-button', function() {
+	        var $button = $(this);
+	        var pictureNumber = $button.val();
+// 	        console.log(pictureNumber);
+	        // 找到相應的圖片預覽元素和其他操作
+	        var $fileInput = $(`#file-input-${pictureNumber}`);
+	        var $imagePreview = $(`#image-preview-${pictureNumber}`);
+	        var $removeImageInput = $('input[name="removeImage"]');
+	        var removeSet = new Set($removeImageInput.val().split(',').filter(Boolean));
+	        
+	        // 切換按鈕文字和執行相應操作
+	        if ($button.text() === '標記刪除') {
+	            $button.text('取消刪除');
+	            addRemoveImage(pictureNumber);
+	        } else {
+	            $button.text('標記刪除');
+	            removeRemoveImage(pictureNumber); // 取消刪除時移除相應的值
+	        }
+	        
+	        // 印出移除集合的內容到控制台
+	        console.log('Current removeImage content:', $removeImageInput.val());
+	    });
+
+	    function addRemoveImage(pictureNumber) {
+	        var $removeImageInput = $('input[name="removeImage"]');
+	        var removeSet = new Set($removeImageInput.val().split(',').filter(Boolean));
+	        removeSet.add(pictureNumber);
+	        $removeImageInput.val(Array.from(removeSet).join(','));
+	        
+// 	        console.log('Current removeImage content:', $removeImageInput.val());
+	    }
+
+	    function removeRemoveImage(pictureNumber) {
+	        var $removeImageInput = $('input[name="removeImage"]');
+	        var removeSet = new Set($removeImageInput.val().split(',').filter(Boolean));
+	        removeSet.delete(pictureNumber); // 從集合中刪除該值
+	        $removeImageInput.val(Array.from(removeSet).join(','));
+	        
+// 	        console.log('Current removeImage content:', $removeImageInput.val());
+	    }
+
+	    // 其他 JavaScript 代碼...
+	});
 	</script>
 </body>
 </html>

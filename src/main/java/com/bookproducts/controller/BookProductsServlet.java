@@ -110,7 +110,11 @@ public class BookProductsServlet extends HttpServlet {
 			if ("product_page_ajax".equals(action)) {
 				List<String> auth = new ArrayList<>();
 				for (AuthorVO auths : bpVO.getAuthorVO()) {
-					auth.add(auths.getAuthorName());
+					if (auths.getAuthorName() != null) {
+						auth.add(auths.getAuthorName());
+					} else if (auths.getAuthorName() == null) {
+						auth.add(auths.getEnglishName());
+					}
 				}
 
 				HashMap<String, Object> bpMap = new HashMap<>();
@@ -483,16 +487,16 @@ public class BookProductsServlet extends HttpServlet {
 
 			// ---書籍狀態---
 			Integer productStatus = Integer.valueOf(req.getParameter("productStatus"));
-			
+
 			// ---上架日期---
-			java.sql.Date releaseDate =null;
+			java.sql.Date releaseDate = null;
 			try {
 				String releaseDateParam = req.getParameter("releaseDate");
-			    if (releaseDateParam != null && !releaseDateParam.isEmpty()) {
-			        releaseDate = java.sql.Date.valueOf(releaseDateParam);
-			    }
+				if (releaseDateParam != null && !releaseDateParam.isEmpty()) {
+					releaseDate = java.sql.Date.valueOf(releaseDateParam);
+				}
 			} catch (IllegalArgumentException e) {
-				releaseDate =null;
+				System.out.println("錯誤");
 			}
 			// ---出版日期---
 			java.sql.Date publicationDate = null;
@@ -523,31 +527,31 @@ public class BookProductsServlet extends HttpServlet {
 			if (introductionContent.trim().length() == 0 || introductionContent == null) {
 				errorMsgs.add("請輸入內容");
 			}
-			
+
 			// ---原本已有作者---
 			List<AuthorVO> author = (List<AuthorVO>) session.getAttribute("authorVOLsit");
 //			System.out.println(author.size());
 			// ---被刪除關聯的作者---
-			String[] stringValues = (String[]) req.getParameterValues("RemoveAuthor");
+			String[] stringValues = req.getParameterValues("RemoveAuthor");
 //			for (String strValue : stringValues) {
 //                System.out.println(strValue);
 //            }
-			List<Integer> RemoveAuthor = new ArrayList<>();
+			List<Integer> removeAuthor = new ArrayList<>();
 			if (stringValues != null) {
 				for (String strValue : stringValues) {
 					// 分割包含逗號的字符串
 					String[] splitValues = strValue.split(",");
 					for (String value : splitValues) {
-	                    String trimmedValue = value.trim();
-	                    if (!trimmedValue.isEmpty()) {
-	                        try {
-	                            RemoveAuthor.add(Integer.parseInt(trimmedValue)); // 移除多餘空格並轉換為整數
-	                        } catch (NumberFormatException e) {
-	                            // 處理轉換異常，例如記錄日志
-	                        	System.err.println("Invalid number format: " + trimmedValue);
-	                        }
-	                    }
-	                }
+						String trimmedValue = value.trim();
+						if (!trimmedValue.isEmpty()) {
+							try {
+								removeAuthor.add(Integer.parseInt(trimmedValue)); // 移除多餘空格並轉換為整數
+							} catch (NumberFormatException e) {
+								// 處理轉換異常，例如記錄日志
+								System.err.println("Invalid number format: " + trimmedValue);
+							}
+						}
+					}
 				}
 			}
 			// 測試
@@ -564,7 +568,7 @@ public class BookProductsServlet extends HttpServlet {
 //			for (String string : authorList) {
 //				System.out.println(string);
 //			}
-			
+
 			if (!errorMsgs.isEmpty()) {
 				errorMsgs.add("修改失敗");
 				BookProductsVO bpVOEm = new BookProductsVO();
@@ -596,7 +600,7 @@ public class BookProductsServlet extends HttpServlet {
 
 			// ---書籍狀態的改變---
 			String mark = null;
-			BookProductsVO bpVOOriginal = (BookProductsVO)session.getAttribute("updateBpVO");
+			BookProductsVO bpVOOriginal = (BookProductsVO) session.getAttribute("updateBpVO");
 			if (bpVOOriginal.getProductStatus() != productStatus) {
 				if (productStatus == 1) {
 					mark = "書籍被改為上架";
@@ -622,11 +626,11 @@ public class BookProductsServlet extends HttpServlet {
 					authors.add(arthor);
 				}
 			}
-			
+
 			authors.addAll(author);
 			// ---將要被刪除關聯的作者裝進集合裡---
 			List<AuthorVO> filteredAuthors = author.stream()
-					.filter(authorVO -> RemoveAuthor.contains(authorVO.getAuthorNumber())).collect(Collectors.toList());
+					.filter(authorVO -> removeAuthor.contains(authorVO.getAuthorNumber())).collect(Collectors.toList());
 //			for(AuthorVO i:filteredAuthors) {
 //				System.out.println(i.getAuthorName());
 //			}
@@ -642,6 +646,7 @@ public class BookProductsServlet extends HttpServlet {
 			bpVO.setPrice(price);
 			bpVO.setIntroductionContent(introductionContent);
 			bpVO.setReleaseDate(releaseDate);
+//			System.out.println(releaseDate);
 			BookClassVO bcVO = new BookClassVO();
 			bcVO.setClassNumber(bookClassNumber);
 			bpVO.setBcVO(bcVO);
@@ -657,7 +662,7 @@ public class BookProductsServlet extends HttpServlet {
 //				System.out.println("這裡是提交資料作者部分"+authors.size());
 				bpVO.setAuthorVO(authors);
 			}
-			
+
 			// ---提交更改---
 			int result = bpSce.updateBp(bpVO);
 			System.out.println(result);
@@ -695,7 +700,7 @@ public class BookProductsServlet extends HttpServlet {
 				SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 				Session sessionHibernate = sessionFactory.getCurrentSession();
 				for (AuthorVO authorVO : filteredAuthors) {
-					System.out.println(authorVO.getAuthorNumber());
+//					System.out.println(authorVO.getAuthorNumber());
 					sessionHibernate.createNativeQuery(
 							"delete from book_author where bookNumber = :bookNumber and authorNumber = :authorNumber")
 							.setParameter("bookNumber", bookNumber)
@@ -716,15 +721,4 @@ public class BookProductsServlet extends HttpServlet {
 		}
 	}
 
-	// ===前端圖片傳送處理===
-//	private byte[] toByteArray(InputStream inputStream) throws IOException {
-//        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-//        int bytesRead;
-//        byte[] data = new byte[1024];
-//        while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
-//            buffer.write(data, 0, bytesRead);
-//        }
-//        buffer.flush();
-//        return buffer.toByteArray();
-//    }
 }

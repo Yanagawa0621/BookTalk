@@ -78,7 +78,7 @@ public class BookClassServlet extends HttpServlet {
 			// ===轉交資料===
 			list.add(bcVO);
 			req.setAttribute("list", list);
-			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookClass/BookClassQuery.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookClass/bookClassQuery.jsp");
 			failureView.forward(req, res);
 			return;
 		}
@@ -100,7 +100,7 @@ public class BookClassServlet extends HttpServlet {
 			}
 			// ---轉交資料---
 			req.setAttribute("list", list);
-			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookClass/BookClassQuery.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/back-end/bookClass/bookClassQuery.jsp");
 			failureView.forward(req, res);
 			return;
 		}

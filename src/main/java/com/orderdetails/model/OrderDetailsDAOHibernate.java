@@ -54,6 +54,15 @@ public class OrderDetailsDAOHibernate implements OrderDetailsDAO_interface{
 				.setParameter("bookProductsVO", bpVO)
 				.uniqueResult();
 	}
-
 	
+	public List<Object[]> salesSorting() {
+	    return getSession().createQuery(
+	            "select od.bookProductsVO, count(od.ratingScore) as count " +
+	            "from OrderDetailsVO od " +
+	            "where od.ratingScore > 1 " +
+	            "group by od.bookProductsVO " +
+	            "order by count(od.ratingScore) desc", Object[].class)
+	        .setMaxResults(10)
+	        .list();
+	}
 }

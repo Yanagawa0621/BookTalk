@@ -5,6 +5,8 @@ import java.util.List;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
 
+
+
 public class OrderDetailsService implements OrderDetailsService_inteface {
 	private OrderDetailsDAO_interface dao;
 	private OrderService orderSev;
@@ -50,8 +52,7 @@ public class OrderDetailsService implements OrderDetailsService_inteface {
 		return dao.getAll();
 	}
 
-	
-
-
-	
+	public List<Object[]> getSalesSorting(){
+		return dao.salesSorting();
+	}
 }
