@@ -81,6 +81,10 @@ $(function(){
 			$("button.shop_add_cart").on("click", function(event){
 				event.preventDefault();
 				event.stopPropagation();
+				if (!userNumber) {	//userNumber沒有值，導向登入頁面
+	   	 			window.location.href = contextPath + "/front-end/login/login.jsp";
+	   	 			return;
+				}
 				if(!$(this).hasClass("-disabled")){
 					let quantity = $(this).closest("form").children("input").val();
 					let bookStock = $(this).closest("form").children("input").attr("max");
@@ -98,6 +102,10 @@ $(function(){
 	//新增商品按鈕綁定(單頁商品視窗用)
 	$("#detail_add_cart").on("click", function(event){
 		event.preventDefault();
+		if (!userNumber) {	//userNumber沒有值，導向登入頁面
+	   	 	window.location.href = contextPath + "/front-end/login/login.jsp";
+	   	 	return;
+		}
 		if(!$(this).hasClass("-disabled")){
 			addMiniCartOne();	//呼叫新增商品的function
 		}
