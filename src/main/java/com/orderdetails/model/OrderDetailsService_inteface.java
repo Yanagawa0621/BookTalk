@@ -14,4 +14,6 @@ public interface OrderDetailsService_inteface {
 	public int updateEvaluateRatingScore(Integer orderNumber, List<OrderDetailsVO> orderDetailsVOList);
 	
 	public List<OrderDetailsVO> getAll();
+	
+	public List<Object[]> getSalesSorting();
 }
