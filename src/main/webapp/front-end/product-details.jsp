@@ -108,8 +108,14 @@ List<BookProductsVO> list = (List<BookProductsVO>) request.getAttribute("list");
 								<br>
 
 								<c:forEach var="authorVO" items="${bpVO.authorVO}">
-									<span style="font-weight: bold;">作者:&nbsp;&nbsp;${authorVO.authorName}</span>
-									<br>
+									<c:if test="${not empty authorVO.authorName}">
+										<span style="font-weight: bold;">作者:&nbsp;&nbsp;${authorVO.authorName}</span>
+										<br>
+									</c:if>
+									<c:if test="${empty authorVO.authorName}">
+										<span style="font-weight: bold;">作者:&nbsp;&nbsp;${authorVO.englishName}</span>
+										<br>
+									</c:if>
 								</c:forEach>
 								<span style="font-weight: bold;">出版社:&nbsp;&nbsp;${bpVO.phVO.name}</span>
 								<br> <span style="font-weight: bold;">出版日期:&nbsp;&nbsp;${bpVO.publicationDate}</span>

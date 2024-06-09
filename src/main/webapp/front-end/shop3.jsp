@@ -409,9 +409,6 @@ pageContext.setAttribute("bcList", bcList);
 						                htmlContent +=`<div class="modal_price mb-10">`
 						                    htmlContent +=`<span class="new_price">NT$ `+price+`</span>`
 						                htmlContent +=`</div>`
-						                htmlContent +=`<div class="modal_description mb-15">`
-						                    htmlContent +=`<p>`+introductionContent+`</p>`
-						                htmlContent +=`</div>`
 						                	htmlContent +=`<div class="product_rating">`
 						                		htmlContent +=`<h2 style="font-size: 20px; font-weight:bold;">評分</h2><ul>`
 						                		if(ratingScoreAvg!=null){
@@ -449,6 +446,11 @@ pageContext.setAttribute("bcList", bcList);
                                                     htmlContent +=`<input min="1" max="`+stock+`" step="1" value="1" type="number">`
                                                     htmlContent +=`<button type="button" class="shop_add_cart">加入購物車</button>`
 						                        htmlContent +=`</form>`
+						                        	htmlContent +=`<div class="modal_description mb-15">`
+									                	htmlContent +=`<br>`
+									                	htmlContent +=`<h3>內容介紹:</h3>`
+									                    htmlContent +=`<p>`+introductionContent+`</p>`
+									                htmlContent +=`</div>`
 						                    htmlContent +=`</div>`
 						                htmlContent +=`</div>`
 						            
