@@ -199,6 +199,10 @@
 		                			<td>${orderVO.total}</td>
 		                		</tr>
 		                		<tr>
+		                			<th class="align-middle">付款編號：</th>
+		                			<td>${orderVO.paymentNumber}</td>
+		                		</tr>
+		                		<tr>
 		                			<th class="align-middle">備註：</th>
 		                			<td>
 		                				<c:choose>
