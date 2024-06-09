@@ -4,6 +4,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.YearMonth" %>
+<%@ page import="com.article.model.*"%>
+<%@ page import="com.forum.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 
 <%  
@@ -413,7 +416,7 @@
     </div>
     <!--product area end-->
     
-    <!--blog area start-->
+    <!-- blog area start -->
     <section class="blog_section color_two">
         <div class="container">
             <div class="row">
@@ -425,96 +428,32 @@
             </div>
             <div class="row">
                 <div class="blog_carousel blog_column3 owl-carousel">
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
-                                   <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
+                    <jsp:useBean id="articleSvc" scope="page" class="com.article.model.ArticleService"/>
+                    <c:set var="list" value="${articleSvc.getPopularArticle()}" />
+                    <c:forEach var="articleVO" items="${list}" varStatus="loop" begin="0" end="2">
+                        <div class="col-lg-3">
+                            <article class="single_blog">
+                                <figure>
+                                    <div class="blog_thumb">
+                                        ${articleVO.articleImage}
                                     </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"> est ad quia aperiam unde quam hic, quae optio quis, is.</a></h4>
-                                   <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog8.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html"> Aut doloremque, optio optio delectus est quae molestiae. </a></h4>
-                                   <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog6.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html">est ad quia aperiam unde quam hic, quae optio quis, is. </a></h4>
-                                   <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
-                    <div class="col-lg-3">
-                        <article class="single_blog">
-                            <figure>
-                                <div class="blog_thumb">
-                                    <a href="blog-details.html"><img src="${pageContext.request.contextPath}/front-end/assets/img/blog/blog7.jpg" alt=""></a>
-                                </div>
-                                <figcaption class="blog_content">
-                                   <h4 class="post_title"><a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </a></h4>
-                                   <div class="articles_date">
-                                        <span><i class="fas fa-calendar" aria-hidden="true"></i> 18/12/2022</span>
-                                        <span><i class="fas fa-user" aria-hidden="true"></i> eCommerce Themes</span>
-                                    </div>
-                                    <p class="post_desc">Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus praesent</p>
-                                    <a href="#">+ Read More</a>
-                                </figcaption>
-                            </figure>
-                        </article>
-                    </div>
+                                    <figcaption class="blog_content">
+                                        <h4 class="post_title"><a href="javascript:void(0);" onclick="confirmNavigation(event);" data-toggle="modal" data-target="#lightboxModal${loop.index}"><i class="fa fa-paper-plane"></i>${articleVO.title}</a></h4>
+                                        <jsp:useBean id="userVO" scope="page" class="com.user.model.UserServiceImpl"/>
+                                        <div class="blog_meta">
+                                            <c:set var="ArticleUserNumber" value="${articleVO.userNumber}"/>
+                                            <c:set var="userName" value="${userVO.getUserByNumber(ArticleUserNumber)}"/>
+                                            <p>作者:${userName.name} / 發文日期: ${articleVO.issueTime} / 看板: ${articleVO.forumVO.name}</p>
+                                        </div>
+                                        <p class="post_desc">${articleVO.articleSummary}</p>
+                                        <!-- <footer class="btn_more">
+                                            <a href="#"> Read more</a>
+                                        </footer> -->
+                                    </figcaption>
+                                </figure>
+                            </article>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -600,9 +539,6 @@
 						                htmlContent +=`<div class="modal_price mb-10">`
 						                    htmlContent +=`<span class="new_price">NT$ `+price+`</span>`
 						                htmlContent +=`</div>`
-						                htmlContent +=`<div class="modal_description mb-15">`
-						                    htmlContent +=`<p>`+introductionContent+`</p>`
-						                htmlContent +=`</div>`
 						                	htmlContent +=`<div class="product_rating">`
 						                		htmlContent +=`<h2 style="font-size: 20px; font-weight:bold;">評分</h2><ul>`
 						                		if(ratingScoreAvg!=null){
@@ -640,6 +576,11 @@
                                                     htmlContent +=`<input min="1" max="`+stock+`" step="1" value="1" type="number">`
                                                     htmlContent +=`<button type="button" class="shop_add_cart">加入購物車</button>`
 						                        htmlContent +=`</form>`
+						                htmlContent +=`<div class="modal_description mb-15">`
+						                	htmlContent +=`<br>`
+						                	htmlContent +=`<h3>內容介紹:</h3>`
+						                    htmlContent +=`<p>`+introductionContent+`</p>`
+						                htmlContent +=`</div>`
 						                    htmlContent +=`</div>`
 						                htmlContent +=`</div>`
 						            
@@ -666,6 +607,15 @@
                 window.location.href = window.location.pathname + "?selectPage=home";
             }
         };
+    </script>
+    
+    <script>
+        function confirmNavigation(event) {
+            event.preventDefault(); 
+            if (confirm("前往論壇看更多？")) {
+                window.location.href = "${pageContext.request.contextPath}/front-end/article/popularArticle.jsp"; // 替换成目标JSP页面的路径
+            }
+        }
     </script>
 </body>
 
