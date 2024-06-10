@@ -247,7 +247,7 @@
                             <div class="widget_title">
                                 <h3>發文</h3>
                             </div>
-                            <form action="<%= request.getContextPath() %>/front-end/article/ckEditor/sample/addForumArticle.jsp">
+                            <form onsubmit="handleFormSubmit(event);">
                                 <button class="post-button" type="submit">發文</button>
                             </form>
                         </div>
@@ -344,11 +344,6 @@ window.onload = function() {
             formInputs[i].disabled = true;
         }
 
-        var postButtons = document.getElementsByClassName("post-button");
-        for (var i = 0; i < postButtons.length; i++) {
-            postButtons[i].disabled = true;
-        }
-
         var likeButtons = document.getElementsByClassName("like-button");
         for (var i = 0; i < likeButtons.length; i++) {
             likeButtons[i].disabled = true;
@@ -416,6 +411,9 @@ function submitComment(articleNumber) {
 
 function like(articleNumber) {
     console.log("按");
+    const likeButton = document.getElementById("like-button-" + articleNumber);
+    likeButton.disabled = true;
+
     $.ajax({
         type: "POST",
         url: contextPath + "/like/like.do",
@@ -435,15 +433,19 @@ function like(articleNumber) {
             currentValue += 1;
             // 将新的值更新回 p 标签
             likeCountElement.textContent = currentValue;
+            likeButton.disabled = false;
         },
         error: function(xhr, status, error) {
             console.error(error);
             alert("按讚失败");
+            likeButton.disabled = false;
         }
     });
 }
 
 function unlike(articleNumber) {
+	const likeButton = document.getElementById("like-button-" + articleNumber);
+    likeButton.disabled = true;
     $.ajax({
         type: "POST",
         url: contextPath + "/like/like.do",
@@ -463,15 +465,19 @@ function unlike(articleNumber) {
             currentValue -= 1;
             // 将新的值更新回 p 标签
             likeCountElement.textContent = currentValue;
+            likeButton.disabled = false;
         },
         error: function(xhr, status, error) {
             console.error(error);
             alert("取消按讚失败");
+            likeButton.disabled = false;
         }
     });
 }
 function likeCom(commentNumber) {
     console.log("按");
+    const likeButton = document.getElementById("like-button-" + commentNumber);
+    likeButton.disabled = true;
     $.ajax({
         type: "POST",
         url: contextPath + "/like/like.do",
@@ -491,15 +497,19 @@ function likeCom(commentNumber) {
             currentValue += 1;
             // 将新的值更新回 p 标签
             likeCountElement.textContent = currentValue;
+            likeButton.disabled = false;
         },
         error: function(xhr, status, error) {
             console.error(error);
             alert("按讚失败");
+            likeButton.disabled = false;
         }
     });
 }
 
 function unlikeCom(commentNumber) {
+	const likeButton = document.getElementById("like-button-" + commentNumber);
+    likeButton.disabled = true;
     $.ajax({
         type: "POST",
         url: contextPath + "/like/like.do",
@@ -519,10 +529,12 @@ function unlikeCom(commentNumber) {
             currentValue -= 1;
             // 将新的值更新回 p 标签
             likeCountElement.textContent = currentValue;
+            likeButton.disabled = false;
         },
         error: function(xhr, status, error) {
             console.error(error);
             alert("取消按讚失败");
+            likeButton.disabled = false;
         }
     });
 }
@@ -576,6 +588,19 @@ function updateComment(commentNumber,content){
             alert("更新留言失败");
         }
     });
+}
+function handleFormSubmit(event) {
+    event.preventDefault(); // 阻止默认的表单提交
+
+    if (userID) {
+        // 如果 userID 有值，直接跳转到a网址
+        window.location.href = contextPath + "/front-end/article/ckEditor/sample/addForumArticle.jsp";
+    } else {
+        // 如果 userID 没有值，弹出确认窗口
+        if (confirm("您尚未登入，是否前往登入页面？")) {
+            window.location.href = contextPath + "/front-end/login/login.jsp"; // 替换成目标b网址
+        }
+    }
 }
 </script>
 
