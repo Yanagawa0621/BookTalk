@@ -3,7 +3,7 @@
 
 <%
 	String contextPath = request.getContextPath();
-	String url = "/front-end/user/login.jsp";
+	String url = "/front-end/login/login.jsp";
 	Integer userNumber = (Integer) session.getAttribute("userNumber");
 	if (userNumber == null) {
 	    response.sendRedirect(contextPath + url);

@@ -122,6 +122,23 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
+                        <i class="nav-icon fab fa-wpforms"></i>
+                        <p>
+                            論壇看板管理
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="${pageContext.request.contextPath}/back-end/forum/forumPage.jsp" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>論壇看板搜尋</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user-astronaut"></i>
                         <p>
                             客服
@@ -144,25 +161,6 @@
                             </a>
                         </li>    
                     </ul>           
-                </li>        
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fab fa-wpforms"></i>
-                        <p>
-                            論壇管理
-                            <i class="fas fa-angle-left right"></i>
-                            <span class="badge badge-info right">6</span>  
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>文章檢舉列表</p>
-                                <span class="badge badge-info right">6</span> 
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

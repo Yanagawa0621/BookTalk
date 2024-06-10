@@ -36,7 +36,7 @@ public class ArticleDAO implements ArticleDAO_interface {
 
     @Override
     public List<ArticleVO> findByForumNumber(Integer forumNumber) {
-        String hql = "FROM ArticleVO WHERE forumVO.forumNumber = :forumNumber AND articleState = 1";
+        String hql = "FROM ArticleVO WHERE forumVO.forumNumber = :forumNumber AND articleState = 1 ORDER BY articleNumber DESC";
         Query<ArticleVO> query = getSession().createQuery(hql, ArticleVO.class);
         query.setParameter("forumNumber", forumNumber);
         return query.list();

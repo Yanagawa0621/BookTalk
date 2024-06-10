@@ -74,10 +74,9 @@ pageContext.setAttribute("bcList", bcList);
 								<h3>依價格篩選</h3>
 								<form action="#">
 									<div id="slider-range"></div>
-									<button type="submit">篩選</button>
+									<button type="button" id="price_filter">篩選</button>
 									<input type="text" name="text" id="amount"
 										style="width: 120px;" />
-
 								</form>
 							</div>
 							<div class="widget_list widget_color">
@@ -339,6 +338,46 @@ pageContext.setAttribute("bcList", bcList);
 		    })
 		});
 	</script>
+	<script>
+        $(document).ready(function() {
+            // 初始化滑桿
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [0, 1000],
+                slide: function(event, ui) {
+                    $("#amount").val("NT$" + ui.values[0] + " - NT$" + ui.values[1]);
+                }
+            });
+            $("#amount").val("NT$" + $("#slider-range").slider("values", 0) +
+                " - NT$" + $("#slider-range").slider("values", 1));
+
+            // 綁定按鈕點擊事件
+            $("#price_filter").click(function(event) {
+                // 防止表單提交
+                event.preventDefault();
+
+                // 獲取滑桿的最小值和最大值
+                var minPrice = $("#slider-range").slider("values", 0);
+                var maxPrice = $("#slider-range").slider("values", 1);
+
+                // 先顯示所有商品
+                $(".col-lg-4.col-md-4.col-sm-6.col-12").show();
+
+                // 遍歷每個商品
+                $(".col-lg-4.col-md-4.col-sm-6.col-12").each(function() {
+                    var priceText = $(this).find(".current_price").text();
+                    var price = parseInt(priceText.replace("NT$", "").replace(",", "").trim());
+
+                    // 如果價格不在範圍內，隱藏商品
+                    if (price < minPrice || price > maxPrice) {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

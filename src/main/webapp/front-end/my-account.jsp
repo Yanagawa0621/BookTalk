@@ -12,6 +12,8 @@
     <%@include file="/front-end/component/menu.jsp" %>
     <!-- menu area end -->
     
+    <input type="hidden" name="userNumber" id="getUserNumber" value="${sessionScope.userNumber}">
+    
     <!-- breadcrumbs area start -->
     <div class="breadcrumbs_area">
         <div class="container">   
@@ -105,6 +107,7 @@
     
 <!-- JS -->
 <%@include file="/front-end/component/script.jsp" %>
+<script src="${pageContext.request.contextPath}/front-end/assets/js/order/order.js"></script>
 
 </body>
 </html>

@@ -29,12 +29,12 @@ public class CommentServlet extends HttpServlet {
 			String content = req.getParameter("content");
 			String articleNumberStr = req.getParameter("articleNumber");
 			HttpSession session = req.getSession();
-			String userNumberStr = (String) session.getAttribute("userNumber");
+			//String userNumberStr = (String) session.getAttribute("userNumber");
 			Integer articleNumber = null;
-			Integer userNumber = null;
+			Integer userNumber = (Integer) session.getAttribute("userNumber");
 			try {
 				articleNumber = Integer.parseInt(articleNumberStr);
-				userNumber = Integer.parseInt(userNumberStr);
+//				userNumber = Integer.parseInt(userNumberStr);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
