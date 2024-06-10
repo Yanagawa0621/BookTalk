@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Login</title>
+    <title>登入</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .login-form {
@@ -39,7 +39,7 @@
                     <label for="passcode">密碼🔑</label>
                     <input type="password" class="form-control" id="passcode" name="passcode" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">🔥🔥🔥 登入🔥🔥🔥 </button>
+                <button type="submit" class="btn btn-primary btn-block">🔥🔥🔥登入🔥🔥🔥 </button>
                 <div class="form-group">
                     <a href="${pageContext.request.contextPath}/front-end/login/forgotPassword.jsp">忘記密碼🔒❓</a>
                 </div>

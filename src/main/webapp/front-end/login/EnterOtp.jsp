@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +20,7 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
-                            <h2 class="text-center">Enter OTP</h2>
+                            <h2 class="text-center">請輸入一次性密碼 (OTP)</h2>
                             <c:if test="${not empty message}">
                                 <p class='text-danger ml-1'>${message}</p>
                             </c:if>

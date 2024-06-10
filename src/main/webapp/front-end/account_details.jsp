@@ -41,12 +41,12 @@
             <label for="birthday">生日</label>
             <input type="date" class="form-control" id="birthday" name="birthday" value="${user.birthday}" required>
         </div>
-		<div class="form-group">
-		    <label for="photo">照片</label>
-		    <input type="file" class="form-control-file" id="photo" name="photo" accept="image/jpeg, image/png">
-		    <img id="photoPreview" src="${user.photo != null ? 'data:image/jpeg;base64,' + user.photo : ''}" alt="照片預覽" class="img-fluid mt-2" style="max-width: 200px;">
-		    <input type="hidden" name="base64Photo" value="${user.photo}">
-		</div>
+        <div class="form-group">
+            <label for="photo">照片</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" accept="image/jpeg, image/png">
+            <img id="photoPreview" src="${user.photo != null ? 'data:image/jpeg;base64,' + user.photo : ''}" alt="照片預覽" class="img-fluid mt-2" style="max-width: 200px;">
+            <input type="hidden" name="base64Photo" value="${user.photo}">
+        </div>
         <div class="form-group">
             <label for="nationalIdNumber">身份證字號</label>
             <input type="text" class="form-control" id="nationalIdNumber" name="nationalIdNumber" value="${user.nationalIdNumber}" required>
@@ -56,24 +56,6 @@
             <label for="telephoneNumber">手機號碼</label>
             <input type="text" class="form-control" id="telephoneNumber" name="telephoneNumber" value="${user.telephoneNumber}" required>
             <div class="text-danger" id="telephoneError"><c:if test="${fieldName == 'telephoneNumber'}">${errorMessage}</c:if></div>
-        </div>
-        <div class="form-group">
-            <label for="address">地址</label>
-            <input type="text" class="form-control" id="address" name="address" value="${user.address}" required>
-        </div>
-        <div class="form-group">
-            <label for="city">縣市</label>
-            <select class="form-control" id="city" name="city" required>
-                <option value="">請選擇縣市</option>
-                <!-- 城市選項將由 JavaScript 動態填充 -->
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="district">區域</label>
-            <select class="form-control" id="district" name="district" required>
-                <option value="">請選擇區域</option>
-                <!-- 區域選項將由 JavaScript 動態填充 -->
-            </select>
         </div>
         <div class="form-group">
             <label for="accountStatus">帳號狀態</label>
@@ -107,66 +89,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    async function loadDistricts() {
-        const response = await fetch('${pageContext.request.contextPath}/front-end/article/ckEditor/taiwan-districts.json', {
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'
-            }
-        });
-        const districts = await response.json();
-
-        function getDistricts(city) {
-            return districts[city] || [];
-        }
-
-        function getCities() {
-            return Object.keys(districts);
-        }
-
-        return {
-            getDistricts,
-            getCities
-        };
-    }
-
-    async function populateCities() {
-        const TaiwanDistricts = await loadDistricts();
-        const citySelect = document.querySelector('select[name=city]');
-        const cities = TaiwanDistricts.getCities();
-        cities.forEach(city => {
-            const option = document.createElement('option');
-            option.value = city;
-            option.textContent = city;
-            citySelect.appendChild(option);
-        });
-
-        // 預設選擇的縣市和區域
-        const selectedCity = "<c:out value='${user.city}'/>";
-        const selectedDistrict = "<c:out value='${user.district}'/>";
-        if (selectedCity) {
-            citySelect.value = selectedCity;
-            await updateDistricts();
-            const districtSelect = document.querySelector('select[name=district]');
-            districtSelect.value = selectedDistrict;
-        }
-    }
-
-    async function updateDistricts() {
-        const TaiwanDistricts = await loadDistricts();
-        const citySelect = document.querySelector('select[name=city]');
-        const districtSelect = document.querySelector('select[name=district]');
-        const selectedCity = citySelect.value;
-        const districts = TaiwanDistricts.getDistricts(selectedCity);
-
-        districtSelect.innerHTML = "<option value=''>請選擇區域</option>";
-        districts.forEach(district => {
-            const option = document.createElement('option');
-            option.value = district;
-            option.textContent = district;
-            districtSelect.appendChild(option);
-        });
-    }
-
     function validateForm() {
         const passcode = document.querySelector('input[name="passcode"]').value;
         const nationalIdNumber = document.querySelector('input[name="nationalIdNumber"]').value;
@@ -224,8 +146,6 @@
     }
 
     window.addEventListener('load', function () {
-        populateCities();
-        document.querySelector('select[name=city]').addEventListener('change', updateDistricts);
         document.getElementById('togglePassword').addEventListener('click', togglePassword);
         document.getElementById('photo').addEventListener('change', previewPhoto);
 
@@ -237,4 +157,3 @@
         }
     });
 </script>
-</div>

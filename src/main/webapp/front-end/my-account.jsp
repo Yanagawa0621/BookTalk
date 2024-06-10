@@ -44,7 +44,7 @@
                                 <li>
                                     <c:choose>
                                         <c:when test="${not empty sessionScope.loggedInUser}">
-                                            歡迎, ${sessionScope.userName} (userNumber: ${sessionScope.userNumber})
+                                            🎉歡迎, ${sessionScope.userName}🎉
                                         </c:when>
                                         <c:otherwise>
                                             <jsp:include page="/front-end/login/login.jsp" />
@@ -54,7 +54,7 @@
                                 <li><a href="#orders" data-toggle="tab" class="nav-link">訂單資訊</a></li>
                                 <li><a href="#address" data-toggle="tab" class="nav-link">地址資訊</a></li>
                                 <li><a href="#account-details" data-toggle="tab" class="nav-link">帳號資訊</a></li>
-                                <li><a href="${pageContext.request.contextPath}/front-end/login/logout.jsp" class="nav-link">登出</a></li>
+                                <li><a href="${pageContext.request.contextPath}/logout" class="nav-link">登出</a></li>
                             </ul>
                         </div>    
                     </div>
@@ -62,8 +62,8 @@
                         <!-- Tab panes -->
                         <div class="tab-content dashboard_content">
                             <div class="tab-pane fade show active" id="dashboard">
-                                <h3>Dashboard</h3>
-                                <p>From your account dashboard, you can easily check & view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
+                                <h3>儀錶板</h3>
+                                <p>從您的帳戶儀表板，您可以輕鬆檢查和查看您的近期訂單，管理您的送貨和帳單地址，並編輯您的密碼和帳戶詳細信息。</p>
                             </div>
                             <div class="tab-pane fade" id="orders">
                                 <h3>訂單資訊</h3>

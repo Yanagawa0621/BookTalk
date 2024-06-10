@@ -1,9 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!doctype html>
 <html>
 <head>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
-<title>Forgot Password</title>
+<title>忘記密碼</title>
 <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet'>
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <style>
@@ -47,20 +49,20 @@ body {
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
                 <div class="forgot">
-                    <h2>Forgot your password?</h2>
-                    <p>Change your password in three easy steps. This will help you to secure your password!</p>
+                    <h2>忘記密碼了嗎？</h2>
+                    <p>只需三個簡單步驟即可更改您的密碼，這將有助於您保護您的密碼！</p>
                     <ol class="list-unstyled">
-                        <li><span class="text-primary text-medium">1. </span>Enter your email address below.</li>
-                        <li><span class="text-primary text-medium">2. </span>Our system will send you an OTP to your email</li>
-                        <li><span class="text-primary text-medium">3. </span>Enter the OTP on the next page</li>
+                        <li><span class="text-primary text-medium">1. </span>在下方輸入您已註冊過 BookTalk 的電子郵件。</li>
+                        <li><span class="text-primary text-medium">2. </span>我們的系統將向您的電子郵件發送一次性密碼 (OTP)。</li>
+                        <li><span class="text-primary text-medium">3. </span>在下一頁輸入 OTP。</li>
                     </ol>
                 </div>
                 <form class="card mt-4" action="${pageContext.request.contextPath}/forgotPassword" method="POST">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="email-for-pass">Enter your email address</label>
+                            <label for="email-for-pass">輸入你的電子信箱</label>
                             <input class="form-control" type="text" name="email" id="email-for-pass" required>
-                            <small class="form-text text-muted">Enter the registered email address. Then we'll email a OTP to this address.</small>
+                            <small class="form-text text-muted">請輸入已註冊的電子郵件地址。然後我們會將一次性密碼（OTP）發送到這個地址。</small>
                         </div>
                     </div>
                     <div class="card-footer">

@@ -88,17 +88,17 @@
         const nationalIdNumber = document.querySelector('input[name="nationalIdNumber"]').value;
         const telephoneNumber = document.querySelector('input[name="telephoneNumber"]').value;
 
-        const passcodePattern = /^[A-Z][a-z]\d{6}$/;
+        const passcodePattern = /^[A-Za-z]\d{7,15}$/;
         if (!passcodePattern.test(passcode)) {
-            document.getElementById('passcodeError').textContent = "密碼必須以一個大寫字母開頭，接著一個小寫字母和6位數字。";
+            document.getElementById('passcodeError').textContent = "密碼必須以一個字母開頭，且包含至少一個數字，長度為8至16個字符。";
             return false;
         } else {
             document.getElementById('passcodeError').textContent = "";
         }
 
-        const nationalIdPattern = /^[A-Z]\d{9}$/;
+        const nationalIdPattern = /^[A-Z][12]\d{8}$/;
         if (!nationalIdPattern.test(nationalIdNumber)) {
-            document.getElementById('nationalIdError').textContent = "身份證號格式不正確, 必須以一個大寫字母開頭，和9位數字。";
+            document.getElementById('nationalIdError').textContent = "身份證號格式不正確，必須以一個大寫字母開頭，第二個字符必須是'1'或'2'，接著8位數字。";
             return false;
         } else {
             document.getElementById('nationalIdError').textContent = "";
@@ -106,7 +106,7 @@
 
         const telephonePattern = /^09\d{8}$/;
         if (!telephonePattern.test(telephoneNumber)) {
-            document.getElementById('telephoneError').textContent = "電話號碼格式不正確, 必須以09為開頭，後面8個位數字。";
+            document.getElementById('telephoneError').textContent = "電話號碼格式不正確，必須以09為開頭，後面8個位數字。";
             return false;
         } else {
             document.getElementById('telephoneError').textContent = "";
@@ -193,12 +193,11 @@
             <label for="birthday">生日</label>
             <input type="date" class="form-control" id="birthday" name="birthday" value="${param.birthday}" required>
         </div>
-		<div class="form-group">
-		    <label for="photo">照片</label>
-		    <input type="file" class="form-control-file" id="photo" name="photo" accept="image/jpeg, image/png">
-		    <img id="photoPreview" src="${base64Photo != null ? 'data:image/jpeg;base64,' + base64Photo : ''}" alt="照片預覽" class="img-fluid mt-2" style="max-width: 200px;">
-		    <input type="hidden" name="base64Photo" value="${base64Photo}">
-		</div>
+        <div class="form-group">
+            <label for="photo">照片</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" accept="image/jpeg, image/png">
+            <img id="photoPreview" src="${base64Photo != null ? 'data:image/jpeg;base64,' + base64Photo : ''}" alt="照片預覽" class="img-fluid mt-2" style="max-width: 200px;">
+            <input type="hidden" name="base64Photo" value="${base64Photo}">
         </div>
         <div class="form-group">
             <label for="nationalIdNumber">身份證字號</label>

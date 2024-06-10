@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -96,6 +97,9 @@ public class UserServlet extends HttpServlet {
                             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
                         }
                         break;
+                    case "updateAddress":
+                        updateAddress(request, response, session);
+                        break;
                     default:
                         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
                         break;
@@ -105,6 +109,28 @@ public class UserServlet extends HttpServlet {
                 if (transaction != null) transaction.rollback();
                 throw new ServletException(e);
             }
+        }
+    }
+
+    private void updateAddress(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession();
+        Integer userNumber = (Integer) httpSession.getAttribute("userNumber");
+        if (userNumber == null) {
+            response.sendRedirect(request.getContextPath() + "/front-end/login/login.jsp");
+            return;
+        }
+        UserVO user = userService.getUserByNumber(userNumber);
+        user.setCity(request.getParameter("city"));
+        user.setDistrict(request.getParameter("district"));
+        user.setAddress(request.getParameter("address"));
+        try {
+            userService.updateUser(user);
+            httpSession.setAttribute("city", user.getCity());
+            httpSession.setAttribute("district", user.getDistrict());
+            httpSession.setAttribute("address", user.getAddress());
+            response.sendRedirect(request.getContextPath() + "/front-end/my-account.jsp");
+        } catch (DuplicateFieldException e) {
+            handleException(request, response, e, "/front-end/my-account.jsp", user);
         }
     }
 
