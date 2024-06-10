@@ -183,13 +183,13 @@
 	                <table id="orderlist" class="table table-bordered table-hover">
 	                  <thead>
 		                  <tr>
-		                    <th style="width: 70px;">書籍編號</th>
-		                    <th style="width: 200px;">書籍名稱</th>
-		                    <th style="width: 110px;">ISBN</th>
-		                    <th style="width: 110px;">書籍類別</th>
-		                    <th style="width: 80px;">書籍狀態</th>
-		                    <th style="width: 90px;">發布時間</th>		                    
-		                    <th style="width: 90px;">出版社</th>
+		                    <th style="width: 72px;">書籍編號</th>
+		                    <th style="width: 215px;">書籍名稱</th>
+		                    <th style="width: 111px;">ISBN</th>
+		                    <th style="width: 111px;">書籍類別</th>
+		                    <th style="width: 81px;">書籍狀態</th>
+		                    <th style="width: 91px;">發布時間</th>		                    
+		                    <th style="width: 91px;">出版社</th>
 		                    <th>出版時間</th>
 		                    <th>數量</th>
 		                    <th>價格</th>
