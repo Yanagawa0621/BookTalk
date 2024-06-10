@@ -53,11 +53,11 @@
 	              	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forum/forum.do" name="form1">
 		                 <table class="table table-bordered table-hover">
 							<tr>
-								<td>員工編號:<font color=red><b>*</b></font></td>
+								<td>看板編號:<font color=red><b>*</b></font></td>
 								<td><%=forumVO.getForumNumber()%></td>
 							</tr>
 							<tr>
-								<td>員工姓名:</td>
+								<td>看板姓名:</td>
 								<td><input type="TEXT" name="name" value="<%=forumVO.getName()%>" size="45"/></td>
 							</tr>
 					     </table>
