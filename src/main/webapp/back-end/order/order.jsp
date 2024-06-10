@@ -226,7 +226,7 @@
 			        responsivePriority: 2, 
 			      },
 			      {
-			        targets: [6],
+			        targets: [6,3,2],
 			        responsivePriority: 4, 
 			      },
 			      {
