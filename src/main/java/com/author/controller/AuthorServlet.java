@@ -41,6 +41,7 @@ public class AuthorServlet extends HttpServlet {
 				// ===查詢資料===
 				List<BookProductsVO> list = new ArrayList<>();
 				List<AuthorVO> AuthorVOs = authsce.keywordQuery(Keywords);
+
 				if (!AuthorVOs.isEmpty()) {
 					for (AuthorVO AuthorVO : AuthorVOs) {
 						for (BookProductsVO bpVO : AuthorVO.getBpVO()) {
@@ -50,6 +51,7 @@ public class AuthorServlet extends HttpServlet {
 						}
 					}
 					if (list.isEmpty()) {
+
 						String url = "/front-end/shop3.jsp";
 						String message = "本平台暫無相關作者的書籍";
 						req.setAttribute("message", message);

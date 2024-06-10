@@ -55,6 +55,8 @@ public class BookProductsServlet extends HttpServlet {
 //			System.out.println("關鍵字查詢");
 			String searchMain = req.getParameter("searchMain");
 			if ("bookTitle".equals(searchMain) || "isbn".equals(searchMain)) {
+//				List<String> errorMsgs = new LinkedList<String>();
+//				req.setAttribute("errorMsgs", errorMsgs);
 				// ===接受參數===
 				String Keywords = req.getParameter("Keywords").trim();
 				// ===查詢資料===
@@ -66,9 +68,7 @@ public class BookProductsServlet extends HttpServlet {
 						iterator.remove();
 					}
 				}
-
-				if (list.isEmpty()) {
-
+				if (list.isEmpty()||list.size()==0) {
 					String url = "/front-end/shop3.jsp";
 					String message = "查無相關書籍";
 					req.setAttribute("message", message);
