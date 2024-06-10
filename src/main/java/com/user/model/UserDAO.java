@@ -3,6 +3,7 @@ package com.user.model;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 import java.util.List;
 
@@ -90,6 +91,16 @@ public class UserDAO implements UserDAO_interface {
             return session.createQuery("FROM UserVO WHERE accessNumber = :role", UserVO.class)
                           .setParameter("role", role)
                           .list();
+        }
+    }
+    
+    @Override
+    public List<UserVO> findByEmail(String email) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM UserVO WHERE eMail = :email";
+            Query<UserVO> query = session.createQuery(hql, UserVO.class);
+            query.setParameter("email", email);
+            return query.list();
         }
     }
 

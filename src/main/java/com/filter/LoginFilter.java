@@ -22,12 +22,19 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
 
+        String requestURI = httpRequest.getRequestURI();
+
+        // 放行首页和根目錄
+        if (requestURI.endsWith("index.jsp") || requestURI.equals(httpRequest.getContextPath() + "/")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         if (session == null || session.getAttribute("loggedInUser") == null) {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/front-end/login/login.jsp");
             return;
         }
 
-        // 将用户信息放入 request 属性中
         UserVO user = (UserVO) session.getAttribute("loggedInUser");
         httpRequest.setAttribute("user", user);
 

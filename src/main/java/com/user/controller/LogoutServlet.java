@@ -19,7 +19,7 @@ public class LogoutServlet extends HttpServlet {
             // 使當前 session 無效
             session.invalidate();
         }
-        // 重定向到登錄頁面
-        response.sendRedirect(request.getContextPath() + "/front-end/login/login.jsp");
+        // 重定向到首頁
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 }
