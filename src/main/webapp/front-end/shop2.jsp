@@ -10,6 +10,8 @@
 
 <% 
 BookClassVO oneBcVO=(BookClassVO) request.getAttribute("bcVO");
+List<BookProductsVO> list=oneBcVO.getBpVO();
+pageContext.setAttribute("list",list);
 %>
 
 <%
@@ -124,7 +126,7 @@ pageContext.setAttribute("bcList", bcList);
 					</div>
 					<!--shop toolbar end-->
 					<div class="row shop_wrapper">
-						<c:forEach var="bpVO" items="<%=oneBcVO.getBpVO()%>" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+						<c:forEach var="bpVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 						<c:if test="${bpVO.productStatus==1}">
 							<div class="col-lg-4 col-md-4 col-sm-6 col-12 ">
 								<article class="single_product">
