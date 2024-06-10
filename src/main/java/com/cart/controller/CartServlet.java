@@ -3,6 +3,7 @@ package com.cart.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -72,6 +73,7 @@ public class CartServlet extends HttpServlet {
 	
 	private void addItem(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String tempUserNumber = req.getParameter("userNumber");
+		System.out.println("tempUserNumber" + tempUserNumber);
 		Integer userNumber = 0;
 		
 		if(tempUserNumber != null) {
@@ -141,13 +143,13 @@ public class CartServlet extends HttpServlet {
 	private void getAllItems(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String userNumber = req.getParameter("userNumber");
 		List<CartVO> cartList = new ArrayList<>();
-		if(userNumber != null) {	//如果js檔有userNumber的話
+		if(userNumber != null && userNumber != "") {	//如果js檔有userNumber的話
 			cartList = cartService.getCartItems(Integer.valueOf(userNumber));
 		}else {		//沒有userNumber，直接抓session裡的
 			HttpSession session = req.getSession();
 			cartList = cartService.getCartItems((Integer) session.getAttribute("userNumber"));
-		}	
-		
+		}
+	
 		String jsonStr = new Gson().toJson(cartList);
 		
 		System.out.println(jsonStr);
