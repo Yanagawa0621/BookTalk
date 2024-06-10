@@ -12,6 +12,7 @@
     String queryString = request.getQueryString();
     
     // 計算資料總筆數和分頁相關資訊
+    if(list != null && !list.isEmpty()){
     rowNumber = list.size();
     if (rowNumber % rowsPerPage != 0)
         pageNumber = rowNumber / rowsPerPage + 1;
@@ -21,7 +22,7 @@
     pageIndexArray = new int[pageNumber]; 
     for (int i = 1; i <= pageIndexArray.length; i++)
         pageIndexArray[i - 1] = i * rowsPerPage - rowsPerPage;
-
+	}
     // 處理可能的 URL 參數異常情況
     try {
         String whichPageParam = request.getParameter("whichPage");
