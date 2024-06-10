@@ -45,10 +45,7 @@
                                             歡迎, ${sessionScope.userName} (userNumber: ${sessionScope.userNumber})
                                         </c:when>
                                         <c:otherwise>
-                                            <form action="${pageContext.request.contextPath}/userLogin" method="post">
-                                                <input type="hidden" name="redirect" value="${pageContext.request.contextPath}/front-end/my-account.jsp" />
-                                                <button type="submit" class="btn nav-link active">登入</button>
-                                            </form>
+                                            <jsp:include page="/front-end/login/login.jsp" />
                                         </c:otherwise>
                                     </c:choose>
                                 </li>
@@ -85,20 +82,9 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="address">
-                                <p>The following addresses will be used on the checkout page by default.</p>
-                                <h4 class="billing-address">Billing address</h4>
-                                <a href="#" class="view">Edit</a>
-                                <p><strong>Bobby Jackson</strong></p>
-                                <address>
-                                    House #15<br>
-                                    Road #1<br>
-                                    Block #C<br>
-                                    Banasree<br>
-                                    Dhaka<br>
-                                    1212
-                                </address>
-                                <p>Bangladesh</p>
+                            <div class="tab-pane fade" id="address">
+                                <!-- Include address_info.jsp here -->
+                                <jsp:include page="/front-end/address_info.jsp" />
                             </div>
                             <div class="tab-pane fade" id="account-details">
                                 <h3>帳號詳細資訊</h3>

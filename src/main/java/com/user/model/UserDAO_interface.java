@@ -3,6 +3,8 @@ package com.user.model;
 import java.util.List;
 
 public interface UserDAO_interface {
+	
+	List<UserVO> findByEmail(String email);
     void save(UserVO user);
     void update(UserVO user);
     void delete(Integer number);

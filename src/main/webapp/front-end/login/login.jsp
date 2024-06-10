@@ -32,14 +32,20 @@
             <h3>Login</h3>
             <form action="${pageContext.request.contextPath}/userLogin" method="post">
                 <div class="form-group">
-                    <label for="account">Account</label>
+                    <label for="account">帳號👤</label>
                     <input type="text" class="form-control" id="account" name="account" required>
                 </div>
                 <div class="form-group">
-                    <label for="passcode">Password</label>
+                    <label for="passcode">密碼🔑</label>
                     <input type="password" class="form-control" id="passcode" name="passcode" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                <button type="submit" class="btn btn-primary btn-block">🔥🔥🔥 登入🔥🔥🔥 </button>
+                <div class="form-group">
+                    <a href="${pageContext.request.contextPath}/front-end/login/forgotPassword.jsp">忘記密碼🔒❓</a>
+                </div>
+                <div class="form-group">
+                    <a href="${pageContext.request.contextPath}/front-end/login/registration.jsp">現在 我想來點...🐧會員註冊🐧</a>
+                </div>
                 <c:if test="${not empty errorMessage}">
                     <div class="error_message">${errorMessage}</div>
                 </c:if>
