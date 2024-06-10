@@ -34,9 +34,10 @@ public class PublisingHouseServlet extends HttpServlet {
 		
 		if ("query_bar".equals(action)) {
 			String searchMain = req.getParameter("searchMain");
-			if ("author".equals(searchMain)) {
+			if ("publishing_house".equals(searchMain)) {
 				// ===接受參數===
 				String Keywords = req.getParameter("Keywords");
+				System.out.println(Keywords);
 				// ===查詢資料===
 				List<BookProductsVO> list = new ArrayList<>();
 				List<PublishingHouseVO> phVOs = phSce.KeywordQueryPh(Keywords);
@@ -48,7 +49,7 @@ public class PublisingHouseServlet extends HttpServlet {
 							}
 						}
 					}
-					if (list.isEmpty()) {
+					if (list.isEmpty()||list.size()==0) {
 						String url = "/front-end/shop3.jsp";
 						String message = "本平台暫無相關出版社的書籍";
 						req.setAttribute("message", message);
@@ -87,7 +88,7 @@ public class PublisingHouseServlet extends HttpServlet {
 			System.out.println(keywords);
 			// ---查詢資料---
 			List<PublishingHouseVO> list=phSce.KeywordQueryPhNp(keywords);
-			if(list.size()==0) {
+			if(list.isEmpty()||list.size()==0) {
 				errorMsgs.add("查無資料");
 				RequestDispatcher failureView=req.getRequestDispatcher("/back-end/publishingHouse/publishingHouse.jsp");
 				failureView.forward(req, res);
