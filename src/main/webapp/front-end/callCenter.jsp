@@ -108,14 +108,7 @@ $(document).ready(function(){
     var isTxt = function(name) {return name.match(/txt$/i)};
     var isJpg = function(name) {return name.match(/jpg$/i)};
     var isPng = function(name) {return name.match(/png$/i)};
-    
-    function is_valid_email_address(emailAddress){
-		var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		return pattern.test(emailAddress);
-        //設定變數pattern 是 (pattern的驗證格式)
-        //回傳 替換文字內容emailAddress的值
-	}  
-    
+       
     $('.dropdown-item').click(function(){
         var selectedText = $(this).text();
         $('#problemType_').text(selectedText);

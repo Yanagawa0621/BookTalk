@@ -14,7 +14,6 @@ DROP TABLE IF EXISTS user; -- 會員 --
 DROP TABLE IF EXISTS access; -- 權限 --
 DROP TABLE IF EXISTS user_status; -- 會員狀態 --
 DROP TABLE IF EXISTS administrator; -- 管理員 --
-DROP TABLE IF EXISTS qa; -- QA --
 DROP TABLE IF EXISTS purchase_details; -- 採購明細 --
 DROP TABLE IF EXISTS purchase; -- 採購 --
 DROP TABLE IF EXISTS promotion_details; -- 促銷明細 --
@@ -25,9 +24,9 @@ DROP TABLE IF EXISTS book_products; -- 書籍商品 --
 DROP TABLE IF EXISTS book_class; -- 書籍類別 --
 DROP TABLE IF EXISTS author; -- 作者 --
 DROP TABLE IF EXISTS publishing_house; -- 出版社 --
+DROP TABLE IF EXISTS callcenter; -- 客服中心 --
 DROP TABLE IF EXISTS qa; -- 前端常見問題QA --
-DROP TABLE IF EXISTS callcenter; -- 前端客服中心 --
-
+DROP TABLE IF EXISTS book_sys_parameter; -- 系統參數設定檔 --
 
 
 
@@ -336,10 +335,11 @@ CREATE TABLE user_status (
     statusName VARCHAR(20) COMMENT '狀態名稱',
     statusDescribe VARCHAR(50) COMMENT '狀態說明',
     statusDays INTEGER COMMENT '狀態天數'
-) COMMENT '會員狀態 user_status';
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT '會員狀態 user_status';
 
-INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('1','1',7);
-INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('2','2',0);
+INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('正常','正常狀態',0);
+INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('暫時停權7天','暫時停權7天',7);
+INSERT INTO user_status (statusName, statusDescribe, statusDays) VALUES ('永久停權','永久停權',0);
 
 -- 權限 --
 CREATE TABLE access (
@@ -348,7 +348,8 @@ CREATE TABLE access (
     accessDescribe VARCHAR(50) COMMENT '權限說明'
 ) COMMENT '權限 access';
 
-INSERT INTO access (name, accessDescribe) VALUES ('1', '描述1');
+INSERT INTO access (accessNumber, name, accessDescribe) VALUES (1, '一般會員', '一般會員的描述');
+INSERT INTO access (accessNumber, name, accessDescribe) VALUES (2, '後台管理員', '後台管理員的描述');
 
 -- 會員 --
 CREATE TABLE user (
@@ -373,30 +374,37 @@ CREATE TABLE user (
     CONSTRAINT fk_user_accessNumber FOREIGN KEY (accessNumber) REFERENCES access(accessNumber)
 ) COMMENT '會員 user';
 
-INSERT INTO user (accountStatusNumber, accessNumber, account, passcode, name, registerDate, sex, eMail, introduceOneself, birthday, photo, nationalIdNumber, telephoneNumber, address, statusStartDate) 
-VALUES 
-    (1, 1, '134', '123', 'Tina Wang', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
-    (1, 1, '1765', '456', '王小明', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
-    (1, 1, '1876', '3423', 'David Wu', '1983-01-30', '2', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
-    (1, 1, '112', '789', '天天小飛', '1984-02-20', '2', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
-	(1, 1, 'xx35f23', '6757', '黃依依', '1984-02-11', '2', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, '1', '1', '1', '1985-03-01'),
-    (1, 1, 'flji424', '4fa4adfa', '麥當勞', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, '1', '1', '1', '1982-12-18'),
-    (1, 1, '1lafiv', '455afaf', 'kobe', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, '1', '1', '1', '1983-02-20'),
-    (1, 1, '345daf', 'adfggwert', 'LeBron James', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, '1', '1', '1', '1979-07-12'),
-    (1, 1, 'mary', '565608', 'Anthony Davis', '1984-02-20', '2', 'mary3423@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21'),
-    (1, 1, 'john1445', '123456fs', 'Russell', '1984-02-20', '1', 'johnere@gmail.com', 'eum#', '1981-11-17', NULL, '1', '1', '1', '1985-03-21');
+-- 添加 city 和 district 欄位
+ALTER TABLE user
+ADD COLUMN city VARCHAR(50) COMMENT '城市',
+ADD COLUMN district VARCHAR(50) COMMENT '區';
 
+INSERT INTO user (accountStatusNumber, accessNumber, account, passcode, name, registerDate, sex, eMail, introduceOneself, birthday, photo, nationalIdNumber, telephoneNumber, address, city, district, statusStartDate) 
+VALUES 
+    (1, 1, '134', '123', 'Tina Wang', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, 'A123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1982-12-18'),
+    (1, 1, '1765', '456', '王小明', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, 'B123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1983-02-20'),
+    (1, 1, '1876', '3423', 'David Wu', '1983-01-30', '2', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, 'C123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1979-07-12'),
+    (1, 1, '112', '789', '天天小飛', '1984-02-20', '2', 'ghi@gmail.com', 'eum#', '1981-11-17', NULL, 'D123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-21'),
+    (1, 1, 'xx35f23', '6757', '黃依依', '1984-02-11', '2', 'kyty@gmail.com', 'ijelm', '1981-11-09', NULL, 'E123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-01'),
+    (1, 1, 'flji424', '4fa4adfa', '麥當勞', '1981-11-17', '1', 'abc@gmail.com', 'HELLO!', '1981-11-17', NULL, 'F123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1982-12-18'),
+    (1, 1, '1lafiv', '455afaf', 'kobe', '1983-01-19', '1', 'def@gmail.com', 'HI@', '1981-11-17', NULL, 'G123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1983-02-20'),
+    (1, 1, '345daf', 'adfggwert', 'LeBron James', '1983-01-30', '1', 'vcxv@gmail.com', 'TIF@', '1981-11-17', NULL, 'H123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1979-07-12'),
+    (1, 1, 'mary', '565608', 'Anthony Davis', '1984-02-20', '2', 'mary3423@gmail.com', 'eum#', '1981-11-17', NULL, 'I123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-21'),
+    (1, 1, 'john1445', '123456fs', 'Russell', '1984-02-20', '1', 'johnere@gmail.com', 'eum#', '1981-11-17', NULL, 'J123456789', '1234567890', 'Some Address', 'Some City', 'Some District', '1985-03-21');
+    
 -- 登入記錄 --
 CREATE TABLE login_record (
     number INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '編號',
-    userNumber INTEGER NOT NULL COMMENT '會員編號',
+    userNumber INTEGER NULL COMMENT '會員編號',
+    account VARCHAR(20) NULL COMMENT '帳號',
     loginTime DATETIME COMMENT '登入時間',
     ip VARCHAR(45) COMMENT 'IP位址',
     area VARCHAR(20) COMMENT '地區',
+    userType VARCHAR(20) COMMENT '區分使用者類型',
     CONSTRAINT fk_login_record_userNumber FOREIGN KEY (userNumber) REFERENCES user(number)
 ) COMMENT '登入紀錄 login_record';
 
-INSERT INTO login_record (userNumber, loginTime, ip, area) VALUES (1, '1981-11-17 11:12:13', '1', 'taiwan');
+INSERT INTO login_record (userNumber, loginTime, ip, area, userType) VALUES (1, '1981-11-17 11:12:13', '1', 'taiwan', 'user');
 
 -- 申訴 --
 CREATE TABLE complaint (
@@ -413,19 +421,20 @@ CREATE TABLE complaint (
 
 INSERT INTO complaint (userNumber, processingStatus, complaintTypeNumber, content, complaintTime, completedDate, response) VALUES (1, 1, 1, '123', '1981-11-17 00:00:00', '1981-11-17 00:00:00', '1');
 
--- 管理員 --
+-- 管理員
 CREATE TABLE administrator(
-	account VARCHAR(20) PRIMARY KEY COMMENT'帳號',
-    passcode VARCHAR(20) COMMENT'密碼',
-    name VARCHAR(255) COMMENT'名稱'
-)COMMENT'管理員 administrator';
+    account VARCHAR(20) PRIMARY KEY COMMENT '帳號',
+    passcode VARCHAR(20) COMMENT '密碼',
+    name VARCHAR(255) COMMENT '名稱',
+    number INT UNIQUE COMMENT '編號' -- 添加唯一约束
+) COMMENT '管理員 administrator';
 
-INSERT INTO administrator(account,passcode,name) VALUES
-('AS127894','A79461354','FAKER'),
-('QW121345','F83748512','peter'),
-('dog123','d98765432','cat'),
-('cat2222','c1234567','dog'),
-('abcd1234','a1234567','alpha');
+INSERT INTO administrator (account, passcode, name, number)
+VALUES ('AS127894', 'A79461354', 'FAKER', 1),
+       ('QW121345', 'F83748512', 'peter', 2),
+       ('dog123', 'd98765432', 'cat', 3),
+       ('cat2222', 'c1234567', 'dog', 4),
+       ('abcd1234', 'a1234567', 'alpha', 5);
 
 
 -- 訂單 --
@@ -462,7 +471,7 @@ VALUES
 (2, 0, "2024-04-23 14:22:50", null, "2024-04-23 15:20:50", '大谷翔平', '0911-254-868', '310新竹縣竹東鎮沿河街411號', 50.00, 1150.00, 'BT04jk4e', '第12筆訂單'),
 (8, 5, "2024-05-21 03:05:41", "2024-05-24 23:05:41", "2024-05-28 11:28:41", 'LeBron James', '0931-587-868', '97346花蓮縣吉安鄉民治路436號', 50.00, 1450.00, 'BTfnk334', '第13筆訂單'),
 (9, 5, "2024-04-12 08:20:50", "2024-04-14 13:10:26", "2024-04-20 12:16:48", 'Anthony Davis', '0955-847-684', '920屏東縣潮州鎮五福路20號', 100.00, 600.00, 'BT6345gf', '第14筆訂單'),
-(10, 2, "2024-06-11 18:10:21", null, null, 'Russell', '0935-847-886', '114台北市內湖區康寧路一段33巷21號', 100.00, 860.00, 'BT1777a8', '第15筆訂單');
+(10, 2, "2024-06-08 18:10:21", null, null, 'Russell', '0935-847-886', '114台北市內湖區康寧路一段33巷21號', 100.00, 860.00, 'BT1777a8', '第15筆訂單');
 
 
 --  訂單明細 --
@@ -603,14 +612,33 @@ VALUES
 	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (3, NULL, 3, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (4, NULL, 4, 1, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
 	INSERT INTO report (reportedArticleNumber, reportedCommentNumber, reporter, userStatus, processingStatusCode, content, reportTime, penaltyStartDate, penaltyEndDate, auditResultComment) VALUES (5, NULL, 5, 2, 1, '檢舉內容1', '2024-04-10 14:00:00', '2024-04-12', '2024-04-15', '審核內容1');
-    
-    
+
+-- 客服中心 --
+CREATE TABLE callcenter (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '編號',
+    problemType VARCHAR(20) NOT NULL COMMENT '發問類型',
+    problemDescription TEXT NOT NULL COMMENT '問題描述',
+    email VARCHAR(255) NOT NULL COMMENT '發問者信箱',
+    orderNumber Int COMMENT '發問訂單編號(如果有)',
+    attachedFile MEDIUMBLOB COMMENT '附加圖檔',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '發問日期',
+    processStatus VARCHAR(1) DEFAULT '0' COMMENT '回應日期',
+    fileName VARCHAR(50) COMMENT '檔案名稱',
+    responseAt DATETIME COMMENT '回應日期',
+    responseDescription TEXT COMMENT '回應內容'
+) COMMENT '客服中心 ';
+
+INSERT INTO callcenter(problemType,problemDescription,email,orderNumber,attachedFile,createdAt,processStatus,fileName,responseAt,responseDescription) VALUES
+('1','商品規格詢問','123@yahoo.com',NULL,NULL,SYSDATE(),'0',NULL,SYSDATE(),123321)
+;
+
+-- 前端常見問題QA --
 CREATE TABLE qa(
 	seqNo INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '流水編號',
 	questionNo int COMMENT '問題編號',
 	question VARCHAR(500)  COMMENT '問題',
 	answer VARCHAR(500) COMMENT '答案',
-	way VARCHAR(1) COMMENT '狀態',
+	way VARCHAR(255) DEFAULT 'Y' COMMENT '狀態',
     createDate DATETIME COMMENT '建立日期',
     updateDate DATETIME COMMENT '異動日期'
 	
@@ -638,23 +666,17 @@ INSERT INTO qa(questionNo,question,answer,way,createDate,updateDate) VALUES
 (7,'如果遇到問題如何聯繫客服？','您可以通過客服相關裡的客服中心方式聯繫我們的客服團隊,具體聯繫信息請參見我們的“客服中心”頁面','Y',SYSDATE(),NULL)
 ;
 
+-- 系統參數設定檔 --
+CREATE TABLE book_sys_parameter(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '流水編號',
+    -- typeCode VARCHAR(20) NOT NULL COMMENT '型態代碼',
+   -- typeValue VARCHAR(20) NOT NULL COMMENT '型態值',
+    typeName VARCHAR(60) NOT NULL COMMENT '型態名稱'-- ,
+   -- typeDescription VARCHAR(100) COMMENT'描述'
+)COMMENT '系統參數設定檔';
 
--- 前端客服中心 --
-CREATE TABLE callcenter (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY COMMENT '編號',
-    problemType VARCHAR(20) NOT NULL COMMENT '發問類型',
-    problemDescription TEXT NOT NULL COMMENT '問題描述',
-    email VARCHAR(255) NOT NULL COMMENT '發問者信箱',
-    orderNumber Int COMMENT '發問訂單編號(如果有)',
-    attachedFile MEDIUMBLOB COMMENT '附加圖檔',
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '發問日期',
-    processStatus VARCHAR(1) DEFAULT '0' COMMENT '處理狀態(0-待處理、1-處理中、2-已完成)',
-    responseAt DATETIME COMMENT '回應日期',
-    responseDescription TEXT COMMENT '回應內容'
-) COMMENT '客服中心 ';
-
-INSERT INTO callcenter(problemType,problemDescription,email,orderNumber,attachedFile,createdAt,responseAt,responseDescription) VALUES
-('產品詢問','商品規格詢問','123@yahoo.com',NULL,NULL,SYSDATE(),NULL,123321)
-;
+INSERT INTO book_sys_parameter(typeCode,typeValue,typeName,description) VALUES ('CallCenter','1','書籍商品相關問題','客服中心問題類型');
+INSERT INTO book_sys_parameter(typeCode,typeValue,typeName,description) VALUES ('CallCenter','2','訂單相關問題','客服中心問題類型');
+INSERT INTO book_sys_parameter(typeCode,typeValue,typeName,description) VALUES ('CallCenter','3','其他建議相關','客服中心問題類型');
 
 -- 這裡是底部 --

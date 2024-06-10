@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 
@@ -15,9 +16,7 @@ import com.google.gson.annotations.Expose;
 @Table(name = "callcenter")
 public class CallCenterVO implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -49,6 +48,14 @@ public class CallCenterVO implements java.io.Serializable {
 	@Column(name = "createdAt")
 	@Expose
 	private Timestamp createdAt;
+	
+	@Column(name = "processStatus",columnDefinition = "VARCHAR(1) DEFAULT '0'")
+	@Expose
+	private String processStatus;
+	
+	@Column(name = "fileName")
+	@Expose
+	private String fileName;
 
 	@Column(name = "responseAt")
 	@Expose
@@ -58,6 +65,24 @@ public class CallCenterVO implements java.io.Serializable {
 	@Expose
 	private String responseDescription;
 
+	@Transient
+	private String problemTypeName;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getProcessStatus() {
+		return processStatus;
+	}
+	
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
 	public String getProblemType() {
 		return problemType;
 	}
@@ -124,5 +149,24 @@ public class CallCenterVO implements java.io.Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getProblemTypeName() {
+		if(!"".equals(this.getProblemType())) {
+			problemTypeName = ProblemTypeEnum.getDescriptionByKey(this.getProblemType());
+		}
+		return problemTypeName;
+	}
+
+	public void setProblemTypeName(String problemTypeName) {
+		this.problemTypeName = problemTypeName;
 	}
 }

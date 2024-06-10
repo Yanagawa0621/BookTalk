@@ -125,14 +125,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/back-end/callCenter/callCenter.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>客訴案件列表</p>
                   <span class="badge badge-info right">5</span> 
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/back-end/qa/qa.jsp" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>前台Q&A資料編輯</p>
                 </a>

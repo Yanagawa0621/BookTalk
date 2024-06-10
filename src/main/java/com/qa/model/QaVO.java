@@ -39,7 +39,7 @@ public class QaVO implements java.io.Serializable {
 	@Expose
 	private String answer;
 
-	@Column(name = "way",length = 1,nullable = false)
+	@Column(name = "way",columnDefinition = "VARCHAR(255) DEFAULT 'Y'")
 	@Expose
 	private String way;
 
@@ -50,6 +50,14 @@ public class QaVO implements java.io.Serializable {
 	@Column(name="updateDate")
 	@Expose
 	private Timestamp updateDate;
+
+	public Integer getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(Integer seqNo) {
+		this.seqNo = seqNo;
+	}
 
 	public Integer getQuestionNo() {
 		return questionNo;

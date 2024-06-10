@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
+import java.sql.Timestamp;    
+import java.util.Date;    
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
@@ -34,12 +35,12 @@ public class CallCenterServlet extends HttpServlet {
 	private CallCenterService ccSce;
 
 	public void init() throws ServletException {
-		System.out.println("intoCallCenter init");
+		//System.out.println("intoCallCenter init");
 		ccSce = new CallCenterService();
 	}
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("intoCallCenter doGet");
+		//System.out.println("intoCallCenter doGet");
 		doPost(req, res);
 	}
 	
@@ -74,12 +75,15 @@ public class CallCenterServlet extends HttpServlet {
 		       vo.setProblemDescription(problemDescription);
 		       vo.setEmail(email);
 		       vo.setAttachedFile(bytes);
+		       vo.setProcessStatus("0");
+		       vo.setCreatedAt(new Timestamp(new Date().getTime()));
+		       vo.setFileName(fileName);
 		       //呼叫service=>Dao=>將資料寫入至table callcenter
 		       mapMessage = ccSce.save(vo);
 		       //寫入table狀況(成功/失敗)回傳Json物件給前端
 	    	   json = new JSONObject(mapMessage);
 	       }
-	       System.out.println(json);
+	      // System.out.println(json);
 		   res.setContentType("application/json");
 	       res.setCharacterEncoding("UTF-8");
            res.getWriter().println(json);
