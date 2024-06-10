@@ -32,12 +32,12 @@ public class ArticleServlet extends HttpServlet {
 			String content = req.getParameter("content");
 			String forumNumberStr = req.getParameter("forumNumber");
 			HttpSession session = req.getSession();
-			String userNumberStr = (String) session.getAttribute("userNumber");
+			//String userNumberStr = (String) session.getAttribute("userNumber");
 			Integer forumNumber = null;
-			Integer userNumber = null;
+			Integer userNumber = (Integer) session.getAttribute("userNumber");;
 			try {
 				forumNumber = Integer.parseInt(forumNumberStr);
-				userNumber = Integer.parseInt(userNumberStr);
+				//userNumber = Integer.parseInt(userNumberStr);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
@@ -92,14 +92,14 @@ public class ArticleServlet extends HttpServlet {
 //			}
 //		}
 //***********************假登入*************************************
-		if ("fakeID".equals(action)) {
-			String str = req.getParameter("userNumber");
-			HttpSession session = req.getSession();
-			session.setAttribute("userNumber", str);
-			String url = "/front-end/article/popularArticle.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(req, res);
-		}
+//		if ("fakeID".equals(action)) {
+//			String str = req.getParameter("userNumber");
+//			HttpSession session = req.getSession();
+//			session.setAttribute("userNumber", str);
+//			String url = "/front-end/article/popularArticle.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+//			successView.forward(req, res);
+//		}
 //************************模糊搜尋文章標題*****************************
 		if ("getName_For_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();

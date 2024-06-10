@@ -62,6 +62,7 @@
 						標題:
 						<input type="text" name = "title" required style="width:94.5%; height:30px;">
 						<textarea id="content" name="content" class="editor"></textarea>
+						<input type="hidden" name="forumNumber" value="${articleVO.forumVO.name}">
 						<input type="hidden" name="action" value="insert">
 						<input type="submit" value="送出新增">
 					</form>
