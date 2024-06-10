@@ -145,7 +145,7 @@
 										          <span aria-hidden="true">&times;</span>
 										        </button>-->
 										      </div> 
-										      <div class="modal-body" style="font-size: 18px; padding: 30px;">
+										      <div id="modal-body-${articleVO.articleNumber}"class="modal-body" style="font-size: 18px; padding: 30px;">
 											        <!-- 燈箱内容區域 -->
 												    ${articleVO.content}
 												    <jsp:useBean id="likeSvc" scope="page" class="com.likeRecord.model.LikeService"/>
@@ -381,7 +381,7 @@ function submitComment(articleNumber) {
             // 更新留言区域
             $(".comment-input").val("");
             let commentNumber = response.commentNumber;
-            $(".modal-body").append(
+            $("#modal-body-" + articleNumber).append(
                     '<div class="comment-area-'+commentNumber+'">' +
                     '<p>您</p>' +
                     '<p>' + comment + '</p>' + 
@@ -442,7 +442,7 @@ function like(articleNumber) {
 }
 
 function unlike(articleNumber) {
-	const likeButton = document.getElementById("like-button-" + articleNumber);
+	const likeButton = document.getElementById("unlike-button-" + articleNumber);
     likeButton.disabled = true;
     $.ajax({
         type: "POST",
@@ -474,7 +474,7 @@ function unlike(articleNumber) {
 }
 function likeCom(commentNumber) {
     console.log("按");
-    const likeButton = document.getElementById("like-button-" + commentNumber);
+    const likeButton = document.getElementById("likeCom-button-" + commentNumber);
     likeButton.disabled = true;
     $.ajax({
         type: "POST",
@@ -506,7 +506,7 @@ function likeCom(commentNumber) {
 }
 
 function unlikeCom(commentNumber) {
-	const likeButton = document.getElementById("like-button-" + commentNumber);
+	const likeButton = document.getElementById("unlikeCom-button-" + commentNumber);
     likeButton.disabled = true;
     $.ajax({
         type: "POST",
