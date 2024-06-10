@@ -129,9 +129,18 @@
                         <c:if test="${articleVO.articleState == 1}">
 	                        <article class="single_blog">
 	                            <figure>
-	                                <div class="blog_thumb">
-	                                    ${articleVO.articleImage }
-	                                </div>
+	                                <c:choose>
+									    <c:when test="${articleVO.articleImage == '/HibernateEx-Web/front-end/assets/img/blog/default.jpg'}">
+									        <div class="blog_thumb">
+									            <img src="<%=request.getContextPath()%>/front-end/assets/img/blog/default.jpg" alt=''>
+									        </div>
+									    </c:when>
+									    <c:otherwise>
+									        <div class="blog_thumb">
+									            ${articleVO.articleImage}
+									        </div>
+									    </c:otherwise>
+									</c:choose>
 	                                <figcaption class="blog_content">
 	                                   <h4 class="post_title"><a href="#" onclick="event.preventDefault();"data-toggle="modal" data-target="#lightboxModal${loop.index}"><i class="fa fa-paper-plane"></i>${articleVO.title}</a></h4>
 	                                   <!-- Modal -->
@@ -407,6 +416,7 @@ function submitComment(articleNumber) {
                     '<button id="unlikeCom-button-' + commentNumber + '" class="unlikeCom-button" style="background:white; display: none;" onclick="unlikeCom(' + commentNumber + ');">' +
                     '<i class="fas fa-thumbs-up"></i>' +
                     '</button>' +
+                    '<button class="updateCom-button" onclick="openUpdateText(' + commentNumber + ', \'' + comment + '\');">更新</button>' +
                     '<form class="delete-form" onsubmit="event.preventDefault(); deleteComment(' + commentNumber + ');">' +
                     '<input type="submit" value="刪除" style="background:red;">' +
                     '</form>' +

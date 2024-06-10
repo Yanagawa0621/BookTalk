@@ -8,14 +8,16 @@
     List<ArticleVO> list = (List<ArticleVO>) request.getAttribute("list");
 %>
 <%  
-    rowNumber=list.size();
-    if (rowNumber%rowsPerPage !=0)
-         pageNumber=rowNumber/rowsPerPage + 1;
-    else pageNumber=rowNumber/rowsPerPage;    
-
-    pageIndexArray=new int[pageNumber]; 
-    for (int i=1 ; i<=pageIndexArray.length ; i++)
-         pageIndexArray[i-1]=i*rowsPerPage-rowsPerPage;
+	if(list != null && !list.isEmpty()){
+	    rowNumber=list.size();
+	    if (rowNumber%rowsPerPage !=0)
+	         pageNumber=rowNumber/rowsPerPage + 1;
+	    else pageNumber=rowNumber/rowsPerPage;    
+	
+	    pageIndexArray=new int[pageNumber]; 
+	    for (int i=1 ; i<=pageIndexArray.length ; i++)
+	         pageIndexArray[i-1]=i*rowsPerPage-rowsPerPage;
+	}
 %>
 
 <%  try {
