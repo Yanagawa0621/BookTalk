@@ -156,8 +156,10 @@ public class ArticleServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			ArticleService articleSvc = new ArticleService();
+			ArticleVO articleVO = articleSvc.getOneFromArticleNumber(articleNumber);
+			Integer forumNumber = articleVO.getForumVO().getForumNumber();
 			articleSvc.delete(articleNumber);
-			String url = "/front-end/article/popularArticle.jsp";
+			String url = "/front-end/article/forumsArticle.jsp?forumNumber="+forumNumber;
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}
