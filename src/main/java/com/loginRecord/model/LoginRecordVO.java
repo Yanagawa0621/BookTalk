@@ -1,5 +1,6 @@
 package com.loginRecord.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 import com.user.model.UserVO;
@@ -7,7 +8,8 @@ import com.administrator.model.AdministratorVO;
 
 @Entity
 @Table(name = "login_record")
-public class LoginRecordVO {
+public class LoginRecordVO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -119,4 +121,20 @@ public class LoginRecordVO {
     public void setUserType(String userType) {
         this.userType = userType;
     }
+    
+    @Override
+    public String toString() {
+        return "LoginRecordVO{" +
+                "number=" + number +
+                ", user=" + (user != null ? user.getName() : "null") +
+                ", admin=" + (admin != null ? admin.getName() : "null") +
+                ", userNumber=" + userNumber +
+                ", adminNumber=" + adminNumber +
+                ", loginTime=" + loginTime +
+                ", ip='" + ip + '\'' +
+                ", area='" + area + '\'' +
+                ", userType='" + userType + '\'' +
+                '}';
+    }
+
 }

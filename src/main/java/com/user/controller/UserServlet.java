@@ -41,11 +41,15 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         handleRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         handleRequest(request, response);
     }
 
@@ -62,23 +66,23 @@ public class UserServlet extends HttpServlet {
             try {
                 switch (action) {
                     case "list":
-                        listUsers(request, response);
+                        listUsers(request, response, session);
                         break;
                     case "listMembers":
-                        listMembers(request, response);
+                        listMembers(request, response, session);
                         break;
                     case "listAdmins":
-                        listAdmins(request, response);
+                        listAdmins(request, response, session);
                         break;
                     case "edit":
-                        showEditForm(request, response);
+                        showEditForm(request, response, session);
                         break;
                     case "delete":
-                        deleteUser(request, response);
+                        deleteUser(request, response, session);
                         break;
                     case "add":
                         if (isMultipartContent(request)) {
-                            addUser(request, response);
+                            addUser(request, response, session);
                         } else {
                             System.out.println("表單內容類型錯誤: " + request.getContentType());
                             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
@@ -86,7 +90,7 @@ public class UserServlet extends HttpServlet {
                         break;
                     case "update":
                         if (isMultipartContent(request)) {
-                            updateUser(request, response);
+                            updateUser(request, response, session);
                         } else {
                             System.out.println("表單內容類型錯誤: " + request.getContentType());
                             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
@@ -109,26 +113,25 @@ public class UserServlet extends HttpServlet {
         return contentType != null && contentType.startsWith("multipart/form-data");
     }
 
-    private void listUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listUsers(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         List<UserVO> userList = userService.getAllUsers();
         request.setAttribute("userList", userList);
         request.getRequestDispatcher("/back-end/user/users.jsp").forward(request, response);
     }
 
-    private void listMembers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listMembers(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         List<UserVO> memberList = userService.getUsersByRole(1); // 1 代表一般會員
         request.setAttribute("userList", memberList);
         request.getRequestDispatcher("/back-end/user/members.jsp").forward(request, response);
     }
 
-    private void listAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listAdmins(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         List<UserVO> adminList = userService.getUsersByRole(2); // 2 代表後台管理員
         request.setAttribute("adminList", adminList);
         request.getRequestDispatcher("/back-end/user/adminList.jsp").forward(request, response);
     }
 
-
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         Integer number = Integer.parseInt(request.getParameter("number"));
         UserVO existingUser = userService.getUserByNumber(number);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -139,7 +142,7 @@ public class UserServlet extends HttpServlet {
         request.getRequestDispatcher("/back-end/user/editUser.jsp").forward(request, response);
     }
 
-    private void addUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void addUser(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         try {
             UserVO user = parseUserFromRequest(request);
             userService.addUser(user);
@@ -149,15 +152,20 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateUser(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         try {
             UserVO user = parseUserFromRequest(request);
             user.setNumber(Integer.parseInt(request.getParameter("number")));
-            
-            // 获取原始使用者信息
+
+            // 獲取原始使用者信息
             UserVO originalUser = userService.getUserByNumber(user.getNumber());
             Integer originalAccessNumber = originalUser.getAccessNumber();
-            
+
+            // 如果沒有上傳新照片，則保留原來的照片
+            if (user.getPhoto() == null || user.getPhoto().length == 0) {
+                user.setPhoto(originalUser.getPhoto());
+            }
+
             userService.updateUser(user);
 
             if (originalAccessNumber == 2 && user.getAccessNumber() != 2) { // 如果從 "後台管理員" 變更為其他角色
@@ -183,14 +191,14 @@ public class UserServlet extends HttpServlet {
         }
     }
 
-
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {
         Integer number = Integer.parseInt(request.getParameter("number"));
         userService.deleteUser(number);
         response.sendRedirect(request.getContextPath() + "/user?action=list");
     }
 
     private UserVO parseUserFromRequest(HttpServletRequest request) throws IOException, ServletException, DuplicateFieldException {
+        request.setCharacterEncoding("UTF-8");
         if (!isMultipartContent(request)) {
             throw new ServletException("表單必須設置為 multipart/form-data");
         }

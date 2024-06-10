@@ -3,13 +3,14 @@ package com.loginRecord.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 import com.loginRecord.model.LoginRecordService;
 import com.loginRecord.model.LoginRecordServiceImpl;
 import com.loginRecord.model.LoginRecordVO;
@@ -38,29 +39,43 @@ public class LoginRecordServlet extends HttpServlet {
         UserVO user = new UserVO();
         user.setNumber(userNumber);
 
-        LoginRecordVO loginRecord = new LoginRecordVO();
-        loginRecord.setUser(user);
-        loginRecord.setLoginTime(new Date());
-        loginRecord.setIp(ip);
-        loginRecord.setArea(area);
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                LoginRecordVO loginRecord = new LoginRecordVO();
+                loginRecord.setUser(user);
+                loginRecord.setLoginTime(new Date());
+                loginRecord.setIp(ip);
+                loginRecord.setArea(area);
 
-        loginRecordService.addLoginRecord(loginRecord);
+                loginRecordService.addLoginRecord(loginRecord);
 
-        response.sendRedirect(request.getContextPath() + "/back-end/user/loginSuccess.jsp");
+                transaction.commit();
+                response.sendRedirect(request.getContextPath() + "/back-end/user/loginSuccess.jsp");
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                throw new ServletException(e);
+            }
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userNumberStr = request.getParameter("userNumber");
-        if (userNumberStr != null && !userNumberStr.isEmpty()) {
-            try {
-                Integer userNumber = Integer.parseInt(userNumberStr);
-                List<LoginRecordVO> loginRecords = loginRecordService.getLoginRecordsByUserNumber(userNumber);
-                request.setAttribute("loginRecords", loginRecords);
-            } catch (NumberFormatException e) {
-                request.setAttribute("error", "使用者編號格式錯誤。");
-            }
-        }
+        String userName = request.getParameter("userName");
+        String userType = request.getParameter("userType");
+        String timeRange = request.getParameter("timeRange");
+        String customDaysStr = request.getParameter("customDays");
+
+        // 打印參數以進行調試
+        System.out.println("userName: " + userName);
+        System.out.println("userType: " + userType);
+        System.out.println("timeRange: " + timeRange);
+        System.out.println("customDaysStr: " + customDaysStr);
+
+        List<LoginRecordVO> loginRecords = loginRecordService.searchLoginRecords(userName, userType, timeRange, customDaysStr);
+        request.setAttribute("loginRecords", loginRecords);
+
         request.getRequestDispatcher("/back-end/user/loginRecord.jsp").forward(request, response);
     }
+
 }

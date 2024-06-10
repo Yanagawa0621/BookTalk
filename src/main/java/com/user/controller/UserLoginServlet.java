@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 import com.user.model.UserService;
 import com.user.model.UserServiceImpl;
 import com.user.model.UserVO;
@@ -42,23 +45,32 @@ public class UserLoginServlet extends HttpServlet {
 
         UserVO user = userService.getUserByAccount(account);
 
-        if (user != null && user.getPasscode().equals(passcode)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loggedInUser", user);
-            session.setAttribute("userName", user.getName());
-            session.setAttribute("userNumber", user.getNumber()); // 添加 userNumber 到 session
-            session.setAttribute("welcomeMessage", "🎉 Welcome " + user.getName() + " to BookTalk! 📚"); // 登入成功後顯示歡迎該使用者+emoji
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                if (user != null && user.getPasscode().equals(passcode)) {
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("loggedInUser", user);
+                    httpSession.setAttribute("userName", user.getName());
+                    httpSession.setAttribute("userNumber", user.getNumber()); // 添加 userNumber 到 session
+                    httpSession.setAttribute("welcomeMessage", "🎉 Welcome " + user.getName() + " to BookTalk! 📚"); // 登入成功後顯示歡迎該使用者+emoji
 
-            // 記錄登入信息
-            if (recordLogin(request, user)) {
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
-            } else {
-                request.setAttribute("errorMessage", "無法記錄登錄信息，請聯繫管理員");
-                request.getRequestDispatcher("/front-end/my_account.jsp").forward(request, response);
+                    // 記錄登入信息
+                    if (recordLogin(request, user)) {
+                        response.sendRedirect(request.getContextPath() + "/index.jsp");
+                    } else {
+                        request.setAttribute("errorMessage", "無法記錄登錄信息，請聯繫管理員");
+                        request.getRequestDispatcher("/front-end/my_account.jsp").forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("errorMessage", "帳號或密碼錯誤");
+                    request.getRequestDispatcher("/front-end/my_account.jsp").forward(request, response);
+                }
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                throw new ServletException(e);
             }
-        } else {
-            request.setAttribute("errorMessage", "帳號或密碼錯誤");
-            request.getRequestDispatcher("/front-end/my_account.jsp").forward(request, response);
         }
     }
 

@@ -6,7 +6,6 @@
 <%@ page import="com.access.model.AccessVO" %>
 <%@ include file="/back-end/checkAdminSession.jsp" %>
 
-
 <%
     AccessService accessService = new AccessServiceImpl();
     List<AccessVO> accessList = accessService.getAllAccesses();
@@ -20,17 +19,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script>
         async function loadDistricts() {
-            const response = await fetch('<%=request.getContextPath()%>/front-end/article/ckEditor/taiwan-districts.json');
+            const response = await fetch('<%=request.getContextPath()%>/front-end/article/ckEditor/taiwan-districts.json', {
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            });
             const districts = await response.json();
-
+    
             function getDistricts(city) {
                 return districts[city] || [];
             }
-
+    
             function getCities() {
                 return Object.keys(districts);
             }
-
+    
             return {
                 getDistricts,
                 getCities
@@ -127,7 +130,7 @@
                 document.getElementById('nationalIdError').textContent = "";
             }
 
-            const telephonePattern = /^\d{10}$/;
+            const telephonePattern = /^09\d{8}$/;
             if (!telephonePattern.test(telephoneNumber)) {
                 document.getElementById('telephoneError').textContent = "電話號碼格式不正確, 必須以09為開頭，後面8個位數字。";
                 return false;
@@ -161,7 +164,7 @@
 <body>
 <div class="container">
     <h2 class="my-4">編輯使用者</h2>
-    <form action="<%=request.getContextPath()%>/user" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form action="<%=request.getContextPath()%>/user" method="post" enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="return validateForm()">
         <input type="hidden" name="action" value="update">
         <input type="hidden" name="number" value="${user.number}">
         <!-- 錯誤訊息顯示區 -->

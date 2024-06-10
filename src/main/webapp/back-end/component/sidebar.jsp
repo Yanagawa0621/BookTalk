@@ -60,6 +60,12 @@
                                 <p>後台管理員列表</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="${pageContext.request.contextPath}/back-end/user/loginRecord.jsp" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>登入記錄</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

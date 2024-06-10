@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import util.HibernateUtil;
 import com.administrator.model.AdministratorService;
 import com.administrator.model.AdministratorServiceImpl;
 import com.administrator.model.AdministratorVO;
@@ -42,18 +45,27 @@ public class AdminLoginServlet extends HttpServlet {
 
         AdministratorVO admin = adminService.getAdministratorByAccount(account);
 
-        if (admin != null && admin.getPasscode().equals(passcode)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loggedInAdmin", admin);
-            session.setAttribute("adminName", admin.getName());
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                if (admin != null && admin.getPasscode().equals(passcode)) {
+                    HttpSession httpSession = request.getSession();
+                    httpSession.setAttribute("loggedInAdmin", admin);
+                    httpSession.setAttribute("adminName", admin.getName());
 
-            // 記錄登入信息
-            recordLogin(request, admin);
+                    // 記錄登入信息
+                    recordLogin(request, admin);
 
-            response.sendRedirect(request.getContextPath() + "/back-end/bk_index.jsp"); // 後台首頁
-        } else {
-            request.setAttribute("errorMessage", "帳號或密碼錯誤");
-            request.getRequestDispatcher("/back-end/bk_login.jsp").forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/back-end/bk_index.jsp"); // 後台首頁
+                } else {
+                    request.setAttribute("errorMessage", "帳號或密碼錯誤");
+                    request.getRequestDispatcher("/back-end/bk_login.jsp").forward(request, response);
+                }
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) transaction.rollback();
+                throw new ServletException(e);
+            }
         }
     }
 
