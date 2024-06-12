@@ -86,6 +86,11 @@
             option.textContent = district;
             districtSelect.appendChild(option);
         });
+
+        const selectedDistrict = "${sessionScope.user.district}";
+        if (selectedDistrict) {
+            districtSelect.value = selectedDistrict;
+        }
     }
 
     window.addEventListener('load', function () {

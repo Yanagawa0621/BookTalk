@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.HibernateUtil;
 import com.user.model.DuplicateFieldException;
 import com.user.model.UserService;
@@ -30,6 +32,7 @@ import com.administrator.model.AdministratorVO;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = LoggerFactory.getLogger(UserServlet.class);
     private UserService userService;
     private AdministratorService administratorService;
 
@@ -60,7 +63,7 @@ public class UserServlet extends HttpServlet {
             action = "list";
         }
 
-        System.out.println("Content Type: " + request.getContentType()); // 添加日誌輸出
+        logger.info("Handling action: " + action);
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -85,7 +88,7 @@ public class UserServlet extends HttpServlet {
                         if (isMultipartContent(request)) {
                             addUser(request, response, session);
                         } else {
-                            System.out.println("表單內容類型錯誤: " + request.getContentType());
+                            logger.error("表單內容類型錯誤: " + request.getContentType());
                             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
                         }
                         break;
@@ -93,23 +96,38 @@ public class UserServlet extends HttpServlet {
                         if (isMultipartContent(request)) {
                             updateUser(request, response, session);
                         } else {
-                            System.out.println("表單內容類型錯誤: " + request.getContentType());
+                            logger.error("表單內容類型錯誤: " + request.getContentType());
                             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "表單必須設置為 multipart/form-data");
                         }
                         break;
                     case "updateAddress":
                         updateAddress(request, response, session);
                         break;
+                    case "loadUserDetails":
+                        loadUserDetails(request, response);
+                        break;
                     default:
+                        logger.error("無效的操作: " + action);
                         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "無效的操作");
                         break;
                 }
                 transaction.commit();
             } catch (Exception e) {
                 if (transaction != null) transaction.rollback();
+                logger.error("Error during transaction", e);
                 throw new ServletException(e);
             }
         }
+    }
+
+    private void loadUserDetails(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Integer userNumber = (Integer) session.getAttribute("userNumber");
+        if (userNumber != null) {
+            UserVO user = userService.getUserByNumber(userNumber);
+            session.setAttribute("user", user);
+        }
+        request.getRequestDispatcher("/front-end/user/account_details.jsp").forward(request, response);
     }
 
     private void updateAddress(HttpServletRequest request, HttpServletResponse response, Session session) throws ServletException, IOException {

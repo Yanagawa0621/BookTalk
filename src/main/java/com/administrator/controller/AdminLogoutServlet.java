@@ -16,7 +16,11 @@ public class AdminLogoutServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
+            System.out.println("AdminLogoutServlet: Session invalidated");
+        } else {
+            System.out.println("AdminLogoutServlet: No session to invalidate");
         }
         response.sendRedirect(request.getContextPath() + "/back-end/bk_login.jsp");
+        System.out.println("AdminLogoutServlet: Redirecting to login page");
     }
 }
