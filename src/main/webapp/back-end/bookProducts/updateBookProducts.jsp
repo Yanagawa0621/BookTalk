@@ -14,6 +14,8 @@
 BookProductsVO bpVO = (BookProductsVO) request.getAttribute("bpVO");
 List<AuthorVO> authorVOLsit = bpVO.getAuthorVO();
 session.setAttribute("authorVOLsit", authorVOLsit);
+String originalISBN=bpVO.getIsbn();
+session.setAttribute("originalISBN", originalISBN);
 %>
 
 <%

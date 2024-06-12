@@ -111,6 +111,10 @@ public class BookProductsService {
 	public List<BookProductsVO> statusQueryBpNp(Integer productStatus) {
 		return bpDAO.statusQuery(productStatus);
 	}
+	
+	public int ISBNQuery(String isbn) {
+		return bpDAO.ISBNQuery(isbn);
+	}
 	// =================================以下做圖片及添加資料處理用========================================
 
 	// 單筆書籍資料的圖片轉換

@@ -178,7 +178,7 @@
 												    	<div class="like-area">
 													        <button id="like-button-${articleVO.articleNumber}" class="like-button" style="display: none;" onclick="like(${articleVO.articleNumber});"><i class="far fa-thumbs-up"></i></button>
 													        <button id="unlike-button-${articleVO.articleNumber}" class="unlike-button" style="background:white;"onclick="unlike(${articleVO.articleNumber});"><i class="fas fa-thumbs-up"></i></button>
-												    		<p class="like-count">${articleVO.likeSum}</p>
+												    		<p id="likeSum-count-${articleVO.articleNumber}" class="like-count">${articleVO.likeSum}</p>
 												    	</div>
 												    </c:when>
 												    <c:otherwise>

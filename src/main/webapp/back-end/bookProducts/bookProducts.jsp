@@ -13,33 +13,7 @@
 <!DOCTYPE html>
 <html>
 <!-- head -->
-<style>
-	th,tr {
-	  white-space: nowrap; /* 讓文字不換行 */
-	}
 
-    .fixed-size-form {
-        width: 300px; /* 固定寬度 */
-    }
-     .form-row { 
-         margin-bottom: 10px; /* 行間距 10px */ 
-     } 
-	
-	.input-group {
-        margin-bottom: 20px; /* 調整 input-group 的下邊距 */
-    }
-    
-    table {
-	    table-layout: fixed;
-	    width: 100%;
-	}
-    
-    th, td {
-        white-space: nowrap; /* 禁止換行 */
-        overflow: hidden; /* 超出部分隱藏 */
-        text-overflow: ellipsis; /* 超出部分用...表示 */
-    }
-</style>
 
 <%@include file="/back-end/component/header.jsp" %>
 
@@ -181,16 +155,16 @@
 	                <h3 class="card-title">所有書籍</h3>
 	              </div>	<!-- /.card-header -->
 	              <div class="card-body">
-	                <table id="orderlist" class="table table-bordered table-hover">
+	                <table id="orderlist" class="table table-bordered table-hover dt-responsive nowrap">
 	                  <thead>
 		                  <tr>
-		                    <th style="width: 72px;">書籍編號</th>
-		                    <th style="width: 205px;">書籍名稱</th>
-		                    <th style="width: 111px;">ISBN</th>
-		                    <th style="width: 111px;">書籍類別</th>
-		                    <th style="width: 81px;">書籍狀態</th>
-		                    <th style="width: 91px;">發布時間</th>		                    
-		                    <th style="width: 91px;">出版社</th>
+		                    <th >書籍編號</th>
+		                    <th >書籍名稱</th>
+		                    <th >ISBN</th>
+		                    <th >書籍類別</th>
+		                    <th >書籍狀態</th>
+		                    <th >發布時間</th>		                    
+		                    <th >出版社</th>
 		                    <th>出版時間</th>
 		                    <th>數量</th>
 		                    <th>價格</th>
@@ -255,12 +229,32 @@
 		      "paging": true,
 		      "lengthChange": true,
 		      "searching": false,
-		      "ordering": false,
+		      "ordering": true,
+		      "stateSave": false, // 預設為false 在頁面刷新時，是否要保存當前表格資料與狀態
+		      "destroy": false, // 預設為false 是否銷毀當前暫存資料
 		      "info": true,
 		      "autoWidth": false,
 		      "responsive": true,
+		      "columnDefs":[
+		          {
+		            targets: [4,10],
+		            responsivePriority: 1, 
+		          },
+		          {
+			        targets: [0,1,2,3,8],
+			        responsivePriority: 2, 
+			      },
+			      {
+			        targets: [6],
+			        responsivePriority: 4, 
+			      },
+			      {
+				    targets: [7],
+				    responsivePriority: 3, 
+				  }
+		      	],
 		      language: {	//設定語言為繁中
-		          url: "${pageContext.request.contextPath}/plugins/i18n/zh-HANT.json"
+		          url: "${pageContext.request.contextPath}/back-end/plugins/i18n/zh-HANT.json"
 		      },
 		      lengthMenu: [
 		    	    [5, 10, 15, 20, 25, 50, -1],

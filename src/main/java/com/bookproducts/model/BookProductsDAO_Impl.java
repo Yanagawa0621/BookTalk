@@ -12,4 +12,5 @@ public interface BookProductsDAO_Impl{
 	List<BookProductsVO> statusQuery(Integer productStatus);
 	BookProductsVO singleQuery(Integer bookNumber);
 	int disassociate(BookProductsVO bpVO);
+	int ISBNQuery(String isbn);
 }
