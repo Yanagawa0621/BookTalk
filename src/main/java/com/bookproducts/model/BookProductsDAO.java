@@ -101,6 +101,24 @@ public class BookProductsDAO implements BookProductsDAO_Impl {
 		}
 	}
 
+	@Override
+	public int ISBNQuery(String isbn) {
+		try {
+			BookProductsVO bpVO= getSession().createQuery("from BookProductsVO where isbn = :isbn",BookProductsVO.class)
+			.setParameter("isbn", isbn)
+			.uniqueResult();
+			
+			if(bpVO!=null) {
+				return 1;
+			}else {
+				return -1;
+			}
+		}catch (Exception e) {
+			return -1;
+		}
+		
+	}
+
 //=================================以下是測試用的main方法========================================
 
 //	public static void main(String[] args) {

@@ -299,12 +299,15 @@ public class BookProductsServlet extends HttpServlet {
 			// ---sibn---
 			String isbn = req.getParameter("isbn");
 			String reg2 = "^[0-9]{10,13}$";
+			int repeatISBN=bpSce.ISBNQuery(isbn);
 			if (isbn.trim().length() == 0 || isbn == null) {
 				errorMsgs.add("國際書碼不可空白");
 			} else if (!isbn.trim().matches(reg2)) {
 				errorMsgs.add("國際書碼格式錯誤");
+			}else if(repeatISBN==1) {
+				errorMsgs.add("國際書碼已重複");
 			}
-
+			
 			// ---出版日期---
 			java.sql.Date publicationDate = null;
 			try {
@@ -386,6 +389,7 @@ public class BookProductsServlet extends HttpServlet {
 					authors.add(arthor);
 				}
 			}
+			
 			// ---提交新增---
 			int result = bpSce.addBp(bookClassNumber, publishiingHouseCode, 0, bookTitle, isbn, price, publicationDate,
 					stock, introductionContent, authors);
@@ -479,10 +483,16 @@ public class BookProductsServlet extends HttpServlet {
 			// ---sibn---
 			String isbn = req.getParameter("isbn");
 			String reg2 = "^[0-9]{10,13}$";
+			String originalISBN=(String)session.getAttribute("originalISBN");
 			if (isbn.trim().length() == 0 || isbn == null) {
 				errorMsgs.add("國際書碼不可空白");
 			} else if (!isbn.trim().matches(reg2)) {
 				errorMsgs.add("國際書碼格式錯誤");
+			} else if(!isbn.equals(originalISBN)) {
+				int repeatISBN=bpSce.ISBNQuery(isbn);
+				if(repeatISBN==1) {
+					errorMsgs.add("國際書碼已重複");
+				}
 			}
 
 			// ---書籍狀態---
