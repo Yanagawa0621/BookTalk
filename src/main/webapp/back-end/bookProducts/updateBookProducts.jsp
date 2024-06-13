@@ -89,7 +89,7 @@ String[] RemoveAuthor = (String[]) request.getAttribute("RemoveAuthor");
 				<div class="card">
 					<div class="card-header">
 						<h3 class="card-title">修改書籍資訊</h3>
-											<p>removeAuthorString 的值是: ${removeAuthorString}</p>
+<%-- 											<p>removeAuthorString 的值是: ${removeAuthorString}</p> --%>
 					</div>
 					<!-- /.card-header -->
 					<div class="card-body">

@@ -53,7 +53,7 @@
 						<form method="post" action="${pageContext.request.contextPath}/bookClass.do" class="needs-validation" novalidate>
 							<label for="orderInput">類別編號搜尋</label>
 							<div class="input-group">		
-								<input type="search" id="orderInput" name="classNumber" class="form-control" placeholder="搜尋訂單編號" required>
+								<input type="search" id="orderInput" name="classNumber" class="form-control" placeholder="搜尋類別編號" required>
 								<input type="hidden" name="action" value="getOne_For_Display">	
 								<div class="invalid-tooltip">
           							請輸入類別編號         							

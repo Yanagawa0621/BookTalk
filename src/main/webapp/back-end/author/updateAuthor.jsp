@@ -52,11 +52,11 @@
 		                <table id="updateOrder" class="table table-bordered table-hover">
 		                	<tbody>
 		                		<tr>
-		                			<th class="align-middle">訂單編號：</th>
+		                			<th class="align-middle">中文名稱：</th>
 		                			<td><input class="form-control" type="text" name="authorName" value="${authorVO.authorName}"></td>
 		                		</tr>
 		                		<tr>
-		                			<th class="align-middle">會員編號：</th>
+		                			<th class="align-middle">英文名稱：</th>
 		                			<td><input class="form-control" type="text" name="englishName" value="${authorVO.englishName}"></td>
 		                		</tr>		               
 			              	</tbody>

@@ -141,7 +141,7 @@
 				        
 				        <!-- 新增書籍按鈕 -->
 				        <div class="col-md-4 d-flex justify-content-center align-self-end">
-				            <a href="${pageContext.request.contextPath}/back-end/order/addOrder.jsp">
+				            <a href="${pageContext.request.contextPath}/back-end/bookProducts/addBookProducts.jsp">
 				                <button type="button" class="btn btn-block bg-gradient-success">新增書籍</button>
 				            </a>
 				        </div>
