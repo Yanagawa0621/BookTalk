@@ -130,7 +130,7 @@
 	                        <article class="single_blog">
 	                            <figure>
 	                                <c:choose>
-									    <c:when test="${articleVO.articleImage == '/HibernateEx-Web/front-end/assets/img/blog/default.jpg'}">
+									    <c:when test="${articleVO.articleImage != null && articleVO.articleImage.equals('null')}">
 									        <div class="blog_thumb">
 									            <img src="<%=request.getContextPath()%>/front-end/assets/img/blog/default.jpg" alt=''>
 									        </div>
@@ -351,25 +351,22 @@
 ============================================ -->
 <%@include file="/front-end/component/script.jsp" %>
 <script type="text/javascript">
-//新增留言 之後須加上userNumber
+
 
 var contextPath = "<%= request.getContextPath() %>";
 var userID = "${sessionScope.userNumber != null ? sessionScope.userNumber : ''}";
 
 window.onload = function() {
     if (!userID) {
-        console.log("userID 未抓到值");
-        // 这里可以进行相应的处理，如禁用某些功能或显示提示信息
+        console.log("userID 未抓到值");      
         var formInputs = document.getElementsByClassName("form-input");
         for (var i = 0; i < formInputs.length; i++) {
             formInputs[i].disabled = true;
         }
-
         var likeButtons = document.getElementsByClassName("like-button");
         for (var i = 0; i < likeButtons.length; i++) {
             likeButtons[i].disabled = true;
         }
-
         var unlikeButtons = document.getElementsByClassName("unlike-button");
         for (var i = 0; i < unlikeButtons.length; i++) {
             unlikeButtons[i].disabled = true;
@@ -382,10 +379,9 @@ window.onload = function() {
         for (var i = 0; i < unlikeButtons.length; i++) {
             unlikeButtons[i].disabled = true;
         }
-
     } else {
         console.log("userID 抓到的值为: " + userID);
-        // 这里可以进行其他初始化操作
+       
     }
 };
 
@@ -401,7 +397,7 @@ function submitComment(articleNumber) {
         },
         success: function(response) {
             alert("新增留言成功");
-            // 更新留言区域
+           
             $(".comment-input").val("");
             let commentNumber = response.commentNumber;
             $("#modal-body-" + articleNumber).append(
@@ -449,11 +445,8 @@ function like(articleNumber) {
             document.getElementById("like-button-" + articleNumber).style.display = "none";
             document.getElementById("unlike-button-" + articleNumber).style.display = "inline-block";
             const likeCountElement = document.getElementById("likeSum-count-" + articleNumber);
-            // 获取当前值并转换为数字
-            let currentValue = parseInt(likeCountElement.textContent, 10);
-            // 增加 1
+            let currentValue = parseInt(likeCountElement.textContent, 10);     
             currentValue += 1;
-            // 将新的值更新回 p 标签
             likeCountElement.textContent = currentValue;
             likeButton.disabled = false;
         },
@@ -512,12 +505,10 @@ function likeCom(commentNumber) {
             alert("按讚成功");
             document.getElementById("likeCom-button-" + commentNumber).style.display = "none";
             document.getElementById("unlikeCom-button-" + commentNumber).style.display = "inline-block";
-            const likeCountElement = document.getElementById("likeSumCom-count-" + commentNumber);
-            // 获取当前值并转换为数字
+            const likeCountElement = document.getElementById("likeSumCom-count-" + commentNumber);    
             let currentValue = parseInt(likeCountElement.textContent, 10);
             // 增加 1
-            currentValue += 1;
-            // 将新的值更新回 p 标签
+            currentValue += 1; 
             likeCountElement.textContent = currentValue;
             likeButton.disabled = false;
         },
@@ -544,12 +535,9 @@ function unlikeCom(commentNumber) {
             alert("取消按讚成功");
             document.getElementById("likeCom-button-" + commentNumber).style.display = "inline-block";
             document.getElementById("unlikeCom-button-" + commentNumber).style.display = "none";
-            const likeCountElement = document.getElementById("likeSumCom-count-" + commentNumber);
-            // 获取当前值并转换为数字
-            let currentValue = parseInt(likeCountElement.textContent, 10);
-            // 增加 1
-            currentValue -= 1;
-            // 将新的值更新回 p 标签
+            const likeCountElement = document.getElementById("likeSumCom-count-" + commentNumber);         
+            let currentValue = parseInt(likeCountElement.textContent, 10);          
+            currentValue -= 1;          
             likeCountElement.textContent = currentValue;
             likeButton.disabled = false;
         },
@@ -570,7 +558,7 @@ function deleteComment(commentNumber) {
         },
         success: function(response) {
             alert("刪除留言成功");
-            // 更新留言区域
+            
             $(".comment-area-"+ commentNumber).hide();
         },
         error: function(xhr, status, error) {
@@ -589,8 +577,7 @@ function openUpdateText(commentNumber, content) {
         '</div>'
     );
 }
-function updateComment(commentNumber,content){
-	
+function updateComment(commentNumber,content){	
 	$.ajax({
         type: "POST",
         url: contextPath + "/comment/comment.do",
@@ -601,7 +588,7 @@ function updateComment(commentNumber,content){
         },
         success: function(response) {
             alert("更新留言成功");
-            // 更新留言区域
+           
             $(".comment-area-"+ commentNumber + " p:nth-child(2)").text(content);
         	$(".update-area").hide();
         },
@@ -612,13 +599,11 @@ function updateComment(commentNumber,content){
     });
 }
 function handleFormSubmit(event,forumNumber) {
-    event.preventDefault(); // 阻止默认的表单提交
-
+    event.preventDefault(); 
     if (userID) {
-        // 如果 userID 有值，直接跳转到a网址
         window.location.href = contextPath + "/front-end/article/ckEditor/sample/addArticle.jsp?forumNumber="+forumNumber;
     } else {
-        // 如果 userID 没有值，弹出确认窗口
+        
         if (confirm("您尚未登入，是否前往登入页面？")) {
             window.location.href = contextPath + "/front-end/login/login.jsp"; // 替换成目标b网址
         }
