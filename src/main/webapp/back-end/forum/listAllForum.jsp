@@ -23,7 +23,7 @@
 				<div class="container-fluid">
 					<div class="row justify-content-between">
 						<div class="col-md-6">
-							<h1 class="m-0">搜尋看板</h1>
+							<h1 class="m-0">全部看板</h1>
 						</div>	<!-- /.col -->								
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
