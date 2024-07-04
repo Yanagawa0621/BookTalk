@@ -20,7 +20,7 @@
 				<div class="container-fluid">
 					<div class="row justify-content-between">
 						<div class="col-md-6">
-							<h1 class="m-0">搜尋看板</h1>
+							<h1 class="m-0">新增看板</h1>
 						</div>	<!-- /.col -->								
 					</div>	<!-- /.row -->					
 				</div>	<!-- /.container-fluid -->				
@@ -54,7 +54,7 @@
 		                 <table class="table table-bordered table-hover">
 							<tr>
 								<td>看板名稱:</td>
-								<td><input type="TEXT" name="name" placeholder="搜尋看板名稱"  size="45" required/></td>
+								<td><input type="TEXT" name="name" placeholder="輸入看板名稱"  size="45" required/></td>
 							</tr>
 					     </table>
 						 <br>

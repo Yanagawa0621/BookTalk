@@ -38,7 +38,7 @@ public class ArticleService {
 		Document doc = Jsoup.parse(pic);
 		Element link = doc.select("img").first();
 		if (link == null) {
-			articleVO.setArticleImage("<img src='/HibernateEx-Web/front-end/assets/img/blog/default.jpg' alt=''>");
+			articleVO.setArticleImage("null");
 		} else {
 			articleVO.setArticleImage(link.outerHtml());
 		}
